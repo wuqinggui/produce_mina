@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/buyCar/buyCar.js
 Page({
 
   /**
