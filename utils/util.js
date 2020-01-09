@@ -53,7 +53,6 @@ function formatMsgTime(timespan) {
     var hour = Math.abs(Math.floor(milliseconds % 86400 / 3600));
     var minute = Math.abs(Math.floor(milliseconds % 86400 % 3600 / 60));
 
-
     const prex = milliseconds > 0 ? "前" : "后";
 
     if (day > 0) {
@@ -158,8 +157,9 @@ function getCurrentPageUrl(type) {
 
 module.exports = {
   formatTime,
+  formatMsgTime,
+  getRandom,
   matchFn,
   isBlank,
-  formatMsgTime,
   getCurrentPageUrl
 }

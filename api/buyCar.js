@@ -1,6 +1,6 @@
 var req = require('../utils/http.js').default;
 
-var indexApi = {
+var buyCarApi = {
   // 首页-城市下拉列表
   getIndexCity: function (params) {
     return new Promise((resolve, reject) => {
@@ -12,4 +12,4 @@ var indexApi = {
     });
   }
 }
-export default indexApi;
+export default buyCarApi;
