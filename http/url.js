@@ -1,4 +1,4 @@
-export const baseUrl = '';
+export const baseUrl = 'https://';
 
 // 用户模块
 export const POST_USER_REGISTER_URL = baseUrl + 'wechat/user/register'; // 注册（获取用户微信信息）

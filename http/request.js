@@ -1,9 +1,10 @@
 const util = require('../utils/util.js')
+var MD5 = require('../libs/md5.js');
 
 const httpHeader = (contentType) => {
   let timesTamp = parseInt(new Date().getTime() / 1000);
-  let app_key = 'b0b1a56c6fa5a13dfb0ee65suj8cjw';
-  let app_secret = 'e8c410df2f433360440w8jemyse3kci';
+  let app_key = '';
+  let app_secret = '';
   let session_id = wx.getStorageSync('session_id') ? wx.getStorageSync('session_id') : '';
   // object传json格式，否则传formData，仅限post请求
   contentType = contentType === 'formData' ? 'application/x-www-form-urlencoded' : 'application/json';
@@ -28,7 +29,7 @@ const wxRequest = (url, type, params) => {
   return new Promise((resolve, reject) => {
     wx.request({
       url: url,
-      header: httpHeader,
+      header: httpHeader(),
       method: type ? type : 'POST',
       data: params ? params : {},
       success: res => {

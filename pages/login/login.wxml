@@ -4,7 +4,7 @@
   <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{!wxSetting}}">
     <text class='wechat-login-text'>微信授权</text>
   </button>
-  <button open-type="getPhoneNumber" bindgetuserinfo="getPhoneNumber" class="wechat-login-btn"  wx:else>
+  <button wx:else open-type="getPhoneNumber" bindgetuserinfo="getPhoneNumber" class="wechat-login-btn"  bindtap="weChatLogin">
     <text class='wechat-login-text'>手机号授权登录</text>
   </button>
 </view>
