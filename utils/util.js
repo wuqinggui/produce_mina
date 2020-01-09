@@ -18,27 +18,7 @@ const formatTime = (date, type) => {
   const minute = time.getMinutes()
   const second = time.getSeconds()
 
-  if (type === 1) {
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-  } else if (type === 2) {
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':')
-  } else if (type === 3) {
-    return [year, month, day].map(formatNumber).join('/')
-  } else if (type === 4) {
-    return [hour, minute, second].map(formatNumber).join(':')
-  } else if (type === 5) {
-    return [year, month, day].map(formatNumber).join('-')
-  } else if (type === 6) {
-    return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute].map(formatNumber).join(':')
-  } else if (type === 7) {
-    return [year, month, day].map(formatNumber).join('.')
-  } else if (type === 8) {
-    return [hour, minute].map(formatNumber).join(':')
-  } else if (type === 9) {
-    return [year, month, day].map(formatNumber).join('.') + ' ' + [hour, minute].map(formatNumber).join(':')
-  } else {
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
-  }
+  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
 const formatNumber = m => {
@@ -69,7 +49,6 @@ function formatMsgTime(timespan) {
     var timeSpanStr;
 
     milliseconds = now_new - timespan;
-    //console.log("milliseconds", milliseconds);
     var day = Math.abs(Math.floor(milliseconds / 86400));
     var hour = Math.abs(Math.floor(milliseconds % 86400 / 3600));
     var minute = Math.abs(Math.floor(milliseconds % 86400 % 3600 / 60));
@@ -92,18 +71,15 @@ function formatMsgTime(timespan) {
   return timeSpanStr;
 }
 
-/**
- * 日期格式化
- * @param date
- * @returns {String}
- */
-function formatDate(date) {
-  const y = date.getFullYear()
-  let m = date.getMonth() + 1
-  m = m < 10 ? '0' + m : m
-  let d = date.getDate()
-  d = d < 10 ? ('0' + d) : d
-  return y + '-' + m + '-' + d
+/*生成随机数, n代表生成几位的随机数*/
+const getRandom = n => {
+  var chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  var nums = '';
+  for (var i = 0; i < n; i++) {
+    var id = parseInt(Math.random() * 61);
+    nums += chars[id];
+  }
+  return nums;
 }
 
 /**
@@ -155,11 +131,29 @@ function isBlank(value) {
 /**
  * 获取当前页url
  */
-function getCurrentPageUrl() {
+function getCurrentPageUrl(type) {
   var pages = getCurrentPages()    //获取加载的页面
   var currentPage = pages[pages.length - 1]    //获取当前页面的对象
-  var url = currentPage    //当前页面url
-  return url
+  var url = currentPage.route    //当前页面url（不含参数）
+  var options = currentPage.options //当前页面的参数
+  var pageURL = url;
+  var objectIndex = 1;
+  for (var i in options) {
+    if (objectIndex === 1) {
+      // 第一个参数
+      pageURL = pageURL + '?' + i + '=' + options[i];
+      objectIndex = 2;
+    } else {
+      pageURL = pageURL + '&' + i + '=' + options[i];
+    }
+  }
+  if (type) {
+    // 当前页面url（不含参数）
+    return url
+  } else {
+    // 返回一个完整的url
+    return pageURL
+  }
 }
 
 module.exports = {
@@ -167,6 +161,5 @@ module.exports = {
   matchFn,
   isBlank,
   formatMsgTime,
-  formatDate,
   getCurrentPageUrl
 }
