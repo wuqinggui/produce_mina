@@ -1,46 +1,11 @@
-<view>
-  <view class="login-header">
-    <image class="login-logo" src="/images/logo.png" mode="aspectFill" lazy-load></image>
-    <view class="login-mark">一站式设计创意产业服务平台</view>
-  </view>
-  
-  <!-- 是否微信授权 -->
-  <view wx:if="{{!wxLogin}}">
-    <view class="login-way login-height-auto" wx:if="{{loginWay !== 'isAccount'}}">
-      <button class="login-way-weChat" open-type="getUserInfo" bindgetuserinfo="getUserInfo">微信授权</button>
-    </view>
-  </view>
-  <view wx:else>
-      <view class="login-way" wx:if="{{loginWay !== 'isAccount'}}">
-        <button class="login-way-weChat" open-type="getPhoneNumber" bindtap="getWxCode" bindgetphonenumber="getPhoneNumber">微信手机号登录</button>
-        <button class="login-way-account" bindtap="changeAccountLogin">账号密码/验证码登录</button>
-      </view>
-      <view wx:if="{{loginWay === 'isAccount'}}">
-        <view class="login-form">
-          <view class="login-form-way">
-            <text class="{{ type === 2 ? 'curWay' : 'unCurWay'}}" bindtap="changeLoginType" data-type="2">
-            <text>验证码登录</text>
-            <text wx:if="{{type === 2}}" class="curWay-line"></text>
-            </text>
-            <text class="{{ type === 1 ? 'curWay' : 'unCurWay'}}" bindtap="changeLoginType" data-type="1">
-            <text>密码登录</text>
-            <text wx:if="{{type === 1}}" class="curWay-line"></text>
-            </text>
-          </view>
-          <input value='{{account}}' bindinput="bindKeyPhone" type="number" maxlength="11" placeholder="手机号" placeholder-class="input-placeholder" class='input-content'/>
-          <input wx:if="{{type === 1}}" value='{{password}}' password="{{true}}" bindinput="bindKeyPassword" maxlength="20" placeholder="密码" placeholder-class="input-placeholder" class='input-content'/>
-          <view class="code-area">
-          <input wx:if="{{type === 2}}" value='{{sms_code}}' type="number" bindinput="bindKeyCode" maxlength="6" placeholder="验证码" placeholder-class="input-placeholder" class='input-content'/>
-          <button bindtap="getCode" class="code-tip-btn" wx:if="{{type === 2}}">{{code_tip}}</button>
-          </view>
-          <button bindtap="toSubmit" class="submit-btn {{ account && sms_code || account && password ? '' : 'btn-disabled' }}">登 录</button>
-        </view>
-        
-        <button class="login-weChat-phone" open-type="getPhoneNumber" bindtap="getWxCode"  bindgetphonenumber="getPhoneNumber">微信手机号一键登录</button>
-      </view>
-  </view>
-
+<view class='wechat-login-area'>
+  <image class="wechat-login-logo" src="/images/fangsuo_logo.png" mode="cover"></image>
+  <view class='wechat-login-title'>农贸商城</view>
+  <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{!wxSetting}}">
+    <text class='wechat-login-text'>微信授权</text>
+  </button>
+  <button open-type="getPhoneNumber" bindgetuserinfo="getPhoneNumber" class="wechat-login-btn"  wx:else>
+    <text class='wechat-login-text'>手机号授权登录</text>
+  </button>
 </view>
- <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
-<!-- <view class="login-bg" style="background-image:url({{'/images/bg.png'}});"></view> -->
-<image class="login-bg" src="/images/bg.png" mode="cover"></image>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

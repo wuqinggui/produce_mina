@@ -9,12 +9,12 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "农贸",
+    "navigationBarTitleText": "农贸商城",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "backgroundColor": "#fff",
-    "color": "#000000",
+    "color": "#929292",
     "selectedColor": "#000000",
     "list": [
       {
