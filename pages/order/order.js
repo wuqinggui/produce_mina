@@ -27,16 +27,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let session_id = wx.getStorageSync('session_id')
-    if (session_id) {
-      // this.init();
-    } else {
-      let url = util.getCurrentPageUrl();
-      wx.setStorageSync('goBackPageURL', url)
-      wx.reLaunch({
-        url: '/pages/login/login'
-      })
-    }
+    
   },
 
   /**
