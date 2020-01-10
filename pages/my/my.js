@@ -63,5 +63,41 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  getUserInfo: function (e) {
+    let { errMsg, userInfo } = e.detail;
+    switch (errMsg) {
+      case 'getUserInfo:fail auth deny':
+      case 'getUserInfo:fail:cancel to confirm login':
+        break;
+      default:
+        // 必须是在用户已经授权的情况下调用
+        wx.getUserInfo({
+          success(res) {
+            let params = Object.assign({}, res);
+            delete params['userInfo'];
+            delete params['errMsg'];
+            userApi.getUserinfo(params)
+              .then((res2) => {
+                authLogic.getUserinfoSetting();
+                wx.setStorage({
+                  key: 'authUserinfo',
+                  data: res
+                });
+              })
+              .catch((error2) => {
+                console.log(error2);
+              })
+          },
+          fail(error) {
+            wx.showToast({
+              title: '授权用户信息失败，请重试',
+              icon: 'none'
+            });
+          }
+        });
+        break;
+    }
+  },
 })

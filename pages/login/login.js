@@ -1,5 +1,5 @@
 import { POST_USER_REGISTER_URL } from '../../http/url.js'
-const request = require('../../http/request.js')
+const wxRequest = require('../../http/request.js').wxRequest
 
 Page({
 
@@ -131,7 +131,7 @@ Page({
       encryptedData: _self.data.encryptedData,
       iv: _self.data.iv
     }
-    request.wxRequest(url, type, param).then(res => {
+    wxRequest(url, type, param).then(res => {
       wx.hideLoading();
       console.log('微信快捷登录成功', res)
       // 其它位置根据用户session_id判断是否已登录

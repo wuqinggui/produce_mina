@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "支付成功"
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#ffb800",
+  "navigationBarTitleText": "支付成功",
+  "navigationBarTextStyle": "white"
 }

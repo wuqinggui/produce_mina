@@ -1,20 +1,9 @@
 const util = require('../utils/util.js')
-var MD5 = require('../libs/md5.js');
 
-const httpHeader = (contentType) => {
-  let timesTamp = parseInt(new Date().getTime() / 1000);
-  let app_key = '';
-  let app_secret = '';
-  let session_id = wx.getStorageSync('session_id') ? wx.getStorageSync('session_id') : '';
-  // object传json格式，否则传formData，仅限post请求
-  contentType = contentType === 'formData' ? 'application/x-www-form-urlencoded' : 'application/json';
+function httpHeader () {
   return {
-    'LC-Appkey': app_key,
-    'LC-Timestamp': timesTamp,
-    'LC-Session': session_id,
-    'LC-Sign': MD5.hexMD5(app_key + timesTamp + app_secret),
-    'content-type': contentType,
-    'Accept': 'application/json'
+    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'authUserid': wx.getStorageSync("userId") ? wx.getStorageSync("userId") : ''
   };
 }
 
