@@ -1,2 +1,56 @@
-<!--pages/buyCar/buyCar.wxml-->
-<text>pages/buyCar/buyCar.wxml</text>
+<view class="container carts-list">
+	<block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+		<view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
+			<view class="shop-name">
+				<icon type="circle" size="20" class="mr10"/>
+				<text class="f14">{{itemName.storeName}}</text>
+			</view>
+			<view class="add f14 mr20">添加商品</view>
+		</view>
+    <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
+    	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+	    	<!-- 复选框图标 -->
+			<icon type="{{item.selected ? 'success_circle' : 'circle'}}" size="20" catchtap="bindCheckbox" data-idx="{{idx}}"  data-index="{{index}}"/>
+			<view>
+			<!-- 缩略图 -->
+				<image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill"/>
+			</view>
+			<view class="carts-text mr20">
+				<!-- 商品标题 -->
+				<text class="carts-title">{{item.goods.title}}</text>
+				<text class="carts-type">{{item.goods.type}}</text>
+				<view class="carts-subtitle">
+				<!-- 价格 -->
+				  	<view class="carts-price">
+							<text class="symbol f10">￥</text>
+							<text class="price f14 pr10">{{item.goods.price}}</text>
+							<text class="unit f12">/斤</text>
+						</view>
+				  	<!-- 数量加减 -->
+				  	<view>
+				      <view class="stepper">
+						<!-- 减号 -->
+						<text class="{{minusStatuses[idx][index]}}" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus">-</text>
+						<!-- 数值 -->
+						<input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.quantity}}" />
+						<!-- 加号 -->
+						<text class="normal" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindPlus">+</text>
+					  </view>
+				  	</view>
+				</view>
+			</view>
+      	</view>
+      	<button type="warn" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
+    </view>
+	</block>
+</view>
+<view class="carts-footer">
+	<view class="select-and-amount" bindtap="bindSelectAll">
+		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
+		<text>全选</text>
+	</view>
+	<view class="sum">
+		<text class="mr20">合计: ￥{{total}}</text>
+		<view class="button mr10" bindtap="bindCheckout">立即下单</view>
+	</view>
+</view>
