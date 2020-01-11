@@ -1,8 +1,3 @@
 {
-  "navigationBarTitleText": "购物车",
-  "usingComponents": {
-    "mp-cells": "../../component/cells/cells",
-    "mp-cell": "../../component/cell/cell",
-    "mp-slideview": "../../component/slideview/slideview"
-  }
+  "navigationBarTitleText": "购物车"
 }

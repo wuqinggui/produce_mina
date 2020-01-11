@@ -221,8 +221,8 @@
 .delete-button {
 	width: 60px;
 	font-size: 16px;
-	height: 99%;
-	line-height: 90px;
+	height: 100%;
+	line-height: 160rpx;
 	border: 0;
 	border-radius: 0;
 	position: absolute;

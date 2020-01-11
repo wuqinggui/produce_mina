@@ -7,7 +7,7 @@ Page({
 		selectedAllStatus: false,
 		total: '1.00',
 		startX: 0,
-		itemLefts: []
+		itemLefts: {}
 	},
 	bindMinus: function(e) {
 		// loading提示
@@ -101,12 +101,23 @@ Page({
 		var objIndex = parseInt(e.currentTarget.dataset.idx);
 		//原始的icon状态
 		var selected = this.data.cartObj[objIndex].carts[listIndex].selected;
-		var cartObj = this.data.cartObj;
+    var cartObj = this.data.cartObj;
+    var selectedAllStatus = this.data.selectedAllStatus;
 		// 对勾选状态取反
 		cartObj[objIndex].carts[listIndex].selected = !selected;
+    var carts = cartObj[objIndex].carts;
+    for(var i =0; i < carts.length; i++) {
+      if(carts[i].selected) {
+        cartObj[objIndex].selectedAll = selectedAllStatus = true;
+      }else {
+        cartObj[objIndex].selectedAll = selectedAllStatus = false;
+        break
+      }
+    }
 		// 写回经点击修改后的数组
 		this.setData({
 			cartObj: cartObj,
+      selectedAllStatus: selectedAllStatus
 		},function() {
 			wx.hideLoading();
 		});
@@ -122,15 +133,18 @@ Page({
 		// 取反操作
 		selectedAllStatus = !selectedAllStatus;
 		// 购物车数据，关键是处理selected值
-		var carts = this.data.carts;
+		var cartObj = this.data.cartObj;
 		// 遍历
-		for (var i = 0; i < carts.length; i++) {
-			carts[i].selected = selectedAllStatus;
-			// update selected status to db
-		}
+		for(var item in cartObj) {
+      cartObj[item].selectedAll = selectedAllStatus;
+      var carts = cartObj[item].carts;
+      for (var i = 0; i < carts.length; i++) {
+        carts[i].selected = selectedAllStatus;
+      }
+    }
 		this.setData({
 			selectedAllStatus: selectedAllStatus,
-			carts: carts,
+      cartObj: cartObj,
 		},function() {
 			wx.hideLoading();
 		});
@@ -179,11 +193,39 @@ Page({
 		}
 		return cartIds;
 	},
+  selectedAll: function(e) {
+    var cartObj = this.data.cartObj;
+    var index = parseInt(e.currentTarget.dataset.index);
+    var carts = cartObj[index].carts;
+    var selected = cartObj[index].selectedAll = !cartObj[index].selectedAll;
+    // 环境中目前已选状态
+    var selectedAllStatus = this.data.selectedAllStatus;
+    // 判断是否全选
+    for(var item in cartObj) {
+      console.log(cartObj[item].selectedAll);
+      if (cartObj[item].selectedAll) {
+        selectedAllStatus = true;
+      } else {
+        selectedAllStatus = false;
+        break;
+      }
+    }
+    // 单个店铺选择
+    for (var i = 0; i < carts.length; i++) {
+      carts[i].selected = selected;
+    } 
+    this.setData({
+      cartObj: cartObj,
+      selectedAllStatus: selectedAllStatus
+    })
+    this.sum();
+  },
 	onShow: function() {
     this.setData({
       cartObj: [{
 					id: 1,
 					storeName: '水果旗舰店1',
+          selectedAll: true,
 					carts:[{
 						objectId: 1,
 						selected: true,
@@ -221,6 +263,7 @@ Page({
 				},{
 					id: 2,
 					storeName: '水果旗舰店2',
+          selectedAll: true,
 					carts:[{
 						objectId: 1,
 						selected: true,
@@ -258,6 +301,7 @@ Page({
 				}
 		]
     })
+    this.bindSelectAll();
 	},
 	sum: function() {
 		var cartObj = this.data.cartObj;
@@ -286,23 +330,31 @@ Page({
 		});
 	},
 	touchStart: function (e) {
-		var startX = e.touches[0].clientX;
+    var startX = e.touches[0].clientX;
+    var idx = e.currentTarget.dataset.idx;
+    var itemLefts = this.data.itemLefts;
+    itemLefts[idx] = [];
+    for (var item in itemLefts) {
+      itemLefts[item] = [];
+    }
 		this.setData({
 			startX: startX,
-			itemLefts: []
+      itemLefts: itemLefts
 		});
 	},
 	touchMove: function (e) {
+    var idx = e.currentTarget.dataset.idx;
 		var index = e.currentTarget.dataset.index;
 		var movedX = e.touches[0].clientX;
 		var distance = this.data.startX - movedX;
 		var itemLefts = this.data.itemLefts;
-		itemLefts[index] = -distance;
+		itemLefts[idx][index] = -distance;
 		this.setData({
 			itemLefts: itemLefts
 		});
 	},
 	touchEnd: function (e) {
+    var idx = e.currentTarget.dataset.idx;
 		var index = e.currentTarget.dataset.index;
 		var endX = e.changedTouches[0].clientX;
 		var distance = this.data.startX - endX;
@@ -312,15 +364,16 @@ Page({
 			distance = 0;
 		} else {
 			if (distance >= buttonWidth) {
-				distance = buttonWidth;
+				distance = 60;
 			} else if (distance >= buttonWidth / 2){
-				distance = buttonWidth;
+				distance = 60;
 			} else {
 				distance = 0;
 			}
 		}
 		var itemLefts = this.data.itemLefts;
-		itemLefts[index] = -distance;
+    console.log(itemLefts);
+		itemLefts[idx][index] = -distance;
 		this.setData({
 			itemLefts: itemLefts
 		});
