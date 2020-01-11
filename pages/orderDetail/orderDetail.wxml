@@ -1,2 +1,96 @@
 <!--pages/orderDetail/orderDetail.wxml-->
-<text>pages/orderDetail/orderDetail.wxml</text>
+<view class="orderDetail">
+  <view class="receipt row al-c ju-b mb20" bindtap="updateInfo">
+    <view class="info pr10">
+      <view class="userinfo flex ju-b mb5 mt10">
+        <text class="name f14">收件人： 陈一发</text>
+        <text class="number f14">156465451654</text>
+      </view>
+      <view class="address f12">
+        收货地址：嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻
+      </view>
+    </view>
+    <mp-icon icon="arrow" color="black" size="{{14}}"></mp-icon>
+  </view>
+  <view class="{{isAuto ? 'list' : ''}}">
+    <block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
+      <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
+        <view class="carts-item" data-idx="{{idx}}" data-index="{{index}}">
+          <view>
+            <!-- 缩略图 -->
+            <image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill" />
+          </view>
+          <view class="carts-text">
+            <!-- 商品标题 -->
+            <view class="verticle-center">
+              <text class="carts-title f12">{{item.goods.title}}</text>
+              <text class="carts-type ml10">{{item.goods.type}}</text>
+            </view>
+            <view class="carts-price row ju-b al-c">
+              <view class="priceinfo">
+                <text class="symbol f10">￥</text>
+                <text class="price f14 pr10">{{item.goods.price}}</text>
+                <text class="unit f12">/斤</text>
+              </view>
+              <view class="num f10">
+                * 100</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="more flex ju-c pt10 pb10" bindtap="changeWidth">
+    <mp-icon icon="more2" color="black" size="18"></mp-icon>
+  </view>
+  <view class="other mt20 mb50">
+    <view class="freight">
+      <text class="f14">运费</text>
+      <text class="type f14">免运费</text>
+    </view>
+    <view class="summation">
+      <text class="f14">合计</text>
+      <view>
+        <text class="suminfo f12">共计15件商品</text>
+        <text class="total ml10 f14">￥90.00</text>
+      </view>
+    </view>
+    <view class="freight">
+    <view>
+      <text class="f14">账单</text>
+      <text class="tip f10 ml5">账期内未付款，则不能再次下单</text>
+    </view>
+      <text class="type f14">2010/10/06</text>
+    </view>
+    <view class="freight">
+      <text class="f14 orderinfo">订单信息</text>
+    </view>
+    <view class="detailInfo flex column mt10 pb10">
+      <view class="flex ju-b">
+        <text>付款方式：</text>
+        <text>微信付款</text>
+      </view>
+      <view class="flex ju-b">
+        <text>订单编号：</text>
+        <text>100111546546546465</text>
+      </view>
+      <view class="flex ju-b">
+        <text>创建时间：</text>
+        <text>2010/10/06 11:00</text>
+      </view>
+      <view class="flex ju-b">
+        <text>付款时间：</text>
+        <text>2010/10/06 11:00</text>
+      </view>
+      <view class="flex ju-b">
+        <text>发货时间：</text>
+        <text>2010/10/06 11:00</text>
+      </view>
+    </view>
+    <view class="btns mt10 flex">
+      <text class="btn f12 ml5">补单</text>
+      <text class="btn f12 ml5">退货退款</text>
+      <text class="btn f12 ml5">确认收货</text>
+    </view>
+  </view>
+</view>

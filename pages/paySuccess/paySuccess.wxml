@@ -1,2 +1,10 @@
 <!--pages/paySuccess/paySuccess.wxml-->
-<text>pages/paySuccess/paySuccess.wxml</text>
+<view class="paySuccess mt100 flex column">
+  <view class="ju-c flex">
+    <icon type="success" size="80" color="#fff" />
+  </view>
+  <view class="mt50 flex ju-c">
+    <view class="btn f14">查看订单</view>
+    <view class="btn f14">商城首页</view>
+  </view>
+</view>

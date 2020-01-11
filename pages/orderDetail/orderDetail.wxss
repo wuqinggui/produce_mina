@@ -1,1 +1,107 @@
 /* pages/orderDetail/orderDetail.wxss */
+.orderDetail {
+  padding: 0 40rpx;
+}
+.list {
+  height: 300px;
+  overflow: hidden;
+}
+.tip {
+  color: #F55353;
+}
+.address {
+  color: #858585;
+}
+.detailInfo {
+  border-bottom: 1rpx solid #eee;
+}
+.detailInfo text {
+  line-height: 60rpx;
+  color: #8B8B8B;
+  font-size: 24rpx;
+}
+/*每行单元格*/
+.carts-item {
+	display: flex;
+	flex-direction: row;
+	height:100%;
+	/*width属性解决标题文字太短而缩略图偏移*/
+	width:100%;
+	border-bottom: 1rpx solid #eee;
+	padding: 15rpx 0;
+	margin-right: 40rpx;
+	background: white;
+	z-index: 99;
+}/*左部图片*/
+.carts-image {
+	width:120rpx;
+	height:120rpx;
+}
+
+
+/*右部描述*/
+.carts-text {
+	margin-left: 20rpx;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+  padding: 10rpx 0;
+	justify-content: space-between;
+}
+
+/*右上部分标题*/
+.carts-title {
+	font-size: 28rpx;
+	color: #444;
+}
+
+/*右上部分类别*/
+.carts-type {
+  padding: 1rpx 10rpx;
+	font-size: 20rpx;
+	color: #DEDEDE;
+	border: 1px solid #DEDEDE;
+	border-radius: 50rpx;
+	text-align: center;
+}
+/*价格*/
+.carts-price {
+	line-height: 22px;
+}
+.carts-price .symbol {
+	color: #fc9326;
+}
+.carts-price .price {
+	color: #fc9326;
+}
+.carts-price .unit {
+	color: #DEDEDE;
+}
+.carts-price .num {
+	color: #666;
+}
+.freight, .summation {
+  height: 80rpx;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.summation .suminfo {
+  color: #666;
+}
+.summation .total {
+  color: #999;
+}
+.freight .type {
+  color: #838383;
+}
+.btns {
+  justify-content: flex-end;
+}
+.btns .btn {
+  color: #8B8B8B;
+  border: 1rpx solid #8B8B8B;
+  padding: 5rpx 20rpx;
+  border-radius: 30rpx;
+}

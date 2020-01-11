@@ -1,1 +1,144 @@
 /* pages/orderSubmit/orderSubmit.wxss */
+.orderSubmit {
+  padding: 0 40rpx;
+}
+.list {
+  height: 300px;
+  overflow: hidden;
+}
+.shop-title {
+	height: 80rpx;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.shop-title .add {
+	color: #fc9326;
+}
+.address {
+  color: #858585;
+}
+/*每行单元格*/
+.carts-item {
+	display: flex;
+	flex-direction: row;
+	height:100%;
+	/*width属性解决标题文字太短而缩略图偏移*/
+	width:100%;
+	border-bottom: 1rpx solid #eee;
+	padding: 15rpx 0;
+	margin-right: 40rpx;
+	background: white;
+	z-index: 99;
+}/*左部图片*/
+.carts-image {
+	width:120rpx;
+	height:120rpx;
+}
+
+
+/*右部描述*/
+.carts-text {
+	margin-left: 20rpx;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+  padding: 10rpx 0;
+	justify-content: space-between;
+}
+
+/*右上部分标题*/
+.carts-title {
+	font-size: 28rpx;
+	color: #444;
+}
+
+/*右上部分类别*/
+.carts-type {
+  padding: 1rpx 10rpx;
+	font-size: 20rpx;
+	color: #DEDEDE;
+	border: 1px solid #DEDEDE;
+	border-radius: 50rpx;
+	text-align: center;
+}
+/*价格*/
+.carts-price {
+	line-height: 22px;
+}
+.carts-price .symbol {
+	color: #fc9326;
+}
+.carts-price .price {
+	color: #fc9326;
+}
+.carts-price .unit {
+	color: #DEDEDE;
+}
+.carts-price .num {
+	color: #666;
+}
+.freight, .summation {
+  height: 80rpx;
+  border-bottom: 1px solid #DEDEDE;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.summation .suminfo {
+  color: #666;
+}
+.summation .total {
+  font-weight: bold;
+  color: #fc9326;
+}
+.freight .type {
+  color: #838383;
+}
+
+/*底部按钮*/
+.carts-footer {
+	width: 100%;
+	height: 80rpx;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	position: fixed;
+	bottom: 0;
+	border-top: 1px solid #eee;
+	background: white;
+	align-items: center;
+	z-index: 100;
+}
+.carts-footer .sum {
+	display: flex;
+  height: 100%;
+	align-items: center;
+}
+.sum .total {
+  font-weight: bold;
+	color: #fc9326;
+}
+
+/*立即结算按钮*/
+.carts-footer .button {
+	line-height: 60rpx;
+	text-align: center;
+	width: 220rpx;
+	height: 60rpx;
+	background-color: #F33737;
+	color: white;
+	font-size: 28rpx;
+	border-radius: 50px;
+	border: 0;
+}
+
+/*删除按钮*/
+.carts-footer .delete {
+	height: 80rpx;
+	width: 180rpx;
+	text-align: right;
+	line-height: 80rpx;
+	color: #fc9326;
+}

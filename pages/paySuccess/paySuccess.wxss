@@ -1,1 +1,13 @@
 /* pages/paySuccess/paySuccess.wxss */
+page {
+  background-color: #FFA800;
+}
+.btn {
+  border: 4rpx solid #fff;
+  border-radius: 50rpx;
+  text-align: center;
+  padding: 15rpx 25rpx;
+  margin: 0 20rpx;
+  color: #fff;
+  width: 220rpx;
+}

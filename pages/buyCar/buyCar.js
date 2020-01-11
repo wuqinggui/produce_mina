@@ -154,9 +154,9 @@ Page({
 	bindCheckout: function() {
 		var cartIds = this.calcIds();
 		cartIds = cartIds.join(',');
-		wx.navigateTo({
-			url: '../../../../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total
-		});
+		// wx.navigateTo({
+		// 	url: '../../../../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total
+		// });
 	},
 	delete: function (e) {
 		var that = this;
@@ -168,7 +168,7 @@ Page({
 			content: '确认要删除吗',
 			success: function(res) {
 				if (res.confirm) {
-					
+					console.log('删除成功');
 				}
 			}
 		})
@@ -177,13 +177,17 @@ Page({
 		// 遍历取出已勾选的cid
 		// var buys = [];
 		var cartIds = [];
-		for (var i = 0; i < this.data.carts.length; i++) {
-			if (this.data.carts[i].selected) {
-				// 移动到Buy对象里去
-				// cartIds += ',';
-				cartIds.push(this.data.carts[i].objectId);
-			}
-		}
+    var cartObj = this.data.cartObj;
+		for(var item in cartObj) {
+      var carts = cartObj[item].carts;
+      for (var i = 0; i < carts.length; i++) {
+        if (carts[i].selected) {
+          // 移动到Buy对象里去
+          // cartIds += ',';
+          cartIds.push(carts[i].objectId);
+        }
+      }
+    }
 		if (cartIds.length <= 0) {
 			wx.showToast({
 				title: '请勾选商品',
@@ -229,7 +233,7 @@ Page({
 					carts:[{
 						objectId: 1,
 						selected: true,
-						quantity: 10,
+						quantity: 1,
 						goods: {
 							objectId: 1,
 							avatar: '../../images/cai.jpg',
@@ -242,7 +246,7 @@ Page({
 						selected: true,
 						quantity: 10,
 						goods: {
-							objectId: 1,
+							objectId: 2,
 							avatar: '../../images/cai.jpg',
 							title: '小宝贝',
 							price: 12,
@@ -253,7 +257,7 @@ Page({
 						selected: true,
 						quantity: 10,
 						goods: {
-							objectId: 1,
+							objectId: 3,
 							avatar: '../../images/cai.jpg',
 							title: '小宝贝',
 							price: 12,
@@ -269,7 +273,7 @@ Page({
 						selected: true,
 						quantity: 10,
 						goods: {
-							objectId: 1,
+							objectId: 4,
 							avatar: '../../images/cai.jpg',
 							title: '小宝贝',
 							price: 12,
@@ -280,7 +284,7 @@ Page({
 						selected: true,
 						quantity: 10,
 						goods: {
-							objectId: 1,
+							objectId: 5,
 							avatar: '../../images/cai.jpg',
 							title: '小宝贝',
 							price: 12,
@@ -291,7 +295,7 @@ Page({
 						selected: true,
 						quantity: 10,
 						goods: {
-							objectId: 1,
+							objectId: 6,
 							avatar: '../../images/cai.jpg',
 							title: '小宝贝',
 							price: 12,
@@ -325,9 +329,9 @@ Page({
 	showGoods: function (e) {
 		// 点击购物车某件商品跳转到商品详情
 		var objectId = e.currentTarget.dataset.objectId;
-		wx.navigateTo({
-			url: '../goods/detail/detail?objectId=' + objectId
-		});
+		// wx.navigateTo({
+		// 	url: '../goods/detail/detail?objectId=' + objectId
+		// });
 	},
 	touchStart: function (e) {
     var startX = e.touches[0].clientX;
@@ -372,7 +376,6 @@ Page({
 			}
 		}
 		var itemLefts = this.data.itemLefts;
-    console.log(itemLefts);
 		itemLefts[idx][index] = -distance;
 		this.setData({
 			itemLefts: itemLefts
