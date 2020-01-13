@@ -6,7 +6,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    userInfo: {},
+    list: [
+      {
+        text: '店铺管理',
+        tip: '',
+      }, {
+        text: '员工管理',
+        tip: '1380043433',
+      }, {
+        text: '商家入驻申请',
+        tip: '',
+      }, {
+        text: '关于商城',
+        tip: '',
+      }, {
+        text: '关于商城',
+        tip: '',
+      }, {
+        text: '关于商城',
+        tip: '',
+      }
+    ]
   },
 
   /**
@@ -27,7 +48,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    var _this = this;
+    wx.getUserInfo({
+      success: function (res) {
+        _this.setData({
+          userInfo: res.userInfo
+        })
+      }
+    })
   },
 
   /**

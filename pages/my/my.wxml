@@ -1,25 +1,16 @@
-<view class="my-container">
-<view>
- <button
-      class="auth-btn"
-      hover-class="none"
-      open-type="getUserInfo"
-      bindgetuserinfo="getUserInfo"
-      wx:if="{{!getApp().globalData.isAuthUserinfo}}">
-      <image
-        src="{{userInfo.avatarUrl ? userInfo.avatarUrl : '/images/head_img'}}" 
-        class="head-portrait">
-      </image>
-      <text class="Large-Title text">点击显示微信头像</text>
-    </button>
-    <button
-      class="auth-btn"
-      hover-class="none"
-      wx:else>
-      <open-data type="userAvatarUrl" class="head-portrait"></open-data>
-      <view class="text-overflow Large-Title">
-        <open-data type="userNickName"></open-data>
-      </view>
-    </button>
-</view>
-</view>
+<template name="list">
+    <view class="list flex ju-b" hover-class="none" data-tip="{{tip}}" data-url="{{url}}" catchtap='navigateTo'>
+        <view class="list-text">{{text}}</view>
+        <mp-icon icon="arrow" class="arrow" color="black" size="{{14}}"></mp-icon>
+    </view>
+</template>
+
+<scroll-view scroll-y="trues" class="user">
+    <view class="info pt30">
+        <view class="info-wrap">
+            <image class="info-icon" src="{{userInfo.avatarUrl}}" catchtap="navigateTo" data-url-type="userinfo"></image>
+            <view class="info-name">{{userInfo.nickName}}</view>
+        </view>
+    </view>
+    <template wx:for="{{list}}" wx:key="index" is="list" data="{{...item}}"></template>
+</scroll-view>

@@ -90,7 +90,7 @@
     <view class="btns mt10 flex">
       <text class="btn f12 ml5">补单</text>
       <text class="btn f12 ml5">退货退款</text>
-      <text class="btn f12 ml5">确认收货</text>
+      <text class="btn btn-border f12 ml5">确认收货</text>
     </view>
   </view>
 </view>

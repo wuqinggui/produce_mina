@@ -30,7 +30,7 @@ Page({
   // 确认下单
   bindCheckout: function() {
     // wx.navigateTo({
-    //   url: '',
+    //   url: '../',
     // })
   },
   changeWidth: function() {

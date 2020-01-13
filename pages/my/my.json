@@ -1,6 +1,9 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarBackgroundColor": "#ffb800",
+  "navigationBarBackgroundColor": "#FFA800",
   "navigationBarTitleText": "我的",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "mp-icon": "../../component/icon/icon"
+  }
 }

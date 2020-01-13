@@ -37,8 +37,6 @@
 	width:120rpx;
 	height:120rpx;
 }
-
-
 /*右部描述*/
 .carts-text {
 	margin-left: 20rpx;
@@ -104,4 +102,8 @@
   border: 1rpx solid #8B8B8B;
   padding: 5rpx 20rpx;
   border-radius: 30rpx;
+}
+.btns .btn-border {
+  color: #FFAE11;
+  border: 1rpx solid #FFAE11;
 }
