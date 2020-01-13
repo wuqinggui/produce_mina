@@ -38,13 +38,13 @@ App({
     // 查询一下用户是否授权了 用户信息
     this.getUserinfoSetting();
 
+    // 查询一下用户是否授权了 地理位置
+    this.getLocationSetting();
+
   },
   onShow: function (options) {
     console.log('------------onShow场景值---------', options.scene);
     console.log('------------onShow二维码参数---------', options);
-
-    // 查询一下用户是否授权了 地理位置
-    this.getLocationSetting();
 
     // 断网提示
     if (wx.onNetworkStatusChange) {

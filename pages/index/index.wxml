@@ -1,126 +1,106 @@
-<view>
-<button bindtap="getCurCity">城市</button>
+<view class="menu-wrap">
+<view class="head-wrap verticle-center row">
+  <view class='city-wrap verticle-center row' bindtap="getCurCity">
+    <text class='text-black'>{{curCity.cityName}}</text>
+    <view class='triangle-wrap ml5'>
+      <image src="../../images/triangle_down.png"></image>
+    </view>
+  </view>
+  <view class="flex-1 pt5 pb5 pl10 pr10 ml10 mr10 {{curShop.shopId ? 'shop-wrap' : 'shop-search'}}" bindtap="showShopPop">
+    <view class='search-wrap' wx:if="{{!curShop.shopId}}">
+      <image src="../../images/search_icon.jpg"></image>
+    </view>
+    <text class='flex-1'>{{curShop.shopName ? curShop.shopName : '搜索'}}</text>
+    <view class='search-wrap' wx:if="{{curShop.shopId}}">
+      <image src="../../images/icon_down@2x.png"></image>
+    </view>
+  </view>
+  <view class='head-icon'>
+    <image src="../../images/wechat_icon.png" class="wechat_icon"></image>
+  </view>
+</view>
 <scroll-view
     scroll-y
-    scroll-into-view="{{categoryCurView}}"
+    scroll-into-view="{{'categoryId_' + curCategoryId}}"
     scroll-top="{{scrollTop}}"
     class="content-wrap"
-    style="height:{{menuListHeight}}px"
     bindscroll="scroll">
-    <!-- <scroll-view
-      class="category-list placeholder {{parse.getCategoryClass(bannerList)}}"   
-      style="height:{{menuListHeight}}px;"
-      wx:if="{{ menuLoading }}">
-      <block wx:for="{{[1]}}" wx:key="{{item}}">
-        <view class="item cur"></view>
-      </block>
-    </scroll-view>
+    <!-- 左侧菜单栏 -->
     <scroll-view
       scroll-y
-      class="category-list sticky {{parse.getCategoryClass(bannerList, categoryListFixed)}}"   
-      style="height:{{menuListHeight}}px;top:{{categoryListFixed ? headHeight + 'px' : 'auto'}}"
-      wx:else>
-      <block wx:for="{{categoryList}}" wx:key="{{item}}">
+      class="category-list">
+      <block wx:for="{{goodsList}}" 
+             wx:for-item="categoryItem"
+             wx:for-index="categoryIndex"
+             wx:key="{{categoryItem}}">
         <view
-          class="item {{categoryCur === item.categoryId ? 'cur' : ''}}"
-          data-category-id="{{item.categoryId}}"
-          data-source="list"
+          class="categoryItem {{curCategoryId === categoryItem.categoryId ? 'cur' : ''}}"
+          data-category-item="{{categoryItem}}"
+          data-category-id="{{categoryItem.categoryId}}"
           bindtap="handleChangeCategory">
-          <badge count="{{item.num}}" alone custom-class="badge-wrap" custom-badge="badge"></badge>
-          <image src="{{item.icon}}" class="icon" wx:if="{{item.icon}}"></image>
-          <view>{{item.categoryName}}</view>
-          <view class="line"></view>
+          <badge count="{{categoryItem.selectedNum}}" alone custom-class="badge-wrap" custom-badge="badge"></badge>
+          <image src="{{categoryItem.icon}}" class="icon" wx:if="{{categoryItem.icon}}"></image>
+          <view class="text-overflow text-center">{{categoryItem.categoryName}}</view>
         </view>
       </block>
     </scroll-view>
-    <view class="product-list placeholder" wx:if="{{ menuLoading }}">
-      <view>
-        <block
-          wx:for="{{[1,2,3]}}"
-          wx:key="{{item}}">
-          <view class="item">
-            <view class="image-wrap">
-              <image class="image placeholder-bg"></image>
-            </view>
-            <view class="product-detail-wrap">
-              <view class="title placeholder-bg"></view>
-              <view class="detail">
-                <view class="constitute-wrap placeholder-bg"></view>
-              </view>
-              <view class="bottom-wrap">
-                <view></view>
-                <view class="stepper"></view>
-              </view>
-            </view>
-          </view>
-        </block>
-      </view>
-    </view>
-    <view class="product-list" wx:else>
+    <!-- 右侧菜品 -->
+    <view class="product-list">
       <block
         wx:for="{{goodsList}}"
         wx:for-item="categoryItem"
         wx:for-index="categoryIndex"
         wx:key="{{categoryItem}}">
-        <view id="{{categoryItem.categoryId}}">
+        <view id="{{'categoryId_' + categoryItem.categoryId}}">
           <view class="category-bar">
-            <view
-              class="title-wrap sticky Caption {{categoryCur === categoryItem.categoryId ? 'cur' : ''}} {{categoryBarFixed === categoryItem.categoryId ? 'fixed' : ''}}"
-              style="top:{{ categoryBarFixed === categoryItem.categoryId ? headHeight + 'px' : 'auto'}}">
-              <image src="{{categoryItem.icon}}" class="icon" wx:if="{{categoryItem.icon}}"></image>
-              <view>{{categoryItem.categoryName}}</view>
+            <view class="title-wrap text-overflow">{{categoryItem.categoryName}}
             </view>
           </view>
           <block
-            wx:for="{{categoryItem.goodsMap}}"
-            wx:key="{{item}}">
-            <load-more tip="没有更多餐品" wx:if="{{index === 'placeholder'}}"></load-more>
-            <view wx:if="{{index === 'placeholder'}}" style="height:{{item.height}}px;"></view>
-            <view
-              class="item"
-              wx:else>
+            wx:for="{{categoryItem.children}}"
+            wx:for-item="goodsItem"
+            wx:for-index="goodsIndex"
+            wx:key="{{goodsItem}}">
+            <view class="goodsItem">
               <view class="image-wrap">
                 <image
-                  src="{{item.goodsPictureList ? item.goodsPictureList : imgPlaceholder}}"
-                  class="image"
-                  data-category-index="{{categoryIndex}}"
-                  data-goods-id="{{item.goodsId}}"
-                  binderror="errImg"></image>
-                <view class="half-px-border surround"></view>
+                  src="{{goodsItem.imgUrl ? goodsItem.imgUrl : imgPlaceholder}}"
+                  class="image"></image>
               </view>
-              <view class="product-detail-wrap">
-                <view class="title Title color-g80 overflow">{{item.goodsName}}</view>
-                <view class="detail">
-                  <view class="constitute-wrap sCaption overflow" wx:if="{{item.goodsDesc}}">{{item.goodsDesc}}</view>
+              <view class="product-detail-wrap column ju-b">
+                <view>
+                  <view class="title gray3 text-overflow f16">{{goodsItem.goodName}}</view>
+                  <text class="label f12 gray6">{{goodsItem.label}}</text>
                 </view>
-                <view class="bottom-wrap">
-                  <view class="price-wrap">
-                    <view class="sale-price Large-Title" wx:if="{{diningMode === 'DELIVERY'}}">¥{{item.sku['deliveryPrice'+currentShop.priceLevel]}}</view>
-                    <view class="sale-price Large-Title" wx:else>¥{{item.sku['eatInPrice'+currentShop.priceLevel]}}</view>
-                    <view class="more xsCaption" wx:if="{{item.multiSkuStatus}}">起</view>
-                  </view>
-                  <view class="stepper">
-                    <stepper
-                      loading="{{ cartLoading && curCartLoadingId === item.goodsId }}"
-                      min="0"
-                      max="99"
-                      value="{{item.num}}"
-                      isMeal="{{item.multiSkuStatus}}"
-                      data-category-id="{{categoryItem.categoryId}}"
-                      data-goods-id="{{item.goodsId}}"
-                      data-source="list"
-                      bindplus="handlePlus"
-                      bindminus="handleMinus"
-                      visible="{{!((!k5000num && !shopSelected && diningMode !== 'DELIVERY') || isRest)}}">
-                    </stepper>
-                  </view>
+                <view class="price-wrap">
+                  <text class="price f12">¥</text>
+                  <text class="price f16">{{goodsItem.price}}</text>
+                  <text class="unit f10">/ 斤</text>
                 </view>
+              </view>
+              <view class="icon-wrap direction-center">
+                <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckGoodsItem" data-goods-item="{{goodsItem}}" data-goods-id="{{goodsItem.goodId}}" data-goods-index="{{goodsIndex}}" data-category-item="{{categoryItem}}" data-category-id="{{categoryItem.categoryId}}" data-category-index="{{categoryIndex}}" data-check-value="{{goodsItem.isSelect ? false : true}}"/>
               </view>
             </view>
           </block>
-          <view class="placeholder" wx:if="{{categoryIndex == goodsList.length - 1}}"></view>
+          <view class="placeholder p20" wx:if="{{categoryIndex == goodsList.length - 1}}">
+            <view class="f14 gray9 text-center lh200"> -- 没有更多菜品了 -- </view>
+          </view>
         </view>
       </block>
-    </view> -->
+    </view>
   </scroll-view>
+  
+  <view class="foot-wrap verticle-center row">
+    <view class="image-wrap">
+      <image src="../../images/car_icon.jpg" class="car_icon"></image>
+    </view>
+    <view class='selectedNum'>
+      <badge count="{{buyCarGoodtypeNum}}" alone custom-class="badge-wrap" custom-badge="badge"></badge>
+      <view class="gray3">已选</view>
+    </view>
+    <view class='flex-1'>
+      <button class="add_btn" bindtap="addCar">加入购物车</button>
+    </view>
+  </view>
 </view>

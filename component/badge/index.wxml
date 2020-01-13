@@ -1,0 +1,5 @@
+<view class="custom-class badge {{alone ? 'badge-alone' : 'default'}}">
+  <slot></slot>
+  <view class="badge-dot custom-badge" wx:if="{{ dot }}"></view>
+  <view class="badge-count custom-badge color-fff xsCaption {{count < 10 ? 'single' : 'double'}}" wx:elif="{{ count !== 0 }}">{{ finalCount }}</view>
+</view>
