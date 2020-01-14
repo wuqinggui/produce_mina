@@ -1,1 +1,60 @@
 /* pages/shopManage/shopManage.wxss */
+
+.addinfo .weui-input {
+  border-bottom: 1px solid #dfdfdf;
+  text-align: left;
+  padding-left: 10rpx;
+}
+
+.weui-dialog__hd {
+  padding: 30rpx 0 !important;
+}
+
+.weui-dialog__bd {
+  margin-bottom: 14rpx !important;
+}
+
+.weui-dialog__ft {
+  line-height: 100rpx !important;
+  min-height: 100rpx !important;
+  align-items: center;
+}
+
+.weui-dialog__btn {
+  font-size: 32rpx !important;
+  color: #333 !important;
+}
+
+.search .ipt {
+  width: 100%;
+}
+
+.search .ipt input {
+  color: #000;
+  padding-left: 30rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  border: 1rpx solid #ffeabf;
+  background-color: #fffbf7;
+}
+
+.list-item {
+  align-items: center;
+  border-bottom: 1rpx solid #dfdfdf;
+}
+
+.info .name {
+  line-height: 64rpx;
+}
+
+.info .remark {
+  color: #ffb017;
+}
+
+.icon .weui-icon {
+  background: #999 !important;
+}
+
+.add {
+  align-items: center;
+}

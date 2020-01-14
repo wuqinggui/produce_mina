@@ -1,2 +1,16 @@
-<!--pages/set/set.wxml-->
-<text>pages/set/set.wxml</text>
+<template name="list">
+  <view class="list ju-b flex {{index == (len-1) ? 'mt10' : ''}}" hover-class="none" data-tip="{{tip}}" data-url="{{url}}" catchtap='navigateTo'>
+    <view class="list-text f14">{{text}}</view>
+    <view class="infomation flex">
+      <view class="list-info pr5 f13" wx:if="{{!img}}">{{info}}</view>
+      <view class="list-info pr5 f13 avatar" wx:if="{{img}}">
+        <image src="{{info}}"></image>
+      </view>
+      <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
+    </view>
+  </view>
+</template>
+<scroll-view scroll-y="trues" class="user mt10">
+  <template wx:for="{{list}}" wx:key="index" is="list" data="{{len:list.length, index, ...item}}"></template>
+</scroll-view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

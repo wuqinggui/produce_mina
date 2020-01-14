@@ -1,1 +1,23 @@
 /* pages/shippingAddress/shippingAddress.wxss */
+page {
+  background-color: #F2F2F2;
+}
+.info {
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+}
+.edit {
+  width: 180rpx;
+  align-items: center;
+}
+.addAddress {
+  color: #fff;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #FFA800;
+  text-align: center;
+}

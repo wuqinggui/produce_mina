@@ -8,3 +8,4 @@
     <view class="btn f14">商城首页</view>
   </view>
 </view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

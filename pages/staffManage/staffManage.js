@@ -5,9 +5,73 @@ Page({
    * 页面的初始数据
    */
   data: {
+    inputValue: '',
+    shopName: '',
+    worktype: '',
+    showOneButtonDialog: false,
+    oneButton: [{ text: '添加' }],
+    array: ['美国', '中国', '巴西', '日本'],
+    list: [{
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '下单员',
+    }, {
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '下单员',
+    }, {
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '下单员',
+    }, {
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '下单员',
+    }, {
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '下单员',
+    }]
+  },
+  selectShop: function() {
 
   },
-
+  bindPickerChange: function (e) {
+    var array = this.data.array;
+    console.log('picker发送选择改变，携带值为', e)
+    this.setData({
+      inputValue: array[e.detail.value]
+    })
+  },
+  bindPickerChange2: function (e) {
+    var array = this.data.array;
+    console.log('picker发送选择改变，携带值为', e)
+    this.setData({
+      shopName: array[e.detail.value]
+    })
+  },
+  bindPickerChange3: function (e) {
+    var array = this.data.array;
+    console.log('picker发送选择改变，携带值为', e)
+    this.setData({
+      worktype: array[e.detail.value]
+    })
+  },
+  tapDialogButton(e) {
+    this.setData({
+      showOneButtonDialog: false
+    })
+  },
+  addShop: function () {
+    this.setData({
+      showOneButtonDialog: true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

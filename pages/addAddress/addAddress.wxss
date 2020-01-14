@@ -1,1 +1,31 @@
 /* pages/addAddress/addAddress.wxss */
+page {
+  background-color: #F2F2F2;
+}
+.info {
+  padding: 20rpx 30rpx;
+}
+.info .name {
+  width: 180rpx;
+}
+.info textarea  {
+  width: 100%;
+}
+.enter {
+  height: 90rpx;
+  line-height: 90rpx;
+  background: #999;
+  text-align: center;
+  color: #fff;
+}
+.weui-input {
+  width: 100%;
+}
+.place-holder {
+    width: 100%;
+    font-size: 28rpx;
+    color: #808080;
+}
+.gray {
+    color: #808080;
+}

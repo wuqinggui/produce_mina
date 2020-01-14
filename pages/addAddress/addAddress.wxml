@@ -1,2 +1,20 @@
 <!--pages/addAddress/addAddress.wxml-->
-<text>pages/addAddress/addAddress.wxml</text>
+<template name="address">
+  <view class="addInfo bg-white">
+    <view class="info flex">
+      <text class="name f14">{{name}}</text>
+      <!-- <text class="{{value ? '': 'gray8'}}" wx:if="{{tip=='province'}}">{{value || placeholder}}</text> -->
+      <picker style="width: 100%;" wx:if="{{tip=='province'}}" mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker" wx:if="{{region.length}}">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+        <view class="picker gray" wx:else>选择省/市/区</view>
+      </picker>
+      <input placeholder-class="place-holder" class="weui-input f14" value="{{value}}" placeholder="{{placeholder}}"  wx:if="{{tip=='people' || tip=='phone'}}" />
+      <textarea wx:elif="{{tip=='address'}}" value="{{value}}" placeholder="{{placeholder}}"></textarea>
+    </view>
+  </view>
+</template>
+<view class="addAddress">
+  <template is="address" wx:for="{{list}}" wx:key="index" data="{{region, customItem, ...item}}"/>
+  <view class="enter mt20 f16" bindtap="enter" bindtap="submit">确定</view>
+</view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

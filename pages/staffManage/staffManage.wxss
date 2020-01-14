@@ -1,1 +1,84 @@
 /* pages/staffManage/staffManage.wxss */
+
+.addinfo .weui-input {
+  border-bottom: 1px solid #dfdfdf;
+  text-align: left;
+  padding-left: 10rpx;
+}
+.addinfo .select {
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+}
+.addinfo text {
+  width: 180rpx;
+}
+.portrait image {
+  width: 120rpx;
+  height: 120rpx;
+}
+.weui-dialog__hd {
+  padding: 30rpx 0 !important;
+}
+
+.weui-dialog__bd {
+  margin-bottom: 14rpx !important;
+}
+
+.weui-dialog__ft {
+  line-height: 100rpx !important;
+  min-height: 100rpx !important;
+  align-items: center;
+}
+
+.weui-dialog__btn {
+  font-size: 32rpx !important;
+  color: #333 !important;
+}
+
+.search .ipt {
+  position: relative;
+  width: 100%;
+}
+.ipt .select {
+  top: 6rpx;
+  right: 10rpx;
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+}
+.piker {
+  position: relative;
+}
+
+.search .ipt input {
+  color: #000;
+  padding-left: 30rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  border: 1rpx solid #ffeabf;
+  background-color: #fffbf7;
+}
+
+.list-item {
+  align-items: center;
+  border-bottom: 1rpx solid #dfdfdf;
+}
+
+.info .name {
+  line-height: 64rpx;
+}
+
+.info .remark {
+  color: #ffb017;
+}
+
+.icon .weui-icon {
+  background: #999 !important;
+}
+
+.add {
+  align-items: center;
+}

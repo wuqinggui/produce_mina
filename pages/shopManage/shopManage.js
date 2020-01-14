@@ -5,9 +5,51 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    inputValue: '',
+    showOneButtonDialog: false,
+    oneButton: [{ text: '添加' }],
+    list: [{
+      name: '小港',
+      phone: '13169418600',
+      shopName: '广州天河百货分店',
+      remark: '备注',
+    }, {
+        name: '小港',
+        phone: '13169418600',
+        shopName: '广州天河百货分店',
+        remark: '备注',
+      }, {
+        name: '小港',
+        phone: '13169418600',
+        shopName: '广州天河百货分店',
+        remark: '备注',
+      }, {
+        name: '小港',
+        phone: '13169418600',
+        shopName: '广州天河百货分店',
+        remark: '备注',
+      }, {
+        name: '小港',
+        phone: '13169418600',
+        shopName: '广州天河百货分店',
+        remark: '备注',
+      }]
   },
-
+  tapDialogButton(e) {
+    this.setData({
+      showOneButtonDialog: false
+    })
+  },
+  bindKeyInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
+  addShop: function() {
+    this.setData({
+      showOneButtonDialog: true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
