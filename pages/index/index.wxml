@@ -1,7 +1,7 @@
 <view class="menu-wrap">
 <view class="head-wrap verticle-center row">
   <view class='city-wrap verticle-center row' bindtap="getCurCity">
-    <text class='text-black'>{{curCity.cityName}}</text>
+    <view class='city-name text-black text-overflow flex-1'>{{curCity.cityName}}</view>
     <view class='triangle-wrap ml5'>
       <image src="../../images/triangle_down.png"></image>
     </view>
@@ -10,13 +10,7 @@
     <view class='search-wrap' wx:if="{{!curShop.shopId}}">
       <image src="../../images/search_icon.jpg"></image>
     </view>
-    <text class='flex-1'>{{curShop.shopName ? curShop.shopName : '搜索'}}</text>
-    <view class='search-wrap' wx:if="{{curShop.shopId}}">
-      <image src="../../images/icon_down@2x.png"></image>
-    </view>
-  </view>
-  <view class='head-icon'>
-    <image src="../../images/wechat_icon.png" class="wechat_icon"></image>
+    <text class='flex-1 f12'>{{curShop.shopName ? curShop.shopName : '搜索'}}</text>
   </view>
 </view>
 <scroll-view
@@ -38,7 +32,6 @@
           data-category-item="{{categoryItem}}"
           data-category-id="{{categoryItem.categoryId}}"
           bindtap="handleChangeCategory">
-          <badge count="{{categoryItem.selectedNum}}" alone custom-class="badge-wrap" custom-badge="badge"></badge>
           <image src="{{categoryItem.icon}}" class="icon" wx:if="{{categoryItem.icon}}"></image>
           <view class="text-overflow text-center">{{categoryItem.categoryName}}</view>
         </view>
@@ -96,8 +89,8 @@
       <image src="../../images/car_icon.jpg" class="car_icon"></image>
     </view>
     <view class='selectedNum'>
-      <badge count="{{buyCarGoodtypeNum}}" alone custom-class="badge-wrap" custom-badge="badge"></badge>
-      <view class="gray3">已选</view>
+      <mp-badge content="{{buyCarGoodtypeNum}}" ext-class="badge-wrap" wx:if="{{buyCarGoodtypeNum}}"/>
+      <view class="gray3 f14">已选</view>
     </view>
     <view class='flex-1'>
       <button class="add_btn" bindtap="addCar">加入购物车</button>

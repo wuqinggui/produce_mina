@@ -23,6 +23,10 @@ image {
   box-shadow:0 0 4rpx rgb(238, 236, 236);
 }
 
+.head-wrap .city-wrap{
+  max-width: 150rpx;
+}
+
 .head-wrap .city-wrap .triangle-wrap{
   width: 24rpx;
   height: 14rpx;
@@ -59,11 +63,6 @@ image {
   height: 40rpx;
 }
 
-.head-wrap .head-icon{
-  width: 48rpx;
-  height: 48rpx;
-}
-
 /* 菜谱区域 */
 .content-wrap {
   position: relative;
@@ -88,20 +87,6 @@ image {
   line-height: 32rpx;
   color: #333;
   position: relative;
-}
-
-.category-list .categoryItem .badge-wrap {
-  position: absolute;
-  top: 4rpx;
-  right: 4rpx;
-  z-index: 2;
-}
-
-.category-list .categoryItem .badge {
-  height: 28rpx;
-  line-height: 28rpx;
-  min-width: 28rpx;
-  padding: 0 8rpx;
 }
 
 .category-list .categoryItem .icon {
@@ -218,11 +203,9 @@ image {
 }
 
 .foot-wrap .selectedNum{
-  width: 130rpx;
+  width: 114rpx;
   padding: 12rpx 20rpx;
-  font-size: 26rpx;
   line-height: 32rpx;
-  color: #333;
   position: relative;
 }
 
@@ -231,13 +214,10 @@ image {
   top: 4rpx;
   right: 4rpx;
   z-index: 2;
-}
-
-.foot-wrap .selectedNum .badge {
+  padding: 0 8rpx;
   height: 28rpx;
   line-height: 28rpx;
   min-width: 28rpx;
-  padding: 0 8rpx;
 }
 
 .foot-wrap .add_btn{
@@ -250,7 +230,7 @@ justify-content:center;
   font-size:30rpx;
   color: #fff;
   line-height:48rpx;
-  padding: 0 20rpx;
+  padding: 0 30rpx;
   background-color: #FFA800;
 }
 

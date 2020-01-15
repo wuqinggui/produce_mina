@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "首页",
   "usingComponents": {
-    "badge": "/component/badge/index"
+    "mp-badge": "../../component/badge/badge"
   }
 }
