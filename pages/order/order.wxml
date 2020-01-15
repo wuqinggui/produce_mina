@@ -19,7 +19,7 @@
         <view class="carts-text">
           <!-- 商品标题 -->
           <view class="verticle-center">
-            <text class="carts-title f12">{{goodsList[index].goods_name}}</text>
+            <text class="carts-title f14">{{goodsList[index].goods_name}}</text>
             <text class="carts-type ml10">{{goodsList[index].sum_price}}</text>
           </view>
           <view class="carts-price row ju-b al-c">
@@ -28,13 +28,13 @@
               <text class="price f14 pr10">{{goodsList[index].sum_price}}</text>
               <text class="unit f12">/斤</text>
             </view>
-            <view class="num f12">× {{goodsList[index].goods_number}}</view>
+            <view class="num f13">× {{goodsList[index].goods_number}}</view>
           </view>
         </view>
       </view>
     </view>
     <view class="flexible pt10 pb10" bindtap="OpenClose" data-index="{{index}}">
-      <mp-icon icon="more2" color="black" size="{{20}}"></mp-icon>
+      <image src="../../images/{{flexible ? 'icon_up@2x' : 'icon_down@2x'}}.png"></image>
     </view>
     <view class="cell-count flex">
       <text class="count-amount f12">共{{goodsList.length}}件商品</text>

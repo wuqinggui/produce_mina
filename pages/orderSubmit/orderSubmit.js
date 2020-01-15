@@ -23,9 +23,9 @@ Page({
   },
   // 跳转修改收货人信息
   updateInfo: function() {
-    // wx.navigateTo({
-    //   url: '',
-    // })
+    wx.navigateTo({
+      url: '../shippingAddress/shippingAddress',
+    })
   },
   // 确认下单
   bindCheckout: function() {

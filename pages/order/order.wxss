@@ -80,8 +80,8 @@
 /*左部图片*/
 
 .carts-image {
-  width: 120rpx;
-  height: 120rpx;
+  width: 140rpx;
+  height: 140rpx;
 }
 
 /*右部描述*/
@@ -114,7 +114,10 @@
 }
 
 /*价格*/
-
+.flexible image {
+  width: 60rpx;
+  height: 60rpx;
+}
 .carts-price {
   line-height: 22px;
 }
@@ -197,10 +200,10 @@
 }
 
 .btns .btn {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #8b8b8b;
   border: 1rpx solid #8b8b8b;
-  padding: 10rpx 20rpx;
+  padding: 12rpx 30rpx;
   border-radius: 30rpx;
 }
 

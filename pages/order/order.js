@@ -73,7 +73,7 @@ Page({
         real_price: 5,
         shop_price: 6,
         sku_id: 6,
-        sum_price: "上品",
+        sum_price: "12.00",
         thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
       },{
         created_at: "2016-12-26 11:51:29",
@@ -87,7 +87,7 @@ Page({
         real_price: 5,
         shop_price: 6,
         sku_id: 6,
-        sum_price: "上品",
+        sum_price: "12.00",
         thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
       }],
       goods_price: 12,
@@ -144,7 +144,7 @@ Page({
           real_price: 5,
           shop_price: 6,
           sku_id: 6,
-          sum_price: "上品",
+          sum_price: "12.00",
           thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
         }, {
           created_at: "2016-12-26 11:51:29",
@@ -158,7 +158,7 @@ Page({
           real_price: 5,
           shop_price: 6,
           sku_id: 6,
-          sum_price: "上品",
+            sum_price: "12.00",
           thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
         }],
         goods_price: 12,

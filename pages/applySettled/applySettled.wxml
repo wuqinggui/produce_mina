@@ -1,2 +1,272 @@
 <!--pages/applySettled/applySettled.wxml-->
-<text>pages/applySettled/applySettled.wxml</text>
+<template name="item1">
+  <view class="template pl10 pr10">
+    <view class="title mt20 mb10 f16">填写店铺信息</view>
+    <form bindsubmit="formSubmit">
+      <view class="shopInfo">
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">商户名称：</text>
+          </view>
+          <view class="list-item-input">
+            <input name="shopName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{shopName}}" />
+          </view>
+        </view>
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">主营项目：</text>
+          </view>
+          <view class="list-item-input">
+            <input name="mainProject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainProject}}" />
+          </view>
+        </view>
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">商户负责人姓名：</text>
+          </view>
+          <view class="list-item-input">
+            <input name="boss" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{boss}}" />
+          </view>
+        </view>
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">身份证：</text>
+          </view>
+          <view class="list-item-input">
+            <input name="cardId" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardId}}" />
+          </view>
+        </view>
+        <view class="list-item flex" bindtap="selectCardDate">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">身份证期限：</text>
+          </view>
+          <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <!-- <view class="list-item-input">
+          <input placeholder-class="place-holder" class="weui-input" />
+        </view> -->
+        </view>
+        <view class="list-item flex" bindtap="selectAddress">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">总店地址：</text>
+          </view>
+          <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <!-- <view class="list-item-input">
+          <input placeholder-class="place-holder" class="weui-input" />
+        </view> -->
+        </view>
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">手机号码：</text>
+          </view>
+          <view class="list-item-input">
+            <input name="phone" type="number" placeholder-class="place-holder" class="weui-input" placeholder="将用于接受通知短信及店铺账号等信息" />
+          </view>
+        </view>
+        <view class="list-item flex">
+          <view class="list-item-info">
+            <text class="require">*</text>
+            <text class="name">手机验证码：</text>
+          </view>
+          <view class="list-item-input pr154">
+            <input name="verCode" type="number" placeholder-class="place-holder" class="weui-input" placeholder="请输入验证码" />
+          </view>
+          <view class="sendEMS f13" bindtap="sendEMS">发送验证码</view>
+        </view>
+        <view class="accept pt10">
+          <radio-group name="accept">
+            <radio class="radio" value="true" checked="{{isAccept}}">
+              <text class="agreement f18">《商家入驻协议》</text>
+            </radio>
+          </radio-group>
+        </view>
+        <view class="btns mt50 mb50 text-center">
+          <button class="btn wbtn" formType="submit">下一步</button>
+        </view>
+      </view>
+    </form>
+  </view>
+</template>
+<template name="item2">
+  <view class="template pl10 pr10">
+    <view class="title mt20 mb10 f16">填写证件信息</view>
+    <view class="uploadList">
+      <view class="cardJust mb10 flex">
+        <view class="uploadImg flex-1">
+          <view class="title mb10">
+            <text class="require">*</text>
+            <text>身份证头像面</text>
+          </view>
+          <view class="cardImg">
+            <image class="img" src="../../images/cardBg.png"></image>
+          </view>
+        </view>
+        <view class="example flex-1">
+          <view class="title mb10">示例：</view>
+          <view class="example-img">
+            <image class="img" src="../../images/head_img.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="cardBack mb10 flex">
+        <view class="uploadImg flex-1">
+          <view class="title mb10">
+            <text class="require">*</text>
+            <text>身份证头像面</text>
+          </view>
+          <view class="cardImg">
+            <image class="img" src="../../images/cardBg.png"></image>
+          </view>
+        </view>
+        <view class="example flex-1">
+          <view class="title mb10">示例：</view>
+          <view class="example-img">
+            <image class="img" src="../../images/head_img.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="takeCard mb10 flex">
+        <view class="uploadImg flex-1">
+          <view class="title mb10">
+            <text class="require">*</text>
+            <text>身份证头像面</text>
+          </view>
+          <view class="cardImg">
+            <image class="img" src="../../images/cardBg.png"></image>
+          </view>
+        </view>
+        <view class="example flex-1">
+          <view class="title mb10">示例：</view>
+          <view class="example-img">
+            <image class="img" src="../../images/head_img.png"></image>
+          </view>
+        </view>
+      </view>
+      <view class="business flex">
+        <view class="uploadImg flex-1">
+          <view class="title mb10">
+            <text class="require">*</text>
+            <text>身份证头像面</text>
+          </view>
+          <view class="cardImg">
+            <image class="img" src="../../images/cardBg.png"></image>
+          </view>
+        </view>
+        <view class="example flex-1">
+          <view class="title mb10">示例：</view>
+          <view class="example-img">
+            <image class="img" src="../../images/head_img.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="btns mt50 mb50 text-center">
+      <text class="btn wbtn">确定</text>
+    </view>
+  </view>
+</template>
+<template name="item3">
+  <view class="template pr20 pl20 ">
+    <view class="tip pt30 pb20 text-center flex column">
+      <icon class="mb20" type="success" size="80" color="#FFA800" />
+      <view>您的入驻申请已成功提交</view>
+      <view>审核中，请耐心等待...</view>
+    </view>
+    <view class="txt mt20">
+      <view class="f12 pb5 gray6">· 我们将在3个工作日内（不含国家法定节假日）完成审核并以短信或邮件的方式通知您。</view>
+      <view class="f12 pb5 gray6">· 您也可以登录我的店铺及时查看审核进度。</view>
+      <view class="f12 pb5 gray6">· 如有疑问请咨询客服咨询。</view>
+    </view>
+    <view class="btns mt50 mb50 text-center ju-a flex">
+      <text class="btn cancel">撤销申请</text>
+      <text class="btn">返回</text>
+    </view>
+  </view>
+</template>
+<template name="item4">
+  <view class="template pr20 pl20 ">
+    <view class="tip pt30 pb20 text-center flex column">
+      <icon class="mb20" type="warn" size="80" color="#F33737" />
+      <view>抱歉，您的申请审核不通过！</view>
+    </view>
+    <view class="txt mt20">
+      <view class="f12 pb5 gray6">· 我们将在3个工作日内（不含国家法定节假日）完成审核并以短信或邮件的方式通知您。</view>
+      <view class="f12 pb5 gray6">· 您也可以登录我的店铺及时查看审核进度。</view>
+      <view class="f12 pb5 gray6">· 如有疑问请咨询客服咨询。</view>
+    </view>
+    <view class="btns mt50 mb50 text-center ju-a flex">
+      <text class="btn cancel">撤销申请</text>
+      <text class="btn btn-warn">重新申请</text>
+    </view>
+  </view>
+</template>
+<template name="item5">
+  <view class="template pr20 pl20 ">
+    <view class="tip pt30 pb20 text-center flex column">
+      <icon class="mb20" type="success" size="80" color="#FFA800" />
+      <view>恭喜您，店铺创建成功！</view>
+    </view>
+    <view class="txt mt20">
+      <view class="f12 pb5 gray6">· 现在您可以回到商家我的店铺首页区经营您的店铺啦，赶紧去录入上品把。</view>
+      <view class="f12 pb5 gray6">· 如有疑问请咨询客服联系</view>
+    </view>
+    <view class="btns mt50 mb50 text-center ju-a flex">
+      <text class="btn wbtn">返回</text>
+    </view>
+  </view>
+</template>
+<view class="applySettled">
+  <view class="progress flex column">
+    <view class="title pb20 pt10 text-center">入驻进度</view>
+    <view class="list flex">
+      <view class="item flex flex-1 column ju-c complate">
+        <view class="step">
+          <text>1</text>
+        </view>
+        <view class="name">
+          <text>商户信息</text>
+        </view>
+      </view>
+      <view class="item flex flex-1 column ju-c complate">
+        <view class="step">
+          <text>2</text>
+        </view>
+        <view class="name">
+          <text>证件信息</text>
+        </view>
+      </view>
+      <view class="item flex flex-1 column ju-c complate">
+        <view class="step">
+          <text>3</text>
+        </view>
+        <view class="name">
+          <text>提交审核</text>
+        </view>
+      </view>
+      <view class="item flex flex-1 column ju-c">
+        <view class="step">
+          <text>4</text>
+        </view>
+        <view class="name">
+          <text>创建成功</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="infomation">
+    <block>
+      <template is="item1" data="{{...shopInfo}}" />
+      <!-- <template is="item2" data="{{...shopInfo}}" />
+      <template is="item3" data="{{...shopInfo}}" />
+      <template is="item4" data="{{...shopInfo}}" />
+      <template is="item5" data="{{...shopInfo}}" /> -->
+    </block>
+  </view>
+</view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

@@ -41,12 +41,12 @@ Page({
   },
   editAddress: function() {
     wx.navigateTo({
-      url: '',
+      url: '../addAddress/addAddress',
     })
   },
   add: function() {
     wx.navigateTo({
-      url: '',
+      url: '../addAddress/addAddress',
     })
   },
   /**
