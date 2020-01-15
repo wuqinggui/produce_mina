@@ -2,7 +2,6 @@
 @import "/style/fonts.wxss";
 @import "/style/common.wxss";
 @import "/style/base.wxss";
-@import "/libs/wxParse/wxParse.wxss";
 
 view{
   box-sizing: border-box;
@@ -16,14 +15,3 @@ view{
 text{
   font: 30rpx/1.5  "PingFangSC-Regular","IBMPlexSerif-TextItalic", "microsoft yahei", BlinkMacSystemFont,  "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
-
-/**重置富文本样式**/
-/* .wxParse-inline{display: inline-block !important;} */
-.wxParse-strong{font-weight: 600;}
-.wxParse-u{text-decoration: underline;}
-.wxParse-h1{ font-size:2em; margin: .67em 0 }
-.wxParse-h2{ font-size:1.5em; margin: .75em 0 }
-.wxParse-h3{ font-size:1.17em; margin: .83em 0 }
-.wxParse-h4{ margin: 1.12em 0}
-.wxParse-h5 { font-size:.83em; margin: 1.5em 0 }
-.wxParse-h6{ font-size:.75em; margin: 1.67em 0 }
