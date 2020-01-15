@@ -15,9 +15,10 @@ Page({
     },
     // 当前店铺
     curShop: {
-      shopId: 111,
-      shopName: '广州店铺1'
+      shopId: 222,
+      shopName: '广州店铺2'
     },
+    shopPopData: {}, // 店铺弹框选择前的店铺数据
     // 店铺列表
     shopList: [
       {
@@ -41,6 +42,32 @@ Page({
         shopName: '广州店铺5'
       }
     ],
+    shopPop: false, // 是否显示店铺弹框
+    showShopList: false, // 是否显示店铺下拉列表
+    // 顶部导航菜品分类
+    narList: [],
+    // narList: [
+    //   {
+    //     categoryId: 1,
+    //     categoryName: '粮油',
+    //     imgUrl: '../../images/cai.jpg'
+    //   },
+    //   {
+    //     categoryId: 2,
+    //     categoryName: '蔬菜',
+    //     imgUrl: '../../images/cai.jpg'
+    //   },
+    //   {
+    //     categoryId: 3,
+    //     categoryName: '百货',
+    //     imgUrl: '../../images/cai.jpg'
+    //   },
+    //   {
+    //     categoryId: 4,
+    //     categoryName: '生鲜',
+    //     imgUrl: '../../images/cai.jpg'
+    //   }
+    // ],
     // 选中的左侧类别
     curCategoryId: 1,
     // 产品数据
@@ -50,6 +77,7 @@ Page({
         categoryName: '水果类',
         selectedNum: 0,
         icon: '',
+        imgUrl: '../../images/cai.jpg',
         children: [
           {
             goodId: 10001,
@@ -108,6 +136,7 @@ Page({
         categoryName: '时蔬类',
         selectedNum: 0,
         icon: '',
+        imgUrl: '../../images/cai.jpg',
         children: [
           {
             goodId: 20001,
@@ -166,6 +195,7 @@ Page({
         categoryName: '肉类',
         selectedNum: 0,
         icon: '',
+        imgUrl: '../../images/cai.jpg',
         children: [
           {
             goodId: 30001,
@@ -224,6 +254,7 @@ Page({
         categoryName: '海鲜类',
         selectedNum: 0,
         icon: '',
+        imgUrl: '../../images/cai.jpg',
         children: [
           {
             goodId: 40001,
@@ -268,6 +299,35 @@ Page({
           {
             goodId: 40005,
             goodName: '海鲜e',
+            isSelect: false,
+            selectedNum: 0,
+            label: '上品',
+            price: 12,
+            unit: '斤',
+            imgUrl: '../../images/cai.jpg'
+          }
+        ]
+      },
+      {
+        categoryId: 5,
+        categoryName: '其他分类',
+        selectedNum: 0,
+        icon: '',
+        imgUrl: '../../images/cai.jpg',
+        children: [
+          {
+            goodId: 50001,
+            goodName: '其他分类a',
+            isSelect: false,
+            selectedNum: 0,
+            label: '上品',
+            price: 12,
+            unit: '斤',
+            imgUrl: '../../images/cai.jpg'
+          },
+          {
+            goodId: 50002,
+            goodName: '其他分类b',
             isSelect: false,
             selectedNum: 0,
             label: '上品',
@@ -371,11 +431,50 @@ Page({
   },
   // 显示店铺弹框
   showShopPop: function () {
-
+    console.log('显示店铺弹框', this.data.curShop)
+    this.setData({
+      shopPopData: this.data.curShop,
+      shopPop: true,
+      showShopList: false
+    })
+  },
+  // 显示店铺下拉数据
+  showShopSelect: function () {
+    this.setData({
+      showShopList: !this.data.showShopList
+    })
+  },
+  // 切换店铺
+  changeShop: function (e) {
+    console.log(e)
+    let { shopId, shopItem } = e.currentTarget.dataset;
+    this.setData({
+      shopPopData: shopItem,
+      showShopList: false
+    })
+  },
+  // 确认切换店铺
+  sureChangeShop: function (e) {
+    if (this.data.curShop.shopId && this.data.shopPopData.shopId && this.data.shopPopData.shopId == this.data.curShop.shopId) {
+      this.setData({
+        showShopList: false,
+        shopPop: false
+      })
+    } else {
+      this.setData({
+        curShop: this.data.shopPopData,
+        showShopList: false,
+        shopPop: false
+      })
+      // 重新获取菜品数据
+    }
   },
   // 关闭店铺弹框
   hidShopPop: function () {
-
+    this.setData({
+      showShopList: false,
+      shopPop: false
+    })
   },
   // 获取数据
   getData: function () {
@@ -403,7 +502,7 @@ Page({
     /**
      * 监听滚动事件时会直接修改分类
      */
-    let { categoryId, source } = e.currentTarget.dataset;
+    let { categoryId } = e.currentTarget.dataset;
 
     // 列表点击相同分类不处理
     if (this.data.curCategoryId === categoryId) return;
@@ -422,7 +521,7 @@ Page({
       })
       return;
     }
-    console.log(e)
+    // console.log(e)
     let { scrollTop } = e.detail;
     let { curCategoryId, goodsList } = this.data;
 
