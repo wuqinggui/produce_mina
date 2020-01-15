@@ -26,7 +26,7 @@
       <block wx:for="{{goodsList}}" 
              wx:for-item="categoryItem"
              wx:for-index="categoryIndex"
-             wx:key="{{categoryItem}}">
+             wx:key="categoryIndex">
         <view
           class="categoryItem {{curCategoryId === categoryItem.categoryId ? 'cur' : ''}}"
           data-category-item="{{categoryItem}}"
@@ -43,7 +43,7 @@
         wx:for="{{goodsList}}"
         wx:for-item="categoryItem"
         wx:for-index="categoryIndex"
-        wx:key="{{categoryItem}}">
+        wx:key="categoryIndex">
         <view id="{{'categoryId_' + categoryItem.categoryId}}">
           <view class="category-bar">
             <view class="title-wrap text-overflow">{{categoryItem.categoryName}}
@@ -53,7 +53,7 @@
             wx:for="{{categoryItem.children}}"
             wx:for-item="goodsItem"
             wx:for-index="goodsIndex"
-            wx:key="{{goodsItem}}">
+            wx:key="goodsIndex">
             <view class="goodsItem">
               <view class="image-wrap">
                 <image
