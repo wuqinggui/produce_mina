@@ -1,8 +1,6 @@
 //app.js
-
 var modal = require('./component/modal.js').default;
 import Tools from './component/tools.js'
-
 
 var showNetworkTips = false;// 网络错误提示
 var failLoginCount = 0; // 登陆错误次数
