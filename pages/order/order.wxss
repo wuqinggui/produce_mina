@@ -205,6 +205,7 @@
 .btns .btn {
   font-size: 26rpx;
   color: #8b8b8b;
+  
   border: 1rpx solid #8b8b8b;
   padding: 12rpx 30rpx;
   border-radius: 30rpx;
