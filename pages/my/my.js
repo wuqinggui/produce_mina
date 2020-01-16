@@ -142,9 +142,6 @@ Page({
               // })
           },
           fail(error) {
-            _this.setData({
-              isAuthUserinfo: false
-            })
             wx.showToast({
               title: '授权用户信息失败，请重试',
               icon: 'none'
