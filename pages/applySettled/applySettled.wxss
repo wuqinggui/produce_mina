@@ -39,11 +39,11 @@
   font-size: 26rpx;
 }
 .template .list-item {
+  position: relative;
   justify-content: space-between;
   align-items: center;
   position: relative;
   padding: 20rpx 0;
-  border-bottom: 1rpx solid #F0F0F0;
 }
 .template .list-item .weui-icon {
   background: #999 !important;
@@ -100,6 +100,7 @@
   /* flex:0 0 250rpx; */
 }
 .template .tip {
-  border-bottom: 1rpx solid #D8D8D8;
+  position: relative;
+  /* border-bottom: 1rpx solid #D8D8D8; */
   /* flex:0 0 250rpx; */
 }

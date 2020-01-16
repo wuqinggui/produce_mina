@@ -3,6 +3,7 @@
   <view class="order-cell {{index == 0 ? '' : 'mt10'}}">
     <view class="carts-list {{flexible ? '' : 'auto'}}">
       <view class="carts-name flex ju-b pt10 pb10">
+      <view class="half-px-border half-px-border-bottom"></view>
         <view class="shop-name">
           <mp-icon icon="album" color="black" size="{{20}}"></mp-icon>
           <text class="f14 ml5">水果店铺名</text>
@@ -41,19 +42,21 @@
       <text class="count-price f14">合计：￥{{total_amount}}</text>
     </view>
     <view class="btns flex mt10" hidden="{{order.isButtonShow}}">
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付</button>
+      <view class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付
+      <view class="half-px-border"></view>
+      </view>
 
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
+      <view class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</view>
 
-      <button class="btn ml5 btn-border" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
+      <view class="btn ml5 btn-border" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</view>
 
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待发货'&&refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.subOrderSn}}">申请退款</button>
+      <view class="btn ml5" wx:if="{{ order.orderStatus==='待发货'&&refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.subOrderSn}}">申请退款</view>
 
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.subOrderSn}}">查看物流</button>
+      <view class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.subOrderSn}}">查看物流</view>
 
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.subOrderSn}}">确认收货</button>
+      <view class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.subOrderSn}}">确认收货</view>
 
-      <button wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="order.deleteOrder({ subOrderSn:order.data.sub_order_sn })">删除订单</button>
+      <view wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="order.deleteOrder({ subOrderSn:order.data.sub_order_sn })">删除订单</view>
     </view>
   </view>
 </template>

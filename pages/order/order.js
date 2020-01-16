@@ -74,7 +74,7 @@ Page({
         shop_price: 6,
         sku_id: 6,
         sum_price: "12.00",
-        thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
+        thumb_url: "../../images/cai.jpg"
       },{
         created_at: "2016-12-26 11:51:29",
         goods_attr: "口味:甜; 尺寸:L; ",
@@ -88,7 +88,7 @@ Page({
         shop_price: 6,
         sku_id: 6,
         sum_price: "12.00",
-        thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
+        thumb_url: "../../images/cai.jpg"
       }],
       goods_price: 12,
       id: 192,
@@ -145,7 +145,7 @@ Page({
           shop_price: 6,
           sku_id: 6,
           sum_price: "12.00",
-          thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
+          thumb_url: "../../images/cai.jpg"
         }, {
           created_at: "2016-12-26 11:51:29",
           goods_attr: "口味:甜; 尺寸:L; ",
@@ -159,7 +159,7 @@ Page({
           shop_price: 6,
           sku_id: 6,
             sum_price: "12.00",
-          thumb_url: "http://img13.360buyimg.com/n1/jfs/t3655/151/1971152678/274261/fb508f8c/5840d683Na2190edd.jpg"
+          thumb_url: "../../images/cai.jpg"
         }],
         goods_price: 12,
         id: 192,

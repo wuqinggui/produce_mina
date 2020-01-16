@@ -9,9 +9,10 @@
   height: 100.77rpx;
   line-height: 100.77rpx;
   padding: 0 35.15rpx;
-  border: 1px solid #f8f8f8;
+  /* border-bottom: 1px solid #f6f6f6; */
   background: #fff;
   font-size: 32.81rpx;
+  position: relative;
 }
 
 .info {

@@ -4,18 +4,22 @@
     <view class="addinfo pb20 flex ju-c">
       <text>店铺名：</text>
       <input class="weui-input" />
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>负责人：</text>
       <input class="weui-input" />
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>联系电话：</text>
       <input class="weui-input" />
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>备注：</text>
       <input class="weui-input" />
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </mp-dialog>
   <view class="search flex ju-b pt10 pb10">
@@ -39,6 +43,7 @@
       <view class="icon">
         <mp-icon icon="arrow" color="black" size="{{14}}"></mp-icon>
       </view>
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </view>
 </view>

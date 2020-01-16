@@ -1,7 +1,9 @@
 /* pages/staffManage/staffManage.wxss */
 
+.addinfo {
+  position: relative;
+}
 .addinfo .weui-input {
-  border-bottom: 1px solid #dfdfdf;
   text-align: left;
   padding-left: 10rpx;
 }
@@ -63,8 +65,8 @@
 }
 
 .list-item {
+  position: relative;
   align-items: center;
-  border-bottom: 1rpx solid #dfdfdf;
 }
 
 .info .name {

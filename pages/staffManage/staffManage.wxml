@@ -8,8 +8,8 @@
           <input class="weui-input" disabled="true" value="{{shopName}}" />
         </view>
       </picker>
-
       <image src="../../images/icon_down@2x.png" class="select"></image>
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo piker pb20 flex ju-c">
       <text>工种：</text>
@@ -19,22 +19,27 @@
         </view>
       </picker>
       <image src="../../images/icon_down@2x.png" class="select"></image>
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>员工名：</text>
       <input class="weui-input" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>联系电话：</text>
       <input class="weui-input" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>账号：</text>
       <input class="weui-input" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb20 flex ju-c">
       <text>密码：</text>
       <input class="weui-input" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </mp-dialog>
   <view class="search flex ju-b pt10 pb10">
@@ -67,6 +72,7 @@
       <view class="icon">
         <mp-icon icon="arrow" color="black" size="{{14}}"></mp-icon>
       </view>
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </view>
 </view>

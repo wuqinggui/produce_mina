@@ -2,6 +2,7 @@
     <view class="list flex ju-b" hover-class="none" data-tip="{{tip}}" data-url="{{url}}" catchtap='navigateTo'>
         <view class="list-text">{{text}}</view>
         <mp-icon icon="arrow" class="arrow" color="black" size="{{14}}"></mp-icon>
+        <view class="half-px-border half-px-border-bottom"></view>
     </view>
 </template>
 

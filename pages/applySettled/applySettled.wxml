@@ -12,6 +12,7 @@
           <view class="list-item-input">
             <input name="shopName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{shopName}}" />
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="list-item flex">
           <view class="list-item-info">
@@ -21,6 +22,7 @@
           <view class="list-item-input">
             <input name="mainProject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainProject}}" />
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="list-item flex">
           <view class="list-item-info">
@@ -30,6 +32,7 @@
           <view class="list-item-input">
             <input name="boss" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{boss}}" />
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="list-item flex">
           <view class="list-item-info">
@@ -39,6 +42,7 @@
           <view class="list-item-input">
             <input name="cardId" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardId}}" />
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="list-item flex" bindtap="selectCardDate">
           <view class="list-item-info">
@@ -46,6 +50,7 @@
             <text class="name">身份证期限：</text>
           </view>
           <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <view class="half-px-border half-px-border-bottom"></view>
           <!-- <view class="list-item-input">
           <input placeholder-class="place-holder" class="weui-input" />
         </view> -->
@@ -56,6 +61,7 @@
             <text class="name">总店地址：</text>
           </view>
           <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <view class="half-px-border half-px-border-bottom"></view>
           <!-- <view class="list-item-input">
           <input placeholder-class="place-holder" class="weui-input" />
         </view> -->
@@ -68,6 +74,7 @@
           <view class="list-item-input">
             <input name="phone" type="number" placeholder-class="place-holder" class="weui-input" placeholder="将用于接受通知短信及店铺账号等信息" />
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="list-item flex">
           <view class="list-item-info">
@@ -78,6 +85,7 @@
             <input name="verCode" type="number" placeholder-class="place-holder" class="weui-input" placeholder="请输入验证码" />
           </view>
           <view class="sendEMS f13 {{sendFlag? '' : 'bg-gray6'}}" bindtap="sendEMS">{{sendMsg}}</view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
         <view class="accept pt10">
           <checkbox-group name="accept">
@@ -177,6 +185,7 @@
       <icon class="mb20" type="success" size="80" color="#FFA800" />
       <view>您的入驻申请已成功提交</view>
       <view>审核中，请耐心等待...</view>
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="txt mt20">
       <view class="f12 pb5 gray6">· 我们将在3个工作日内（不含国家法定节假日）完成审核并以短信或邮件的方式通知您。</view>
@@ -263,9 +272,9 @@
     <block>
       <template is="item1" data="{{...shopInfo}}" wx:if="{{step == 0}}" />
       <template is="item2" data="{{...shopInfo}}" wx:if="{{step == 1}}" />
-      <template is="item3" data="{{...shopInfo}}" wx:if="{{step == 2}}"  />
-      <template is="item4" data="{{...shopInfo}}" wx:if="{{step == 3}}"  />
-      <template is="item5" data="{{...shopInfo}}" wx:if="{{step == 4}}"  />
+      <template is="item3" data="{{...shopInfo}}" wx:if="{{step == 2}}" />
+      <template is="item4" data="{{...shopInfo}}" wx:if="{{step == 3}}" />
+      <template is="item5" data="{{...shopInfo}}" wx:if="{{step == 4}}" />
     </block>
   </view>
 </view>

@@ -8,7 +8,7 @@
       <view class="add f14 mr20" bindtap="addShop">添加商品</view>
     </view>
     <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
-      <view class="carts-item" style="left: {{itemLefts[idx][index]}}px;" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+      <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
         <icon type="{{item.selected ? 'success_circle' : 'circle'}}" size="20" catchtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}" />
         <view>
@@ -39,6 +39,7 @@
             </view>
           </view>
         </view>
+        <view class="half-px-border half-px-border-bottom"></view>
       </view>
       <button type="warn" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
     </view>
