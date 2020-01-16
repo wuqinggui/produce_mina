@@ -187,8 +187,8 @@ image {
 
 .product-detail-wrap .label{
   margin-top: 10rpx;
-  padding: 6rpx 12rpx;
-  border: 2rpx solid #e3e3e3;
+  padding: 6rpx 16rpx;
+  border: 1rpx solid #f3f3f3;
   border-radius: 46rpx;
 }
 

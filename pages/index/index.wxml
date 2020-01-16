@@ -7,7 +7,7 @@
         <image src="../../images/triangle_down.png"></image>
       </view>
     </view>
-    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 mr10 {{curShop.shopId ? 'shop-wrap' : 'shop-search'}}" bindtap="showShopPop">
+    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 {{curShop.shopId ? 'shop-wrap' : 'shop-search'}}" bindtap="showShopPop">
       <view class='search-wrap' wx:if="{{!curShop.shopId}}">
         <image src="../../images/search_icon.jpg"></image>
       </view>
@@ -81,7 +81,7 @@
               <view class="product-detail-wrap column ju-b">
                 <view>
                   <view class="title gray3 text-overflow f16">{{goodsItem.goodName}}</view>
-                  <text class="label f12 gray6">{{goodsItem.label}}</text>
+                  <text class="label f10 gray6">{{goodsItem.label}}</text>
                 </view>
                 <view class="price-wrap">
                   <text class="price f12">¥</text>
