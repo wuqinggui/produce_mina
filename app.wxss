@@ -7,7 +7,7 @@ view{
   box-sizing: border-box;
   margin: 0;
 	padding: 0;
-  word-wrap: break-word; /*自动换行*/
+  word-wrap: break-word;
 	word-break: break-all;
   font: 30rpx/1.5  "PingFangSC-Regular","IBMPlexSerif-TextItalic", "microsoft yahei", BlinkMacSystemFont,  "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
