@@ -1,6 +1,6 @@
 <!--pages/applySettled/applySettled.wxml-->
 <template name="item1">
-  <view class="template pl10 pr10">
+  <view class="template pl20 pr20">
     <view class="title mt20 mb10 f16">填写店铺信息</view>
     <form bindsubmit="formSubmit">
       <view class="shopInfo">
@@ -94,7 +94,7 @@
   </view>
 </template>
 <template name="item2">
-  <view class="template pl10 pr10">
+  <view class="template pl20 pr20">
     <view class="title mt20 mb10 f16">填写证件信息</view>
     <view class="uploadList">
       <view class="cardJust mb10 flex">

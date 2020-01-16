@@ -1,6 +1,6 @@
 /* pages/applySettled/applySettled.wxss */
 .progress {
-  padding: 30rpx 20rpx 50rpx 20rpx;
+  padding: 30rpx 30rpx 50rpx 30rpx;
   background: #FFFBF7;
 }
 .progress .item {
@@ -21,10 +21,13 @@
   width: 100%;
 }
 .item .step text {
+  display: inline-block;
   position: relative;
   z-index: 9;
   color: #fff;
-  padding: 8rpx 18rpx;
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   border-radius: 50%;
   background: #D8D8D8;
 }

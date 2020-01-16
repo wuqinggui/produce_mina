@@ -9,6 +9,12 @@ Page({
     startX: 0,
     itemLefts: {}
   },
+  // 添加商品
+  addShop: function() {
+    wx.switchTab({
+      url: '../index/index'
+    })
+  },
   bindMinus: function (e) {
     // loading提示
     // wx.showLoading({
@@ -108,10 +114,18 @@ Page({
     var carts = cartObj[objIndex].carts;
     for (var i = 0; i < carts.length; i++) {
       if (carts[i].selected) {
-        cartObj[objIndex].selectedAll = selectedAllStatus = true;
+        cartObj[objIndex].selectedAll = true;
       } else {
-        cartObj[objIndex].selectedAll = selectedAllStatus = false;
+        cartObj[objIndex].selectedAll = false;
         break
+      }
+    }
+    for (var item in cartObj) {
+      if (cartObj[item].selectedAll) {
+        selectedAllStatus = true;
+      }else {
+        selectedAllStatus = false;
+        break;
       }
     }
     // 写回经点击修改后的数组
