@@ -23,6 +23,7 @@
 
 /*整体列表*/
 .carts-list {
+  overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	padding-left: 40rpx;
