@@ -15,16 +15,24 @@
 }
 
 .info {
-  height: 360rpx;
+  padding: 60rpx;
   background: #ffa800;
 }
 
-.info-wrap {
+.auth-btn{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
   text-align: center;
+}
+
+
+.info-icon {
+  width: 176rpx;
+  height: 176rpx;
+  border: 4rpx solid #fff;
+  border-radius: 88rpx;
+  overflow: hidden;
 }
 
 .list-icon-wrap {
@@ -54,14 +62,6 @@
 
 .list-text {
   font-size: 28rpx;
-}
-
-.info-icon {
-  width: 164rpx;
-  height: 164rpx;
-  border: 4.69rpx solid #fff;
-  border-radius: 82rpx;
-  margin-bottom: 29.29rpx;
 }
 
 .arrow .weui-icon {

@@ -1,6 +1,5 @@
 //app.js
-var wxRequest = require('./http/request.js').wxRequest;
-import { loginURL, getPhonenumberURL } from './http/url.js'
+
 var modal = require('./component/modal.js').default;
 import Tools from './component/tools.js'
 
@@ -101,7 +100,7 @@ App({
           // let params = {
             // code: res.code
           // }
-          // wxRequest(loginURL, 'POST', params)
+          // userApi.login(params)
           //   .then((res) => {
               this.globalData.getOpenidEnd = true;
               typeof this.globalData.getOpenidCb == "function" && this.globalData.getOpenidCb();
@@ -156,6 +155,13 @@ App({
         console.log('用户信息授权失败', error)
         this.globalData.isAuthUserinfo = false;
       })
+  },
+  // 存储用户数据
+  saveUserinfo: function (res) {
+    console.log('存储用户数据', res)
+    // wx.setStorageSync("userId", userinfo.userId);
+    this.globalData.userInfo = res;
+    // wx.setStorageSync("userinfo", userinfo);
   },
 
   // 查询授权情况
@@ -316,7 +322,7 @@ App({
           };
           let { userinfo } = this.globalData.userinfo;
           let { mobile } = userinfo;
-          // wxRequest(getPhonenumberURL, 'POST', params)
+          // userApi.getPhonenumber(params)
           //   .then((res1) => {
           // console.log(source);
           // console.log(mobile);

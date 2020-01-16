@@ -1,5 +1,4 @@
-import { POST_USER_REGISTER_URL } from '../../http/url.js'
-const wxRequest = require('../../http/request.js').wxRequest
+var userApi = require('../../http/userApi.js').default;
 
 Page({
 
@@ -123,15 +122,13 @@ Page({
     });
     let _self = this;
     wx.removeStorageSync('isGoLogin'); // 在进行http请求之前先清除isGoLogin缓存
-    let url = POST_USER_REGISTER_URL;
-    let type = 'POST';
-    let param = {
+    let params = {
       code: _self.data.code,
       signature: _self.data.signature,
       encryptedData: _self.data.encryptedData,
       iv: _self.data.iv
     }
-    wxRequest(url, type, param).then(res => {
+    userApi.login(params).then(res => {
       wx.hideLoading();
       console.log('微信快捷登录成功', res)
       // 其它位置根据用户session_id判断是否已登录

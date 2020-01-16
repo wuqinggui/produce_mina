@@ -6,11 +6,25 @@
 </template>
 
 <scroll-view scroll-y="trues" class="user">
-    <view class="info pt30">
-        <view class="info-wrap">
-            <image class="info-icon" src="{{userInfo.avatarUrl}}" catchtap="navigateTo" data-url-type="userinfo"></image>
-            <view class="info-name">{{userInfo.nickName}}</view>
-        </view>
+    <view class="info">
+        <button
+        class="auth-btn"
+        hover-class="none"
+        open-type="getUserInfo"
+        bindgetuserinfo="getUserInfo"
+        wx:if="{{!isAuthUserinfo}}">
+            <image src="/images/head_img.png" class="info-icon"></image>
+            <text class="gray3 f16 text-white text-overflow pt10 pb10">点击显示微信头像</text>
+        </button>
+        <button
+            class="auth-btn"
+            hover-class="none"
+            wx:else>
+            <open-data type="userAvatarUrl" class="info-icon"></open-data>
+            <view class="gray3 f16 text-white text-overflow pt10 pb10">
+                <open-data type="userNickName"></open-data>
+            </view>
+        </button>
     </view>
     <template wx:for="{{list}}" wx:key="index" is="list" data="{{...item}}"></template>
 </scroll-view>
