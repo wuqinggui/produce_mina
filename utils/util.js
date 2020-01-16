@@ -1,13 +1,6 @@
 /**
  * 时间戳格式转化
- * 1: yy-mm-dd hh:mm:ss
- * 2: yy/mm/dd hh:mm
- * 3: yy/mm/dd
- * 4: hh:mm:ss
- * 5: yy-mm-dd
- * 6: yy-mm-dd hh:mm
- * 7: yy.mm.dd
- * 8: hh:mm
+ * 1: yyyy-mm-dd hh:mm:ss
  */
 const formatTime = (date, type) => {
   const time = new Date(date * 1000)
@@ -31,9 +24,7 @@ const formatNumber = m => {
  * @returns {*}
  */
 function formatMsgTime(timespan) {
-
   timeSpanStr = "";
-
   try {
     var dateTime = new Date(parseInt(timespan) * 1000);
     var year = dateTime.getFullYear();
@@ -44,15 +35,12 @@ function formatMsgTime(timespan) {
     var second = dateTime.getSeconds();
     var now = new Date();
     var now_new = Date.parse(new Date()) / 1000;  //typescript转换写法
-
     var milliseconds = 0;
     var timeSpanStr;
-
     milliseconds = now_new - timespan;
     var day = Math.abs(Math.floor(milliseconds / 86400));
     var hour = Math.abs(Math.floor(milliseconds % 86400 / 3600));
     var minute = Math.abs(Math.floor(milliseconds % 86400 % 3600 / 60));
-
     const prex = milliseconds > 0 ? "前" : "后";
 
     if (day > 0) {
@@ -64,9 +52,8 @@ function formatMsgTime(timespan) {
     } else {
       timeSpanStr = minute + '分钟' + prex;
     }
-  } catch (e) {
-  }
 
+  } catch (e) {}
   return timeSpanStr;
 }
 
@@ -90,30 +77,45 @@ function getRandom(n){
 function matchFn(matchType, value) {
   const match = {
     // 链接
-    url: /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/gi,
+    url: /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?$/,
     // 固话
-    phone: /^((\d{8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$/gi,
+    phone: /^((\d{8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$/,
     // 手机号码
-    tel: /^1[345789]\d{9}$/gi,
+    mobile : /^0?1[3|4|5|7|8][0-9]\d{8}$/,
+    // 数字
+    number : /^(-?\d+)(\.\d+)?$/,
+    // 整数（包含正整数，负整数，0）
+    int : /^[-]?([0-9]+\d*)$/,
     // 正整数（不包含0）
-    positiveInt: /^[1-9]\d*$/gi,
+    positiveInt : /^([1-9]+\d*)$/,
     // 非负整数（包含0）
-    nonnegativeInt: /^[1-9]\d*|0$/gi,
+    nonnegativeInt: /^[1-9]\d*|0$/,
     // 浮点
-    float: /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/gi,
+    float: /^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$/,
     // 小数点后不超过两位
-    floatFixedTwo: /^\d+(\.\d{1,2})?$/gi,
+    floatFixedTwo: /^\d+(\.\d{1,2})?$/,
     // 邮编
-    postcode: /^[1-9]\d{5}(?!\d)$/gi,
+    postCode:/^[0-9]{6}$/,
     // 邮箱
-    email: /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/gi,
+    email : /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/,
     // 字母或数字
-    letterOrNum: /^[a-zA-Z\d]+$/gi,
-    // 10位，第一个不能为0
-    // 可以输入中文，字母，数字
-    room: /^[\u4e00-\u9fa5_a-zA-Z1-9_][\u4e00-\u9fa5_a-zA-Z0-9_]{0,10}$/gi,
+    letterOrNum: /^[a-zA-Z\d]+$/,
+    // 10位，第一个不能为0，可以输入中文，字母，数字
+    room: /^[\u4e00-\u9fa5_a-zA-Z1-9_][\u4e00-\u9fa5_a-zA-Z0-9_]{0,10}$/,
     // 身份证
-    identity_no: /^\d{15}|\d{18}$/gi
+    idCardNo:/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+    // 百分数
+    percentage: /^(100|[1-9]?\d(\.\d\d?\d?)?)%$|0$/,
+    // 年月日（yyyy-mm-dd）
+    date : /^(\d{4})-(\d{2})-(\d{2})$/,
+    // 年月日时分秒（yyyy-mm-dd hh:mm:ss）
+    datetime : /^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$/,
+    // 汉字
+    chn:/^[\u4e00-\u9fa5]+$/,
+    // 统一社会信用代码
+    unifiedSocialCreditCode:/^[A-Z0-9]{18}$/,
+    // 组织代码
+    orgCode:/^[A-Z0-9]{8}\-[A-Z0-9]{1}$/,
   }
   return match[matchType].test(value);
 }

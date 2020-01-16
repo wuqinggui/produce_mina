@@ -109,7 +109,7 @@
     </view>
     <view class='selectedNum'>
       <mp-badge content="{{buyCarGoodtypeNum}}" ext-class="badge-wrap" wx:if="{{buyCarGoodtypeNum}}"/>
-      <view class="gray3 f14">已选</view>
+      <view class="gray3 f16">已选</view>
     </view>
     <view class='flex-1'>
       <button class="add_btn" bindtap="addCar">加入购物车</button>

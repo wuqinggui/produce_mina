@@ -15,6 +15,7 @@
 }
 
 .info {
+  height: 392rpx;
   padding: 60rpx;
   background: #ffa800;
 }
@@ -25,7 +26,6 @@
   align-items: center;
   text-align: center;
 }
-
 
 .info-icon {
   width: 176rpx;

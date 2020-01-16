@@ -1,5 +1,5 @@
 var wxRequest = require('./request.js').wxRequest;
-import { loginURL,getPhonenumberURL,getUserInfoUrl,updateUserInfoUrl  } from './url'
+import { loginURL, getPhonenumberURL, getUserInfoUrl, updateUserInfoUrl  } from './url'
 
 var userApi = {
   login: function (params) {
@@ -12,7 +12,7 @@ var userApi = {
         .catch((error) => reject(error))
     });
   },
-  getPhonenumber: function (params) {
+  getPhoneNumber: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(getPhonenumberURL, 'POST', params)
         .then((res) => {
@@ -22,20 +22,14 @@ var userApi = {
         .catch((error) => reject(error))
     });
   },
-  getUserinfo: function (params) {
-    console.log('getUserinfo', params)
+  getUserInfo: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(getUserInfoUrl, 'POST', params)
         .then((res) => {
-          console.log('res', res)
           getApp().globalData.saveUserinfo(res);
           resolve(res);
         })
-        .catch((error) => {
-          
-          console.log('error', error)
-          reject(error)
-        })
+        .catch((error) => reject(error))
     });
   },
   updateUserInfo: function (params) {
