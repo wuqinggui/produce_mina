@@ -57,7 +57,7 @@
 .template .list-item-input {
   flex: 1;
 }
-.template .accept .radio {
+.template .accept .checkbox {
   scale: 0.8;
 }
 .template .accept .agreement {

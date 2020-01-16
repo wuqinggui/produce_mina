@@ -65,6 +65,9 @@
 .carts-list {
   height: 100%;
 }
+.carts-name {
+  border-bottom: 1rpx solid #F8F8F8;
+}
 /*每行单元格*/
 .carts-item {
   display: flex;

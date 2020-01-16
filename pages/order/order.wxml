@@ -2,7 +2,7 @@
 <template name="order-cell">
   <view class="order-cell {{index == 0 ? '' : 'mt10'}}">
     <view class="carts-list {{flexible ? '' : 'auto'}}">
-      <view class="flex ju-b pt10 pb10">
+      <view class="carts-name flex ju-b pt10 pb10">
         <view class="shop-name">
           <mp-icon icon="album" color="black" size="{{20}}"></mp-icon>
           <text class="f14 ml5">水果店铺名</text>
@@ -20,7 +20,7 @@
           <!-- 商品标题 -->
           <view class="verticle-center">
             <text class="carts-title f14">{{goodsList[index].goods_name}}</text>
-            <text class="carts-type ml10">{{goodsList[index].sum_price}}</text>
+            <text class="carts-type ml10">{{goodsList[index].goods_sn}}</text>
           </view>
           <view class="carts-price row ju-b al-c">
             <view class="priceinfo">

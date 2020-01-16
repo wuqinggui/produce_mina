@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    step: 0,
     shopInfo: {
       shopName: '',
       mainProject: '',
@@ -15,22 +16,26 @@ Page({
       address: '',
       phone: '',
       verCode: '',
-      isAccept: false
+      isAccept: false,
+      sendFlag: true,
+      sendMsg: '发送验证码',
+      time: 10
     }
   },
   // 店铺信息--下一步按钮
   formSubmit: function(e) {
     var formValue = e.detail.value;
-    var radioVal = e.detail.value.accept;
+    var radioVal = e.detail.value.accept[0];
+    console.log(formValue);
     if(utils.isBlank(radioVal)) {
       wx.showToast({
-        title: '成功',
-        icon: 'success',
+        title: '请阅读并勾选商家入驻协议',
+        icon: 'none',
         duration: 2000
       })
     }
     for(var item in formValue) {
-      
+      console.log(item);
     }
   },
   // 选择总店地址
@@ -41,9 +46,28 @@ Page({
   selectAddress: function () {
 
   },
+  timeInterval: function() {
+    var shopInfo = this.data.shopInfo;
+    shopInfo.sendFlag = false;
+    var timer = setInterval(() => {
+      shopInfo.time--;
+      shopInfo.sendMsg = shopInfo.time + ' 秒后重新发送';
+      if (shopInfo.time == 0) {
+        clearInterval(timer);
+        shopInfo.sendMsg = '重新发送';
+        shopInfo.time = 10;
+        shopInfo.sendFlag = true;
+      }
+      this.setData({
+        shopInfo: shopInfo
+      })
+    }, 1000)
+  },
   // 发送验证码
   sendEMS: function() {
-
+    var shopInfo = this.data.shopInfo;
+    if (!shopInfo.sendFlag) { return }
+    this.timeInterval();
   },
   /**
    * 生命周期函数--监听页面加载

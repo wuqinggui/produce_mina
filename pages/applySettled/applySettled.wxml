@@ -77,14 +77,14 @@
           <view class="list-item-input pr154">
             <input name="verCode" type="number" placeholder-class="place-holder" class="weui-input" placeholder="请输入验证码" />
           </view>
-          <view class="sendEMS f13" bindtap="sendEMS">发送验证码</view>
+          <view class="sendEMS f13 {{sendFlag? '' : 'bg-gray6'}}" bindtap="sendEMS">{{sendMsg}}</view>
         </view>
         <view class="accept pt10">
-          <radio-group name="accept">
-            <radio class="radio" value="true" checked="{{isAccept}}">
+          <checkbox-group name="accept">
+            <checkbox class="checkbox" value="true" checked="{{isAccept}}">
               <text class="agreement f18">《商家入驻协议》</text>
-            </radio>
-          </radio-group>
+            </checkbox>
+          </checkbox-group>
         </view>
         <view class="btns mt50 mb50 text-center">
           <button class="btn wbtn" formType="submit">下一步</button>
@@ -233,7 +233,7 @@
           <text>商户信息</text>
         </view>
       </view>
-      <view class="item flex flex-1 column ju-c complate">
+      <view class="item flex flex-1 column ju-c">
         <view class="step">
           <text>2</text>
         </view>
@@ -241,7 +241,7 @@
           <text>证件信息</text>
         </view>
       </view>
-      <view class="item flex flex-1 column ju-c complate">
+      <view class="item flex flex-1 column ju-c">
         <view class="step">
           <text>3</text>
         </view>
@@ -261,11 +261,11 @@
   </view>
   <view class="infomation">
     <block>
-      <template is="item1" data="{{...shopInfo}}" />
-      <!-- <template is="item2" data="{{...shopInfo}}" />
-      <template is="item3" data="{{...shopInfo}}" />
-      <template is="item4" data="{{...shopInfo}}" />
-      <template is="item5" data="{{...shopInfo}}" /> -->
+      <template is="item1" data="{{...shopInfo}}" wx:if="{{step == 0}}" />
+      <template is="item2" data="{{...shopInfo}}" wx:if="{{step == 1}}" />
+      <template is="item3" data="{{...shopInfo}}" wx:if="{{step == 2}}"  />
+      <template is="item4" data="{{...shopInfo}}" wx:if="{{step == 3}}"  />
+      <template is="item5" data="{{...shopInfo}}" wx:if="{{step == 4}}"  />
     </block>
   </view>
 </view>

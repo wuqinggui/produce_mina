@@ -2,6 +2,13 @@
 .orderSubmit {
   padding: 0 40rpx;
 }
+.weui-icon {
+  background: #999 !important;
+}
+.more image {
+  width: 60rpx;
+  height: 60rpx;
+}
 .list {
   height: 280px;
   overflow: hidden;

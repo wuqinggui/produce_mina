@@ -41,7 +41,7 @@
     </block>
   </view>
   <view class="more flex ju-c pt10 pb10" bindtap="changeWidth">
-    <mp-icon icon="more2" color="black" size="18"></mp-icon>
+    <image src="../../images/icon_{{isAuto ? 'down' : 'up'}}@2x.png"></image>
   </view>
   <view class="other mt20 mb50">
     <view class="freight">
@@ -88,9 +88,9 @@
       </view>
     </view>
     <view class="btns mt10 flex">
-      <text class="btn f12 ml5">补单</text>
-      <text class="btn f12 ml5">退货退款</text>
-      <text class="btn btn-border f12 ml5">确认收货</text>
+      <text class="btn f13 ml5">补单</text>
+      <text class="btn f13 ml5">退货退款</text>
+      <text class="btn btn-border f13 ml5">确认收货</text>
     </view>
   </view>
 </view>

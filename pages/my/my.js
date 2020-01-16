@@ -10,28 +10,35 @@ Page({
     list: [
       {
         text: '店铺管理',
-        tip: '',
+        tip: '1',
+        url: '/pages/shopManage/shopManage'
       }, {
         text: '员工管理',
-        tip: '1380043433',
+        tip: '2',
+        url: '/pages/staffManage/staffManage'
       }, {
         text: '商家入驻申请',
-        tip: '',
-      }, {
-        text: '关于商城',
-        tip: '',
-      }, {
-        text: '关于商城',
-        tip: '',
-      }, {
-        text: '关于商城',
-        tip: '',
+        tip: '3',
+        url: '/pages/applySettled/applySettled'
       }
+      // , {
+      //   text: '关于商城',
+      //   tip: '',
+      // }, {
+      //   text: '关于商城',
+      //   tip: '',
+      // }, {
+      //   text: '关于商城',
+      //   tip: '',
+      // }
     ]
   },
 
-  navigateTo: function() {
-    console.log(111);
+  navigateTo: function(e) {
+    let { url } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: url,
+    })
   },
   /**
    * 生命周期函数--监听页面加载

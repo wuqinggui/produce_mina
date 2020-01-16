@@ -2,6 +2,10 @@
 .orderDetail {
   padding: 0 40rpx;
 }
+.more image {
+  width: 60rpx;
+  height: 60rpx;
+}
 .list {
   height: 300px;
   overflow: hidden;
@@ -100,7 +104,7 @@
 .btns .btn {
   color: #8B8B8B;
   border: 1rpx solid #8B8B8B;
-  padding: 5rpx 20rpx;
+  padding: 6rpx 30rpx;
   border-radius: 30rpx;
 }
 .btns .btn-border {
