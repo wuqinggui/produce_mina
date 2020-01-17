@@ -10,35 +10,48 @@ Page({
     list: [
       {
         text: '店铺管理',
-        tip: '1',
-        url: '/pages/shopManage/shopManage'
+        url: '/pages/shopManage/shopManage',
+        num: 5
       }, {
         text: '员工管理',
-        tip: '2',
-        url: '/pages/staffManage/staffManage'
+        url: '/pages/staffManage/staffManage',
+        num: 0
       }, {
         text: '商家入驻申请',
-        tip: '3',
-        url: '/pages/applySettled/applySettled'
+        url: '/pages/applySettled/applySettled',
+        num: 0
       }
-      // , {
-      //   text: '关于商城',
-      //   tip: '',
-      // }, {
-      //   text: '关于商城',
-      //   tip: '',
-      // }, {
-      //   text: '关于商城',
-      //   tip: '',
-      // }
+      , {
+        text: '关于我们',
+        url: '',
+        // url: '/pages/aboutUS/aboutUS',
+        num: 0
+      }, {
+        text: '客服',
+        url: '',
+        // url: '/pages/service/service',
+        num: 0
+      }, {
+        text: '设置',
+        url: '/pages/set/set',
+        num: 0
+      }
     ]
   },
 
   navigateTo: function(e) {
-    let { url } = e.currentTarget.dataset;
-    wx.navigateTo({
-      url: url,
-    })
+    let { url,text  } = e.currentTarget.dataset;
+    if (url) {
+      wx.navigateTo({
+        url: url,
+      })
+    } else {
+      wx.showToast({
+        title: '暂无设计' + text + '页面',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载

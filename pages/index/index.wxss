@@ -136,15 +136,11 @@ image {
 }
 
 .product-list .category-bar .title-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   width: 100%;
+  height: 100%;
   font-size: 30rpx;
-  color: #333;
   font-weight: 500;
-  background: #fff;
-  padding: 10rpx 20rpx 0rpx 20rpx;
+  padding: 15rpx 20rpx 0rpx 20rpx;
 }
 
 .product-list .category-bar .title-wrap.cur {
@@ -248,8 +244,8 @@ image {
 .foot-wrap .add_btn{
   float: right;
   display:flex;
-align-items:center;
-justify-content:center;
+  align-items:center;
+  justify-content:center;
   border-radius:30rpx;
   height:60rpx;
   font-size:30rpx;

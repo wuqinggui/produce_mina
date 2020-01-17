@@ -9,6 +9,8 @@
     "pages/my/my",
     "pages/shopManage/shopManage",
     "pages/staffManage/staffManage",
+    "pages/aboutUS/aboutUS",
+    "pages/service/service",
     "pages/set/set",
     "pages/shippingAddress/shippingAddress",
     "pages/addAddress/addAddress",

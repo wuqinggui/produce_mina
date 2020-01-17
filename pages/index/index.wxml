@@ -51,7 +51,7 @@
           data-category-id="{{categoryItem.categoryId}}"
           bindtap="handleChangeCategory">
           <image src="{{categoryItem.icon}}" class="icon" wx:if="{{categoryItem.icon}}"></image>
-          <view class="text-overflow text-center">{{categoryItem.categoryName}}</view>
+          <view class="text-overflow text-center text-black">{{categoryItem.categoryName}}</view>
         </view>
       </block>
     </scroll-view>
@@ -63,8 +63,8 @@
         wx:for-index="categoryIndex"
         wx:key="categoryIndex">
         <view id="{{'categoryId_' + categoryItem.categoryId}}">
-          <view class="category-bar">
-            <view class="title-wrap text-overflow">{{categoryItem.categoryName}}
+          <view class="category-bar verticle-center">
+            <view class="title-wrap text-overflow text-black gray3">{{categoryItem.categoryName}}
             </view>
           </view>
           <block
@@ -92,6 +92,7 @@
               <view class="icon-wrap direction-center">
                 <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckGoodsItem" data-goods-item="{{goodsItem}}" data-goods-id="{{goodsItem.goodId}}" data-goods-index="{{goodsIndex}}" data-category-item="{{categoryItem}}" data-category-id="{{categoryItem.categoryId}}" data-category-index="{{categoryIndex}}" data-check-value="{{goodsItem.isSelect ? false : true}}"/>
               </view>
+              <view class="half-px-border half-px-border-bottom"></view>
             </view>
           </block>
           <view class="placeholder p20" wx:if="{{categoryIndex == goodsList.length - 1}}">

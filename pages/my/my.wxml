@@ -1,7 +1,8 @@
 <template name="list">
-    <view class="list flex ju-b" hover-class="none" data-tip="{{tip}}" data-url="{{url}}" catchtap='navigateTo'>
-        <view class="list-text">{{text}}</view>
-        <mp-icon icon="arrow" class="arrow" color="black" size="{{14}}"></mp-icon>
+    <view class="list row verticle-center" hover-class="click-active" data-url="{{url}}" data-text="{{text}}" catchtap='navigateTo'>
+        <view class="list-text flex-1">{{text}}</view>
+        <view class="f16 ml10 mr10 gray6" wx:if="{{num > 0}}">{{num}}</view>
+        <mp-icon icon="arrow" class="arrow" color="black" size="{{10}}"></mp-icon>
         <view class="half-px-border half-px-border-bottom"></view>
     </view>
 </template>
@@ -15,14 +16,14 @@
         bindgetuserinfo="getUserInfo"
         wx:if="{{!isAuthUserinfo}}">
             <image src="/images/head_img.png" class="info-icon"></image>
-            <text class="gray3 f16 text-white text-overflow pt10 pb10">点击显示微信头像</text>
+            <text class="gray3 f16 text-white text-overflow pt10">点击显示微信头像</text>
         </button>
         <button
             class="auth-btn"
             hover-class="none"
             wx:else>
             <open-data type="userAvatarUrl" class="info-icon"></open-data>
-            <view class="gray3 f16 text-white text-overflow pt10 pb10">
+            <view class="gray3 f16 text-white text-overflow pt10">
                 <open-data type="userNickName"></open-data>
             </view>
         </button>

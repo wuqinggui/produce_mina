@@ -1124,3 +1124,25 @@
 	word-wrap: break-word; /*自动换行*/
 	word-break: break-all;
 }
+
+/* 点击文字颜色 */
+.tapmodeYs:active {
+	color: #287df5 !important;
+}
+/* 点击时的背景颜色 */
+.tapmodeBg:active {
+	background: rgba(108, 159, 247, 0.1) !important;
+}
+.tapmodeBg_287:active {
+	background: #287df5 !important;
+	color: #fff !important;
+	border: none !important;
+}
+.click-active {
+	background: #eee !important;
+}
+.btn-active {
+	background: #287df5 !important;
+	color: #fff !important;
+	border: none !important;
+}
