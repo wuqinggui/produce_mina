@@ -1,44 +1,102 @@
-const app = getApp();
-
+// pages/set/set.js
 Page({
+
+  /**
+   * 页面的初始数据
+   */
   data: {
-    loading: true
+    isAuthUserinfo: false, // wxml无法直接使用getApp().globalData.isAuthUserinfo
+    userInfo: {},
   },
-  onLoad() {
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    let { getOpenidEnd } = getApp().globalData;
+    // 已微信登陆
+    if (getOpenidEnd) {
+      this.pageInit();
+    } else {
+      // 未微信登陆
+      getApp().globalData.getOpenidCb = () => {
+        this.pageInit();
+      }
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+  
+  // 页面初始化
+  pageInit: function () {
     this.setData({
-      list: [{
-        text: '头像',
-        tip: '',
-        img: true,
-        info: app.globalData.userInfo.avatarUrl
-      }, {
-        text: '用户名',
-        tip: '',
-        info: app.globalData.userInfo.nickName
-      }, {
-        text: '手机号',
-        tip: '',
-        url: 'tel-bind/tel-bind',
-        info: app.globalData.userInfo.mobile || '尚未绑定'
-      }, {
-        text: '微信',
-        tip: '',
-        url: 'tel-bind/tel-bind',
-        info: app.globalData.userInfo.mobile || '尚未绑定'
-      }, {
-        text: '收货地址',
-        tip: '',
-        url: 'tel-bind/tel-bind',
-        info: app.globalData.userInfo.mobile || '尚未绑定'
-      }, {
-        text: '退出登录',
-        tip: '',
-        url: 'tel-bind/tel-bind',
-        info: app.globalData.userInfo.mobile || '尚未绑定'
-      }]
-    });
+      isAuthUserinfo: getApp().globalData.isAuthUserinfo,
+      userinfo: getApp().globalData.userinfo
+    })
   },
+  // 跳转收货地址
+  goAddress: function () {
+    wx.navigateTo({
+      url: '/pages/shippingAddress/shippingAddress',
+    })
+  },
+  // 退出登陆
+  logout: function () {
+    wx.navigateTo({
+      url: '/pages/login/login',
+    })
+  },
+
+  
   navigateTo(e) {
+    return
     const url = e.currentTarget.dataset.url;
     const that = this;
     if (url === undefined) {
@@ -68,7 +126,7 @@ Page({
                 icon: icon
               }).then(res => {
                 if (res.statusCode == 200) {
-                  app.globalData.userInfo.avatarUrl = res.data.data.icon;
+                  getApp().globalData.userInfo.avatarUrl = res.data.data.icon;
                   resource.showTips(that, '修改成功');
                   that.onLoad();
                 } else {
@@ -89,4 +147,4 @@ Page({
       });
     }
   }
-});
+})

@@ -117,6 +117,7 @@ Page({
 
   // 微信登录，获取session_id
   weChatLogin: function () {
+    return
     wx.showLoading({
       title: '登录中',
     });
