@@ -1,7 +1,13 @@
 /* pages/staffManage/staffManage.wxss */
-
 .addinfo {
   position: relative;
+}
+.arrow {
+  transform: rotate(90deg);
+}
+.addinfo text {
+  width: 160rpx;
+  text-align: right;
 }
 .addinfo .weui-input {
   text-align: left;
@@ -28,14 +34,12 @@
 .weui-dialog__bd {
   margin-bottom: 14rpx !important;
 }
-
-.weui-dialog__ft {
-  line-height: 100rpx !important;
-  min-height: 100rpx !important;
-  align-items: center;
+.weui-dialog__ft::after {
+  border-top: 1rpx solid #f3f3f3 !important;
 }
 
 .weui-dialog__btn {
+  line-height: 128rpx;
   font-size: 32rpx !important;
   color: #333 !important;
 }
@@ -45,11 +49,12 @@
   width: 100%;
 }
 .ipt .select {
-  top: 6rpx;
+  top: 24rpx;
   right: 10rpx;
   position: absolute;
   width: 50rpx;
   height: 50rpx;
+  transform: rotate(90deg);
 }
 .piker {
   position: relative;

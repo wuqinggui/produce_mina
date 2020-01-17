@@ -1,6 +1,12 @@
 /* pages/shopManage/shopManage.wxss */
+
 .addinfo {
   position: relative;
+}
+
+.addinfo text {
+  width: 160rpx;
+  text-align: right;
 }
 .addinfo .weui-input {
   text-align: left;
@@ -14,14 +20,12 @@
 .weui-dialog__bd {
   margin-bottom: 14rpx !important;
 }
-
-.weui-dialog__ft {
-  line-height: 100rpx !important;
-  min-height: 100rpx !important;
-  align-items: center;
+.weui-dialog__ft::after {
+  border-top: 1rpx solid #f3f3f3 !important;
 }
 
 .weui-dialog__btn {
+  line-height: 128rpx;
   font-size: 32rpx !important;
   color: #333 !important;
 }

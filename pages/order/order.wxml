@@ -6,9 +6,9 @@
       <view class="half-px-border half-px-border-bottom"></view>
         <view class="shop-name">
           <mp-icon icon="album" color="black" size="{{20}}"></mp-icon>
-          <text class="f14 ml5">水果店铺名</text>
+          <text class="ml5">水果店铺名</text>
         </view>
-        <view class="cell-status f14">
+        <view class="cell-status">
           {{refund_status==="没有售后" ? order_status : "售后处理中"}}
         </view>
       </view>
@@ -20,14 +20,14 @@
         <view class="carts-text">
           <!-- 商品标题 -->
           <view class="verticle-center">
-            <text class="carts-title f14">{{goodsList[index].goods_name}}</text>
+            <text class="carts-title">{{goodsList[index].goods_name}}</text>
             <text class="carts-type ml10">{{goodsList[index].goods_sn}}</text>
           </view>
           <view class="carts-price row ju-b al-c">
             <view class="priceinfo">
               <text class="symbol f10">￥</text>
-              <text class="price f14 pr10">{{goodsList[index].sum_price}}</text>
-              <text class="unit f12">/斤</text>
+              <text class="price pr10">{{goodsList[index].sum_price}}</text>
+              <text class="unit f13">/斤</text>
             </view>
             <view class="num f13">× {{goodsList[index].goods_number}}</view>
           </view>
@@ -35,36 +35,36 @@
       </view>
     </view>
     <view class="flexible pt10 pb10" bindtap="OpenClose" data-index="{{index}}">
-      <image src="../../images/{{flexible ? 'icon_up@2x' : 'icon_down@2x'}}.png"></image>
+      <view class="common-arrow ml5 {{flexible ? 'left' : 'right'}} arrow"></view>
+      <!-- <image src="../../images/{{flexible ? 'icon_up@2x' : 'icon_down@2x'}}.png"></image> -->
     </view>
     <view class="cell-count flex">
       <text class="count-amount f12">共{{goodsList.length}}件商品</text>
       <text class="count-price f14">合计：￥{{total_amount}}</text>
     </view>
     <view class="btns flex mt10" hidden="{{order.isButtonShow}}">
-      <view class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付
-      <view class="half-px-border"></view>
-      </view>
+      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付
+      </button>
 
-      <view class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</view>
+      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
 
-      <view class="btn ml5 btn-border" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</view>
+      <button class="btn ml5 btn-border" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
 
-      <view class="btn ml5" wx:if="{{ order.orderStatus==='待发货'&&refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.subOrderSn}}">申请退款</view>
+      <button class="btn ml5" wx:if="{{ order.orderStatus==='待发货'&&refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.subOrderSn}}">申请退款</button>
 
-      <view class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.subOrderSn}}">查看物流</view>
+      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.subOrderSn}}">查看物流</button>
 
-      <view class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.subOrderSn}}">确认收货</view>
+      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.subOrderSn}}">确认收货</button>
 
-      <view wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="order.deleteOrder({ subOrderSn:order.data.sub_order_sn })">删除订单</view>
+      <button wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="order.deleteOrder({ subOrderSn:order.data.sub_order_sn })">删除订单</button>
     </view>
   </view>
 </template>
 
 <view class="order pb20">
   <view class="nav-header mt10 mb10">
-    <view wx:for="{{navs}}" wx:key="alias" class="f14 nav-cell {{item.alias==activeNav?'active':''}}">
-      <text class="f14" bindtap="changeList" data-alias="{{item.alias}}">{{item.text}}</text>
+    <view wx:for="{{navs}}" wx:key="alias" class="nav-cell {{item.alias==activeNav?'active':''}}">
+      <text bindtap="changeList" data-alias="{{item.alias}}">{{item.text}}</text>
     </view>
   </view>
   <view class="orders-wrap" hidden="{{loading}}">

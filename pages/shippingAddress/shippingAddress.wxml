@@ -3,15 +3,16 @@
   <view class="info mt10 flex">
     <view>
       <view class="user mb5">
-        <text class="mr20 f14">收货人: {{name}} </text>
-        <text class="f14">{{phone}}</text>
+        <text class="mr20">收货人: {{name}} </text>
+        <text>{{phone}}</text>
       </view>
       <view class="address">
-        <text class="f12 gray6">收货地址: {{address}}</text>
+        <text class="f13 gray6 mr5">收货地址： </text>
+        <text class="f13 gray6">{{address}}</text>
       </view>
     </view>
     <view class="edit flex ju-c" bindtap="editAddress">
-      <mp-icon icon="pencil" color="black" size="{{20}}"></mp-icon>
+      <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}"></mp-icon>
     </view>
   </view>
 </template>

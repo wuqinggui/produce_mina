@@ -1,42 +1,42 @@
 <!--pages/staffManage/staffManage.wxml-->
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
-    <view class="addinfo piker pb20 flex ju-c">
+    <view class="addinfo piker pb10 pt10 flex ju-c">
       <text>店铺：</text>
       <picker bindchange="bindPickerChange2" value="{{array[index]}}" range="{{array}}">
         <view class="picker">
           <input class="weui-input" disabled="true" value="{{shopName}}" />
         </view>
       </picker>
-      <image src="../../images/icon_down@2x.png" class="select"></image>
+      <view class="common-arrow right arrow"></view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo piker pb20 flex ju-c">
+    <view class="addinfo piker pb10 pt10 flex ju-c">
       <text>工种：</text>
       <picker bindchange="bindPickerChange3" value="{{array[index]}}" range="{{array}}">
         <view class="picker">
           <input class="weui-input" disabled="true" value="{{worktype}}" />
         </view>
       </picker>
-      <image src="../../images/icon_down@2x.png" class="select"></image>
+      <view class="common-arrow right arrow"></view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb20 flex ju-c">
+    <view class="addinfo pb10 pt10 flex ju-c">
       <text>员工名：</text>
       <input class="weui-input" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb20 flex ju-c">
+    <view class="addinfo pb10 pt10 flex ju-c">
       <text>联系电话：</text>
       <input class="weui-input" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb20 flex ju-c">
+    <view class="addinfo pb10 pt10 flex ju-c">
       <text>账号：</text>
       <input class="weui-input" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb20 flex ju-c">
+    <view class="addinfo pb10 pt10 flex ju-c">
       <text>密码：</text>
       <input class="weui-input" />
       <view class="half-px-border half-px-border-bottom"></view>
@@ -49,7 +49,7 @@
           <input class="weui-input" value="{{inputValue}}" disabled="true" />
         </view>
       </picker>
-      <image src="../../images/icon_down@2x.png" class="select"></image>
+      <view class="common-arrow right arrow select"></view>
     </view>
     <view class="add pl20 flex" bindtap="addShop">
       <mp-icon icon="add2" color="black" size="{{26}}"></mp-icon>
@@ -70,7 +70,7 @@
         </view>
       </view>
       <view class="icon">
-        <mp-icon icon="arrow" color="black" size="{{14}}"></mp-icon>
+        <mp-icon icon="arrow" color="black" size="{{10}}"></mp-icon>
       </view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>

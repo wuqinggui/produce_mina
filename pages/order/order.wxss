@@ -66,7 +66,7 @@
   height: 100%;
 }
 .carts-name {
-  border-bottom: 1rpx solid #F8F8F8;
+  position: relative;
 }
 /*每行单元格*/
 .carts-item {
@@ -101,7 +101,6 @@
 /*右上部分标题*/
 
 .carts-title {
-  font-size: 28rpx;
   color: #444;
 }
 
@@ -111,7 +110,7 @@
   padding: 1rpx 10rpx;
   font-size: 20rpx;
   color: #dedede;
-  border: 1px solid #dedede;
+  border: 1rpx solid #f3f3f3;
   border-radius: 50rpx;
   text-align: center;
 }
@@ -205,15 +204,14 @@
 .btns .btn {
   font-size: 26rpx;
   color: #8b8b8b;
-  
-  border: 1rpx solid #8b8b8b;
+  border: 1rpx solid #e6e4e4;
   padding: 12rpx 30rpx;
   border-radius: 30rpx;
 }
 
 .btns .btn-border {
   color: #ffae11;
-  border: 1rpx solid #ffae11;
+  border: 1rpx solid #f3d599;
 }
 
 .empty {
@@ -245,7 +243,6 @@
   background: #ff2d4b;
   color: #fff;
 }
-
-.button-hover {
-  background-color: transparent;
+.arrow {
+  transform: rotate(90deg);
 }

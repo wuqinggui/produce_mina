@@ -9,8 +9,11 @@
   width: 60rpx;
   height: 60rpx;
 }
+.arrow {
+  transform: rotate(90deg);
+}
 .list {
-  height: 280px;
+  height: 580rpx;
   overflow: hidden;
 }
 .shop-title {
@@ -28,12 +31,12 @@
 }
 /*每行单元格*/
 .carts-item {
+  position: relative;
 	display: flex;
 	flex-direction: row;
 	height:100%;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
-	border-bottom: 1rpx solid #eee;
 	padding: 15rpx 0;
 	margin-right: 40rpx;
 	background: white;
@@ -66,7 +69,7 @@
   padding: 1rpx 10rpx;
 	font-size: 20rpx;
 	color: #DEDEDE;
-	border: 1px solid #DEDEDE;
+	border: 1px solid #f3f3f3;
 	border-radius: 50rpx;
 	text-align: center;
 }
@@ -87,8 +90,8 @@
 	color: #666;
 }
 .freight, .summation {
+  position: relative;
   height: 80rpx;
-  border-bottom: 1px solid #DEDEDE;
   align-items: center;
   display: flex;
   justify-content: space-between;

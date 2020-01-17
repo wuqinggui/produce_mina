@@ -3,9 +3,9 @@
     <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
       <view class="shop-name">
         <icon data-index="{{idx}}" type="{{itemName.selectedAll ? 'success_circle' : 'circle'}}" size="20" class="mr10" bindtap="selectedAll" />
-        <text class="f14">{{itemName.storeName}}</text>
+        <text>{{itemName.storeName}}</text>
       </view>
-      <view class="add f14 mr20" bindtap="addShop">添加商品</view>
+      <view class="add mr20" bindtap="addShop">添加商品</view>
     </view>
     <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
       <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
@@ -23,8 +23,8 @@
             <!-- 价格 -->
             <view class="carts-price">
               <text class="symbol f10">￥</text>
-              <text class="price f14 pr10">{{item.goods.price}}</text>
-              <text class="unit f12">/斤</text>
+              <text class="price pr10">{{item.goods.price}}</text>
+              <text class="unit f13">/斤</text>
             </view>
             <!-- 数量加减 -->
             <view>
