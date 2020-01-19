@@ -60,8 +60,10 @@
 .template .list-item-input {
   flex: 1;
 }
-.template .accept .checkbox {
-  scale: 0.8;
+.template .accept .radio {
+  transform: scale(0.7);
+  position: absolute;
+  left: 0;
 }
 .template .accept .agreement {
   color: #FFA800;

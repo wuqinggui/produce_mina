@@ -66,7 +66,7 @@
           <input placeholder-class="place-holder" class="weui-input" />
         </view> -->
         </view>
-        <view class="list-item flex">
+        <!-- <view class="list-item flex">
           <view class="list-item-info">
             <text class="require">*</text>
             <text class="name">手机号码：</text>
@@ -86,13 +86,13 @@
           </view>
           <view class="sendEMS f13 {{sendFlag? '' : 'bg-gray6'}}" bindtap="sendEMS">{{sendMsg}}</view>
           <view class="half-px-border half-px-border-bottom"></view>
-        </view>
+        </view> -->
         <view class="accept pt10">
-          <checkbox-group name="accept">
-            <checkbox class="checkbox" value="true" checked="{{isAccept}}">
-              <text class="agreement f18">《商家入驻协议》</text>
-            </checkbox>
-          </checkbox-group>
+          <radio-group name="accept">
+            <radio class="radio" value="true" checked="{{isAccept}}">
+              <text class="agreement f20">《商家入驻协议》</text>
+            </radio>
+          </radio-group>
         </view>
         <view class="btns mt50 mb50 text-center">
           <button class="btn wbtn" formType="submit">下一步</button>
