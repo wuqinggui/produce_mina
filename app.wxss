@@ -2,6 +2,7 @@
 @import "/style/fonts.wxss";
 @import "/style/common.wxss";
 @import "/style/base.wxss";
+@import "/style/iconfont.wxss";
 
 view{
   box-sizing: border-box;

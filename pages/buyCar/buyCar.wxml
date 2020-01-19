@@ -30,11 +30,11 @@
             <view>
               <view class="stepper">
                 <!-- 减号 -->
-                <text class="{{minusStatuses[idx][index] ? minusStatuses[idx][index] : 'normal'}}" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus">-</text>
+                <text class=" iconfont icon-jianhao {{minusStatuses[idx][index] ? minusStatuses[idx][index] : 'normal'}}" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
                 <input type="number" data-index="{{index}}" data-idx="{{idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.quantity}}" />
                 <!-- 加号 -->
-                <text class="normal" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindPlus">+</text>
+                <text class="normal iconfont icon-jiahao" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindPlus"></text>
               </view>
             </view>
           </view>

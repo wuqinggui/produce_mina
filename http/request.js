@@ -1,6 +1,7 @@
 function httpHeader () {
   return {
-    'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    // 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    'content-type': 'application/json;charset=UTF-8',
     'authUserid': wx.getStorageSync("userId") ? wx.getStorageSync("userId") : ''
   };
 }

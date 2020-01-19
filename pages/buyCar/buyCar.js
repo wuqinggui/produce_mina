@@ -1,4 +1,5 @@
 // const AV = require('../../utils/av-weapp.js')
+var shopApi = require('../../http/shopApi.js').default;
 var app = getApp()
 Page({
   data: {
@@ -15,12 +16,12 @@ Page({
       url: '../index/index'
     })
   },
-  bindMinus: function (e) {
+  bindMinus: function(e) {
     // loading提示
-    // wx.showLoading({
-    // 	title: '操作中',
-    // 	mask: true
-    // });
+    wx.showLoading({
+    	title: '操作中',
+    	mask: true
+    });
     var listIndex = parseInt(e.currentTarget.dataset.index);
     var objIndex = parseInt(e.currentTarget.dataset.idx);
     var num = this.data.cartObj[objIndex].carts[listIndex].quantity;
@@ -41,12 +42,12 @@ Page({
     this.setData({
       cartObj: cartObj,
       minusStatuses: minusStatuses
-    }, function () {
+    }, function() {
       wx.hideLoading();
     });
     this.sum();
   },
-  bindPlus: function (e) {
+  bindPlus: function(e) {
     wx.showLoading({
       title: '操作中',
       mask: true
@@ -69,12 +70,12 @@ Page({
     this.setData({
       cartObj: cartObj,
       minusStatuses: minusStatuses
-    }, function () {
+    }, function() {
       wx.hideLoading();
     });
     this.sum();
   },
-  bindManual: function (e) {
+  bindManual: function(e) {
     wx.showLoading({
       title: '操作中',
       mask: true
@@ -88,15 +89,15 @@ Page({
     // 将数值与状态写回
     this.setData({
       cartObj: cartObj
-    }, function () {
+    }, function() {
       wx.hideLoading();
     });
     this.sum();
   },
-  bindManualTapped: function () {
+  bindManualTapped: function() {
     // 什么都不做，只为打断跳转
   },
-  bindCheckbox: function (e) {
+  bindCheckbox: function(e) {
     wx.showLoading({
       title: '操作中',
       mask: true
@@ -123,7 +124,7 @@ Page({
     for (var item in cartObj) {
       if (cartObj[item].selectedAll) {
         selectedAllStatus = true;
-      }else {
+      } else {
         selectedAllStatus = false;
         break;
       }
@@ -132,12 +133,12 @@ Page({
     this.setData({
       cartObj: cartObj,
       selectedAllStatus: selectedAllStatus
-    }, function () {
+    }, function() {
       wx.hideLoading();
     });
     this.sum();
   },
-  bindSelectAll: function () {
+  bindSelectAll: function() {
     wx.showLoading({
       title: '操作中',
       mask: true
@@ -159,13 +160,13 @@ Page({
     this.setData({
       selectedAllStatus: selectedAllStatus,
       cartObj: cartObj,
-    }, function () {
+    }, function() {
       wx.hideLoading();
     });
     this.sum();
 
   },
-  bindCheckout: function () {
+  bindCheckout: function() {
     var cartIds = this.calcIds();
     if (cartIds.length) {
       cartIds = cartIds.join(',');
@@ -174,7 +175,7 @@ Page({
       });
     }
   },
-  delete: function (e) {
+  delete: function(e) {
     var that = this;
     // 购物车单个删除
     var objectId = e.currentTarget.dataset.objectId;
@@ -182,14 +183,14 @@ Page({
     wx.showModal({
       title: '提示',
       content: '确认要删除吗',
-      success: function (res) {
+      success: function(res) {
         if (res.confirm) {
           console.log('删除成功');
         }
       }
     })
   },
-  calcIds: function () {
+  calcIds: function() {
     // 遍历取出已勾选的cid
     // var buys = [];
     var cartIds = [];
@@ -213,7 +214,7 @@ Page({
     }
     return cartIds;
   },
-  selectedAll: function (e) {
+  selectedAll: function(e) {
     var cartObj = this.data.cartObj;
     var index = parseInt(e.currentTarget.dataset.index);
     var carts = cartObj[index].carts;
@@ -240,7 +241,23 @@ Page({
     })
     this.sum();
   },
-  onShow: function () {
+  onShow: function() {
+    // shopApi.login({}).then((res)=> {
+    //   console.log(res);
+    // }).catch((error) => {
+    //   console.log(error);
+    // })
+    // return
+    let params = {
+      userId: 'sssss'
+    };
+    shopApi.searchCar(params)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     var cartObj = [{
       id: 1,
       storeName: '水果旗舰店1',
@@ -317,13 +334,12 @@ Page({
           type: '上品'
         }
       }]
-    }
-    ];
+    }];
     this.setData({
       cartObj: cartObj
     })
   },
-  sum: function () {
+  sum: function() {
     var cartObj = this.data.cartObj;
     // 计算总金额
     var total = 0.00;
@@ -342,14 +358,14 @@ Page({
       total: total
     });
   },
-  showGoods: function (e) {
+  showGoods: function(e) {
     // 点击购物车某件商品跳转到商品详情
     var objectId = e.currentTarget.dataset.objectId;
     // wx.navigateTo({
     // 	url: '../goods/detail/detail?objectId=' + objectId
     // });
   },
-  touchStart: function (e) {
+  touchStart: function(e) {
     var startX = e.touches[0].clientX;
     var idx = e.currentTarget.dataset.idx;
     var itemLefts = this.data.itemLefts;
@@ -362,7 +378,7 @@ Page({
       itemLefts: itemLefts
     });
   },
-  touchMove: function (e) {
+  touchMove: function(e) {
     var idx = e.currentTarget.dataset.idx;
     var index = e.currentTarget.dataset.index;
     var movedX = e.touches[0].clientX;
@@ -373,7 +389,7 @@ Page({
       itemLefts: itemLefts
     });
   },
-  touchEnd: function (e) {
+  touchEnd: function(e) {
     var idx = e.currentTarget.dataset.idx;
     var index = e.currentTarget.dataset.index;
     var endX = e.changedTouches[0].clientX;
