@@ -1,11 +1,7 @@
-<view class='wechat-login-area'>
-  <image class="wechat-login-logo" src="/images/fangsuo_logo.png" mode="cover"></image>
-  <view class='wechat-login-title'>农贸商城</view>
-  <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{!wxSetting}}">
-    <text class='wechat-login-text'>微信授权</text>
-  </button>
-  <button wx:else open-type="getPhoneNumber" bindgetuserinfo="getPhoneNumber" class="wechat-login-btn"  bindtap="weChatLogin">
-    <text class='wechat-login-text'>手机号授权登录</text>
-  </button>
+<view class="login-wrap">
+  <input value="{{userName}}" bindinput="bindKeyUserName" type="number" maxlength="11" placeholder="用户名" placeholder-class="input-placeholder" class="input-content"/>
+  <input value="{{password}}" password="{{true}}" bindinput="bindKeyPassword" maxlength="20" placeholder="密码" placeholder-class="input-placeholder" class="input-content"/>
+  <button bindtap="login" class="submit-btn {{ userName && password ? '' : 'btn-disabled' }}">登 录</button>
 </view>
+<image class="login-bg" src="/images/bg.png" mode="cover"></image>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

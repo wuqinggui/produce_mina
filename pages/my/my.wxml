@@ -11,21 +11,9 @@
     <view class="info">
         <button
         class="auth-btn"
-        hover-class="none"
-        open-type="getUserInfo"
-        bindgetuserinfo="getUserInfo"
-        wx:if="{{!isAuthUserinfo}}">
-            <image src="/images/head_img.png" class="info-icon"></image>
-            <text class="gray3 f16 text-white text-overflow pt10">点击显示微信头像</text>
-        </button>
-        <button
-            class="auth-btn"
-            hover-class="none"
-            wx:else>
-            <open-data type="userAvatarUrl" class="info-icon"></open-data>
-            <view class="gray3 f16 text-white text-overflow pt10">
-                <open-data type="userNickName"></open-data>
-            </view>
+        hover-class="none">
+            <image src="{{userInfo.userAvatar ? userInfo.userAvatar : '/images/head_img.png'}}" class="info-icon"></image>
+            <text class="gray3 f16 text-white text-overflow pt10">{{userInfo.userName ? userInfo.userName : '用户名'}}</text>
         </button>
     </view>
     <template wx:for="{{list}}" wx:key="index" is="list" data="{{...item}}"></template>

@@ -1,4 +1,5 @@
 // pages/aboutUS/aboutUS.js
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -26,7 +27,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
+      this.getData();
+    } else {
+      let url = util.getCurrentPageUrl();
+      wx.setStorageSync('goBackPageURL', url)
+      wx.reLaunch({
+        url: '/pages/login/login'
+      })
+    }
   },
 
   /**
@@ -61,6 +71,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+
+  },
+  
+  // 获取数据
+  getData: function () {
 
   }
 })

@@ -1,10 +1,8 @@
 export const baseUrl = 'https://47.106.130.46:8016/trade/';
 
 // 用户模块
-export const loginURL = baseUrl + 'wechat/user/login'; // 微信登陆
-export const getPhonenumberURL = baseUrl + 'wechat/user/getPhonenumber'; // 用户手机信息
-export const getUserInfoUrl = baseUrl + 'wechat/user/getUserInfo'; // 获取用户信息
-export const updateUserInfoUrl = baseUrl + 'wechat/user/updateUserInfo'; // 更新用户信息
+export const loginURL = baseUrl + 'nmUser/login'; // 登陆
+export const tokenURL = baseUrl + 'nmUser/getToken'; // 根据token获取用户信息
 
 // 商城接口
 export const findAllUrl = baseUrl + 'region/findAll'; // 获取所有地区的接口

@@ -1,6 +1,6 @@
 // pages/index/index.js
 var shopApi = require('../../http/shopApi.js').default;
-const util = require('../../utils/util.js')
+var util = require('../../utils/util.js')
 Page({
 
   /**
@@ -362,15 +362,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let { getOpenidEnd } = getApp().globalData;
-    // 已微信登陆
-    if (getOpenidEnd) {
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
       this.pageInit();
     } else {
-      // 未微信登陆
-      getApp().globalData.getOpenidCb = () => {
-        this.pageInit();
-      }
+      let url = util.getCurrentPageUrl();
+      wx.setStorageSync('goBackPageURL', url)
+      wx.reLaunch({
+        url: '/pages/login/login'
+      })
     }
   },
 
@@ -413,23 +413,6 @@ Page({
   pageInit: function () {
     console.log('首页')
     this.getData();
-  },
-  // 获取当前定位的城市
-  getCurCity: function () {
-    console.log('获取当前定位')
-    getApp().setLocation(1)
-      .then((res) => {
-        console.log('res', res)
-        // wx.showToast({
-        //   title: '获取经纬度成功',
-        //   icon: 'none',
-        //   duration: 2000
-        // })
-      })
-      .catch((error) => {
-        console.log('error', error)
-      })
-      this.getCityList();
   },
   // 获取城市列表
   getCityList: function () {

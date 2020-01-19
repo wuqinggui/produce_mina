@@ -1,6 +1,6 @@
 // const AV = require('../../utils/av-weapp.js')
 var shopApi = require('../../http/shopApi.js').default;
-var app = getApp()
+var util = require('../../utils/util.js');
 Page({
   data: {
     cartObj: {},
@@ -242,22 +242,30 @@ Page({
     this.sum();
   },
   onShow: function() {
-    // shopApi.login({}).then((res)=> {
-    //   console.log(res);
-    // }).catch((error) => {
-    //   console.log(error);
-    // })
-    // return
-    let params = {
-      userId: 'sssss'
-    };
-    shopApi.searchCar(params)
-      .then((res) => {
-        console.log(res);
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
+      this.getData();
+    } else {
+      let url = util.getCurrentPageUrl();
+      wx.setStorageSync('goBackPageURL', url)
+      wx.reLaunch({
+        url: '/pages/login/login'
       })
-      .catch((error) => {
-        console.log(error);
-      })
+    }
+  },
+  
+  // 获取数据
+  getData: function () {
+    // let params = {
+    //   userId: 'sssss'
+    // };
+    // shopApi.searchCar(params)
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
     var cartObj = [{
       id: 1,
       storeName: '水果旗舰店1',

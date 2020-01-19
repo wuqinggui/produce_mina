@@ -1,7 +1,7 @@
 <view class="menu-wrap {{narList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
 <!-- 头部城市店铺 -->
   <view class="head-wrap verticle-center row">
-    <view class='city-wrap verticle-center row' bindtap="getCurCity">
+    <view class='city-wrap verticle-center row' bindtap="getCityList">
       <view class='city-name text-black text-overflow flex-1'>{{curCity.cityName}}</view>
       <view class='triangle-wrap ml5'>
         <image src="../../images/triangle_down.png"></image>

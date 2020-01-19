@@ -1,11 +1,11 @@
 // pages/set/set.js
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isAuthUserinfo: false, // wxml无法直接使用getApp().globalData.isAuthUserinfo
     userInfo: {},
   },
 
@@ -27,15 +27,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let { getOpenidEnd } = getApp().globalData;
-    // 已微信登陆
-    if (getOpenidEnd) {
-      this.pageInit();
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
+      this.getData();
     } else {
-      // 未微信登陆
-      getApp().globalData.getOpenidCb = () => {
-        this.pageInit();
-      }
+      let url = util.getCurrentPageUrl();
+      wx.setStorageSync('goBackPageURL', url)
+      wx.reLaunch({
+        url: '/pages/login/login'
+      })
     }
   },
 
@@ -73,13 +73,10 @@ Page({
   onShareAppMessage: function () {
 
   },
-  
-  // 页面初始化
-  pageInit: function () {
-    this.setData({
-      isAuthUserinfo: getApp().globalData.isAuthUserinfo,
-      userinfo: getApp().globalData.userinfo
-    })
+
+  // 获取数据
+  getData: function () {
+
   },
   // 跳转收货地址
   goAddress: function () {
@@ -89,7 +86,7 @@ Page({
   },
   // 退出登陆
   logout: function () {
-    wx.navigateTo({
+    wx.reLaunch({
       url: '/pages/login/login',
     })
   },

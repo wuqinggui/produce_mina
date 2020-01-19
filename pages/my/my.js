@@ -1,12 +1,13 @@
 // pages/my/my.js
 var userApi = require('../../http/userApi.js').default;
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isAuthUserinfo: false, // wxml无法直接使用getApp().globalData.isAuthUserinfo
+    userInfo: {},
     list: [
       {
         text: '店铺管理',
@@ -38,21 +39,6 @@ Page({
       }
     ]
   },
-
-  navigateTo: function(e) {
-    let { url,text  } = e.currentTarget.dataset;
-    if (url) {
-      wx.navigateTo({
-        url: url,
-      })
-    } else {
-      wx.showToast({
-        title: '暂无设计' + text + '页面',
-        icon: 'none',
-        duration: 2000
-      })
-    }
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -71,15 +57,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let { getOpenidEnd } = getApp().globalData;
-    // 已微信登陆
-    if (getOpenidEnd) {
-      this.pageInit();
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
+      this.getData();
     } else {
-      // 未微信登陆
-      getApp().globalData.getOpenidCb = () => {
-        this.pageInit();
-      }
+      let url = util.getCurrentPageUrl();
+      wx.setStorageSync('goBackPageURL', url)
+      wx.reLaunch({
+        url: '/pages/login/login'
+      })
     }
   },
 
@@ -118,50 +104,64 @@ Page({
 
   },
 
-  // 页面初始化
-  pageInit: function () {
-    this.setData({
-      isAuthUserinfo: getApp().globalData.isAuthUserinfo
-    })
+  // 获取用户信息
+  getData: function () {
+    
+  },
+
+  // 页面跳转
+  navigateTo: function(e) {
+    let { url,text  } = e.currentTarget.dataset;
+    if (url) {
+      wx.navigateTo({
+        url: url,
+      })
+    } else {
+      wx.showToast({
+        title: '暂无设计' + text + '页面',
+        icon: 'none',
+        duration: 2000
+      })
+    }
   },
   
   // 弹框式授权用户信息
-  getUserInfo: function (e) {
-    var _this = this;
-    console.log(e.detail)
-    let { errMsg, userInfo } = e.detail;
-    switch (errMsg) {
-      case 'getUserInfo:fail auth deny':
-      case 'getUserInfo:fail:cancel to confirm login':
-        break;
-      default:
-        // 必须是在用户已经授权的情况下调用
-        wx.getUserInfo({
-          success(res) {
-            console.log('用户信息', res)
-            // let params = Object.assign({}, res);
-            // delete params['userInfo'];
-            // delete params['errMsg'];
-            // userApi.getUserInfo(params)
-            //   .then((res2) => {
-              getApp().getUserinfoSetting();
-              getApp().saveUserinfo(res.userInfo);
-              _this.setData({
-                isAuthUserinfo: true
-              })
-              // })
-              // .catch((error2) => {
-              //   console.log(error2);
-              // })
-          },
-          fail(error) {
-            wx.showToast({
-              title: '授权用户信息失败，请重试',
-              icon: 'none'
-            });
-          }
-        });
-        break;
-    }
-  },
+  // getUserInfo: function (e) {
+  //   var _this = this;
+  //   console.log(e.detail)
+  //   let { errMsg, userInfo } = e.detail;
+  //   switch (errMsg) {
+  //     case 'getUserInfo:fail auth deny':
+  //     case 'getUserInfo:fail:cancel to confirm login':
+  //       break;
+  //     default:
+  //       // 必须是在用户已经授权的情况下调用
+  //       wx.getUserInfo({
+  //         success(res) {
+  //           console.log('用户信息', res)
+  //           // let params = Object.assign({}, res);
+  //           // delete params['userInfo'];
+  //           // delete params['errMsg'];
+  //           // userApi.getUserInfo(params)
+  //           //   .then((res2) => {
+  //             getApp().getUserinfoSetting();
+  //             getApp().saveUserinfo(res.userInfo);
+  //             _this.setData({
+  //               isAuthUserinfo: true
+  //             })
+  //             // })
+  //             // .catch((error2) => {
+  //             //   console.log(error2);
+  //             // })
+  //         },
+  //         fail(error) {
+  //           wx.showToast({
+  //             title: '授权用户信息失败，请重试',
+  //             icon: 'none'
+  //           });
+  //         }
+  //       });
+  //       break;
+  //   }
+  // },
 })

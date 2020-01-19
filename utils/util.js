@@ -126,7 +126,7 @@ function matchFn(matchType, value) {
  * @returns {Boolean}
  */
 function isBlank(value) {
-  return value === null || value === undefined || value === 'null' || value === 'undefined' || value === '';
+  return value === null || value === undefined || value === 'null' || value === 'undefined' || value === '' || value === {} || JSON.stringify(value) === '';
 }
 
 /**

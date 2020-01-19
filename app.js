@@ -12,9 +12,8 @@ App({
     userInfo: {}, // 用户数据
     systemInfo: {}, // 设备信息
     isIpx: false, //是否iPhone X
-    timer: '', // 定义一个全局变量表示定时器
     isConnected: true, // 网络状态
-    isAuthUserinfo: false, //是否授权用户信息
+    isAuthUserInfo: false, //是否授权用户信息
     isAuthLocation: false, //是否授权地理位置
     isSystemLocation: false, //是否打开定位权限
     longitude: 0,// 经度
@@ -30,13 +29,13 @@ App({
     this.getSystemInfo();
 
     // 微信登录
-    this.getWXCode({ options });
+    // this.getWXCode({ options });
     
     // 查询一下用户是否授权了 用户信息
-    this.getUserinfoSetting();
+    // this.getUserInfoSetting();
 
     // 查询一下用户是否授权了 地理位置
-    this.getLocationSetting();
+    // this.getLocationSetting();
 
   },
   onShow: function (options) {
@@ -81,7 +80,8 @@ App({
     var systemInfo = wx.getSystemInfoSync()
     console.log('------------设备信息---------', systemInfo);
     let {  model } = systemInfo;
-    if (model.indexOf('iPhone X') !== -1 || model.indexOf('iPhone11') !== -1) {
+    let ipxList = ['iPhone X', 'iPhone XR', 'iPhone XS', 'iPhone XS Max', 'iPhone11'];
+    if (ipxList.indexOf(model) !== -1) {
       this.globalData.isIpx = true;
     } else {
       this.globalData.isIpx = false;
@@ -143,23 +143,16 @@ App({
   },
 
   // 获取用户信息授权
-  getUserinfoSetting: function () {
+  getUserInfoSetting: function () {
     this.getSetting('scope.userInfo')
       .then((res) => {
         console.log('用户信息授权成功', res)
-        this.globalData.isAuthUserinfo = true;
+        this.globalData.isAuthUserInfo = true;
       })
       .catch((error) => {
         console.log('用户信息授权失败', error)
-        this.globalData.isAuthUserinfo = false;
+        this.globalData.isAuthUserInfo = false;
       })
-  },
-  // 存储用户数据
-  saveUserinfo: function (res) {
-    console.log('存储用户数据', res)
-    // wx.setStorageSync("userId", userinfo.userId);
-    this.globalData.userInfo = res;
-    // wx.setStorageSync("userinfo", userinfo);
   },
 
   // 查询授权情况
@@ -213,6 +206,7 @@ App({
           });
       })
   },
+
   // 获取经纬度
   getLocation: function () {
     return new Promise((resolve, reject) => {
@@ -254,6 +248,7 @@ App({
       });
     });
   },
+
   // 地理位置授权
   setLocation: function (again) {
     return new Promise((resolve, reject) => {
@@ -279,6 +274,7 @@ App({
       })
     });
   },
+
   // 由于定位服务拒绝后，再次请求直接进入fail，需要二次设置打开
   openConfirm: function () {
     wx.showModal({
@@ -318,8 +314,8 @@ App({
             iv,
             encryptedData
           };
-          let { userinfo } = this.globalData.userinfo;
-          let { mobile } = userinfo;
+          let { userInfo } = this.globalData.userInfo;
+          let { mobile } = userInfo;
           // userApi.getPhonenumber(params)
           //   .then((res1) => {
           // console.log(source);
