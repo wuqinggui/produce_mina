@@ -1,4 +1,5 @@
 // pages/index/index.js
+var shopApi = require('../../http/shopApi.js').default;
 const util = require('../../utils/util.js')
 Page({
 
@@ -416,18 +417,34 @@ Page({
   // 获取当前定位的城市
   getCurCity: function () {
     console.log('获取当前定位')
-      getApp().setLocation(1)
-        .then((res) => {
-          console.log('res', res)
-          wx.showToast({
-            title: '获取经纬度成功',
-            icon: 'none',
-            duration: 2000
-          })
+    getApp().setLocation(1)
+      .then((res) => {
+        console.log('res', res)
+        // wx.showToast({
+        //   title: '获取经纬度成功',
+        //   icon: 'none',
+        //   duration: 2000
+        // })
+      })
+      .catch((error) => {
+        console.log('error', error)
+      })
+      this.getCityList();
+  },
+  // 获取城市列表
+  getCityList: function () {
+    shopApi.findAll()
+      .then((res) => {
+      console.log('获取城市列表成功', res);
+      })
+      .catch((error) => {
+        console.log('获取城市列表失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '网络连接异常，请稍候再试',
+          icon: 'none',
+          duration: 2000
         })
-        .catch((error) => {
-          console.log('error', error)
-        })
+      })
   },
   // 显示店铺弹框
   showShopPop: function () {

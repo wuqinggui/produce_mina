@@ -18,7 +18,7 @@ import {
 var shopApi = {
   findAll: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findAllUrl, 'POST', params)
+      wxRequest(findAllUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })

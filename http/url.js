@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:8015/trade/';
+export const baseUrl = 'https://47.106.130.46:8016/trade/';
 
 // 用户模块
 export const loginURL = baseUrl + 'wechat/user/login'; // 微信登陆

@@ -20,7 +20,7 @@ const wxRequest = (url, type, params) => {
       method: type ? type : 'POST',
       data: params ? params : {},
       success: res => {
-        if (res.data.code === 0) {
+        if (res.data.code === 20000) {
           console.log(`___________URL:${url}成功,Params:${JSON.stringify(params)} response:`, res);
           resolve(res.data);
         } else {
