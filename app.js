@@ -25,6 +25,10 @@ App({
     console.log('------------onLaunch场景值---------', options.scene);
     console.log('------------onLaunch二维码参数---------', options);
 
+    // 获取全局用户数据
+    this.globalData.userInfo = wx.getStorageSync('sj_userInfo') ? wx.getStorageSync('sj_userInfo') : {}
+    console.log('获取全局用户数据', this.globalData.userInfo);
+    
     // 获取设备信息
     this.getSystemInfo();
 
@@ -86,6 +90,24 @@ App({
     } else {
       this.globalData.isIpx = false;
     }
+  },
+
+  // 存储用户数据和设置缓存
+  saveUserInfo: function (userInfo) {
+    console.log('存储用户数据和设置缓存', userInfo)
+    this.globalData.userInfo = userInfo;
+    wx.setStorageSync("sj_userInfo", userInfo);
+    wx.setStorageSync("sj_userId", userInfo.id);
+    wx.setStorageSync("sj_token", userInfo.token);
+  },
+
+  // 清空用户信息和缓存
+  clearUserInfo: function () {
+    console.log('清空用户信息和缓存')
+    this.globalData.userInfo = {};
+    wx.removeStorageSync('sj_userInfo');
+    wx.removeStorageSync('sj_userid');
+    wx.removeStorageSync('sj_token');
   },
 
   // 用户进来的时候先用wx.login登录传code给服务端，服务端获取openid之后在数据库插一条粉丝数据。用户操作购物车的时候正常请求，当他授权手机号的时候补全他的用户信息就可以了

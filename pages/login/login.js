@@ -29,11 +29,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // 清空用户信息和缓存
-    getApp().globalData.userInfo = {};
-    wx.removeStorageSync('sj_userInfo');
-    wx.removeStorageSync('sj_userid');
-    wx.removeStorageSync('sj_token');
+    getApp().clearUserInfo();// 清空用户信息和缓存
   },
 
   /**
@@ -126,42 +122,14 @@ Page({
     .then((res) => {
       console.log('根据token获取用户信息成功', res)
       wx.hideLoading();
-      // 存储用户数据和设置缓存
-      var userInfo = res.data;
-      getApp().globalData.userInfo = userInfo;
-      wx.setStorageSync("sj_userInfo", userInfo);
-      wx.setStorageSync("sj_userId", userInfo.id);
-      wx.setStorageSync("sj_token", userInfo.token);
-
+      getApp().saveUserInfo(res.data);// 存储用户数据和设置缓存
       wx.showToast({
         title: '登录成功',
         icon: 'success',
         duration: 1000
       })
       setTimeout(() => {
-        wx.switchTab({
-          url: '/pages/index/index'
-        })
-        // let tabPageList = [
-        //   'pages/index/index',
-        //   'pages/buyCar/buyCar',
-        //   'pages/order/order',
-        //   'pages/my/my'
-        // ]
-        // let backURL = wx.getStorageSync('goBackPageURL');
-        // if (backURL && backURL !== 'pages/login/login') {
-        //   if (tabPageList.indexOf(backURL) !== -1) {
-        //     // 跳转tabbar
-
-        //   } else {
-        //     // 跳转普通页面
-
-        //   }
-        // } else {
-        //   wx.switchTab({
-        //     url: '/pages/index/index'
-        //   })
-        // }
+        wx.navigateBack();
       }, 1000);
     })
     .catch((error) => {

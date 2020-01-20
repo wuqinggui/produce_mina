@@ -33,10 +33,8 @@ const wxRequest = (url, type, params) => {
             })
             setTimeout(() => {
               let pageUrl = util.getCurrentPageUrl(1); // 不带参数
-              let url = util.getCurrentPageUrl(); // 完整url
               if (pageUrl !== 'pages/login/login') {
-                wx.setStorageSync('goBackPageURL', url)
-                wx.reLaunch({
+                wx.navigateTo({
                   url: '/pages/login/login'
                 })
               }

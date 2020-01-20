@@ -95,9 +95,7 @@ Page({
     if (sj_userId) {
       this.getData();
     } else {
-      let url = util.getCurrentPageUrl();
-      wx.setStorageSync('goBackPageURL', url)
-      wx.reLaunch({
+      wx.navigateTo({
         url: '/pages/login/login'
       })
     }
