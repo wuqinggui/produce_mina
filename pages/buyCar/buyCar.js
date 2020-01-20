@@ -254,16 +254,22 @@ Page({
   
   // 获取数据
   getData: function () {
-    // let params = {
-    //   userId: 'sssss'
-    // };
-    // shopApi.searchCar(params)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
+    var userId = getApp().globalData.userInfo.id;
+    var params = {
+      userId: userId
+    }
+    shopApi.getCar(params)
+      .then((res) => {
+      console.log('获取购物车数据成功', res);
+      })
+      .catch((error) => {
+        console.log('获取购物车数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取购物车数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
     var cartObj = [{
       id: 1,
       storeName: '水果旗舰店1',

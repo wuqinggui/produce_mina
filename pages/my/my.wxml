@@ -13,7 +13,7 @@
         class="auth-btn"
         hover-class="none">
             <image src="{{userInfo.userAvatar ? userInfo.userAvatar : '/images/head_img.png'}}" class="info-icon"></image>
-            <text class="gray3 f16 text-white text-overflow pt10">{{userInfo.userName ? userInfo.userName : '用户名'}}</text>
+            <text class="gray3 f16 text-white text-overflow pt10">{{userInfo.nickname ? userInfo.nickname : '用户名'}}</text>
         </button>
     </view>
     <template wx:for="{{list}}" wx:key="index" is="list" data="{{...item}}"></template>

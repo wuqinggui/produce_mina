@@ -411,17 +411,62 @@ Page({
   pageInit: function () {
     console.log('首页')
     this.getData();
+    this.getCarData();
+    this.getCityList();
+    this.getShopList();
+  },
+  // 获取数据
+  getData: function () {
+    this.getScrollHeight();
+  },
+  // 获取购物车数据
+  getCarData: function () {
+    var userId = getApp().globalData.userInfo.id;
+    var params = {
+      userId: userId
+    }
+    shopApi.getCar(params)
+      .then((res) => {
+      console.log('获取购物车数据成功', res);
+      })
+      .catch((error) => {
+        console.log('获取购物车数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取购物车数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
   // 获取城市列表
   getCityList: function () {
     shopApi.findAll()
       .then((res) => {
-      console.log('获取城市列表成功', res);
+        console.log('获取地区数据成功', res);
       })
       .catch((error) => {
-        console.log('获取城市列表失败', error);
+        console.log('获取地区数据失败', error);
         wx.showToast({
-          title: error.message ? error.message : '网络连接异常，请稍候再试',
+          title: error.message ? error.message : '获取地区数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+  // 获取店铺
+  getShopList: function () {
+    var shopId = getApp().globalData.userInfo.shopId;
+    var params = {
+      id: shopId
+    }
+    shopApi.findShopByID(params)
+      .then((res) => {
+        console.log('获取店铺成功', res);
+      })
+      .catch((error) => {
+        console.log('获取店铺失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取店铺数据失败',
           icon: 'none',
           duration: 2000
         })
@@ -473,10 +518,6 @@ Page({
       showShopList: false,
       shopPop: false
     })
-  },
-  // 获取数据
-  getData: function () {
-    this.getScrollHeight();
   },
   // 菜品滚动高度
   getScrollHeight: function () {

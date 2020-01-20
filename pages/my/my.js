@@ -12,7 +12,7 @@ Page({
       {
         text: '店铺管理',
         url: '/pages/shopManage/shopManage',
-        num: 5
+        num: 0
       }, {
         text: '员工管理',
         url: '/pages/staffManage/staffManage',
@@ -104,7 +104,10 @@ Page({
 
   // 获取用户信息
   getData: function () {
-    
+    this.setData({
+      userInfo: getApp().globalData.userInfo
+    })
+    console.log('用户信息', this.data.userInfo)
   },
 
   // 页面跳转

@@ -9,19 +9,19 @@
   </view>
   <view class="item row bg-white gray3 verticle-center pl15 pr15 pt10 pb10 position-r">
     <view class="item-text f14">用户名</view>
-    <view class="ml10 mr10 flex-1 text-overflow">{{userInfo.userName}}</view>
+    <view class="ml10 mr10 flex-1 text-overflow text-right">{{userInfo.nickname}}</view>
     <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
     <view class="half-px-border half-px-border-bottom"></view>
   </view>
   <view class="item row bg-white gray3 verticle-center pl15 pr15 pt10 pb10 position-r">
     <view class="item-text f14">手机号</view>
-    <view class="ml10 mr10 flex-1 text-overflow">{{userInfo.phone}}</view>
+    <view class="ml10 mr10 flex-1 text-overflow text-right">{{userInfo.phone}}</view>
     <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
     <view class="half-px-border half-px-border-bottom"></view>
   </view>
   <view class="item row bg-white gray3 verticle-center pl15 pr15 pt10 pb10 position-r">
     <view class="item-text f14">微信</view>
-    <view class="ml10 mr10 flex-1 text-overflow">{{userInfo.wxAccount}}</view>
+    <view class="ml10 mr10 flex-1 text-overflow text-right">{{userInfo.wxAccount}}</view>
     <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
     <view class="half-px-border half-px-border-bottom"></view>
   </view>

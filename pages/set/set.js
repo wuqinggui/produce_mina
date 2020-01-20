@@ -74,7 +74,10 @@ Page({
 
   // 获取数据
   getData: function () {
-
+    this.setData({
+      userInfo: getApp().globalData.userInfo
+    })
+    console.log('用户信息', this.data.userInfo)
   },
   // 跳转收货地址
   goAddress: function () {

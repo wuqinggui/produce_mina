@@ -3,7 +3,7 @@ import {
   findAllUrl,
   findListUrl,
   addCarUrl,
-  searchCarUrl,
+  getCarUrl,
   deleteCarUrl,
   listPayUrl,
   findByUserIdUrl,
@@ -16,6 +16,7 @@ import {
 } from './url'
 
 var shopApi = {
+  // 获取所有地区的接口
   findAll: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(findAllUrl, 'GET', params)
@@ -25,108 +26,120 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
+  // 根据小分类查询所有商品的接口
   findList: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findListUrl, 'POST', params)
+      wxRequest(findListUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 将商品保存到购物车的接口
   addCar: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addCarUrl, 'POST', params)
+      wxRequest(addCarUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
-  searchCar: function (params) {
+  // 根据购物车当前用户ID查询购物车中的商品
+  getCar: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(searchCarUrl, 'POST', params)
+      wxRequest(getCarUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 从购物车中删除商品的接口
   deleteCar: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(deleteCarUrl, 'POST', params)
+      wxRequest(deleteCarUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 下单接口
   listPay: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(listPayUrl, 'POST', params)
+      wxRequest(listPayUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 订单查询接口
   findByUserId: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findByUserIdUrl, 'POST', params)
+      wxRequest(findByUserIdUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 新增店铺接口（含申请入驻的接口）
   addShop: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addShopUrl, 'POST', params)
+      wxRequest(addShopUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 修改店铺接口
   updateShop: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(updateShopUrl, 'POST', params)
+      wxRequest(updateShopUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 根据店铺id查询该店铺下所有的店铺
   findShopByID: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findShopByIDUrl, 'POST', params)
+      wxRequest(findShopByIDUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 员工添加
   addUser: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addUserUrl, 'POST', params)
+      wxRequest(addUserUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 员工修改
   updateUser: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(updateUserUrl, 'POST', params)
+      wxRequest(updateUserUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
         .catch((error) => reject(error))
     });
   },
+  // 员工查询
   findUser: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findUserUrl, 'POST', params)
+      wxRequest(findUserUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })

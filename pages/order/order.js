@@ -1,5 +1,6 @@
 // pages/order/order.js
 var util = require('../../utils/util.js');
+var shopApi = require('../../http/shopApi.js').default;
 Page({
 
   /**
@@ -117,8 +118,25 @@ Page({
 
   },
   
-  // 获取数据
+  // 获取订单数据
   getData: function () {
+    var userId = getApp().globalData.userInfo.id;
+    var params = {
+      userId: userId
+    }
+    shopApi.findByUserId(params)
+      .then((res) => {
+      console.log('获取订单数据成功', res);
+      })
+      .catch((error) => {
+        console.log('获取订单数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取订单数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+
     var orderList = [{
       flexible: true,
       address: "123123",
