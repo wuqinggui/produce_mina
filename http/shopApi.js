@@ -1,12 +1,14 @@
 var wxRequest = require('./request.js').wxRequest;
 import { 
-  findAllUrl,
-  findListUrl,
+  regionUrl,
+  shopClassUrl,
+  shopSmallClassUrl,
+  commodityListUrl,
   addCarUrl,
   getCarUrl,
   deleteCarUrl,
-  listPayUrl,
-  findByUserIdUrl,
+  addOrderUrl,
+  orderListUrl,
   addShopUrl,
   updateShopUrl,
   findShopByIDUrl,
@@ -17,9 +19,29 @@ import {
 
 var shopApi = {
   // 获取所有地区的接口
-  findAll: function (params) {
+  region: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findAllUrl, 'GET', params)
+      wxRequest(regionUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 查询大分类的接口
+  shopClass: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(shopClassUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 查询小分类的接口
+  shopSmallClass: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(shopSmallClassUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
@@ -27,9 +49,9 @@ var shopApi = {
     });
   },
   // 根据小分类查询所有商品的接口
-  findList: function (params) {
+  commodityList: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findListUrl, 'GET', params)
+      wxRequest(commodityListUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
@@ -67,9 +89,9 @@ var shopApi = {
     });
   },
   // 下单接口
-  listPay: function (params) {
+  addOrder: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(listPayUrl, 'GET', params)
+      wxRequest(addOrderUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
@@ -77,9 +99,9 @@ var shopApi = {
     });
   },
   // 订单查询接口
-  findByUserId: function (params) {
+  orderList: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(findByUserIdUrl, 'GET', params)
+      wxRequest(orderListUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })

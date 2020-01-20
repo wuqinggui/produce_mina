@@ -1,57 +1,53 @@
-<view class="menu-wrap {{narList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
-<!-- 头部城市店铺 -->
+<view class="menu-wrap {{classList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
+<!-- 头部地区店铺 -->
   <view class="head-wrap verticle-center row">
-    <view class='city-wrap verticle-center row' bindtap="getCityList">
-      <view class='city-name text-black text-overflow flex-1'>{{curCity.cityName}}</view>
-      <view class='triangle-wrap ml5'>
-        <image src="../../images/triangle_down.png"></image>
+    <picker bindchange="bindPickerChange" value="{{curRegionIndex}}" range="{{regionList}}" range-key="name">
+      <view class="city-wrap verticle-center row">
+        <view class='city-name text-black text-overflow flex-1 mr5'>{{curRegion.name}}</view>
+        <view class='triangle-wrap'></view>
       </view>
-    </view>
-    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 {{curShop.shopId ? 'shop-wrap' : 'shop-search'}}" bindtap="showShopPop">
-      <view class='search-wrap' wx:if="{{!curShop.shopId}}">
+    </picker>
+    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 {{curShop.id ? 'shop-wrap pl15 pr15' : 'shop-search'}}" bindtap="showShopPop">
+      <view class='search-wrap' wx:if="{{!curShop.id}}">
         <image src="../../images/search_icon.jpg"></image>
       </view>
-      <text class="flex-1 {{curShop.shopName ? '' : 'f14'}}">{{curShop.shopName ? curShop.shopName : '搜索'}}</text>
+      <text class="flex-1 {{curShop.merchantName ? '' : 'f14'}}">{{curShop.merchantName ? curShop.merchantName : '搜索店铺'}}</text>
+      <view class="common-arrow bottom arrow" wx:if="{{curShop.id}}"></view>
     </view>
   </view>
 
 <!-- 顶部导航菜品分类 -->
-  <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{narList.length > 0}}">
-    <block wx:for="{{narList}}" 
-          wx:for-item="narItem"
-          wx:for-index="narIndex"
-          wx:key="narIndex">
+  <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{classList.length > 0}}">
+    <block wx:for="{{classList}}" 
+          wx:for-item="classItem"
+          wx:for-index="classIndex"
+          wx:key="classIndex">
       <view class="narItem col-xs-3" >
         <view class="image-wrap">
-          <image src="{{narItem.imgUrl ? narItem.imgUrl : imgPlaceholder}}" class="image"></image>
+          <image src="{{classItem.imagepath ? classItem.imagepath : imgPlaceholder}}" class="image"></image>
         </view>
-        <view class="text-center f14 gray3 text-overflow">{{narItem.categoryName}}</view>
+        <view class="text-center f14 gray3 text-overflow">{{classItem.className}}</view>
       </view>
     </block>
   </view>
 
-<!-- 中间菜品 -->
+  <!-- 中间菜品 -->
   <scroll-view
     scroll-y
-    scroll-into-view="{{'categoryId_' + curCategoryId}}"
-    class="content-wrap"
-    bindscroll="scroll"
-    wx:if="{{goodsList.length > 0}}">
+    class="content-wrap">
     <!-- 左侧菜单栏 -->
-    <scroll-view
+   <scroll-view
       scroll-y
-      class="category-list {{narList.length > 0 ? 'category-list-have-nar' : ''}}">
-      <block wx:for="{{goodsList}}" 
-             wx:for-item="categoryItem"
-             wx:for-index="categoryIndex"
-             wx:key="categoryIndex">
+      class="smallClass-list {{classList.length > 0 ? 'smallClass-list-have-nar' : ''}}">
+      <block wx:for="{{smallClassList}}" 
+             wx:for-item="smallClassItem"
+             wx:for-index="smallClassIndex"
+             wx:key="smallClassIndex">
         <view
-          class="categoryItem {{curCategoryId === categoryItem.categoryId ? 'cur' : ''}}"
-          data-category-item="{{categoryItem}}"
-          data-category-id="{{categoryItem.categoryId}}"
-          bindtap="handleChangeCategory">
-          <image src="{{categoryItem.icon}}" class="icon" wx:if="{{categoryItem.icon}}"></image>
-          <view class="text-overflow text-center text-black">{{categoryItem.categoryName}}</view>
+          class="smallClassItem {{curSmallClass.id === smallClassItem.id ? 'cur' : ''}}"
+          data-item="{{smallClassItem}}"
+          bindtap="handleChangeSmallClass">
+          <view class="text-overflow text-center text-black">{{smallClassItem.smallClassName}}</view>
         </view>
       </block>
     </scroll-view>
@@ -59,52 +55,41 @@
     <view class="product-list">
       <block
         wx:for="{{goodsList}}"
-        wx:for-item="categoryItem"
-        wx:for-index="categoryIndex"
-        wx:key="categoryIndex">
-        <view id="{{'categoryId_' + categoryItem.categoryId}}">
-          <view class="category-bar verticle-center">
-            <view class="title-wrap text-overflow text-black gray3">{{categoryItem.categoryName}}
+        wx:for-item="goodsItem"
+        wx:for-index="goodsIndex"
+        wx:key="goodsIndex">
+        <view class="goodsItem">
+          <view class="image-wrap">
+            <image
+              src="{{goodsItem.imagepath ? goodsItem.imagepath : imgPlaceholder}}"
+              class="image"></image>
+          </view>
+          <view class="product-detail-wrap column ju-b">
+            <view>
+              <view class="title gray3 text-overflow f16">{{goodsItem.name}}</view>
+              <text class="label f10 gray6">{{goodsItem.label}}</text>
+            </view>
+            <view class="price-wrap">
+              <text class="price f12">¥</text>
+              <text class="price f16">{{goodsItem.price}}</text>
+              <text class="unit f10">/ 斤</text>
             </view>
           </view>
-          <block
-            wx:for="{{categoryItem.children}}"
-            wx:for-item="goodsItem"
-            wx:for-index="goodsIndex"
-            wx:key="goodsIndex">
-            <view class="goodsItem">
-              <view class="image-wrap">
-                <image
-                  src="{{goodsItem.imgUrl ? goodsItem.imgUrl : imgPlaceholder}}"
-                  class="image"></image>
-              </view>
-              <view class="product-detail-wrap column ju-b">
-                <view>
-                  <view class="title gray3 text-overflow f16">{{goodsItem.goodName}}</view>
-                  <text class="label f10 gray6">{{goodsItem.label}}</text>
-                </view>
-                <view class="price-wrap">
-                  <text class="price f12">¥</text>
-                  <text class="price f16">{{goodsItem.price}}</text>
-                  <text class="unit f10">/ 斤</text>
-                </view>
-              </view>
-              <view class="icon-wrap direction-center">
-                <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckGoodsItem" data-goods-item="{{goodsItem}}" data-goods-id="{{goodsItem.goodId}}" data-goods-index="{{goodsIndex}}" data-category-item="{{categoryItem}}" data-category-id="{{categoryItem.categoryId}}" data-category-index="{{categoryIndex}}" data-check-value="{{goodsItem.isSelect ? false : true}}"/>
-              </view>
-              <view class="half-px-border half-px-border-bottom"></view>
-            </view>
-          </block>
-          <view class="placeholder p20" wx:if="{{categoryIndex == goodsList.length - 1}}">
-            <view class="f14 gray9 text-center lh200"> -- 没有更多菜品了 -- </view>
+          <view class="icon-wrap direction-center">
+            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckGoodsItem" data-item="{{goodsItem}}" data-index="{{goodsIndex}}" data-check-value="{{goodsItem.isSelect ? false : true}}"/>
           </view>
+          <view class="half-px-border half-px-border-bottom"></view>
         </view>
       </block>
+      <view wx:if="{{goodsList.length == 0}}" class="list-nodata-area">
+        <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+        <view class="list-nodata-tip"> -- 没有商品数据 -- </view>
+      </view>
     </view>
   </scroll-view>
-  
+
   <!-- 底部购物车 -->
-  <view class="foot-wrap verticle-center row" wx:if="{{goodsList.length > 0}}">
+  <view class="foot-wrap verticle-center row">
     <view class="image-wrap">
       <image src="../../images/car_icon.jpg" class="car_icon"></image>
     </view>
@@ -123,8 +108,8 @@
       <view class="shopPop-wrap">
         <view class="shopPop-head gray3 f16 p15 ">请选择购买店铺</view>
         <view class="shopPop-middle pl15 pr15 mb15">
-          <view class="row verticle-center curShop {{shopPopData.shopName ? '' : 'search'}}" bindtap="showShopSelect">
-            <view class="flex-1 text-overflow f16 mr10 {{shopPopData.shopName ? '' : 'f14 gray9'}}">{{shopPopData.shopName ? shopPopData.shopName : '请选择'}}</view>
+          <view class="row verticle-center curShop {{shopPopData.merchantName ? '' : 'search'}}" bindtap="showShopSelect">
+            <view class="flex-1 text-overflow f16 mr10 {{shopPopData.merchantName ? '' : 'f14 gray9'}}">{{shopPopData.merchantName ? shopPopData.merchantName : '请选择'}}</view>
             <view class="image-wrap">
               <image src="../../images/icon_down@2x.png" wx:if="{{!showShopList}}"></image>
               <image src="../../images/icon_up@2x.png" wx:else></image>
@@ -136,7 +121,7 @@
             wx:for-index="shopIndex"
             wx:key="shopIndex"
             wx:if="{{shopList.length > 0}}">
-              <button class="text-overflow f16 item {{shopPopData.shopId && shopPopData.shopId == shopItem.shopId ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop" data-shop-id="{{shopItem.shopId}}" data-shop-item="{{shopItem}}">{{shopItem.shopName}}</button>
+              <button class="text-overflow f16 item {{shopPopData.id && shopPopData.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop" data-shop-id="{{shopItem.id}}" data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
             </block>
             <view class="text-center gray9 f16 pt40 pb40" wx:if="{{shopList.length == 0}}">暂无店铺数据</view>
           </scroll-view>

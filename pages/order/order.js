@@ -124,7 +124,7 @@ Page({
     var params = {
       userId: userId
     }
-    shopApi.findByUserId(params)
+    shopApi.orderList(params)
       .then((res) => {
       console.log('获取订单数据成功', res);
       })

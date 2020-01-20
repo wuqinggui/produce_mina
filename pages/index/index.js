@@ -1,344 +1,38 @@
 // pages/index/index.js
 var shopApi = require('../../http/shopApi.js').default;
-var util = require('../../utils/util.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 当前城市
-    curCity: {
-      cityId: 111,
-      cityName: '广州',
-      latitude: 23.18139,
-      longitude: 113.48067
-    },
+    regionLoading: false,
+    shopLoading: false,
+    classLoading: false,
+    smallClassLoading: false,
+    carLoading: false,
+    commodityLoading: false,
+    // 当前地区
+    curRegion: {},
+    // 当前地区在地区列表的index
+    curRegionIndex: 0,
+    // 地区列表
+    regionList: [],
     // 当前店铺
-    curShop: {
-      shopId: 222,
-      shopName: '广州店铺2'
-    },
+    curShop: {},
     shopPopData: {}, // 店铺弹框选择前的店铺数据
     // 店铺列表
-    shopList: [
-      {
-        shopId: 111,
-        shopName: '广州店铺1'
-      }, 
-      {
-        shopId: 222,
-        shopName: '广州店铺2'
-      },
-      {
-        shopId: 333,
-        shopName: '广州店铺3'
-      },
-      {
-        shopId: 444,
-        shopName: '广州店铺4'
-      },
-      {
-        shopId: 555,
-        shopName: '广州店铺5'
-      }
-    ],
+    shopList: [],
     shopPop: false, // 是否显示店铺弹框
     showShopList: false, // 是否显示店铺下拉列表
-    // 顶部导航菜品分类
-    narList: [],
-    // narList: [
-    //   {
-    //     categoryId: 1,
-    //     categoryName: '粮油',
-    //     imgUrl: '../../images/cai.jpg'
-    //   },
-    //   {
-    //     categoryId: 2,
-    //     categoryName: '蔬菜',
-    //     imgUrl: '../../images/cai.jpg'
-    //   },
-    //   {
-    //     categoryId: 3,
-    //     categoryName: '百货',
-    //     imgUrl: '../../images/cai.jpg'
-    //   },
-    //   {
-    //     categoryId: 4,
-    //     categoryName: '生鲜',
-    //     imgUrl: '../../images/cai.jpg'
-    //   }
-    // ],
-    // 选中的左侧类别
-    curCategoryId: 1,
+    // 大分类
+    classList: [],
+    // 小分类
+    smallClassList: [],
+    // 当前小分类
+    curSmallClass: {},
     // 产品数据
-    goodsList: [
-      {
-        categoryId: 1,
-        categoryName: '水果类',
-        selectedNum: 0,
-        icon: '',
-        imgUrl: '../../images/cai.jpg',
-        children: [
-          {
-            goodId: 10001,
-            goodName: '水果a',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 10002,
-            goodName: '水果b',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 10003,
-            goodName: '水果c',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 10004,
-            goodName: '水果d',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 10005,
-            goodName: '水果e',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          }
-        ]
-      },
-      {
-        categoryId: 2,
-        categoryName: '时蔬类',
-        selectedNum: 0,
-        icon: '',
-        imgUrl: '../../images/cai.jpg',
-        children: [
-          {
-            goodId: 20001,
-            goodName: '时蔬a',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 20002,
-            goodName: '时蔬b',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 20003,
-            goodName: '时蔬c',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 20004,
-            goodName: '时蔬d',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 20005,
-            goodName: '时蔬e',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          }
-        ]
-      },
-      {
-        categoryId: 3,
-        categoryName: '肉类',
-        selectedNum: 0,
-        icon: '',
-        imgUrl: '../../images/cai.jpg',
-        children: [
-          {
-            goodId: 30001,
-            goodName: '肉类a',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 30002,
-            goodName: '肉类b',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 30003,
-            goodName: '肉类c',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 30004,
-            goodName: '肉类d',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 30005,
-            goodName: '肉类e',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          }
-        ]
-      },
-      {
-        categoryId: 4,
-        categoryName: '海鲜类',
-        selectedNum: 0,
-        icon: '',
-        imgUrl: '../../images/cai.jpg',
-        children: [
-          {
-            goodId: 40001,
-            goodName: '海鲜a',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 40002,
-            goodName: '海鲜b',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 40003,
-            goodName: '海鲜c',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 40004,
-            goodName: '海鲜d',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 40005,
-            goodName: '海鲜e',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          }
-        ]
-      },
-      {
-        categoryId: 5,
-        categoryName: '其他分类',
-        selectedNum: 0,
-        icon: '',
-        imgUrl: '../../images/cai.jpg',
-        children: [
-          {
-            goodId: 50001,
-            goodName: '其他分类a',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          },
-          {
-            goodId: 50002,
-            goodName: '其他分类b',
-            isSelect: false,
-            selectedNum: 0,
-            label: '上品',
-            price: 12,
-            unit: '斤',
-            imgUrl: '../../images/cai.jpg'
-          }
-        ]
-      }
-    ],
+    goodsList: [],
     buyCarGoodtypeNum: 0,
     imgPlaceholder: '../../images/cai.jpg', // 默认图片
     isClickView: false,
@@ -410,39 +104,30 @@ Page({
   // 页面初始化
   pageInit: function () {
     console.log('首页')
-    this.getData();
-    this.getCarData();
-    this.getCityList();
-    this.getShopList();
+    this.getRegionList(); // 获取地区列表
+    this.getShopList(); // 获取店铺
+    this.getShopClass(); // 获取大分类
+    this.getShopSmallClass(); // 查询小分类
+    this.getCarData(); // 获取购物车数据
   },
-  // 获取数据
-  getData: function () {
-    this.getScrollHeight();
-  },
-  // 获取购物车数据
-  getCarData: function () {
-    var userId = getApp().globalData.userInfo.id;
-    var params = {
-      userId: userId
-    }
-    shopApi.getCar(params)
-      .then((res) => {
-      console.log('获取购物车数据成功', res);
-      })
-      .catch((error) => {
-        console.log('获取购物车数据失败', error);
-        wx.showToast({
-          title: error.message ? error.message : '获取购物车数据失败',
-          icon: 'none',
-          duration: 2000
-        })
-      })
-  },
-  // 获取城市列表
-  getCityList: function () {
-    shopApi.findAll()
+  
+  // 获取地区列表
+  getRegionList: function () {
+    var regionId = getApp().globalData.userInfo.regionId;
+    shopApi.region()
       .then((res) => {
         console.log('获取地区数据成功', res);
+        this.setData({
+          regionList: res.data
+        })
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].id === regionId) {
+            this.setData({
+              curRegion: res.data[i]
+            })
+            break
+          }
+        }
       })
       .catch((error) => {
         console.log('获取地区数据失败', error);
@@ -453,6 +138,7 @@ Page({
         })
       })
   },
+
   // 获取店铺
   getShopList: function () {
     var shopId = getApp().globalData.userInfo.shopId;
@@ -462,6 +148,17 @@ Page({
     shopApi.findShopByID(params)
       .then((res) => {
         console.log('获取店铺成功', res);
+        this.setData({
+          shopList: res.data
+        })
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].id === shopId) {
+            this.setData({
+              curShop: res.data[i]
+            })
+            break
+          }
+        }
       })
       .catch((error) => {
         console.log('获取店铺失败', error);
@@ -472,6 +169,112 @@ Page({
         })
       })
   },
+
+  // 获取大分类
+  getShopClass: function () {
+    shopApi.shopClass()
+      .then((res) => {
+        console.log('获取大分类数据成功', res);
+        var num = 0;
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].imagepath) {
+            num = num + 1
+          }
+        }
+        if (num > 0 && num === res.data.length) {
+          this.setData({
+            classList: res.data
+          })
+        } else {
+          this.setData({
+            classList: []
+          })
+        }
+      })
+      .catch((error) => {
+        console.log('获取大分类数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取大分类数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 查询小分类
+  getShopSmallClass: function () {
+    shopApi.shopSmallClass()
+      .then((res) => {
+        console.log('获取小分类数据成功', res);
+        this.setData({
+          smallClassList: res.data,
+          curSmallClass: res.data.length > 0 ? res.data[0] : {}
+        })
+        this.getCommodity();
+      })
+      .catch((error) => {
+        console.log('获取小分类数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取小分类数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 获取小分类对应的商品
+  getCommodity: function () {
+    var params = {
+      regionID: this.data.curRegion.id,
+      shopsmallclassid: this.data.curSmallClass.id
+    }
+    shopApi.commodityList(params)
+      .then((res) => {
+        console.log('获取商品数据成功', res);
+        this.setData({
+          goodsList: res.data
+        })
+      })
+      .catch((error) => {
+        console.log('获取商品数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取商品数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 获取购物车数据
+  getCarData: function () {
+    var userId = getApp().globalData.userInfo.id;
+    var params = {
+      userId: userId
+    }
+    shopApi.getCar(params)
+      .then((res) => {
+        console.log('获取购物车数据成功', res);
+      })
+      .catch((error) => {
+        console.log('获取购物车数据失败', error);
+        wx.showToast({
+          title: error.message ? error.message : '获取购物车数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 切换地区
+  bindPickerChange: function(e) {
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
+    var index = e.detail.value;
+    this.setData({
+      curRegionIndex: index,
+      curRegion: this.data.regionList[index]
+    })
+  },
+
   // 显示店铺弹框
   showShopPop: function () {
     console.log('显示店铺弹框', this.data.curShop)
@@ -509,7 +312,6 @@ Page({
         showShopList: false,
         shopPop: false
       })
-      // 重新获取菜品数据
     }
   },
   // 关闭店铺弹框
@@ -519,89 +321,30 @@ Page({
       shopPop: false
     })
   },
-  // 菜品滚动高度
-  getScrollHeight: function () {
-    var data = this.data.goodsList;
-    var categoryHeight = 0;
-    for (var i = 0; i < data.length; i++) {
-      data[i].categoryHeightTop = categoryHeight;
-      categoryHeight = categoryHeight + 30; // px
-      if (data[i].hasOwnProperty('children')) {
-        categoryHeight = categoryHeight + data[i].children.length * 100;
-      }
-      data[i].categoryHeightBottom = categoryHeight;
-    }
-    this.setData({
-      goodsList: data
-    })
-  },
-  // 点击左侧菜单
-  handleChangeCategory: function (e) {
+  // 点击左侧小分类菜单
+  handleChangeSmallClass: function (e) {
     console.log(e)
-    /**
-     * 监听滚动事件时会直接修改分类
-     */
-    let { categoryId } = e.currentTarget.dataset;
-
-    // 列表点击相同分类不处理
-    if (this.data.curCategoryId === categoryId) return;
-
-    // 列表点击时记录下来，否则滚动监听会触发多次
+    let { item } = e.currentTarget.dataset;
+    if (item.id === this.data.curSmallClass.id ) {
+      return
+    }
     this.setData({
-      isClickView: true,
-      curCategoryId: categoryId
+      curSmallClass: item
     });
+    this.getCommodity();
   },
-  // 监听右侧菜品滚动事件
-  scroll: function (e) {
-    if (this.data.isClickView) {
-      this.setData({
-        isClickView: false
-      })
-      return;
-    }
-    // console.log(e)
-    let { scrollTop } = e.detail;
-    let { curCategoryId, goodsList } = this.data;
 
-    for (var i = 0; i < goodsList.length; i++) {
-      let { categoryHeightTop, categoryHeightBottom  } = goodsList[i];
-      if (scrollTop >= categoryHeightTop && scrollTop < categoryHeightBottom) {
-        if (curCategoryId != goodsList[i].categoryId) {
-          this.setData({
-            curCategoryId: goodsList[i].categoryId
-          })
-        }
-        break;
-      } else if (scrollTop >= categoryHeightBottom && (i === (goodsList.length - 1))) {
-        // 最后一个
-        if (curCategoryId != goodsList[i].categoryId) {
-          this.setData({
-            curCategoryId: goodsList[i].categoryId
-          })
-        }
-        break;
-      }
-    }
-  },
   // 切换菜品选中状态
   bindCheckGoodsItem: function (e) {
     console.log(e)
-    let { categoryId, categoryIndex, categoryItem, goodsId, goodsIndex, goodsItem, checkValue } = e.currentTarget.dataset;
+    let { index, checkValue } = e.currentTarget.dataset;
     let data = this.data.goodsList;
-    data[categoryIndex].children[goodsIndex].isSelect = checkValue;
-    if (checkValue) {
-      // 选中
-      data[categoryIndex].selectedNum = data[categoryIndex].selectedNum + 1;
-    } else {
-      // 取消选中
-      if (data[categoryIndex].selectedNum > 0) {
-        data[categoryIndex].selectedNum = data[categoryIndex].selectedNum - 1;
-      }
-    }
+    data[index].isSelect = checkValue;
     let buyCarGoodtypeNum = 0;
     for (var i = 0; i < data.length; i++) {
-      buyCarGoodtypeNum = buyCarGoodtypeNum + data[i].selectedNum;
+      if (data[i].isSelect) {
+        buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
+      }
     }
     this.setData({
       goodsList: data,

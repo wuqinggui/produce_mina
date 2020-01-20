@@ -198,6 +198,16 @@ button::after {
   border-width: 0 0 2px 2px;
 }
 
+.common-arrow.top::after {
+  top: 10px;
+  border-width: 2px 0 0 2px;
+}
+
+.common-arrow.bottom::after {
+  top: 5px;
+  border-width: 0 2px 2px 0;
+}
+
 .common-arrow.small {
   width: 6px;
   height: 12px;
@@ -216,14 +226,13 @@ button::after {
   border-width: 0 0 1px 1px;
 }
 
-.common-arrow.large {
-  width: 10px;
-  height: 20px;
-}
-
 .common-arrow.large::after {
   width: 10px;
   height: 10px;
+}
+
+.common-arrow.right.bottom{
+  transform: rotate(90deg);
 }
 
 /* 动画 */
@@ -318,22 +327,14 @@ image {
   height: 100%;
 }
 
-.noMoreData-tip{
-  margin: 40rpx 0;
-text-align: center;
-  font-size: 30rpx;
-  color: #666666;
-  line-height: 50rpx;
-}
-
 .list-nodata-area{
-  padding-top: 350rpx;
+  padding-top: 320rpx;
   text-align: center;
 }
 
 .list-nodata-image{
-  width: 120rpx;
-  height: 120rpx;
+  width: 200rpx;
+  height: 200rpx;
   margin: 0 auto;
 }
 
@@ -341,7 +342,7 @@ text-align: center;
   margin: 40rpx 0;
   font-size: 28rpx;
   line-height: 50rpx;
-  color: #666666;
+  color: #999999;
 }
 
 /* 弹框 */
