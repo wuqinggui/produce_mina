@@ -61,7 +61,7 @@ var shopApi = {
   // 将商品保存到购物车的接口
   addCar: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addCarUrl, 'GET', params)
+      wxRequest(addCarUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

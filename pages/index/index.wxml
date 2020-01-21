@@ -110,10 +110,8 @@
         <view class="shopPop-middle pl15 pr15 mb15">
           <view class="row verticle-center curShop {{shopPopData.merchantName ? '' : 'search'}}" bindtap="showShopSelect">
             <view class="flex-1 text-overflow f16 mr10 {{shopPopData.merchantName ? '' : 'f14 gray9'}}">{{shopPopData.merchantName ? shopPopData.merchantName : '请选择'}}</view>
-            <view class="image-wrap">
-              <image src="../../images/icon_down@2x.png" wx:if="{{!showShopList}}"></image>
-              <image src="../../images/icon_up@2x.png" wx:else></image>
-            </view>
+            <view class="common-arrow bottom arrow" wx:if="{{!showShopList}}"></view>
+            <view class="common-arrow top arrow" wx:else></view>
           </view>
           <scroll-view  scroll-y class="shopList-select" wx:if="{{showShopList}}">
             <block wx:for="{{shopList}}"
@@ -121,7 +119,7 @@
             wx:for-index="shopIndex"
             wx:key="shopIndex"
             wx:if="{{shopList.length > 0}}">
-              <button class="text-overflow f16 item {{shopPopData.id && shopPopData.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop" data-shop-id="{{shopItem.id}}" data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
+              <button class="text-overflow f16 item {{shopPopData.id && shopPopData.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop"  data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
             </block>
             <view class="text-center gray9 f16 pt40 pb40" wx:if="{{shopList.length == 0}}">暂无店铺数据</view>
           </scroll-view>

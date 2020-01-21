@@ -224,15 +224,21 @@ Page({
 
   // 获取小分类对应的商品
   getCommodity: function () {
+    var regionId = this.data.curRegion.id ? this.data.curRegion.id : getApp().globalData.userInfo.regionId;
     var params = {
-      regionID: this.data.curRegion.id,
+      regionID: regionId,
       shopsmallclassid: this.data.curSmallClass.id
     }
     shopApi.commodityList(params)
       .then((res) => {
         console.log('获取商品数据成功', res);
+        var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].isSelect = false;
+        }
         this.setData({
-          goodsList: res.data
+          goodsList: data,
+          buyCarGoodtypeNum: 0
         })
       })
       .catch((error) => {
@@ -293,7 +299,7 @@ Page({
   // 切换店铺
   changeShop: function (e) {
     console.log(e)
-    let { shopId, shopItem } = e.currentTarget.dataset;
+    let { shopItem } = e.currentTarget.dataset;
     this.setData({
       shopPopData: shopItem,
       showShopList: false
@@ -301,7 +307,7 @@ Page({
   },
   // 确认切换店铺
   sureChangeShop: function (e) {
-    if (this.data.curShop.shopId && this.data.shopPopData.shopId && this.data.shopPopData.shopId == this.data.curShop.shopId) {
+    if (this.data.curShop.id && this.data.shopPopData.id && this.data.shopPopData.id == this.data.curShop.id) {
       this.setData({
         showShopList: false,
         shopPop: false
@@ -354,12 +360,47 @@ Page({
   // 加入购物车
   addCar: function () {
     if (this.data.buyCarGoodtypeNum > 0) {
-      wx.switchTab({
-        url: '/pages/buyCar/buyCar'
+      wx.showLoading({
+        title: '添加中',
+      });
+      var commoditylst = [];
+      var goodsList = this.data.goodsList;
+      for (var i = 0; i < goodsList.length; i++) {
+        if (goodsList[i].isSelect && goodsList[i].id) {
+          commoditylst.push(goodsList[i].id)
+        }
+      }
+      var params = {
+        commoditylst: commoditylst,
+        number: 1,
+        shopid: this.data.curShop.id ? this.data.curShop.id : getApp().globalData.userInfo.shopId,
+        userId: getApp().globalData.userInfo.id,
+      }
+      shopApi.addCar(params)
+      .then((res) => {
+        console.log('商品添加进购物车成功', res);
+        wx.hideLoading();
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 1000
+        })
+        this.setData({
+          buyCarGoodtypeNum: 0
+        })
+      })
+      .catch((error) => {
+        console.log('商品添加进购物车失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '添加失败',
+          icon: 'none',
+          duration: 2000
+        })
       })
     } else {
       wx.showToast({
-        title: '请先选择菜品',
+        title: '请先选择商品',
         icon: 'none',
         duration: 2000
       })
