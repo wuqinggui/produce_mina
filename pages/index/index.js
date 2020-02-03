@@ -6,12 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    regionLoading: false,
-    shopLoading: false,
-    classLoading: false,
-    smallClassLoading: false,
-    carLoading: false,
-    commodityLoading: false,
     // 当前地区
     curRegion: {},
     // 当前地区在地区列表的index
@@ -108,7 +102,7 @@ Page({
     this.getShopList(); // 获取店铺
     this.getShopClass(); // 获取大分类
     this.getShopSmallClass(); // 查询小分类
-    this.getCarData(); // 获取购物车数据
+    // this.getCarData(); // 获取购物车数据
   },
   
   // 获取地区列表
@@ -118,12 +112,15 @@ Page({
       .then((res) => {
         console.log('获取地区数据成功', res);
         this.setData({
-          regionList: res.data
+          regionList: res.data,
+          curRegion: res.data.length > 0 ? res.data[0] : {},
+          curRegionIndex: 0
         })
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].id === regionId) {
             this.setData({
-              curRegion: res.data[i]
+              curRegion: res.data[i],
+              curRegionIndex: i
             })
             break
           }
@@ -149,7 +146,8 @@ Page({
       .then((res) => {
         console.log('获取店铺成功', res);
         this.setData({
-          shopList: res.data
+          shopList: res.data,
+          curShop: res.data.length > 0 ? res.data[0] : {}
         })
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].id === shopId) {
@@ -224,6 +222,9 @@ Page({
 
   // 获取小分类对应的商品
   getCommodity: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
     var regionId = this.data.curRegion.id ? this.data.curRegion.id : getApp().globalData.userInfo.regionId;
     var params = {
       regionID: regionId,
@@ -232,6 +233,7 @@ Page({
     shopApi.commodityList(params)
       .then((res) => {
         console.log('获取商品数据成功', res);
+        wx.hideLoading();
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].isSelect = false;
@@ -243,6 +245,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取商品数据失败', error);
+        wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取商品数据失败',
           icon: 'none',
@@ -252,38 +255,42 @@ Page({
   },
 
   // 获取购物车数据
-  getCarData: function () {
-    var userId = getApp().globalData.userInfo.id;
-    var params = {
-      userId: userId
-    }
-    shopApi.getCar(params)
-      .then((res) => {
-        console.log('获取购物车数据成功', res);
-      })
-      .catch((error) => {
-        console.log('获取购物车数据失败', error);
-        wx.showToast({
-          title: error.message ? error.message : '获取购物车数据失败',
-          icon: 'none',
-          duration: 2000
-        })
-      })
-  },
+  // getCarData: function () {
+  //   var userId = getApp().globalData.userInfo.id;
+  //   var params = {
+  //     userId: userId
+  //   }
+  //   shopApi.getCar(params)
+  //     .then((res) => {
+  //       console.log('获取购物车数据成功', res);
+  //     })
+  //     .catch((error) => {
+  //       console.log('获取购物车数据失败', error);
+  //       wx.showToast({
+  //         title: error.message ? error.message : '获取购物车数据失败',
+  //         icon: 'none',
+  //         duration: 2000
+  //       })
+  //     })
+  // },
 
   // 切换地区
   bindPickerChange: function(e) {
     // console.log('picker发送选择改变，携带值为', e.detail.value)
     var index = e.detail.value;
-    this.setData({
-      curRegionIndex: index,
-      curRegion: this.data.regionList[index]
-    })
+    if (this.data.curRegion.id && this.data.regionList[index].id && this.data.curRegion.id == this.data.regionList[index].id) {
+      return
+    } else {
+      this.setData({
+        curRegionIndex: index,
+        curRegion: this.data.regionList[index]
+      })
+      this.getCommodity();
+    }
   },
 
   // 显示店铺弹框
   showShopPop: function () {
-    console.log('显示店铺弹框', this.data.curShop)
     this.setData({
       shopPopData: this.data.curShop,
       shopPop: true,
@@ -307,18 +314,11 @@ Page({
   },
   // 确认切换店铺
   sureChangeShop: function (e) {
-    if (this.data.curShop.id && this.data.shopPopData.id && this.data.shopPopData.id == this.data.curShop.id) {
-      this.setData({
-        showShopList: false,
-        shopPop: false
-      })
-    } else {
-      this.setData({
-        curShop: this.data.shopPopData,
-        showShopList: false,
-        shopPop: false
-      })
-    }
+    this.setData({
+      curShop: this.data.shopPopData,
+      showShopList: false,
+      shopPop: false
+    })
   },
   // 关闭店铺弹框
   hidShopPop: function () {
@@ -331,7 +331,7 @@ Page({
   handleChangeSmallClass: function (e) {
     console.log(e)
     let { item } = e.currentTarget.dataset;
-    if (item.id === this.data.curSmallClass.id ) {
+    if (item.id === this.data.curSmallClass.id) {
       return
     }
     this.setData({
@@ -357,6 +357,7 @@ Page({
       buyCarGoodtypeNum: buyCarGoodtypeNum
     })
   },
+
   // 加入购物车
   addCar: function () {
     if (this.data.buyCarGoodtypeNum > 0) {
