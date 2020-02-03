@@ -1,57 +1,21 @@
-<view class="container carts-list">
-  <block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-    <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
-      <view class="shop-name">
-        <icon data-index="{{idx}}" type="{{itemName.selectedAll ? 'success_circle' : 'circle'}}" size="20" class="mr10" bindtap="selectedAll" />
-        <text>{{itemName.storeName}}</text>
-      </view>
-      <view class="add mr20" bindtap="addShop">添加商品</view>
-    </view>
-    <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
-      <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
-        <!-- 复选框图标 -->
-        <icon type="{{item.selected ? 'success_circle' : 'circle'}}" size="20" catchtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}" />
-        <view>
-          <!-- 缩略图 -->
-          <image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill" />
+
+  <view class="page-wrap" wx:if="{{!isLoading}}">
+    <scroll-view scroll-y="true" class="scroll-view-area" wx:if="{{buyList.length > 0}}">
+      <view wx:for="{{buyList}}"
+          wx:key="index"
+          data-item="{{item}}" 
+          bindtap="toDetailPage">
+        <view class="buy-item row verticle-center">
+          <image class="shop-icon" src="/images/shop_icon.png" mode="cover"></image>
+          <view class="flex-1 f16 gray3 ml5 mr5 text-overflow">{{item.shopName ? item.shopName : '店铺名称'}}</view>
+          <button class="state-1-btn" wx:if="{{item.isOver}}">已下单</button>
+          <button class="state-2-btn" wx:else>未下单</button>
         </view>
-        <view class="carts-text mr20">
-          <!-- 商品标题 -->
-          <text class="carts-title">{{item.goods.title}}</text>
-          <text class="carts-type">{{item.goods.type}}</text>
-          <view class="carts-subtitle">
-            <!-- 价格 -->
-            <view class="carts-price">
-              <text class="symbol f10">￥</text>
-              <text class="price pr10">{{item.goods.price}}</text>
-              <text class="unit f13">/斤</text>
-            </view>
-            <!-- 数量加减 -->
-            <view>
-              <view class="stepper">
-                <!-- 减号 -->
-                <text class=" iconfont icon-jianhao {{minusStatuses[idx][index] ? minusStatuses[idx][index] : 'normal'}}" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus"></text>
-                <!-- 数值 -->
-                <input type="number" data-index="{{index}}" data-idx="{{idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.quantity}}" />
-                <!-- 加号 -->
-                <text class="normal iconfont icon-jiahao" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindPlus"></text>
-              </view>
-            </view>
-          </view>
-        </view>
-        <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <button type="warn" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
+    </scroll-view>
+    <view wx:else class="list-nodata-area">
+      <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+      <view class="list-nodata-tip"> -- 购物车暂无数据 -- </view>
+      <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>
     </view>
-  </block>
-</view>
-<view class="carts-footer">
-  <view class="select-and-amount" bindtap="bindSelectAll">
-    <icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" />
-    <text>全选</text>
   </view>
-  <view class="sum">
-    <text class="mr20">合计: ￥{{total}}</text>
-    <view class="button mr10" bindtap="bindCheckout">立即下单</view>
-  </view>
-</view>

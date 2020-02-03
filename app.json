@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/buyCar/buyCar",
+    "pages/buyCarDetail/buyCarDetail",
     "pages/order/order",
     "pages/orderDetail/orderDetail",
     "pages/orderSubmit/orderSubmit",

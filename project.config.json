@@ -43,7 +43,15 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/buyCar/buyCar",
+					"pathName": "pages/buyCar/buyCar",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }
