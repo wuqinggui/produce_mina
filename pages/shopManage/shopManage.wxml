@@ -45,10 +45,10 @@
       </view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view wx:if="{{list.length == 0}}" class="list-nodata-area">
-        <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
-        <view class="list-nodata-tip"> 暂无数据 </view>
-      </view>
+    <view wx:if="{{list.length == 0 && showNone}}" class="list-nodata-area">
+      <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+      <view class="list-nodata-tip"> 暂无数据 </view>
+    </view>
   </view>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

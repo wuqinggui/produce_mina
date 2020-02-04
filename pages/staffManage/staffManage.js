@@ -1,96 +1,236 @@
 // pages/staffManage/staffManage.js
 var util = require('../../utils/util.js');
+var shopApi = require('../../http/shopApi.js').default;
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
+    btnStatus: 1, // 点击按钮新增(1)还是修改(2)
+    info: {},  // 新增修改数据
+    showNone: false,
     inputValue: '',
-    shopName: '',
     worktype: '',
     showOneButtonDialog: false,
-    oneButton: [{ text: '添加' }],
-    array: ['美国', '中国', '巴西', '日本'],
-    list: [{
-      name: '小港',
-      phone: '13169418600',
-      shopName: '广州天河百货分店',
-      remark: '下单员',
-    }, {
-      name: '小港',
-      phone: '13169418600',
-      shopName: '广州天河百货分店',
-      remark: '下单员',
-    }, {
-      name: '小港',
-      phone: '13169418600',
-      shopName: '广州天河百货分店',
-      remark: '下单员',
-    }, {
-      name: '小港',
-      phone: '13169418600',
-      shopName: '广州天河百货分店',
-      remark: '下单员',
-    }, {
-      name: '小港',
-      phone: '13169418600',
-      shopName: '广州天河百货分店',
-      remark: '下单员',
-    }]
+    oneButton: [{
+      text: '添加'
+    }],
+    oneButton2: [{
+      text: '确定'
+    }],
+    address: [],  // 地区选择列表
+    userRoles: [{ // 工种
+        id: 1,
+        name: '下单人员'
+      },
+      {
+        id: 2,
+        name: '收货人员'
+      },
+      {
+        id: 3,
+        name: '付款人员'
+      },
+      {
+        id: 4,
+        name: '管理人员'
+      }
+    ],
+    shopList: [], // 店铺列表
+    list: [] // 员工列表
   },
   selectShop: function() {
 
   },
-  bindPickerChange: function (e) {
-    var array = this.data.array;
-    console.log('picker发送选择改变，携带值为', e)
+  // 地址选择
+  bindPickerChange: function(e) {
+    var address = this.data.address;
+    let params = {
+      regionId: e.detail.value
+    };
+    shopApi.searchUser(params).then((res) => {
+      res.data.forEach((item) => {
+        if (item.userRole == 1) {
+          item.roleName = '下单人员';
+        } else if (item.userRole == 2) {
+          item.roleName = '收货人员';
+        } else if (item.userRole == 3) {
+          item.roleName = '付款人员';
+        } else if (item.userRole == 4) {
+          item.roleName = '管理人员';
+        }
+      })
+      this.setData({
+        list: res.data
+      });
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
     this.setData({
-      inputValue: array[e.detail.value]
+      inputValue: address[e.detail.value].name
     })
   },
-  bindPickerChange2: function (e) {
-    var array = this.data.array;
-    console.log('picker发送选择改变，携带值为', e)
+  // 选择店铺
+  bindPickerChange2: function(e) {
+    var shopList = this.data.shopList;
+    var info = this.data.info;
+    var index = e.detail.value;
+    info.merchantName = shopList[e.detail.value].merchantName;
+    info.shopId = shopList[e.detail.value].id;
+    console.log('picker发送选择改变，携带值为', shopList[e.detail.value])
     this.setData({
-      shopName: array[e.detail.value]
+      info: info
     })
   },
-  bindPickerChange3: function (e) {
-    var array = this.data.array;
-    console.log('picker发送选择改变，携带值为', e)
+  // 选择工种
+  bindPickerChange3: function(e) {
+    var userRoles = this.data.userRoles;
+    var info = this.data.info;
+    info.userRole = userRoles[e.detail.value].id;
+    info.userRoleName = userRoles[e.detail.value].name;
     this.setData({
-      worktype: array[e.detail.value]
+      info: info
     })
   },
+  // 确定修改或新增
   tapDialogButton(e) {
+    let data = this.data;
+    let toastTxt = '';
+    if (data.info.shopId == '') {
+      toastTxt = '店铺';
+    } else if (data.info.userRole == '') {
+      toastTxt = '工种';
+    } else if (data.info.nickname == '') {
+      toastTxt = '员工名';
+    } else if (data.info.phone == '') {
+      toastTxt = '联系电话';
+    } else if (data.info.userName == '') {
+      toastTxt = '用户名';
+    } else if (data.info.password == '') {
+      toastTxt = '密码';
+    }
+    if (toastTxt) {
+      return wx.showToast({
+        title: "请输入" + toastTxt,
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    if (data.btnStatus == 1) {
+      let params = data.info; 
+      shopApi.addUser(params).then((res) => {
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 2000
+        })
+        this.getUserList();
+      }).catch((error) => {
+        console.log(error); 
+        wx.showToast({
+          title: error.message ? error.message : '获取数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+    }else {
+      let params = data.info;
+      shopApi.updateUser(params).then((res) => {
+        wx.showToast({
+          title: '修改成功',
+          icon: 'success',
+          duration: 2000
+        })
+        this.getUserList();
+      }).catch((error) => {
+        wx.showToast({
+          title: error.message ? error.message : '获取数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+    }
     this.setData({
       showOneButtonDialog: false
     })
   },
-  addShop: function () {
+  bindAndSet: function (e) {
+    let key = e.currentTarget.dataset.key;
+    let info = this.data.info;
+    info[key] = e.detail.value;
     this.setData({
+      info: info
+    })
+  },
+  // 新增员工
+  addUser: function() {
+    let info = {
+      userName: '',
+      password: '',
+      shopId: '',
+      userRole: '',
+      phone: '',
+      nickname: ''
+    };
+    this.setData({
+      info: info,
+      btnStatus: 1,
       showOneButtonDialog: true
     })
   },
+  // 编辑员工
+  editItem: function(e) {
+    let index = e.currentTarget.dataset.index;
+    let list = this.data.list;
+    let userRoles = this.data.userRoles;
+    let userRole = userRoles.find((item) => {
+      return item.id == list[index].userRole
+    })
+    list[index].userRoleName = userRole && userRole.name;
+    let params = {
+      id: list[index].shopId
+    };
+    shopApi.findShopByID(params).then((res) => {
+      list[index].merchantName = res.data[0].merchantName;
+      list[index].shopId = res.data[0].id;
+      this.setData({
+        info: list[index],
+        btnStatus: 2,
+        showOneButtonDialog: true
+      })
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.getData();
@@ -104,40 +244,102 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  
-  // 获取数据
-  getData: function () {
 
+  // 获取数据
+  getData: function() {
+    wx.showLoading({
+      title: '加载中...',
+    })
+    this.getAddress();
+    this.getUserList();
+    this.getShopList();
+  },
+  // 获取员工列表
+  getUserList: function() {
+    shopApi.findUser({}).then((res) => {
+      wx.hideLoading();
+      res.data.forEach((item) => {
+        if (item.userRole == 1) {
+          item.roleName = '下单人员';
+        } else if (item.userRole == 2) {
+          item.roleName = '收货人员';
+        } else if (item.userRole == 3) {
+          item.roleName = '付款人员';
+        } else if (item.userRole == 4) {
+          item.roleName = '管理人员';
+        }
+      })
+      this.setData({
+        showNone: true,
+        list: res.data
+      })
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+  // 获取地区
+  getAddress: function() {
+    shopApi.region().then((res) => {
+      this.setData({
+        address: res.data
+      });
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+  // 获取店铺列表
+  getShopList: function() {
+    shopApi.shopList().then((res) => {
+      this.setData({
+        shopList: res.data
+      });
+    }).catch((err) => {
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
   }
 })

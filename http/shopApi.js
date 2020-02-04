@@ -16,7 +16,8 @@ import {
   findShopByIDUrl,
   addUserUrl,
   updateUserUrl,
-  findUserUrl
+  findUserUrl,
+  searchUserUrl
 } from './url'
 
 var shopApi = {
@@ -163,7 +164,7 @@ var shopApi = {
   // 员工添加
   addUser: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addUserUrl, 'GET', params)
+      wxRequest(addUserUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
@@ -173,7 +174,7 @@ var shopApi = {
   // 员工修改
   updateUser: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(updateUserUrl, 'GET', params)
+      wxRequest(updateUserUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
@@ -184,6 +185,16 @@ var shopApi = {
   findUser: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(findUserUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 员工搜素
+  searchUser: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(searchUserUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showNone: false,
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
     info: {},
     shopIndex: 0, //默认索引
@@ -36,13 +37,13 @@ Page({
   tapDialogButton(e) {
     let data = this.data;
     let toastTxt = '';
-    if (data.info.merchantName == '') {
+    if (!data.info.merchantName) {
       toastTxt = '店铺名';
-    } else if (data.info.personName == '') {
+    } else if (!data.info.personName) {
       toastTxt = '负责人';
-    } else if (data.info.phone == '') {
+    } else if (!data.info.phone) {
       toastTxt = '联系电话';
-    } else if (data.info.desction == '') {
+    } else if (!data.info.desction) {
       toastTxt = '备注';
     }
     if (toastTxt) {
@@ -58,6 +59,11 @@ Page({
       let id = data.list[index].id;
       let param = info;
       shopApi.updateShop(param).then((res) => {
+        wx.showToast({
+          title: '修改成功',
+          icon: 'success',
+          duration: 2000
+        })
         this.getData();
       }).catch((error) => {
         console.log(error);
@@ -70,6 +76,11 @@ Page({
     } else {
       let param = data.info;
       shopApi.addShop(param).then((res) => {
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 2000
+        })
         this.getData();
       }).catch((error) => {
         console.log(error);
@@ -142,6 +153,9 @@ Page({
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      wx.showLoading({
+        title: '加载中',
+      })
       this.getData();
     } else {
       wx.navigateTo({
@@ -188,10 +202,13 @@ Page({
   // 获取数据
   getData: function() {
     shopApi.shopList().then((res) => {
+      wx.hideLoading();
       this.setData({
+        showNone: true,
         list: res.data
       });
     }).catch((err) => {
+      wx.hideLoading();
       wx.showToast({
         title: error.message ? error.message : '获取数据失败',
         icon: 'none',
