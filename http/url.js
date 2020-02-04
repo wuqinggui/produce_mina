@@ -20,3 +20,7 @@ export const findShopByIDUrl = baseUrl + 'shop/findShopByID'; // 根据店铺id�
 export const addUserUrl = baseUrl + 'nmUser/add'; // 员工添加
 export const updateUserUrl = baseUrl + 'nmUser/update'; // 员工修改
 export const findUserUrl = baseUrl + 'nmUser/findList'; // 员工查询
+// 店铺管理
+export const shopListUrl = baseUrl + 'shop/findAll'; //店铺 供应商管理
+export const deleteShopUrl = baseUrl + 'shop/delete'; //删除店铺 供应商管理
+export const findListShopUrl = baseUrl + 'shop/findList'; //多条件搜索店铺

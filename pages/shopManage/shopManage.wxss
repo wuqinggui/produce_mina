@@ -20,12 +20,16 @@
 .weui-dialog__bd {
   margin-bottom: 14rpx !important;
 }
+.weui-dialog__ft {
+  min-height: 55rpx !important;
+  line-height: 55rpx !important;
+}
 .weui-dialog__ft::after {
   border-top: 1rpx solid #f3f3f3 !important;
 }
 
 .weui-dialog__btn {
-  line-height: 128rpx;
+  line-height: 110rpx;
   font-size: 32rpx !important;
   color: #333 !important;
 }

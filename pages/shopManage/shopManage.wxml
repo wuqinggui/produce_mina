@@ -1,25 +1,25 @@
 <!--pages/shopManage/shopManage.wxml-->
 <view class="shopManage pl20 pr20">
-  <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
+  <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2}}">
     <view class="addinfo pb10 pt10 flex ju-c">
       <text>店铺名：</text>
-      <input class="weui-input" />
-        <view class="half-px-border half-px-border-bottom"></view>
+      <input class="weui-input" bindinput="bindAndSet" data-key="merchantName" value="{{info.merchantName}}" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb10 pt10 flex ju-c">
       <text>负责人：</text>
-      <input class="weui-input" />
-        <view class="half-px-border half-px-border-bottom"></view>
+      <input class="weui-input" bindinput="bindAndSet" data-key="personName" value="{{info.personName}}" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb10 pt10 flex ju-c">
       <text>联系电话：</text>
-      <input class="weui-input" />
-        <view class="half-px-border half-px-border-bottom"></view>
+      <input class="weui-input" bindinput="bindAndSet" data-key="phone" value="{{info.phone}}" />
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <view class="addinfo pb10 pt10 flex ju-c">
       <text>备注：</text>
-      <input class="weui-input" />
-        <!-- <view class="half-px-border half-px-border-bottom"></view> -->
+      <input class="weui-input" bindinput="bindAndSet" data-key="desction" value="{{info.desction}}" />
+      <!-- <view class="half-px-border half-px-border-bottom"></view> -->
     </view>
   </mp-dialog>
   <view class="search flex ju-b pt10 pb10">
@@ -31,20 +31,24 @@
     </view>
   </view>
   <view class="list">
-    <view class="list-item pt10 pb10 flex ju-b" wx:for="{{list}}" wx:key="index">
+    <view class="list-item pt10 pb10 flex ju-b" bindtap="editItem" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
       <view class="info">
-        <view class="name">{{item.shopName}}
-          <text class="remark ml5">({{item.remark}})</text>
+        <view class="name">{{item.merchantName}}
+          <text class="remark ml5">{{item.desction ? "("+item.desction+")" : '' }}</text>
         </view>
         <view class="people gray9">负责人名字：
-          <text>{{item.name}}</text>
+          <text class="mr10">{{item.personName}}</text>
           <text>{{item.phone}}</text> </view>
       </view>
       <view class="icon">
         <mp-icon icon="arrow" color="black" size="{{10}}"></mp-icon>
       </view>
-        <view class="half-px-border half-px-border-bottom"></view>
+      <view class="half-px-border half-px-border-bottom"></view>
     </view>
+    <view wx:if="{{list.length == 0}}" class="list-nodata-area">
+        <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+        <view class="list-nodata-tip"> 暂无数据 </view>
+      </view>
   </view>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

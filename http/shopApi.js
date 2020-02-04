@@ -9,7 +9,9 @@ import {
   deleteCarUrl,
   addOrderUrl,
   orderListUrl,
+  shopListUrl,
   addShopUrl,
+  findListShopUrl,
   updateShopUrl,
   findShopByIDUrl,
   addUserUrl,
@@ -108,10 +110,20 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
+  // 店铺管理列表
+  shopList: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(shopListUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
   // 新增店铺接口（含申请入驻的接口）
   addShop: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addShopUrl, 'GET', params)
+      wxRequest(addShopUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
@@ -121,7 +133,17 @@ var shopApi = {
   // 修改店铺接口
   updateShop: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(updateShopUrl, 'GET', params)
+      wxRequest(updateShopUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 搜素店铺
+  findListShop: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(findListShopUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
