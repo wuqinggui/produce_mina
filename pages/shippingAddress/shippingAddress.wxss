@@ -7,7 +7,7 @@ page {
   background-color: #fff;
 }
 .edit {
-  width: 180rpx;
+  width: 140rpx;
   align-items: center;
 }
 .addAddress {

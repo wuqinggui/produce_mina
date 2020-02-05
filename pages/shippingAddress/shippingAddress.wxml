@@ -1,6 +1,6 @@
 <!--pages/shippingAddress/shippingAddress.wxml-->
 <template name="addressItem">
-  <view class="info mt10 flex">
+  <view class="info mt10 flex ju-b">
     <view>
       <view class="user mb5">
         <text class="mr20">收货人: {{name}} </text>
@@ -8,10 +8,10 @@
       </view>
       <view class="address">
         <text class="f13 gray6 mr5">收货地址： </text>
-        <text class="f13 gray6">{{address}}</text>
+        <text class="f13 gray6">{{addresses}}</text>
       </view>
     </view>
-    <view class="edit flex ju-c" bindtap="editAddress">
+    <view class="edit flex ju-c" bindtap="editAddress" data-id="{{id}}">
       <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}"></mp-icon>
     </view>
   </view>

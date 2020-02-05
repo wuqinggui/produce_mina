@@ -17,7 +17,11 @@ import {
   addUserUrl,
   updateUserUrl,
   findUserUrl,
-  searchUserUrl
+  searchUserUrl,
+  addAddressUrl,
+  searchAddressListUrl,
+  findByIdAddressUrl,
+  updateAddressUrl
 } from './url'
 
 var shopApi = {
@@ -195,6 +199,46 @@ var shopApi = {
   searchUser: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(searchUserUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 收货地址列表
+  addressList: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(searchAddressListUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 收货地址列表
+  addAddress: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(addAddressUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 编辑搜索收货地址
+  findByIdAddress: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(findByIdAddressUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 修改收货地址
+  updateAddress: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(updateAddressUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
