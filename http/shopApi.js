@@ -5,6 +5,7 @@ import {
   shopSmallClassUrl,
   commodityListUrl,
   addCarUrl,
+  carShopUrl,
   getCarUrl,
   deleteCarUrl,
   addOrderUrl,
@@ -74,17 +75,27 @@ var shopApi = {
         })
         .catch((error) => reject(error))
     });
-  },
-  // 根据购物车当前用户ID查询购物车中的商品
-  getCar: function (params) {
-    return new Promise((resolve, reject) => {
-      wxRequest(getCarUrl, 'GET', params)
-        .then((res) => {
-          resolve(res);
-        })
-        .catch((error) => reject(error))
-    });
-  },
+  },  
+  // 查询购物车的店铺列表
+  carShop: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(carShopUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 根据购物车当前用户ID查询购物车中的商品
+  getCar: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(getCarUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
   // 从购物车中删除商品的接口
   deleteCar: function (params) {
     return new Promise((resolve, reject) => {

@@ -2,245 +2,35 @@
 var shopApi = require('../../http/shopApi.js').default;
 Page({
   data: {
-    cartObj: {},
-    minusStatuses: {},
-    selectedAllStatus: false,
-    total: '0.00',
+    shopId: '',
+    carList: {},
+    selectedAllStatus: false, // 全选状态
+    totalPrice: 0, // 合计价格
     startX: 0,
     itemLefts: {}
   },
-  // 添加商品
-  addShop: function() {
-    wx.switchTab({
-      url: '../index/index'
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    console.log('购物车详情options', options)
+    this.setData({
+      shopId: options.shopId
     })
   },
-  bindMinus: function(e) {
-    // loading提示
-    wx.showLoading({
-    	title: '操作中',
-    	mask: true
-    });
-    var listIndex = parseInt(e.currentTarget.dataset.index);
-    var objIndex = parseInt(e.currentTarget.dataset.idx);
-    var num = this.data.cartObj[objIndex].carts[listIndex].quantity;
-    // 如果只有1件了，就不允许再减了
-    if (num > 1) {
-      num--;
-    }
-    // 只有大于一件的时候，才能normal状态，否则disable状态
-    var minusStatus = num <= 1 ? 'disabled' : 'normal';
-    // 购物车数据
-    var cartObj = this.data.cartObj;
-    cartObj[objIndex].carts[listIndex].quantity = num;
-    // 按钮可用状态
-    var minusStatuses = this.data.minusStatuses;
-    minusStatuses[objIndex] = Array.isArray(minusStatuses[objIndex]) ? minusStatuses[objIndex] : [];
-    minusStatuses[objIndex][listIndex] = minusStatus;
-    // 将数值与状态写回
-    this.setData({
-      cartObj: cartObj,
-      minusStatuses: minusStatuses
-    }, function() {
-      wx.hideLoading();
-    });
-    this.sum();
-  },
-  bindPlus: function(e) {
-    wx.showLoading({
-      title: '操作中',
-      mask: true
-    });
-    var listIndex = parseInt(e.currentTarget.dataset.index);
-    var objIndex = parseInt(e.currentTarget.dataset.idx);
-    var num = this.data.cartObj[objIndex].carts[listIndex].quantity;
-    // 自增
-    num++;
-    // 只有大于一件的时候，才能normal状态，否则disable状态
-    var minusStatus = num <= 1 ? 'disabled' : 'normal';
-    // 购物车数据
-    var cartObj = this.data.cartObj;
-    cartObj[objIndex].carts[listIndex].quantity = num;
-    // 按钮可用状态
-    var minusStatuses = this.data.minusStatuses;
-    minusStatuses[objIndex] = Array.isArray(minusStatuses[objIndex]) ? minusStatuses[objIndex] : [];
-    minusStatuses[objIndex][listIndex] = minusStatus;
-    // 将数值与状态写回
-    this.setData({
-      cartObj: cartObj,
-      minusStatuses: minusStatuses
-    }, function() {
-      wx.hideLoading();
-    });
-    this.sum();
-  },
-  bindManual: function(e) {
-    wx.showLoading({
-      title: '操作中',
-      mask: true
-    });
-    var listIndex = parseInt(e.currentTarget.dataset.index);
-    var objIndex = parseInt(e.currentTarget.dataset.idx);
-    var num = this.data.cartObj[objIndex].carts[listIndex].quantity;
-    var cartObj = this.data.cartObj;
-    var num = parseInt(e.detail.value);
-    cartObj[objIndex].carts[listIndex].quantity = num;
-    // 将数值与状态写回
-    this.setData({
-      cartObj: cartObj
-    }, function() {
-      wx.hideLoading();
-    });
-    this.sum();
-  },
-  bindManualTapped: function() {
-    // 什么都不做，只为打断跳转
-  },
-  bindCheckbox: function(e) {
-    wx.showLoading({
-      title: '操作中',
-      mask: true
-    });
-    /*绑定点击事件，将checkbox样式改变为选中与非选中*/
-    //拿到下标值，以在carts作遍历指示用
-    var listIndex = parseInt(e.currentTarget.dataset.index);
-    var objIndex = parseInt(e.currentTarget.dataset.idx);
-    //原始的icon状态
-    var selected = this.data.cartObj[objIndex].carts[listIndex].selected;
-    var cartObj = this.data.cartObj;
-    var selectedAllStatus = this.data.selectedAllStatus;
-    // 对勾选状态取反
-    cartObj[objIndex].carts[listIndex].selected = !selected;
-    var carts = cartObj[objIndex].carts;
-    for (var i = 0; i < carts.length; i++) {
-      if (carts[i].selected) {
-        cartObj[objIndex].selectedAll = true;
-      } else {
-        cartObj[objIndex].selectedAll = false;
-        break
-      }
-    }
-    for (var item in cartObj) {
-      if (cartObj[item].selectedAll) {
-        selectedAllStatus = true;
-      } else {
-        selectedAllStatus = false;
-        break;
-      }
-    }
-    // 写回经点击修改后的数组
-    this.setData({
-      cartObj: cartObj,
-      selectedAllStatus: selectedAllStatus
-    }, function() {
-      wx.hideLoading();
-    });
-    this.sum();
-  },
-  bindSelectAll: function() {
-    wx.showLoading({
-      title: '操作中',
-      mask: true
-    });
-    // 环境中目前已选状态
-    var selectedAllStatus = this.data.selectedAllStatus;
-    // 取反操作
-    selectedAllStatus = !selectedAllStatus;
-    // 购物车数据，关键是处理selected值
-    var cartObj = this.data.cartObj;
-    // 遍历
-    for (var item in cartObj) {
-      cartObj[item].selectedAll = selectedAllStatus;
-      var carts = cartObj[item].carts;
-      for (var i = 0; i < carts.length; i++) {
-        carts[i].selected = selectedAllStatus;
-      }
-    }
-    this.setData({
-      selectedAllStatus: selectedAllStatus,
-      cartObj: cartObj,
-    }, function() {
-      wx.hideLoading();
-    });
-    this.sum();
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
 
   },
-  bindCheckout: function() {
-    var cartIds = this.calcIds();
-    if (cartIds.length) {
-      cartIds = cartIds.join(',');
-      wx.navigateTo({
-        url: '../orderSubmit/orderSubmit?cartIds=' + cartIds + '&amount=' + this.data.total
-      });
-    }
-  },
-  delete: function(e) {
-    var that = this;
-    // 购物车单个删除
-    var objectId = e.currentTarget.dataset.objectId;
-    console.log(objectId);
-    wx.showModal({
-      title: '提示',
-      content: '确认要删除吗',
-      success: function(res) {
-        if (res.confirm) {
-          console.log('删除成功');
-        }
-      }
-    })
-  },
-  calcIds: function() {
-    // 遍历取出已勾选的cid
-    // var buys = [];
-    var cartIds = [];
-    var cartObj = this.data.cartObj;
-    for (var item in cartObj) {
-      var carts = cartObj[item].carts;
-      for (var i = 0; i < carts.length; i++) {
-        if (carts[i].selected) {
-          // 移动到Buy对象里去
-          // cartIds += ',';
-          cartIds.push(carts[i].objectId);
-        }
-      }
-    }
-    if (cartIds.length <= 0) {
-      wx.showToast({
-        title: '请勾选商品',
-        icon: 'success',
-        duration: 1000
-      })
-    }
-    return cartIds;
-  },
-  selectedAll: function(e) {
-    var cartObj = this.data.cartObj;
-    var index = parseInt(e.currentTarget.dataset.index);
-    var carts = cartObj[index].carts;
-    var selected = cartObj[index].selectedAll = !cartObj[index].selectedAll;
-    // 环境中目前已选状态
-    var selectedAllStatus = this.data.selectedAllStatus;
-    // 判断是否全选
-    for (var item in cartObj) {
-      console.log(cartObj[item].selectedAll);
-      if (cartObj[item].selectedAll) {
-        selectedAllStatus = true;
-      } else {
-        selectedAllStatus = false;
-        break;
-      }
-    }
-    // 单个店铺选择
-    for (var i = 0; i < carts.length; i++) {
-      carts[i].selected = selected;
-    }
-    this.setData({
-      cartObj: cartObj,
-      selectedAllStatus: selectedAllStatus
-    })
-    this.sum();
-  },
-  onShow: function() {
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.getData();
@@ -250,16 +40,62 @@ Page({
       })
     }
   },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
   
-  // 获取购物车数据
+  // 获取购物车详情数据
   getData: function () {
     var userId = getApp().globalData.userInfo.id;
     var params = {
-      userId: userId
+      userId: userId,
+      shopid: this.data.shopId
     }
     shopApi.getCar(params)
       .then((res) => {
-      console.log('获取购物车数据成功', res);
+        console.log('获取购物车数据成功', res);
+        var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].isSelect = false;
+          for (var j = 0; j < data[i].commodity.length; j++) {
+            data[i].commodity[j].isSelect = false;
+          }
+        }
+        this.setData({
+          carList: data
+        })
       })
       .catch((error) => {
         console.log('获取购物车数据失败', error);
@@ -269,113 +105,130 @@ Page({
           duration: 2000
         })
       })
-    var cartObj = [{
-      id: 1,
-      storeName: '水果旗舰店1',
-      selectedAll: false,
-      carts: [{
-        objectId: 1,
-        selected: false,
-        quantity: 1,
-        goods: {
-          objectId: 1,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }, {
-        objectId: 1,
-        selected: false,
-        quantity: 10,
-        goods: {
-          objectId: 2,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }, {
-        objectId: 1,
-        selected: false,
-        quantity: 10,
-        goods: {
-          objectId: 3,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }]
-    }, {
-      id: 2,
-      storeName: '水果旗舰店2',
-      selectedAll: false,
-      carts: [{
-        objectId: 1,
-        selected: false,
-        quantity: 10,
-        goods: {
-          objectId: 4,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }, {
-        objectId: 1,
-        selected: false,
-        quantity: 10,
-        goods: {
-          objectId: 5,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }, {
-        objectId: 1,
-        selected: false,
-        quantity: 10,
-        goods: {
-          objectId: 6,
-          avatar: '../../images/cai.jpg',
-          title: '小宝贝',
-          price: 12,
-          type: '上品'
-        }
-      }]
-    }];
-    this.setData({
-      cartObj: cartObj
-    })
   },
-  sum: function() {
-    var cartObj = this.data.cartObj;
-    // 计算总金额
-    var total = 0.00;
-    for (var obj in cartObj) {
-      var carts = cartObj[obj]['carts'];
-      for (var i = 0; i < carts.length; i++) {
-        if (carts[i].selected) {
-          total += carts[i].quantity * carts[i].goods.price;
+  // 添加商品
+  addShop: function(e) {
+    console.log(e.currentTarget.dataset)
+    let id = e.currentTarget.dataset.item.shopid
+    // wx.switchTab({
+    //   url: '/pages/index/index?shopId=' + id
+    // })
+  },
+  // 切换店铺的选中状态
+  cnangeShopSelect: function (e) {
+    wx.showLoading({
+      title: '操作中'
+    });
+    console.log(e.currentTarget.dataset)
+    var idx = e.currentTarget.dataset.idx;
+    var data = this.data.carList;
+    var isSelect = !data[idx].isSelect;
+    data[idx].isSelect = isSelect;
+    for (var j = 0; j < data[idx].commodity.length; j++) {
+      data[idx].commodity[j].isSelect = isSelect;
+    }
+    this.setData({
+      carList: data,
+      selectedAllStatus: false
+    });
+    this.totalPriceNum();
+  },
+  // 数量-1
+  bindMinus: function(e) {
+    
+  },
+  // 数量+1
+  bindPlus: function(e) {
+   
+  },
+  // 切换单个商品选中状态
+  bindCheckbox: function(e) {
+    wx.showLoading({
+      title: '操作中'
+    });
+    console.log(e.currentTarget.dataset)
+    var idx = e.currentTarget.dataset.idx;
+    var index = e.currentTarget.dataset.index;
+    var data = this.data.carList;
+    data[idx].isSelect = false;
+    data[idx].commodity[index].isSelect = !data[idx].commodity[index].isSelect;
+    this.setData({
+      carList: data,
+      selectedAllStatus: false
+    });
+    this.totalPriceNum();
+  },
+  // 切换全选
+  bindSelectAll: function() {
+    wx.showLoading({
+      title: '操作中'
+    });
+    var selectedAllStatus = !this.data.selectedAllStatus; // 取反
+    var data = this.data.carList;
+    for (var i = 0; i < data.length; i++) {
+      data[i].isSelect = selectedAllStatus;
+      for (var j = 0; j < data[i].commodity.length; j++) {
+        data[i].commodity[j].isSelect = selectedAllStatus;
+      }
+    }
+    this.setData({
+      selectedAllStatus: selectedAllStatus,
+      carList: data,
+    });
+    this.totalPriceNum();
+  },
+  // 合计价格
+  totalPriceNum: function () {
+    var num = 0;
+    var data = this.data.carList;
+    for (var i = 0; i < data.length; i++) {
+      for (var j = 0; j < data[i].commodity.length; j++) {
+        if (data[i].commodity[j].isSelect) {
+          // 选中的加上价格, 数量转整数，价格转浮点数类型
+          num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].price);
         }
       }
     }
-    total = total.toFixed(2);
-    // 写回经点击修改后的数组
+    num = num.toFixed(2);
     this.setData({
-      cartObj: cartObj,
-      total: total
-    });
+      totalPrice: num
+    })
+    wx.hideLoading();
   },
-  showGoods: function(e) {
-    // 点击购物车某件商品跳转到商品详情
-    var objectId = e.currentTarget.dataset.objectId;
-    // wx.navigateTo({
-    // 	url: '../goods/detail/detail?objectId=' + objectId
+  // 立即下单
+  bindCheckout: function() {
+    // var cartIds = this.calcIds();
+    // if (cartIds.length) {
+    //   cartIds = cartIds.join(',');
+    //   wx.navigateTo({
+    //     url: '../orderSubmit/orderSubmit?cartIds=' + cartIds + '&amount=' + this.data.totalPrice
+    //   });
+    // }
+  },
+  // 删除商品
+  delete: function(e) {
+    console.log(e.currentTarget.dataset)
+    var _this = this;
+    var item = e.currentTarget.dataset.item;
+    wx.showModal({
+      title: '温馨提示',
+      content: '确认要删除该商品吗？',
+      success: function(res) {
+        if (res.confirm) {
+          console.log('确认删除成功');
+          _this.delectSure(item);
+        }
+      }
+    })
+  },
+  // 确认删除
+  delectSure: function (item) {
+    console.log(item)
+    // wx.showLoading({
+    //   title: '操作中'
     // });
   },
+  // 左右滑动
   touchStart: function(e) {
     var startX = e.touches[0].clientX;
     var idx = e.currentTarget.dataset.idx;

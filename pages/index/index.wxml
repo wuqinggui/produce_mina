@@ -7,12 +7,11 @@
         <view class='triangle-wrap'></view>
       </view>
     </picker>
-    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 {{curShop.id ? 'shop-wrap pl15 pr15' : 'shop-search'}}" bindtap="showShopPop">
-      <view class='search-wrap' wx:if="{{!curShop.id}}">
-        <image src="../../images/search_icon.jpg"></image>
+    <view class="flex-1 pt5 pb5 pl10 pr10 ml10 shop-search">
+      <view class='search-wrap'>
+        <image src="../../images/search_icon.jpg" hover-class="click-active" bindtap="searchName"></image>
       </view>
-      <text class="flex-1 {{curShop.merchantName ? '' : 'f14'}}">{{curShop.merchantName ? curShop.merchantName : '搜索店铺'}}</text>
-      <view class="common-arrow bottom arrow" wx:if="{{curShop.id}}"></view>
+      <input value="{{name}}" bindinput="bingChangeName" bindconfirm="searchName" confirm-type="搜索" placeholder="搜索" placeholder-class="name-placeholder" class="flex-1 name-content"/>
     </view>
   </view>
 
@@ -58,7 +57,7 @@
         wx:for-item="goodsItem"
         wx:for-index="goodsIndex"
         wx:key="goodsIndex">
-        <view class="goodsItem">
+        <view class="goodsItem" wx:for="{{goodsItem.specpricelst}}" wx:for-item="specItem" wx:for-index="specIndex" wx:key="specIndex">
           <view class="image-wrap">
             <image
               src="{{goodsItem.imagepath ? goodsItem.imagepath : imgPlaceholder}}"
@@ -67,16 +66,16 @@
           <view class="product-detail-wrap column ju-b">
             <view>
               <view class="title gray3 text-overflow f16">{{goodsItem.name}}</view>
-              <text class="label f10 gray6">{{goodsItem.label}}</text>
+              <text class="label f10 gray6 text-overflow" wx:if="{{specItem.spec.specName}}">{{specItem.spec.specName}}</text>
             </view>
             <view class="price-wrap">
               <text class="price f12">¥</text>
-              <text class="price f16">{{goodsItem.price}}</text>
-              <text class="unit f10">/ 斤</text>
+              <text class="price f16">{{specItem.price}}</text>
+              <text class="unit f12">{{goodsItem.measurement}}</text>
             </view>
           </view>
           <view class="icon-wrap direction-center">
-            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckGoodsItem" data-item="{{goodsItem}}" data-index="{{goodsIndex}}" data-check-value="{{goodsItem.isSelect ? false : true}}"/>
+            <icon type="{{specItem.isSelect ? 'success_circle' : 'circle'}}" color="{{specItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckSpecItem" data-index="{{goodsIndex}}" data-specindex="{{specIndex}}" data-check-value="{{specItem.isSelect ? false : true}}"/>
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -108,8 +107,8 @@
       <view class="shopPop-wrap">
         <view class="shopPop-head gray3 f16 p15 ">请选择购买店铺</view>
         <view class="shopPop-middle pl15 pr15 mb15">
-          <view class="row verticle-center curShop {{shopPopData.merchantName ? '' : 'search'}}" bindtap="showShopSelect">
-            <view class="flex-1 text-overflow f16 mr10 {{shopPopData.merchantName ? '' : 'f14 gray9'}}">{{shopPopData.merchantName ? shopPopData.merchantName : '请选择'}}</view>
+          <view class="row verticle-center curShop {{curShop.merchantName ? '' : 'search'}}" bindtap="showShopSelect">
+            <view class="flex-1 text-overflow f16 mr10 {{curShop.merchantName ? '' : 'f14 gray9'}}">{{curShop.merchantName ? curShop.merchantName : '请选择'}}</view>
             <view class="common-arrow bottom arrow" wx:if="{{!showShopList}}"></view>
             <view class="common-arrow top arrow" wx:else></view>
           </view>
@@ -119,7 +118,7 @@
             wx:for-index="shopIndex"
             wx:key="shopIndex"
             wx:if="{{shopList.length > 0}}">
-              <button class="text-overflow f16 item {{shopPopData.id && shopPopData.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop"  data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
+              <button class="text-overflow f16 item {{curShop.id && curShop.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop"  data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
             </block>
             <view class="text-center gray9 f16 pt40 pb40" wx:if="{{shopList.length == 0}}">暂无店铺数据</view>
           </scroll-view>

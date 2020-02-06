@@ -76,18 +76,19 @@ Page({
 
   },
 
-  // 获取购物车数据
+  // 获取获取购物车店铺数据
   getData: function () {
     wx.showLoading({
       title: '加载中',
     })
     var userId = getApp().globalData.userInfo.id;
     var params = {
-      userId: userId
+      userId: userId,
+      type: 0
     }
-    shopApi.getCar(params)
+    shopApi.carShop(params)
       .then((res) => {
-        console.log('获取购物车数据成功', res);
+        console.log('获取购物车店铺数据成功', res);
         wx.hideLoading();
         this.setData({
           buyList: res.data,
@@ -112,11 +113,10 @@ Page({
   // 跳转购物车详情
   toDetailPage: function (e) {
     console.log(e)
-    let { item } = e.currentTarget.dataset;
-    // let shopId = ev.currentTarget.dataset.item.shopId
-    // wx.navigateTo({
-    //   url: '/pages/buyCarDetail/buyCarDetail?shopId=' + shopId
-    // })
+    let id = e.currentTarget.dataset.item.id
+    wx.navigateTo({
+      url: '/pages/buyCarDetail/buyCarDetail?shopId=' + id
+    })
   },
 
   // 去下单

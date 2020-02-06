@@ -1,38 +1,36 @@
 <view class="container carts-list">
-  <block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-    <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
-      <view class="shop-name">
-        <icon data-index="{{idx}}" type="{{itemName.selectedAll ? 'success_circle' : 'circle'}}" size="20" class="mr10" bindtap="selectedAll" />
-        <text>{{itemName.storeName}}</text>
-      </view>
-      <view class="add mr20" bindtap="addShop">添加商品</view>
+  <block wx:for="{{carList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
+    <view class="shop-title row verticle-center {{idx == 0 ? '' : 'mt20'}}">
+      <icon type="{{shopitem.isSelect ? 'success_circle' : 'circle'}}" color="{{shopitem.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="cnangeShopSelect" data-idx="{{idx}}"/>
+      <view class="flex-1 text-overflow">{{shopitem.shopName ? shopitem.shopName : '店铺名称'}}</view>
+      <view class="add mr20 ml10 f14" bindtap="addShop" data-item="{{shopitem}}">添加商品</view>
     </view>
-    <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
+    <view wx:for="{{shopitem.commodity}}" class="carts-container" wx:key="index">
       <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
-        <icon type="{{item.selected ? 'success_circle' : 'circle'}}" size="20" catchtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}" />
+        <icon type="{{item.isSelect ? 'success_circle' : 'circle'}}" color="{{item.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}"/>
         <view>
           <!-- 缩略图 -->
-          <image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill" />
+          <image class="carts-image" src="{{item.imagepath}}" mode="aspectFill" />
         </view>
         <view class="carts-text mr20">
           <!-- 商品标题 -->
-          <text class="carts-title">{{item.goods.title}}</text>
-          <text class="carts-type">{{item.goods.type}}</text>
+          <text class="carts-title text-overflow">{{item.name}}</text>
+          <text class="carts-type text-overflow">{{item.shopdesc}}</text>
           <view class="carts-subtitle">
             <!-- 价格 -->
             <view class="carts-price">
               <text class="symbol f10">￥</text>
-              <text class="price pr10">{{item.goods.price}}</text>
-              <text class="unit f13">/斤</text>
+              <text class="price pr5">{{item.price}}</text>
+              <text class="unit f13">{{item.measurement}}</text>
             </view>
             <!-- 数量加减 -->
             <view>
               <view class="stepper">
                 <!-- 减号 -->
-                <text class=" iconfont icon-jianhao {{minusStatuses[idx][index] ? minusStatuses[idx][index] : 'normal'}}" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus"></text>
+                <text class="normal iconfont icon-jianhao" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
-                <input type="number" data-index="{{index}}" data-idx="{{idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.quantity}}" />
+                <input type="number" value="{{item.shoppingcartintermediate.number}}" disabled="{{true}}"/>
                 <!-- 加号 -->
                 <text class="normal iconfont icon-jiahao" data-index="{{index}}" data-idx="{{idx}}" catchtap="bindPlus"></text>
               </view>
@@ -41,17 +39,21 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <button type="warn" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
+      <button type="warn" class="delete-button" catchtap="delete" data-item="{{item}}">删除</button>
     </view>
   </block>
 </view>
 <view class="carts-footer">
-  <view class="select-and-amount" bindtap="bindSelectAll">
-    <icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" />
-    <text>全选</text>
+  <view class="carts-footer-wrap">
+    <view class="select-and-amount" bindtap="bindSelectAll">
+      <icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" color="{{selectedAllStatus ? '#FFA800' : ''}}" size="16"/>
+      <text class="gray3 f14">全选</text>
+    </view>
+    <view class="sum">
+      <text class="mr20">合计: ￥{{totalPrice}}</text>
+      <view class="button mr10" bindtap="bindCheckout">立即下单</view>
+    </view>
   </view>
-  <view class="sum">
-    <text class="mr20">合计: ￥{{total}}</text>
-    <view class="button mr10" bindtap="bindCheckout">立即下单</view>
-  </view>
+  <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
 </view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
