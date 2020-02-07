@@ -316,11 +316,16 @@ Page({
     wx.showLoading({
       title: '加载中',
     });
-    var shopId = getApp().globalData.userInfo.shopId;
+    var userId = getApp().globalData.userInfo.id;
     var params = {
-      id: shopId
+      page:{
+        page: 1,
+        size: 10
+      },
+      type: 0,
+      userId: userId
     }
-    shopApi.findShopByID(params)
+    shopApi.buyShop(params)
       .then((res) => {
         console.log('获取店铺成功', res);
         wx.hideLoading();
@@ -328,14 +333,6 @@ Page({
           shopList: res.data,
           curShop: res.data.length > 0 ? res.data[0] : {}
         })
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].id === shopId) {
-            this.setData({
-              curShop: res.data[i]
-            })
-            break
-          }
-        }
         this.showShopPop();
       })
       .catch((error) => {

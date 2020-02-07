@@ -7,7 +7,8 @@ Page({
     selectedAllStatus: false, // 全选状态
     totalPrice: 0, // 合计价格
     startX: 0,
-    itemLefts: {}
+    itemLefts: {},
+    isClick: false
   },
 
   /**
@@ -78,6 +79,9 @@ Page({
   
   // 获取购物车详情数据
   getData: function () {
+    wx.showLoading({
+      title: '加载中'
+    });
     var userId = getApp().globalData.userInfo.id;
     var params = {
       userId: userId,
@@ -86,6 +90,7 @@ Page({
     shopApi.getCar(params)
       .then((res) => {
         console.log('获取购物车数据成功', res);
+        wx.hideLoading();
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].isSelect = false;
@@ -99,6 +104,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取购物车数据失败', error);
+        wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取购物车数据失败',
           icon: 'none',
@@ -107,12 +113,16 @@ Page({
       })
   },
   // 添加商品
-  addShop: function(e) {
-    console.log(e.currentTarget.dataset)
-    let id = e.currentTarget.dataset.item.shopid
-    // wx.switchTab({
-    //   url: '/pages/index/index?shopId=' + id
-    // })
+  addShop: function() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
+  // 去下单
+  goBuy: function () {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
   },
   // 切换店铺的选中状态
   cnangeShopSelect: function (e) {
@@ -135,11 +145,29 @@ Page({
   },
   // 数量-1
   bindMinus: function(e) {
-    
+    console.log(e.currentTarget.dataset)
+    if (this.data.isClick) {
+      return
+    }
+    this.setData({
+      isClick: true
+    })
+    // 当前数量为1则是删除，否则为修改
+    this.changeCar();
   },
   // 数量+1
   bindPlus: function(e) {
-   
+    console.log(e.currentTarget.dataset)
+    if (this.data.isClick) {
+      return
+    }
+    this.setData({
+      isClick: true
+    })
+    this.changeCar();
+  },
+  changeCar: function () {
+
   },
   // 切换单个商品选中状态
   bindCheckbox: function(e) {
@@ -224,9 +252,35 @@ Page({
   // 确认删除
   delectSure: function (item) {
     console.log(item)
-    // wx.showLoading({
-    //   title: '操作中'
-    // });
+    wx.showLoading({
+      title: '操作中'
+    });
+    var userId = getApp().globalData.userInfo.id;
+    var commodityIDlst = [item.id];
+    var params = {
+      userId: userId,
+      commodityIDlst: commodityIDlst
+    }
+    shopApi.deleteCar(params)
+      .then((res) => {
+        console.log('删除购物车数据成功', res);
+        wx.hideLoading();
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success',
+          duration: 1000
+        })
+        this.getData();
+      })
+      .catch((error) => {
+        console.log('删除购物车数据失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '操作失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
   // 左右滑动
   touchStart: function(e) {

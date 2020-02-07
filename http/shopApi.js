@@ -4,6 +4,7 @@ import {
   shopClassUrl,
   shopSmallClassUrl,
   commodityListUrl,
+  buyShopUrl,
   addCarUrl,
   carShopUrl,
   getCarUrl,
@@ -66,6 +67,16 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
+  // 查询可下单的店铺列表
+  buyShop: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(buyShopUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
   // 将商品保存到购物车的接口
   addCar: function (params) {
     return new Promise((resolve, reject) => {
@@ -99,7 +110,7 @@ var shopApi = {
   // 从购物车中删除商品的接口
   deleteCar: function (params) {
     return new Promise((resolve, reject) => {
-      wxRequest(deleteCarUrl, 'GET', params)
+      wxRequest(deleteCarUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

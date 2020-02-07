@@ -241,3 +241,18 @@
 	top: 0;
 	background-color: #fc9326 !important;
 }
+
+
+.goBuy-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:36rpx;
+  width: 240rpx;
+  height:72rpx;
+  margin: 0 auto;
+  font-size:30rpx;
+  color: #fff;
+  padding: 0 30rpx;
+  background-color: #FFA800;
+}
