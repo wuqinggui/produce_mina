@@ -10,6 +10,7 @@ Page({
     showNone: false,
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
     info: {},
+    userId: '',
     shopIndex: 0, //默认索引
     inputValue: '',
     showOneButtonDialog: false, //显示隐藏dialog
@@ -53,12 +54,9 @@ Page({
         duration: 2000
       })
     }
+    data.info.userId = this.data.userId;
     if (data.btnStatus == 2) {
-      let info = data.info;
-      let index = data.shopIndex;
-      let id = data.list[index].id;
-      let param = info;
-      shopApi.updateShop(param).then((res) => {
+      shopApi.updateShop(data.info).then((res) => {
         wx.showToast({
           title: '修改成功',
           icon: 'success',
@@ -74,8 +72,7 @@ Page({
         })
       })
     } else {
-      let param = data.info;
-      shopApi.addShop(param).then((res) => {
+      shopApi.addShop(data.info).then((res) => {
         wx.showToast({
           title: '添加成功',
           icon: 'success',
@@ -157,6 +154,9 @@ Page({
         title: '加载中',
       })
       this.getData();
+      this.setData({
+        userId: sj_userId
+      });
     } else {
       wx.navigateTo({
         url: '/pages/login/login'
@@ -201,7 +201,8 @@ Page({
 
   // 获取数据
   getData: function() {
-    shopApi.shopList().then((res) => {
+    let params = {};
+    shopApi.shopList(params).then((res) => {
       wx.hideLoading();
       this.setData({
         showNone: true,

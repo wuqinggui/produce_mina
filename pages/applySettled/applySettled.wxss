@@ -60,7 +60,7 @@
 .template .list-item-input {
   flex: 1;
 }
-.template .accept .radio {
+.template .accept .checkbox {
   transform: scale(0.7);
   position: absolute;
   left: 0;

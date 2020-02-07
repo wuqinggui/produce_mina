@@ -10,7 +10,7 @@
             <text class="name">商户名称：</text>
           </view>
           <view class="list-item-input">
-            <input name="shopName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{shopName}}" />
+            <input name="merchantName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{merchantName}}" />
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -20,7 +20,7 @@
             <text class="name">主营项目：</text>
           </view>
           <view class="list-item-input">
-            <input name="mainProject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainProject}}" />
+            <input name="mainproject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainproject}}" />
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -30,7 +30,7 @@
             <text class="name">商户负责人姓名：</text>
           </view>
           <view class="list-item-input">
-            <input name="boss" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{boss}}" />
+            <input name="personName" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{personName}}" />
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -40,7 +40,7 @@
             <text class="name">身份证：</text>
           </view>
           <view class="list-item-input">
-            <input name="cardId" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardId}}" />
+            <input name="cardNumber" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardNumber}}" />
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -48,23 +48,30 @@
           <view class="list-item-info">
             <text class="require">*</text>
             <text class="name">身份证期限：</text>
+            <!-- <text name="validity">{{validity}}</text> -->
           </view>
-          <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <view class="list-item-input">
+            <picker bindchange="changeTime" mode="date" value="{{cardTime}}">
+              <view class="picker flex ju-b verticle-center {{cardTime ? '' : 'grayaaa f12'}}">
+                <text class="f14">{{cardTime ? cardTime : '请选择'}}</text>
+                <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+              </view>
+            </picker>
+          </view>
           <view class="half-px-border half-px-border-bottom"></view>
-          <!-- <view class="list-item-input">
-          <input placeholder-class="place-holder" class="weui-input" />
-        </view> -->
         </view>
         <view class="list-item flex" bindtap="selectAddress">
           <view class="list-item-info">
             <text class="require">*</text>
             <text class="name">总店地址：</text>
+            <!-- <text name="headAddress">{{headAddress}}</text> -->
           </view>
-          <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+          <!-- <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon> -->
+          <view class="list-item-input">
+            <input name="headAddress" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="总店地址" value="{{headAddress}}" />
+            <!-- <input placeholder-class="place-holder" class="weui-input" /> -->
+          </view>
           <view class="half-px-border half-px-border-bottom"></view>
-          <!-- <view class="list-item-input">
-          <input placeholder-class="place-holder" class="weui-input" />
-        </view> -->
         </view>
         <!-- <view class="list-item flex">
           <view class="list-item-info">
@@ -88,11 +95,11 @@
           <view class="half-px-border half-px-border-bottom"></view>
         </view> -->
         <view class="accept pt10">
-          <radio-group name="accept">
-            <radio class="radio" value="true" checked="{{isAccept}}">
+          <checkbox-group name="accept" bindchange="checkDeal">
+            <checkbox class="checkbox" value="{{isAccept}}">
               <text class="agreement f20">《商家入驻协议》</text>
-            </radio>
-          </radio-group>
+            </checkbox>
+          </checkbox-group>
         </view>
         <view class="btns mt50 mb50 text-center">
           <button class="btn wbtn" formType="submit">下一步</button>
@@ -111,8 +118,8 @@
             <text class="require">*</text>
             <text>身份证头像面</text>
           </view>
-          <view class="cardImg">
-            <image class="img" src="../../images/cardBg.png"></image>
+          <view class="cardImg" bindtap="changeAvatar" data-key="cardZmPath">
+            <image class="img" src="{{cardZmPath ? cardZmPath : '../../images/cardBg.png'}}"></image>
           </view>
         </view>
         <view class="example flex-1">
@@ -126,10 +133,10 @@
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
-            <text>身份证头像面</text>
+            <text>身份证国徽面</text>
           </view>
-          <view class="cardImg">
-            <image class="img" src="../../images/cardBg.png"></image>
+          <view class="cardImg" bindtap="changeAvatar" data-key="cardFmPath">
+            <image class="img" src="{{cardFmPath ? cardFmPath : '../../images/cardBg.png'}}"></image>
           </view>
         </view>
         <view class="example flex-1">
@@ -143,10 +150,10 @@
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
-            <text>身份证头像面</text>
+            <text>手持身份证半身照</text>
           </view>
-          <view class="cardImg">
-            <image class="img" src="../../images/cardBg.png"></image>
+          <view class="cardImg" bindtap="changeAvatar" data-key="cardBsPath">
+            <image class="img" src="{{cardBsPath ? cardBsPath : '../../images/cardBg.png'}}"></image>
           </view>
         </view>
         <view class="example flex-1">
@@ -160,10 +167,10 @@
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
-            <text>身份证头像面</text>
+            <text>营业执照</text>
           </view>
-          <view class="cardImg">
-            <image class="img" src="../../images/cardBg.png"></image>
+          <view class="cardImg" bindtap="changeAvatar" data-key="businessLicense">
+            <image class="img" src="{{businessLicense ? businessLicense : '../../images/cardBg.png'}}"></image>
           </view>
         </view>
         <view class="example flex-1">
@@ -174,7 +181,7 @@
         </view>
       </view>
     </view>
-    <view class="btns mt50 mb50 text-center">
+    <view class="btns mt50 mb50 text-center" bindtap="addShop">
       <text class="btn wbtn">确定</text>
     </view>
   </view>
@@ -192,9 +199,9 @@
       <view class="f12 pb5 gray6">· 您也可以登录我的店铺及时查看审核进度。</view>
       <view class="f12 pb5 gray6">· 如有疑问请咨询客服咨询。</view>
     </view>
-    <view class="btns mt50 mb50 text-center ju-a flex">
-      <text class="btn cancel">撤销申请</text>
-      <text class="btn">返回</text>
+    <view class="btns mt50 mb50 text-center ju-c flex">
+      <!-- <text class="btn cancel">撤销申请</text> -->
+      <text class="btn" bindtap="back">返回</text>
     </view>
   </view>
 </template>
@@ -242,7 +249,7 @@
           <text>商户信息</text>
         </view>
       </view>
-      <view class="item flex flex-1 column ju-c">
+      <view class="item flex flex-1 column ju-c {{step >= 1?'complate': ''}}">
         <view class="step">
           <text>2</text>
         </view>
@@ -250,7 +257,7 @@
           <text>证件信息</text>
         </view>
       </view>
-      <view class="item flex flex-1 column ju-c">
+      <view class="item flex flex-1 column ju-c {{step >= 2?'complate': ''}}">
         <view class="step">
           <text>3</text>
         </view>
@@ -258,7 +265,7 @@
           <text>提交审核</text>
         </view>
       </view>
-      <view class="item flex flex-1 column ju-c">
+      <view class="item flex flex-1 column ju-c {{step >= 3?'complate': ''}}">
         <view class="step">
           <text>4</text>
         </view>
@@ -270,7 +277,7 @@
   </view>
   <view class="infomation">
     <block>
-      <template is="item1" data="{{...shopInfo}}" wx:if="{{step == 0}}" />
+      <template is="item1" data="{{cardTime, isAccept, ...shopInfo}}" wx:if="{{step == 0}}" />
       <template is="item2" data="{{...shopInfo}}" wx:if="{{step == 1}}" />
       <template is="item3" data="{{...shopInfo}}" wx:if="{{step == 2}}" />
       <template is="item4" data="{{...shopInfo}}" wx:if="{{step == 3}}" />
