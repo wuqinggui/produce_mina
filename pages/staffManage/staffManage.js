@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userId: '',
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
-    info: {},  // 新增修改数据
+    info: {}, // 新增修改数据
     showNone: false,
     inputValue: '',
     worktype: '',
@@ -18,7 +19,7 @@ Page({
     oneButton2: [{
       text: '确定'
     }],
-    address: [],  // 地区选择列表
+    address: [], // 地区选择列表
     userRoles: [{ // 工种
         id: 1,
         name: '下单人员'
@@ -101,28 +102,31 @@ Page({
   tapDialogButton(e) {
     let data = this.data;
     let toastTxt = '';
-    if (data.info.shopId == '') {
-      toastTxt = '店铺';
-    } else if (data.info.userRole == '') {
-      toastTxt = '工种';
-    } else if (data.info.nickname == '') {
-      toastTxt = '员工名';
-    } else if (data.info.phone == '') {
-      toastTxt = '联系电话';
-    } else if (data.info.userName == '') {
-      toastTxt = '用户名';
-    } else if (data.info.password == '') {
-      toastTxt = '密码';
+    if (!data.info.shopId) {
+      toastTxt = '请输入店铺';
+    } else if (!data.info.userRole) {
+      toastTxt = '请输入工种';
+    } else if (!data.info.nickname) {
+      toastTxt = '请输入员工名';
+    } else if (!data.info.phone) {
+      toastTxt = '请输入联系电话';
+    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(data.info.phone)) {
+      toastTxt = '手机号码格式，请重新输入';
+    } else if (!data.info.userName) {
+      toastTxt = '请输入用户名';
+    } else if (!data.info.password) {
+      toastTxt = '请输入密码';
     }
     if (toastTxt) {
       return wx.showToast({
-        title: "请输入" + toastTxt,
+        title: toastTxt,
         icon: 'none',
         duration: 2000
       })
     }
+    data.info.userId = data.userId;
+    let params = data.info;
     if (data.btnStatus == 1) {
-      let params = data.info; 
       shopApi.addUser(params).then((res) => {
         wx.showToast({
           title: '添加成功',
@@ -131,15 +135,14 @@ Page({
         })
         this.getUserList();
       }).catch((error) => {
-        console.log(error); 
+        console.log(error);
         wx.showToast({
           title: error.message ? error.message : '获取数据失败',
           icon: 'none',
           duration: 2000
         })
       })
-    }else {
-      let params = data.info;
+    } else {
       shopApi.updateUser(params).then((res) => {
         wx.showToast({
           title: '修改成功',
@@ -159,7 +162,7 @@ Page({
       showOneButtonDialog: false
     })
   },
-  bindAndSet: function (e) {
+  bindAndSet: function(e) {
     let key = e.currentTarget.dataset.key;
     let info = this.data.info;
     info[key] = e.detail.value;
@@ -193,11 +196,13 @@ Page({
     })
     list[index].userRoleName = userRole && userRole.name;
     let params = {
-      id: list[index].shopId
+      userID: this.data.userId
     };
-    shopApi.findShopByID(params).then((res) => {
-      list[index].merchantName = res.data[0].merchantName;
-      list[index].shopId = res.data[0].id;
+    shopApi.findShopByUserId(params).then((res) => {
+      let shopInfo = res.data.find((item) => {
+        return list[index].shopId == item.id;
+      })
+      list[index].merchantName = shopInfo.merchantName;
       this.setData({
         info: list[index],
         btnStatus: 2,
@@ -234,6 +239,9 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.getData();
+      this.setData({
+        userId: sj_userId
+      });
     } else {
       wx.navigateTo({
         url: '/pages/login/login'

@@ -39,17 +39,19 @@ Page({
     let data = this.data;
     let toastTxt = '';
     if (!data.info.merchantName) {
-      toastTxt = '店铺名';
+      toastTxt = '请输入店铺名';
     } else if (!data.info.personName) {
-      toastTxt = '负责人';
+      toastTxt = '请输入负责人';
     } else if (!data.info.phone) {
-      toastTxt = '联系电话';
+      toastTxt = '请输入联系电话';
+    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(data.info.phone)) {
+      toastTxt = '联系电话格式有误，请重新输入';
     } else if (!data.info.desction) {
-      toastTxt = '备注';
+      toastTxt = '请输入备注';
     }
     if (toastTxt) {
       return wx.showToast({
-        title: "请输入" + toastTxt,
+        title: toastTxt,
         icon: 'none',
         duration: 2000
       })
@@ -73,6 +75,7 @@ Page({
         })
       })
     } else {
+      data.info.auditStatus = 1;
       shopApi.addShop(data.info).then((res) => {
         wx.showToast({
           title: '添加成功',
@@ -129,6 +132,38 @@ Page({
       btnStatus: 1,
       info: info,
       showOneButtonDialog: true
+    })
+  },
+  // 撤销申请
+  repealApply: function(e) {
+    var _this = this;
+    wx.showModal({
+      title: '提示',
+      content: '确认撤销申请订单？',
+      success(res) {
+        if (res.confirm) {
+          let index = e.currentTarget.dataset.index;
+          let info = _this.data.list[index];
+          info.auditStatus = 4;
+          shopApi.updateShop(info).then((res) => {
+            wx.showToast({
+              title: '修改成功',
+              icon: 'success',
+              duration: 2000
+            })
+            _this.getData();
+          }).catch((error) => {
+            console.log(error);
+            wx.showToast({
+              title: error.message ? error.message : '获取数据失败',
+              icon: 'none',
+              duration: 2000
+            })
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
     })
   },
   /**

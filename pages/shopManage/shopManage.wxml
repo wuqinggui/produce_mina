@@ -32,7 +32,7 @@
   </view>
   <view class="list">
     <view class="list-item pt10 pb10 flex ju-b" bindtap="editItem" data-index="{{index}}" wx:for="{{list}}" wx:key="index">
-      <view class="info">
+      <view class="info mr10">
         <view class="name">{{item.merchantName}}
           <text class="remark ml5">{{item.desction ? "("+item.desction+")" : '' }}</text>
         </view>
@@ -40,7 +40,9 @@
           <text class="mr10">{{item.personName}}</text>
           <text>{{item.phone}}</text> </view>
       </view>
-      <view class="icon">
+      <view class="icon flex verticle-center ju-b {{item.auditStatus==1 ? 'w180' : ''}}">
+        <view catchtap="repealApply" wx:if="{{item.auditStatus==1}}" class="repeal" data-index="{{index}}">撤销申请</view>
+        <view></view>
         <mp-icon icon="arrow" color="black" size="{{10}}"></mp-icon>
       </view>
       <view class="half-px-border half-px-border-bottom"></view>
