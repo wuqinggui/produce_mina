@@ -1,5 +1,9 @@
 /* pages/shopManage/shopManage.wxss */
 
+.w180 {
+  flex: 0 0 180rpx;
+}
+
 .addinfo {
   position: relative;
 }
@@ -8,6 +12,7 @@
   width: 160rpx;
   text-align: right;
 }
+
 .addinfo .weui-input {
   text-align: left;
   padding-left: 10rpx;
@@ -20,10 +25,12 @@
 .weui-dialog__bd {
   margin-bottom: 14rpx !important;
 }
+
 .weui-dialog__ft {
   min-height: 55rpx !important;
   line-height: 55rpx !important;
 }
+
 .weui-dialog__ft::after {
   border-top: 1rpx solid #f3f3f3 !important;
 }
@@ -62,6 +69,15 @@
 
 .icon .weui-icon {
   background: #999 !important;
+}
+
+.icon .repeal {
+  color: #fff;
+  height: 76rpx;
+  background: #ffb017;
+  line-height: 76rpx;
+  padding: 0 16rpx;
+  border-radius: 10rpx;
 }
 
 .add {

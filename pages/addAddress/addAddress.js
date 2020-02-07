@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userId: '',
     id: '',
     region: [],
     customItem: '',
@@ -81,6 +82,7 @@ Page({
   },
   submit: function() {
     var valObj = this.data.valObj;
+    valObj.userId = this.data.userId;
     if (!valObj.name) {
       this.showToast('收货人不能为空');
       return;
@@ -163,6 +165,9 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.getData();
+      this.setData({
+        userId: sj_userId
+      });
     } else {
       wx.navigateTo({
         url: '/pages/login/login'
