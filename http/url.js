@@ -13,7 +13,7 @@ export const buyShopUrl = baseUrl + 'shop/searchByShop'; // 查询可下单的�
 // 购物车
 export const addCarUrl = baseUrl + 'shoppingcart/add'; // 将商品保存到购物车的接口
 export const carShopUrl = baseUrl + 'shop/findList'; // 查询购物车的店铺数据
-export const getCarUrl = baseUrl + 'shoppingcart/findList'; // 根据购物车当前用户ID查询购物车中的商品
+export const getCarUrl = baseUrl + 'shoppingcart/findList'; // 根据购物车当前用户ID查询购物车中的商品export const updateCarUrl = baseUrl + 'shoppingcart/update'; // 修改购物车商品数据
 export const deleteCarUrl = baseUrl + 'shoppingcart/delete'; // 从购物车中删除商品的接口
 // 订单
 export const addOrderUrl = baseUrl + 'order/add'; // 下单接口

@@ -8,6 +8,7 @@ import {
   addCarUrl,
   carShopUrl,
   getCarUrl,
+  updateCarUrl,
   deleteCarUrl,
   addOrderUrl,
   orderListUrl,
@@ -105,6 +106,16 @@ var shopApi = {
       })        .catch((error)  =>  reject(error))    
     });  
   },
+  // 修改购物车商品数据
+  updateCar: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(updateCarUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },  
   // 从购物车中删除商品的接口
   deleteCar: function(params) {
     return new Promise((resolve, reject) => {

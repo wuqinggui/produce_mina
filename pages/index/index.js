@@ -93,7 +93,6 @@ Page({
     console.log('首页')
     this.getRegionList(); // 获取地区列表
     this.getShopClass(); // 获取大分类
-    this.getShopSmallClass(); // 查询小分类
   },
   
   // 获取地区列表
@@ -106,6 +105,7 @@ Page({
           curRegion: res.data.length > 0 ? res.data[0] : {},
           curRegionIndex: 0
         })
+        this.getShopSmallClass(); // 查询小分类
         var regionId = getApp().globalData.userInfo.regionId ? getApp().globalData.userInfo.regionId : '';
         // 已登陆
         if (regionId) {
@@ -135,6 +135,9 @@ Page({
     shopApi.shopClass()
       .then((res) => {
         console.log('获取大分类数据成功', res);
+        // this.setData({
+        //   classList: res.data ? res.data : []
+        // })
         var num = 0;
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].imagepath) {
@@ -318,9 +321,9 @@ Page({
     });
     var userId = getApp().globalData.userInfo.id;
     var params = {
-      page:{
+      page: {
         page: 1,
-        size: 10
+        size: 100
       },
       type: 0,
       userId: userId
@@ -330,8 +333,8 @@ Page({
         console.log('获取店铺成功', res);
         wx.hideLoading();
         this.setData({
-          shopList: res.data,
-          curShop: res.data.length > 0 ? res.data[0] : {}
+          shopList: res.data.list ? res.data.list : [],
+          curShop: res.data.list && res.data.list.length > 0 ? res.data.list[0] : {}
         })
         this.showShopPop();
       })
@@ -412,7 +415,7 @@ Page({
     }
     var params = {
       shopCommoditDto: shopCommoditDto,
-      shopid: this.data.curShop.id,
+      shopId: this.data.curShop.id,
       userId: getApp().globalData.userInfo.id,
     }
     shopApi.addCar(params)

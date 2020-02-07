@@ -99,7 +99,12 @@ Page({
           }
         }
         this.setData({
-          carList: data
+          carList: data,
+          selectedAllStatus: false,
+          totalPrice: 0,
+          startX: 0,
+          itemLefts: {},
+          isClick: false
         })
       })
       .catch((error) => {
@@ -127,7 +132,7 @@ Page({
   // 切换店铺的选中状态
   cnangeShopSelect: function (e) {
     wx.showLoading({
-      title: '操作中'
+      title: '加载中'
     });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
@@ -146,33 +151,80 @@ Page({
   // 数量-1
   bindMinus: function(e) {
     console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
     if (this.data.isClick) {
       return
     }
     this.setData({
       isClick: true
     })
-    // 当前数量为1则是删除，否则为修改
-    this.changeCar();
+    if (item.shoppingcartintermediate.number > 1) {
+      // 修改
+      this.changeCar(item, 1);
+    }
   },
   // 数量+1
   bindPlus: function(e) {
     console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
     if (this.data.isClick) {
       return
     }
     this.setData({
       isClick: true
     })
-    this.changeCar();
+    this.changeCar(item, 2);
   },
-  changeCar: function () {
-
+  // 修改购物车商品数据
+  changeCar: function (item, type) {
+    wx.showLoading({
+      title: '加载中',
+    });
+    var newNum = 0;
+    if (type == 1) {
+      // 减少
+      newNum = item.shoppingcartintermediate.number - 1;
+    } else {
+      // 增加
+      newNum = item.shoppingcartintermediate.number + 1;
+    }
+    var params = {
+      shopCommoditDto: [
+        {
+          id: item.id,
+          spec: item.shoppingcartintermediate.spec,
+          number: newNum
+        }
+      ],
+      shopId: item.shoppingcartintermediate.shopId,
+      userId: getApp().globalData.userInfo.id,
+    }
+    shopApi.updateCar(params)
+    .then((res) => {
+      console.log('修改购物车商品数据成功', res);
+      wx.hideLoading();
+      this.setData({
+        isClick: false
+      })
+      this.getData();
+    })
+    .catch((error) => {
+      console.log('修改购物车商品数据失败', error);
+      wx.hideLoading();
+      this.setData({
+        isClick: false
+      })
+      wx.showToast({
+        title: error.message ? error.message : '操作失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
   },
   // 切换单个商品选中状态
   bindCheckbox: function(e) {
     wx.showLoading({
-      title: '操作中'
+      title: '加载中'
     });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
@@ -189,7 +241,7 @@ Page({
   // 切换全选
   bindSelectAll: function() {
     wx.showLoading({
-      title: '操作中'
+      title: '加载中'
     });
     var selectedAllStatus = !this.data.selectedAllStatus; // 取反
     var data = this.data.carList;
@@ -213,7 +265,7 @@ Page({
       for (var j = 0; j < data[i].commodity.length; j++) {
         if (data[i].commodity[j].isSelect) {
           // 选中的加上价格, 数量转整数，价格转浮点数类型
-          num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].price);
+          num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].specpricelst[0].price);
         }
       }
     }
@@ -223,19 +275,12 @@ Page({
     })
     wx.hideLoading();
   },
-  // 立即下单
-  bindCheckout: function() {
-    // var cartIds = this.calcIds();
-    // if (cartIds.length) {
-    //   cartIds = cartIds.join(',');
-    //   wx.navigateTo({
-    //     url: '../orderSubmit/orderSubmit?cartIds=' + cartIds + '&amount=' + this.data.totalPrice
-    //   });
-    // }
-  },
   // 删除商品
   delete: function(e) {
     console.log(e.currentTarget.dataset)
+    if (this.data.isClick) {
+      return
+    }
     var _this = this;
     var item = e.currentTarget.dataset.item;
     wx.showModal({
@@ -252,14 +297,23 @@ Page({
   // 确认删除
   delectSure: function (item) {
     console.log(item)
+    this.setData({
+      isClick: true
+    })
     wx.showLoading({
-      title: '操作中'
+      title: '加载中'
     });
     var userId = getApp().globalData.userInfo.id;
-    var commodityIDlst = [item.id];
+    var shopCommoditDto = [
+      {
+        id: item.id,
+        spec: item.shoppingcartintermediate.spec
+      }
+    ];
     var params = {
-      userId: userId,
-      commodityIDlst: commodityIDlst
+      shopCommoditDto: shopCommoditDto,
+      shopId: item.shoppingcartintermediate.shopId,
+      userId: userId
     }
     shopApi.deleteCar(params)
       .then((res) => {
@@ -270,17 +324,33 @@ Page({
           icon: 'success',
           duration: 1000
         })
+        this.setData({
+          isClick: false
+        })
         this.getData();
       })
       .catch((error) => {
         console.log('删除购物车数据失败', error);
         wx.hideLoading();
+        this.setData({
+          isClick: false
+        })
         wx.showToast({
           title: error.message ? error.message : '操作失败',
           icon: 'none',
           duration: 2000
         })
       })
+  },
+  // 立即下单
+  bindCheckout: function() {
+    // var cartIds = this.calcIds();
+    // if (cartIds.length) {
+    //   cartIds = cartIds.join(',');
+    //   wx.navigateTo({
+    //     url: '../orderSubmit/orderSubmit?cartIds=' + cartIds + '&amount=' + this.data.totalPrice
+    //   });
+    // }
   },
   // 左右滑动
   touchStart: function(e) {
