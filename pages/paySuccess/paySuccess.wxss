@@ -3,11 +3,11 @@ page {
   background-color: #FFA800;
 }
 .btn {
-  border: 4rpx solid #fff;
+  border: 2rpx solid #fff;
   border-radius: 50rpx;
   text-align: center;
-  padding: 15rpx 25rpx;
-  margin: 0 20rpx;
+  padding: 16rpx 20rpx;
+  margin: 0 36rpx;
   color: #fff;
-  width: 220rpx;
+  width: 200rpx;
 }

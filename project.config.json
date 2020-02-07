@@ -43,15 +43,7 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": [
-				{
-					"id": 0,
-					"name": "pages/buyCarDetail/buyCarDetail",
-					"pathName": "pages/buyCarDetail/buyCarDetail",
-					"query": "shop=171338336",
-					"scene": null
-				}
-			]
+			"list": []
 		}
 	}
 }

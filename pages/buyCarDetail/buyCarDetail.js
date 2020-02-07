@@ -119,13 +119,13 @@ Page({
   },
   // 添加商品
   addShop: function() {
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/index/index'
     })
   },
   // 去下单
   goBuy: function () {
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/index/index'
     })
   },
@@ -343,14 +343,29 @@ Page({
       })
   },
   // 立即下单
-  bindCheckout: function() {
-    // var cartIds = this.calcIds();
-    // if (cartIds.length) {
-    //   cartIds = cartIds.join(',');
-    //   wx.navigateTo({
-    //     url: '../orderSubmit/orderSubmit?cartIds=' + cartIds + '&amount=' + this.data.totalPrice
-    //   });
-    // }
+  bindSubmitOder: function() {
+    var data = this.data.carList;
+    var selectNum = 0;
+    for (var i = 0; i < data.length; i++) {
+      for (var j = 0; j < data[i].commodity.length; j++) {
+        if (data[i].commodity[j].isSelect) {
+          selectNum = 1;
+          break;
+        }
+      }
+    }
+    if (selectNum == 0) {
+      wx.showToast({
+        title: '请先选择下单商品',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    getApp().globalData.submitCarData = data;
+    wx.navigateTo({
+      url: '/pages/orderSubmit/orderSubmit'
+    })
   },
   // 左右滑动
   touchStart: function(e) {

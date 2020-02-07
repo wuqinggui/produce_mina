@@ -1,11 +1,11 @@
 <!--pages/paySuccess/paySuccess.wxml-->
 <view class="paySuccess mt100 flex column">
   <view class="ju-c flex">
-    <icon type="success" size="80" color="#fff" />
+    <icon type="success" size="60" color="#fff" />
   </view>
   <view class="mt50 flex ju-c">
-    <view class="btn f14">查看订单</view>
-    <view class="btn f14">商城首页</view>
+    <button class="btn f14" hover-class="click-active" bindtap="goOrderDetail">查看订单</button>
+    <button class="btn f14" hover-class="click-active" bindtap="goHome">商城首页</button>
   </view>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

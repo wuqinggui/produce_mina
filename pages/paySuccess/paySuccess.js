@@ -1,19 +1,21 @@
 // pages/paySuccess/paySuccess.js
-var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    orderId: '', // 支付成功的订单id
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log('支付成功options', options)
+    this.setData({
+      orderId: options.orderId
+    })
   },
 
   /**
@@ -29,7 +31,7 @@ Page({
   onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
-      this.getData();
+      // this.getData();
     } else {
       wx.navigateTo({
         url: '/pages/login/login'
@@ -73,7 +75,21 @@ Page({
   },
   
   // 获取数据
-  getData: function () {
+  // getData: function () {
 
+  // },
+
+  // 查看订单详情
+  goOrderDetail: function () {
+    wx.navigateTo({
+      url: '/pages/orderDetail/orderDetail?orderId=' + this.data.orderId
+    })
+  },
+
+  // 回到商城首页
+  goHome: function () {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
   }
 })

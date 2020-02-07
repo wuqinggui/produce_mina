@@ -121,7 +121,7 @@ Page({
 
   // 去下单
   goBuy: function () {
-    wx.switchTab({
+    wx.reLaunch({
       url: '/pages/index/index'
     })
   }

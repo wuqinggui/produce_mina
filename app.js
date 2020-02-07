@@ -20,6 +20,8 @@ App({
     latitude: 0,// 纬度
     getOpenidEnd: false,
     getOpenidCb: null,//openid到位回调方法, 页面需要待openid到位回调成功再执行其他请求
+    submitCarData: {}, // 立即下单的购物车数据
+    addresseeData: {}, // 提交订单页面的收件人信息
   },
   onLaunch: function (options) {
     console.log('------------onLaunch场景值---------', options.scene);
