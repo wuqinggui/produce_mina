@@ -1,6 +1,6 @@
 <!--pages/applySettled/applySettled.wxml-->
 <template name="item1">
-  <view class="template pl20 pr20">
+  <view class="template pl15 pr15">
     <view class="title mt20 mb10 f16">填写店铺信息</view>
     <form bindsubmit="formSubmit">
       <view class="shopInfo">
@@ -110,9 +110,9 @@
 </template>
 <template name="item2">
   <view class="template pl20 pr20">
-    <view class="title mt20 mb10 f16">填写证件信息</view>
+    <view class="title mt20 mb20 f16">填写证件信息</view>
     <view class="uploadList">
-      <view class="cardJust mb10 flex">
+      <view class="cardJust mb15 flex">
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
@@ -125,11 +125,11 @@
         <view class="example flex-1">
           <view class="title mb10">示例：</view>
           <view class="example-img">
-            <image class="img" src="../../images/head_img.png"></image>
+            <image class="img" src="../../images/cardZ.jpg"></image>
           </view>
         </view>
       </view>
-      <view class="cardBack mb10 flex">
+      <view class="cardBack mb15 flex">
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
@@ -142,11 +142,11 @@
         <view class="example flex-1">
           <view class="title mb10">示例：</view>
           <view class="example-img">
-            <image class="img" src="../../images/head_img.png"></image>
+            <image class="img" src="../../images/cardF.jpg"></image>
           </view>
         </view>
       </view>
-      <view class="takeCard mb10 flex">
+      <view class="takeCard mb15 flex">
         <view class="uploadImg flex-1">
           <view class="title mb10">
             <text class="require">*</text>
@@ -159,7 +159,7 @@
         <view class="example flex-1">
           <view class="title mb10">示例：</view>
           <view class="example-img">
-            <image class="img" src="../../images/head_img.png"></image>
+            <image class="img" src="../../images/headBody.jpg"></image>
           </view>
         </view>
       </view>
@@ -176,7 +176,7 @@
         <view class="example flex-1">
           <view class="title mb10">示例：</view>
           <view class="example-img">
-            <image class="img" src="../../images/head_img.png"></image>
+            <image class="img" src="../../images/busiess.jpg"></image>
           </view>
         </view>
       </view>
