@@ -55,6 +55,7 @@ Page({
       })
     }
     data.info.userId = this.data.userId;
+    data.info.type = 0;
     if (data.btnStatus == 2) {
       shopApi.updateShop(data.info).then((res) => {
         wx.showToast({
