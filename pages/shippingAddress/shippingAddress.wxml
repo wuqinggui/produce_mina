@@ -1,25 +1,25 @@
-<!--pages/shippingAddress/shippingAddress.wxml-->
-<template name="addressItem">
-  <view class="info mt10 flex ju-b">
-    <view>
-      <view class="user mb5">
-        <text class="mr20">收货人: {{name}} </text>
-        <text>{{phone}}</text>
-      </view>
-      <view class="address">
-        <text class="f13 gray6 mr5">收货地址： </text>
-        <text class="f13 gray6">{{addresses}}</text>
-      </view>
-    </view>
-    <view class="edit flex ju-c" bindtap="editAddress" data-id="{{id}}">
-      <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}"></mp-icon>
-    </view>
-  </view>
-</template>
-
 <view class="shippingAddress pb110">
   <scroll-view scroll-y="trues" class="user">
-    <template wx:for="{{list}}" wx:key="index" is="addressItem" data="{{...item}}" />
+    <view wx:for="{{list}}" wx:key="index">
+      <view class="info mt10 row">
+      <view class="flex-1">
+        <view class="user mb5">
+          <text class="mr20">收货人: {{item.name}} </text>
+          <text>{{item.phone}}</text>
+        </view>
+        <view class="address">
+          <text class="f13 gray6 mr5">收货地址： </text>
+          <text class="f13 gray6">{{item.addresses}}</text>
+        </view>
+      </view>
+      <view class="edit direction-center">
+        <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}" bindtap="editAddress" data-id="{{item.id}}"></mp-icon>
+      </view>
+      <view class="direction-center" wx:if="{{isSelect == 1 && addressId}}">
+        <icon type="{{addressId == item.id ? 'success_circle' : 'circle'}}" color="{{addressId == item.id ? '#FFA800' : ''}}" size="24" bindtap="selectAddress" data-item="{{item}}"/>
+      </view>
+    </view>
+    </view>
   </scroll-view>
 </view>
 <view class="addAddress" bindtap="add">新增收货地址</view>

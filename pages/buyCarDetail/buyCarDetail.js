@@ -146,7 +146,7 @@ Page({
       carList: data,
       selectedAllStatus: false
     });
-    this.totalPriceNum();
+    this.countTotal();
   },
   // 数量-1
   bindMinus: function(e) {
@@ -236,7 +236,7 @@ Page({
       carList: data,
       selectedAllStatus: false
     });
-    this.totalPriceNum();
+    this.countTotal();
   },
   // 切换全选
   bindSelectAll: function() {
@@ -255,10 +255,10 @@ Page({
       selectedAllStatus: selectedAllStatus,
       carList: data,
     });
-    this.totalPriceNum();
+    this.countTotal();
   },
   // 合计价格
-  totalPriceNum: function () {
+  countTotal: function () {
     var num = 0;
     var data = this.data.carList;
     for (var i = 0; i < data.length; i++) {

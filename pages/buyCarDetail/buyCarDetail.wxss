@@ -242,7 +242,6 @@
 	background-color: #fc9326 !important;
 }
 
-
 .goBuy-btn{
   display:flex;
   align-items:center;

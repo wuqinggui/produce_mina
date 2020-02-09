@@ -43,7 +43,21 @@
 		},
 		"miniprogram": {
 			"current": -1,
-			"list": []
+			"list": [
+				{
+					"id": -1,
+					"name": "pages/orderSubmit/orderSubmit",
+					"pathName": "pages/orderSubmit/orderSubmit",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/shippingAddress/shippingAddress",
+					"pathName": "pages/shippingAddress/shippingAddress",
+					"scene": null
+				}
+			]
 		}
 	}
 }

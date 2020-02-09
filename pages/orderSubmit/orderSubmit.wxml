@@ -1,75 +1,84 @@
-<!--pages/orderSubmit/orderSubmit.wxml-->
 <view class="orderSubmit">
-  <view class="receipt row al-c ju-b" bindtap="updateInfo">
+  <view class="receipt row al-c ju-b" bindtap="changeAddresseeData">
     <view class="info pr10">
       <view class="userinfo flex ju-b mb5 mt10">
-        <text class="name">收件人： 陈一发</text>
-        <text class="number">156465451654</text>
+        <text class="name">收件人： {{addresseeData.name}}</text>
+        <text class="number">{{addresseeData.phone}}</text>
       </view>
       <view class="address f13">
-        收货地址：嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻
+        收货地址：{{addresseeData.address}}
       </view>
     </view>
     <view class="common-arrow right"></view>
   </view>
-  <view class="{{isAuto ? 'list' : ''}}">
-    <block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-      <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
-        <view class="shop-name">
-          <text class="ml5">{{itemName.storeName}}</text>
-        </view>
-      </view>
-      <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
-        <view class="carts-item" data-idx="{{idx}}" data-index="{{index}}">
-          <view>
-            <!-- 缩略图 -->
-            <image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill" />
+  <view wx:if="{{submitCarData.length > 0}}">
+    <view class="{{isAuto ? 'list' : ''}}">
+      <block wx:for="{{submitCarData}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
+        <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
+          <view class="shop-name">
+            <text class="ml5 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '店铺名称'}}</text>
           </view>
-          <view class="carts-text">
-            <!-- 商品标题 -->
-            <view class="verticle-center">
-              <text class="carts-title">{{item.goods.title}}</text>
-              <text class="carts-type ml10">{{item.goods.type}}</text>
+        </view>
+        <view wx:for="{{itemName.commodity}}" wx:key="index" class="carts-container">
+          <view class="carts-item">
+            <view>
+              <!-- 缩略图 -->
+              <image class="carts-image" src="{{item.imagepath}}" mode="aspectFill" />
             </view>
-            <view class="carts-price row ju-b al-c">
-              <view class="priceinfo">
-                <text class="symbol f13">￥</text>
-                <text class="price pr10">{{item.goods.price}}</text>
-                <text class="unit f13">/斤</text>
+            <view class="carts-text">
+              <!-- 商品标题 -->
+              <view class="verticle-center">
+                <text class="carts-title text-overflow">{{item.name}}</text>
+                <text class="carts-type ml10 text-overflow">{{item.specpricelst[0].spec.specName}}</text>
               </view>
-              <view class="num f13">
-                * 100</view>
+              <view class="carts-price row ju-b al-c">
+                <view class="priceinfo">
+                  <text class="symbol f13">￥</text>
+                  <text class="price pr10">{{item.specpricelst[0].price}}</text>
+                  <text class="unit f13">{{item.measurement}}</text>
+                </view>
+                <view class="num f13">
+                  * {{item.shoppingcartintermediate.number}}</view>
+              </view>
             </view>
+          <view class="half-px-border half-px-border-bottom"></view>
           </view>
-        <view class="half-px-border half-px-border-bottom"></view>
         </view>
-      </view>
-    </block>
-  </view>
-  <view class="more flex ju-c pt10 pb10" bindtap="changeWidth">
-      <view class="common-arrow {{isAuto ? 'right' : 'left'}} arrow"></view>
-  </view>
-  <view class="other mt20 mb100">
-    <view class="freight">
-      <text>运费</text>
-      <text class="type">免运费</text>
-        <view class="half-px-border half-px-border-bottom"></view>
+      </block>
     </view>
-    <view class="summation">
-      <text>合计</text>
-      <view>
-        <text class="suminfo f13">共计15件商品</text>
-        <text class="total ml10">￥90.00</text>
-      </view>
-        <view class="half-px-border half-px-border-bottom"></view>
+    <view class="more flex ju-c pt10 pb10" bindtap="changeHeight">
+        <view class="common-arrow {{isAuto ? 'right' : 'left'}} arrow"></view>
     </view>
+    <view class="other mt20 mb100">
+      <view class="freight">
+        <text>运费</text>
+        <text class="type">{{freightPrice ? freightPrice : '免运费'}}</text>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="summation">
+        <text>合计</text>
+        <view>
+          <text class="suminfo f13 gray6">共计{{totalNum}}件商品</text>
+          <text class="total ml10">￥{{totalPrice}}</text>
+        </view>
+          <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{submitCarData.length == 0}}" class="list-nodata-area">
+    <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+    <view class="list-nodata-tip"> -- 暂无订单数据 -- </view>
+    <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>
   </view>
 </view>
-<view class="carts-footer">
-  <view class="sum">
-    <text class="mr5">合计: </text>
-    <text class="mr10 total">￥{{total}}</text>
-    <view class="button mr10" bindtap="bindCheckout">确认下单</view>
+<view class="carts-footer" wx:if="{{submitCarData.length > 0}}">
+  <view class="carts-footer-wrap">
+    <view class="sum pl15 pr15">
+      <text class="mr5">合计: </text>
+      <text class="mr10 total">￥{{totalPrice}}</text>
+      <view class="button" bindtap="sureSubmitOrder">确认下单</view>
+    </view>
   </view>
+  <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

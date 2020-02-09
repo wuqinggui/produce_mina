@@ -1,5 +1,4 @@
 // pages/shippingAddress/shippingAddress.js
-var util = require('../../utils/util.js');
 var shopApi = require('../../http/shopApi.js').default;
 Page({
 
@@ -7,7 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: []
+    list: [],
+    isSelect: 0, // 是否来选择收货地址 (0为否1为是)
+    addressId: '', // 选择收货地址时，从其他页传来的地址id
   },
   editAddress: function(e) {
     let id = e.currentTarget.dataset.id;
@@ -24,7 +25,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log('收货地址options', options)
+    this.setData({
+      isSelect: options.isSelect ? options.isSelect : 0,
+      addressId: options.addressId ? options.addressId : ''
+    })
   },
 
   /**
@@ -100,5 +105,14 @@ Page({
     }).catch((error) => {
       console.log(error);
     })
+  },
+
+  // 选择收货地址，放到全局选择收货地址变量，返回上一页
+  selectAddress: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    getApp().globalData.addresseeData = item;
+    wx.navigateBack();
   }
+
 })

@@ -108,19 +108,25 @@
 }
 
 /*底部按钮*/
+/*底部按钮*/
 .carts-footer {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+  box-shadow:0 0 4rpx rgb(238, 236, 236);
+	z-index: 100;
+}
+
+.carts-footer-wrap{
 	width: 100%;
 	height: 80rpx;
+	background: white;
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
-	position: fixed;
-	bottom: 0;
-	border-top: 1px solid #eee;
-	background: white;
 	align-items: center;
-	z-index: 100;
 }
+
 .carts-footer .sum {
 	display: flex;
   height: 100%;
@@ -151,4 +157,18 @@
 	text-align: right;
 	line-height: 80rpx;
 	color: #fc9326;
+}
+
+.goBuy-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:36rpx;
+  width: 240rpx;
+  height:72rpx;
+  margin: 0 auto;
+  font-size:30rpx;
+  color: #fff;
+  padding: 0 30rpx;
+  background-color: #FFA800;
 }

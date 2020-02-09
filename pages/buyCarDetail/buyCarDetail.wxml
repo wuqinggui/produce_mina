@@ -5,7 +5,7 @@
       <view class="flex-1 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '店铺名称'}}</view>
       <view class="add mr20 ml10 f14" bindtap="addShop">添加商品</view>
     </view>
-    <view wx:for="{{shopitem.commodity}}" class="carts-container" wx:key="index">
+    <view wx:for="{{shopitem.commodity}}" wx:key="index" class="carts-container">
       <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
         <icon type="{{item.isSelect ? 'success_circle' : 'circle'}}" color="{{item.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}"/>

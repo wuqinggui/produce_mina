@@ -1,12 +1,16 @@
 // pages/orderSubmit/orderSubmit.js
-var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isAuto: true //高度
+    isAuto: true, //高度
+    freightPrice: 0, // 运费
+    totalNum: 0, // 合计商品数量
+    totalPrice: 0, // 合计价格
+    addresseeData: {}, // 收件人信息
+    submitCarData: [], // 立即下单的购物车数据
   },
 
   /**
@@ -21,24 +25,6 @@ Page({
    */
   onReady: function () {
 
-  },
-  // 跳转修改收货人信息
-  updateInfo: function() {
-    wx.navigateTo({
-      url: '../shippingAddress/shippingAddress',
-    })
-  },
-  // 确认下单
-  bindCheckout: function() {
-    // wx.navigateTo({
-    //   url: '../',
-    // })
-  },
-  changeWidth: function() {
-    var isAuto = this.data.isAuto;
-    this.setData({
-      isAuto: !isAuto
-    })
   },
   /**
    * 生命周期函数--监听页面显示
@@ -92,84 +78,54 @@ Page({
   // 获取数据
   getData: function () {
     this.setData({
-      cartObj: [{
-        id: 1,
-        storeName: '水果旗舰店1',
-        selectedAll: true,
-        carts: [{
-          objectId: 1,
-          selected: true,
-          quantity: 1,
-          goods: {
-            objectId: 1,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 2,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 3,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }]
-      }, {
-        id: 2,
-        storeName: '水果旗舰店2',
-        selectedAll: true,
-        carts: [{
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 4,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 5,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 6,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }]
-      }
-      ]
+      submitCarData: getApp().globalData.submitCarData,
+      addresseeData: getApp().globalData.addresseeData
     })
-  }
+    this.countTotal();
+    console.log('立即下单的购物车数据', this.data.submitCarData)
+    console.log('收货人信息', this.data.addresseeData)
+  },
+  
+  // 跳转收货人信息
+  changeAddresseeData: function() {
+    var id = this.data.addresseeData.id ? this.data.addresseeData.id : '';
+    wx.navigateTo({
+      url: '/pages/shippingAddress/shippingAddress?isSelect=1&addressId=' + id,
+    })
+  },
+  // 去下单
+  goBuy: function () {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
+  // 展示/隐藏部分内容
+  changeHeight: function() {
+    var isAuto = this.data.isAuto;
+    this.setData({
+      isAuto: !isAuto
+    })
+  },
+  // 合计商品数量和价格
+  countTotal: function () {
+    // var num = 0;
+    // var data = this.data.carList;
+    // for (var i = 0; i < data.length; i++) {
+    //   for (var j = 0; j < data[i].commodity.length; j++) {
+    //     if (data[i].commodity[j].isSelect) {
+    //       // 选中的加上价格, 数量转整数，价格转浮点数类型
+    //       num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].specpricelst[0].price);
+    //     }
+    //   }
+    // }
+    // num = num.toFixed(2);
+    // this.setData({
+    //   totalPrice: num
+    // })
+    // wx.hideLoading();
+  },
+  // 确认下单
+  sureSubmitOrder: function() {
+    
+  },
 })
