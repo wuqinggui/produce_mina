@@ -345,12 +345,14 @@ Page({
   // 立即下单
   bindSubmitOder: function() {
     var data = this.data.carList;
+    var newData = this.data.carList;
     var selectNum = 0;
     for (var i = 0; i < data.length; i++) {
+      newData[i].newCommodity = [];
       for (var j = 0; j < data[i].commodity.length; j++) {
         if (data[i].commodity[j].isSelect) {
+          newData[i].newCommodity.push(data[i].commodity[j]);
           selectNum = 1;
-          break;
         }
       }
     }
@@ -362,7 +364,9 @@ Page({
       })
       return
     }
-    getApp().globalData.submitCarData = data;
+    getApp().globalData.submitCarData = newData;
+    console.log(getApp().globalData.submitCarData)
+    return
     wx.navigateTo({
       url: '/pages/orderSubmit/orderSubmit'
     })
