@@ -38,3 +38,5 @@ export const addAddressUrl = baseUrl + 'address/add'; // 新增收货地址
 export const searchAddressListUrl = baseUrl + 'address/findAll'; // 收货地址列表
 export const findByIdAddressUrl = baseUrl + 'address/findById'; // 搜索
 export const updateAddressUrl = baseUrl + 'address/update'; // 修改地址
+// 客户类型
+export const customertypeListUrl = baseUrl + 'customertype/findAll'; // 客户类型

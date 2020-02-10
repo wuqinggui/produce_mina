@@ -8,10 +8,12 @@ Page({
    */
   data: {
     uploadUrl: 'http://47.106.130.46:8000/common/file/upload/qxkj-test/qxkj/test',
-    isAccept: true,
+    isAccept: 0,
     step: 0,
     cardTime: '',
+    addresseeData: {},
     shopInfo: {
+      customerTypeArr: [],
       address: '', // 商户地址 ,
       auditStatus: '', // 审核状态 ,
       businessLicense: '', // 营业执照照片 ,
@@ -23,8 +25,10 @@ Page({
       createName: '', // 创建人名称 ,
       createTime: '', // 创建时间 ,
       customerType: '', // 客户类型 ,
+      customerType_name: '请选择', // 客户类型 ,
       desction: '', // 备注 ,
       headAddress: '', // 总店地址 ,
+      headAddress_name: '', // 总店地址 ,
       id: '', // 主键 ,
       isorder: '', // 是否下单 ,
       mainproject: '', // 主营项目 ,
@@ -43,7 +47,8 @@ Page({
   },
   // 同意选中协议
   checkDeal: function(e) {
-    let isAccept = e.detail.value[0];
+    console.log(e);
+    let isAccept = e.detail.value[0] ? e.detail.value[0] : 0;
     this.setData({
       isAccept: isAccept
     });
@@ -57,71 +62,82 @@ Page({
     });
   },
   // 店铺信息--下一步按钮
-  formSubmit: function(e) {
-    var formValue = e.detail.value;
-    var radioVal = formValue.accept[0];
-    if (!radioVal) {
-      return wx.showToast({
-        title: '请阅读并勾选商家入驻协议',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!formValue.merchantName) {
+  nextSubmit: function() {
+    var shopInfo = this.data.shopInfo;
+    shopInfo.validity = this.data.cardTime;
+    if (!shopInfo.merchantName) {
       return wx.showToast({
         title: '请输入商户名称',
         icon: 'none',
         duration: 2000
       })
-    } else if (!formValue.mainproject) {
+    } else if (!shopInfo.mainproject) {
       return wx.showToast({
         title: '请输入主营项目',
         icon: 'none',
         duration: 2000
       })
-    } else if (!formValue.personName) {
+    } else if (!shopInfo.personName) {
       return wx.showToast({
         title: '请输入负责人名称',
         icon: 'none',
         duration: 2000
       })
-    } else if (!formValue.cardNumber) {
+    } else if (!shopInfo.cardNumber) {
       return wx.showToast({
         title: '请输入身份证',
         icon: 'none',
         duration: 2000
       })
-    } else if (!this.data.cardTime) {
+    } else if (!shopInfo.validity) {
       return wx.showToast({
         title: '请选择身份证期限',
         icon: 'none',
         duration: 2000
       })
-    } else if (!formValue.headAddress) {
+    } else if (!shopInfo.headAddress) {
       return wx.showToast({
-        title: '请输入总店地址',
+        title: '请选择总店地址',
+        icon: 'none',
+        duration: 2000
+      })
+    } else if (!shopInfo.customerType) {
+      return wx.showToast({
+        title: '请选择客户类型',
+        icon: 'none',
+        duration: 2000
+      })
+    } else if (!this.data.isAccept) {
+      return wx.showToast({
+        title: '请阅读并勾选商家入驻协议',
         icon: 'none',
         duration: 2000
       })
     }
-    let shopInfo = this.data.shopInfo;
-    shopInfo.validity = this.data.cardTime;
-    shopInfo.merchantName = formValue.merchantName;
-    shopInfo.mainproject = formValue.mainproject;
-    shopInfo.personName = formValue.personName;
-    shopInfo.cardNumber = formValue.cardNumber;
-    shopInfo.headAddress = formValue.headAddress;
     this.setData({
       step: 1
     });
   },
-  // 选择总店地址
+  bindAndSet: function (e) {
+    let key = e.currentTarget.dataset.key;
+    let shopInfo = this.data.shopInfo;
+    shopInfo[key] = e.detail.value;
+    this.setData({
+      shopInfo: shopInfo
+    })
+  },
+  // 选择身份证期限
   selectCardDate: function() {
 
   },
-  // 选择身份证期限
+  // 选择总店地址
   selectAddress: function() {
-
+    var id = this.data.shopInfo.headAddress ? this.data.shopInfo.headAddress : '';
+    wx.navigateTo({
+      url: '/pages/shippingAddress/shippingAddress?isSelect=1&addressId=' + id,
+    })
   },
+  // 定时器
   timeInterval: function() {
     var shopInfo = this.data.shopInfo;
     shopInfo.sendFlag = false;
@@ -166,12 +182,16 @@ Page({
    */
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId');
+    let addresseeData = getApp().globalData.addresseeData;
     if (sj_userId) {
       let shopInfo = this.data.shopInfo;
       shopInfo.userId = sj_userId;
+      shopInfo.headAddress = addresseeData.id;
+      shopInfo.headAddress_name = addresseeData.addresses || '请选择';
       this.getData();
       this.setData({
-        shopInfo: shopInfo
+        shopInfo: shopInfo,
+        addresseeData: addresseeData
       });
     } else {
       wx.navigateTo({
@@ -223,8 +243,30 @@ Page({
   },
 
   // 获取数据
-  getData: function() {},
-
+  getData: function() {
+    this.getCustomerType();
+  },
+// 获取客户类型
+  getCustomerType: function() {
+    let shopInfo = this.data.shopInfo;
+    shopApi.customertypeList().then((res) => {
+      shopInfo.customerTypeArr = res.data;
+      this.setData({
+        shopInfo: shopInfo
+      });
+    }).catch((error) => {
+      console.log(error);
+    })
+  },
+  changeCustom: function(e) {
+    let index = e.detail.value;
+    let shopInfo = this.data.shopInfo;
+    shopInfo.customerType = shopInfo.customerTypeArr[index].id;
+    shopInfo.customerType_name = shopInfo.customerTypeArr[index].name;
+    this.setData({
+      shopInfo: shopInfo
+    });
+  },
   // 申请入驻店铺
   addShop: function() {
     let params = this.data.shopInfo;

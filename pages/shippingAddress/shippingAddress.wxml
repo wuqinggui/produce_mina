@@ -2,25 +2,28 @@
   <scroll-view scroll-y="trues" class="user">
     <view wx:for="{{list}}" wx:key="index">
       <view class="info mt10 row">
-      <view class="flex-1">
-        <view class="user mb5">
-          <text class="mr20">收货人: {{item.name}} </text>
-          <text>{{item.phone}}</text>
+        <view class="flex-1">
+          <view class="user mb5">
+            <text class="mr20">收货人: {{item.name}} </text>
+            <text>{{item.phone}}</text>
+          </view>
+          <view class="address">
+            <text class="f13 gray6 mr5">收货地址： </text>
+            <text class="f13 gray6">{{item.addresses}}</text>
+          </view>
         </view>
-        <view class="address">
-          <text class="f13 gray6 mr5">收货地址： </text>
-          <text class="f13 gray6">{{item.addresses}}</text>
+        <view class="edit direction-center">
+          <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}" bindtap="editAddress" data-id="{{item.id}}"></mp-icon>
+        </view>
+        <view class="direction-center" wx:if="{{isSelect == 1}}">
+          <icon type="{{addressId == item.id ? 'success_circle' : 'circle'}}" color="{{addressId == item.id ? '#FFA800' : ''}}" size="24" bindtap="selectAddress" data-item="{{item}}" />
         </view>
       </view>
-      <view class="edit direction-center">
-        <mp-icon icon="pencil" color="#3C3C3C" size="{{20}}" bindtap="editAddress" data-id="{{item.id}}"></mp-icon>
-      </view>
-      <view class="direction-center" wx:if="{{isSelect == 1 && addressId}}">
-        <icon type="{{addressId == item.id ? 'success_circle' : 'circle'}}" color="{{addressId == item.id ? '#FFA800' : ''}}" size="24" bindtap="selectAddress" data-item="{{item}}"/>
-      </view>
-    </view>
     </view>
   </scroll-view>
 </view>
-<view class="addAddress" bindtap="add">新增收货地址</view>
+<view class="addAddress" bindtap="add">
+  <text>新增收货地址</text>
+  <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
+</view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

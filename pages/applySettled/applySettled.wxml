@@ -2,78 +2,90 @@
 <template name="item1">
   <view class="template pl15 pr15">
     <view class="title mt20 mb10 f16">填写店铺信息</view>
-    <form bindsubmit="formSubmit">
-      <view class="shopInfo">
-        <view class="list-item flex">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">商户名称：</text>
-          </view>
-          <view class="list-item-input">
-            <input name="merchantName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{merchantName}}" />
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+    <view class="shopInfo">
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">商户名称：</text>
         </view>
-        <view class="list-item flex">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">主营项目：</text>
-          </view>
-          <view class="list-item-input">
-            <input name="mainproject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainproject}}" />
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+        <view class="list-item-input">
+          <input name="merchantName" bindinput="bindAndSet" data-key="merchantName" placeholder-class="place-holder" class="weui-input" maxlength="15" placeholder="最多15个字" value="{{merchantName}}" />
         </view>
-        <view class="list-item flex">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">商户负责人姓名：</text>
-          </view>
-          <view class="list-item-input">
-            <input name="personName" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{personName}}" />
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">主营项目：</text>
         </view>
-        <view class="list-item flex">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">身份证：</text>
-          </view>
-          <view class="list-item-input">
-            <input name="cardNumber" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardNumber}}" />
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+        <view class="list-item-input">
+          <input name="mainproject" bindinput="bindAndSet" data-key="mainproject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainproject}}" />
         </view>
-        <view class="list-item flex" bindtap="selectCardDate">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">身份证期限：</text>
-            <!-- <text name="validity">{{validity}}</text> -->
-          </view>
-          <view class="list-item-input">
-            <picker bindchange="changeTime" mode="date" value="{{cardTime}}">
-              <view class="picker flex ju-b verticle-center {{cardTime ? '' : 'grayaaa f12'}}">
-                <text class="f14">{{cardTime ? cardTime : '请选择'}}</text>
-                <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
-              </view>
-            </picker>
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">商户负责人姓名：</text>
         </view>
-        <view class="list-item flex" bindtap="selectAddress">
-          <view class="list-item-info">
-            <text class="require">*</text>
-            <text class="name">总店地址：</text>
-            <!-- <text name="headAddress">{{headAddress}}</text> -->
-          </view>
-          <!-- <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon> -->
-          <view class="list-item-input">
-            <input name="headAddress" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="总店地址" value="{{headAddress}}" />
-            <!-- <input placeholder-class="place-holder" class="weui-input" /> -->
-          </view>
-          <view class="half-px-border half-px-border-bottom"></view>
+        <view class="list-item-input">
+          <input name="personName" bindinput="bindAndSet" data-key="personName" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{personName}}" />
         </view>
-        <!-- <view class="list-item flex">
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">身份证：</text>
+        </view>
+        <view class="list-item-input">
+          <input name="cardNumber" bindinput="bindAndSet" data-key="cardNumber" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardNumber}}" />
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex" bindtap="selectCardDate">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">身份证期限：</text>
+          <!-- <text name="validity">{{validity}}</text> -->
+        </view>
+        <view class="list-item-input">
+          <picker bindchange="changeTime" mode="date" value="{{cardTime}}">
+            <view class="picker flex ju-b verticle-center {{cardTime ? '' : 'grayaaa f12'}}">
+              <text class="f14">{{cardTime ? cardTime : '请选择'}}</text>
+              <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+            </view>
+          </picker>
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">总店地址：</text>
+        </view>
+        <view class="addressName flex flex-1 ju-b verticle-center" bindtap="selectAddress">
+          <view class="headAddress f14 {{headAddress ? '' : 'grayaaa'}}">{{headAddress_name}}</view>
+          <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">客户类型：</text>
+        </view>
+        <view class="list-item-input">
+          <picker bindchange="changeCustom" range="{{customerTypeArr}}" range-key="name" value="{{customerTypeArr[index]}}">
+            <view class="picker flex ju-b verticle-center {{customerType ? '' : 'grayaaa f14'}}">
+              <text class="f14">{{customerType ? customerType_name : '请选择'}}</text>
+              <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+            </view>
+          </picker>
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <!-- <view class="list-item flex">
           <view class="list-item-info">
             <text class="require">*</text>
             <text class="name">手机号码：</text>
@@ -94,18 +106,17 @@
           <view class="sendEMS f13 {{sendFlag? '' : 'bg-gray6'}}" bindtap="sendEMS">{{sendMsg}}</view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view> -->
-        <view class="accept pt10">
-          <checkbox-group name="accept" bindchange="checkDeal">
-            <checkbox class="checkbox" value="{{isAccept}}">
-              <text class="agreement f20">《商家入驻协议》</text>
-            </checkbox>
-          </checkbox-group>
-        </view>
-        <view class="btns mt50 mb50 text-center">
-          <button class="btn wbtn" formType="submit">下一步</button>
-        </view>
+      <view class="accept pt10">
+        <checkbox-group name="accept" bindchange="checkDeal">
+          <checkbox class="checkbox" value="{{isAccept}}">
+            <text class="agreement f20">《商家入驻协议》</text>
+          </checkbox>
+        </checkbox-group>
       </view>
-    </form>
+      <view class="btns mt50 mb50 text-center">
+        <button class="btn wbtn" bindtap="nextSubmit">下一步</button>
+      </view>
+    </view>
   </view>
 </template>
 <template name="item2">
@@ -277,7 +288,7 @@
   </view>
   <view class="infomation">
     <block>
-      <template is="item1" data="{{cardTime, isAccept, ...shopInfo}}" wx:if="{{step == 0}}" />
+      <template is="item1" data="{{cardTime, isAccept,customerType: customerType, ...shopInfo}}" wx:if="{{step == 0}}" />
       <template is="item2" data="{{...shopInfo}}" wx:if="{{step == 1}}" />
       <template is="item3" data="{{...shopInfo}}" wx:if="{{step == 2}}" />
       <template is="item4" data="{{...shopInfo}}" wx:if="{{step == 3}}" />

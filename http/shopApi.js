@@ -25,7 +25,8 @@ import {
   addAddressUrl,
   searchAddressListUrl,
   findByIdAddressUrl,
-  updateAddressUrl
+  updateAddressUrl,
+  customertypeListUrl
 } from './url'
 
 var shopApi = {
@@ -280,6 +281,17 @@ var shopApi = {
   updateAddress: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(updateAddressUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+    
+  },
+  // 获取客户类型列表
+  customertypeList: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(customertypeListUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })
