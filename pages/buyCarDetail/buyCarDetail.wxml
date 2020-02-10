@@ -2,6 +2,7 @@
   <block wx:for="{{carList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
     <view class="shop-title row verticle-center {{idx == 0 ? '' : 'mt20'}}">
       <icon type="{{shopitem.isSelect ? 'success_circle' : 'circle'}}" color="{{shopitem.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="cnangeShopSelect" data-idx="{{idx}}"/>
+      <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
       <view class="flex-1 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '店铺名称'}}</view>
       <view class="add mr20 ml10 f14" bindtap="addShop">添加商品</view>
     </view>

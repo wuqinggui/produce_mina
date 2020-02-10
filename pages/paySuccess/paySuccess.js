@@ -73,11 +73,6 @@ Page({
   onShareAppMessage: function () {
 
   },
-  
-  // 获取数据
-  // getData: function () {
-
-  // },
 
   // 查看订单详情
   goOrderDetail: function () {

@@ -1,12 +1,12 @@
 // pages/orderSubmit/orderSubmit.js
+var shopApi = require('../../http/shopApi.js').default;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isAuto: true, //高度
-    freightPrice: 0, // 运费
+    freightPrice: '0.00', // 运费
     totalNum: 0, // 合计商品数量
     totalPrice: 0, // 合计价格
     addresseeData: {}, // 收件人信息
@@ -99,33 +99,64 @@ Page({
       url: '/pages/index/index'
     })
   },
-  // 展示/隐藏部分内容
-  changeHeight: function() {
-    var isAuto = this.data.isAuto;
-    this.setData({
-      isAuto: !isAuto
-    })
-  },
   // 合计商品数量和价格
   countTotal: function () {
-    // var num = 0;
-    // var data = this.data.carList;
-    // for (var i = 0; i < data.length; i++) {
-    //   for (var j = 0; j < data[i].commodity.length; j++) {
-    //     if (data[i].commodity[j].isSelect) {
-    //       // 选中的加上价格, 数量转整数，价格转浮点数类型
-    //       num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].specpricelst[0].price);
-    //     }
-    //   }
-    // }
-    // num = num.toFixed(2);
-    // this.setData({
-    //   totalPrice: num
-    // })
-    // wx.hideLoading();
+    var totalNum = 0;
+    var totalPrice = 0;
+    var data = this.data.submitCarData;
+    for (var j = 0; j < data.lstSubmit.length; j++) {
+        // 选中的加上价格, 数量转整数，价格转浮点数类型
+        totalNum = totalNum + parseInt(data.lstSubmit[j].number)
+        totalPrice = totalPrice + parseInt(data.lstSubmit[j].number) * parseFloat(data.lstSubmit[j].specprice.price);
+    }
+    totalPrice = totalPrice.toFixed(2);
+    this.setData({
+      totalNum: totalNum,
+      totalPrice: totalPrice
+    })
   },
   // 确认下单
   sureSubmitOrder: function() {
-    
+    if (!this.data.addresseeData.id) {
+      wx.showToast({
+        title: '请选择收件人信息',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      cartId: this.data.submitCarData.id,
+      actualNumber: this.data.totalNum,
+      number: this.data.totalNum,
+      totalSum: this.data.totalPrice,
+      addressId: this.data.addresseeData.id,
+      freight: this.data.freightPrice,
+      userId: getApp().globalData.userInfo.id
+    }
+    shopApi.addOrder(params)
+      .then((res) => {
+        console.log('下单成功', res);
+        wx.hideLoading();
+        // 带上返回的订单id，关闭单前页面，跳转到支付成功页面，同时需要将全局立即下单的购物车数据submitCarData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
+        // if (res.data.orderId) {
+        //   getApp().globalData.submitCarData = {};
+        //   wx.redirectTo({
+        //     url: '/pages/paySuccess/paySuccess?orderId=' + res.data.orderId,
+        //   })
+        // }
+      })
+      .catch((error) => {
+        console.log('下单失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '操作失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
 })

@@ -172,3 +172,7 @@
   padding: 0 30rpx;
   background-color: #FFA800;
 }
+.shop-icon{
+  width: 30rpx;
+  height: 30rpx;
+}

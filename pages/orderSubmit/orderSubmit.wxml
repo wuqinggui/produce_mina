@@ -1,22 +1,23 @@
 <view class="orderSubmit">
-  <view class="receipt row al-c ju-b" bindtap="changeAddresseeData">
-    <view class="info pr10">
-      <view class="userinfo flex ju-b mb5 mt10">
-        <text class="name">收件人： {{addresseeData.name}}</text>
+  <view class="receipt row verticle-center" bindtap="changeAddresseeData">
+    <view class="info pr10 flex-1">
+      <view class="userinfo row mb5 mt10">
+        <text class="name flex-1">收件人： {{addresseeData.name}}</text>
         <text class="number">{{addresseeData.phone}}</text>
       </view>
       <view class="address f13">
-        收货地址：{{addresseeData.address}}
+        收货地址：{{addresseeData.addresses}}
       </view>
     </view>
     <view class="common-arrow right"></view>
   </view>
   <view wx:if="{{submitCarData.lstSubmit}}">
-    <view class="{{isAuto ? 'list' : ''}}">
+    <view>
       <block>
         <view class="shop-title">
-          <view class="shop-name">
-            <text class="ml5 text-overflow">{{submitCarData.shop.merchantName ? submitCarData.shop.merchantName : '店铺名称'}}</text>
+          <view class="shop-name row verticle-center">
+            <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
+            <text class="flex-1 text-overflow">{{submitCarData.shop.merchantName ? submitCarData.shop.merchantName : '店铺名称'}}</text>
           </view>
         </view>
         <view wx:for="{{submitCarData.lstSubmit}}" wx:key="index" class="carts-container">
@@ -37,8 +38,10 @@
                   <text class="price pr10">{{item.specprice.price}}</text>
                   <text class="unit f13">{{item.commodity.measurement}}</text>
                 </view>
-                <view class="num f13">
-                  * {{item.number}}</view>
+                <view class="num f13 verticle-center">
+                  <text class="mr5">*</text>
+                  <text>{{item.number}}</text>
+                </view>
               </view>
             </view>
           <view class="half-px-border half-px-border-bottom"></view>
@@ -46,10 +49,7 @@
         </view>
       </block>
     </view>
-    <view class="more flex ju-c pt10 pb10" bindtap="changeHeight">
-        <view class="common-arrow {{isAuto ? 'right' : 'left'}} arrow"></view>
-    </view>
-    <view class="other mt20 mb100">
+    <view class="other mt10 mb100">
       <view class="freight">
         <text>运费</text>
         <text class="type">{{freightPrice ? freightPrice : '免运费'}}</text>

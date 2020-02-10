@@ -366,7 +366,6 @@ Page({
       return
     }
     getApp().globalData.submitCarData = submitData;
-    console.log(getApp().globalData.submitCarData)
     wx.navigateTo({
       url: '/pages/orderSubmit/orderSubmit'
     })
