@@ -11,34 +11,34 @@
     </view>
     <view class="common-arrow right"></view>
   </view>
-  <view wx:if="{{submitCarData.length > 0}}">
+  <view wx:if="{{submitCarData.lstSubmit}}">
     <view class="{{isAuto ? 'list' : ''}}">
-      <block wx:for="{{submitCarData}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
-        <view class="shop-title {{idx == 0 ? '' : 'mt20'}}">
+      <block>
+        <view class="shop-title">
           <view class="shop-name">
-            <text class="ml5 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '店铺名称'}}</text>
+            <text class="ml5 text-overflow">{{submitCarData.shop.merchantName ? submitCarData.shop.merchantName : '店铺名称'}}</text>
           </view>
         </view>
-        <view wx:for="{{itemName.commodity}}" wx:key="index" class="carts-container">
+        <view wx:for="{{submitCarData.lstSubmit}}" wx:key="index" class="carts-container">
           <view class="carts-item">
             <view>
               <!-- 缩略图 -->
-              <image class="carts-image" src="{{item.imagepath}}" mode="aspectFill" />
+              <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
             </view>
             <view class="carts-text">
               <!-- 商品标题 -->
               <view class="verticle-center">
-                <text class="carts-title text-overflow">{{item.name}}</text>
-                <text class="carts-type ml10 text-overflow">{{item.specpricelst[0].spec.specName}}</text>
+                <text class="carts-title text-overflow">{{item.commodity.name}}</text>
+                <text class="carts-type ml10 text-overflow">{{item.specprice.spec.specName}}</text>
               </view>
               <view class="carts-price row ju-b al-c">
                 <view class="priceinfo">
                   <text class="symbol f13">￥</text>
-                  <text class="price pr10">{{item.specpricelst[0].price}}</text>
-                  <text class="unit f13">{{item.measurement}}</text>
+                  <text class="price pr10">{{item.specprice.price}}</text>
+                  <text class="unit f13">{{item.commodity.measurement}}</text>
                 </view>
                 <view class="num f13">
-                  * {{item.shoppingcartintermediate.number}}</view>
+                  * {{item.number}}</view>
               </view>
             </view>
           <view class="half-px-border half-px-border-bottom"></view>
@@ -65,13 +65,13 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{submitCarData.length == 0}}" class="list-nodata-area">
+  <view wx:if="{{!submitCarData.lstSubmit || submitCarData.lstSubmit.length == 0}}" class="list-nodata-area">
     <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
     <view class="list-nodata-tip"> -- 暂无订单数据 -- </view>
     <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>
   </view>
 </view>
-<view class="carts-footer" wx:if="{{submitCarData.length > 0}}">
+<view class="carts-footer" wx:if="{{submitCarData.lstSubmit && submitCarData.lstSubmit.length > 0}}">
   <view class="carts-footer-wrap">
     <view class="sum pl15 pr15">
       <text class="mr5">合计: </text>

@@ -10,7 +10,7 @@ Page({
     totalNum: 0, // 合计商品数量
     totalPrice: 0, // 合计价格
     addresseeData: {}, // 收件人信息
-    submitCarData: [], // 立即下单的购物车数据
+    submitCarData: {}, // 立即下单的购物车数据
   },
 
   /**

@@ -5,24 +5,24 @@
       <view class="flex-1 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '店铺名称'}}</view>
       <view class="add mr20 ml10 f14" bindtap="addShop">添加商品</view>
     </view>
-    <view wx:for="{{shopitem.commodity}}" wx:key="index" class="carts-container">
+    <view wx:for="{{shopitem.lst}}" wx:key="index" class="carts-container">
       <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
         <icon type="{{item.isSelect ? 'success_circle' : 'circle'}}" color="{{item.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}"/>
         <view>
           <!-- 缩略图 -->
-          <image class="carts-image" src="{{item.imagepath}}" mode="aspectFill" />
+          <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
         </view>
         <view class="carts-text mr20">
           <!-- 商品标题 -->
-          <text class="carts-title text-overflow">{{item.name}}</text>
-          <text class="carts-type text-overflow">{{item.specpricelst[0].spec.specName}}</text>
+          <text class="carts-title text-overflow">{{item.commodity.name}}</text>
+          <text class="carts-type text-overflow">{{item.specprice.spec.specName}}</text>
           <view class="carts-subtitle">
             <!-- 价格 -->
             <view class="carts-price">
               <text class="symbol f13">￥</text>
-              <text class="price pr5">{{item.specpricelst[0].price}}</text>
-              <text class="unit f13">{{item.measurement}}</text>
+              <text class="price pr5">{{item.specprice.price}}</text>
+              <text class="unit f13">{{item.commodity.measurement}}</text>
             </view>
             <!-- 数量加减 -->
             <view>
@@ -30,7 +30,7 @@
                 <!-- 减号 -->
                 <text class="normal iconfont icon-jianhao" data-item="{{item}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
-                <input type="number" value="{{item.shoppingcartintermediate.number}}" disabled="{{true}}"/>
+                <input type="number" value="{{item.number}}" disabled="{{true}}"/>
                 <!-- 加号 -->
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>

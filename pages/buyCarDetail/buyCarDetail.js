@@ -3,7 +3,7 @@ var shopApi = require('../../http/shopApi.js').default;
 Page({
   data: {
     shopId: '',
-    carList: {},
+    carList: [],
     selectedAllStatus: false, // 全选状态
     totalPrice: 0, // 合计价格
     startX: 0,
@@ -91,11 +91,12 @@ Page({
       .then((res) => {
         console.log('获取购物车数据成功', res);
         wx.hideLoading();
-        var data = res.data ? res.data : [];
+        var data = [];
+        data[0] = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].isSelect = false;
-          for (var j = 0; j < data[i].commodity.length; j++) {
-            data[i].commodity[j].isSelect = false;
+          for (var j = 0; j < data[i].lst.length; j++) {
+            data[i].lst[j].isSelect = false;
           }
         }
         this.setData({
@@ -139,8 +140,8 @@ Page({
     var data = this.data.carList;
     var isSelect = !data[idx].isSelect;
     data[idx].isSelect = isSelect;
-    for (var j = 0; j < data[idx].commodity.length; j++) {
-      data[idx].commodity[j].isSelect = isSelect;
+    for (var j = 0; j < data[idx].lst.length; j++) {
+      data[idx].lst[j].isSelect = isSelect;
     }
     this.setData({
       carList: data,
@@ -158,7 +159,7 @@ Page({
     this.setData({
       isClick: true
     })
-    if (item.shoppingcartintermediate.number > 1) {
+    if (item.number > 1) {
       // 修改
       this.changeCar(item, 1);
     }
@@ -183,20 +184,20 @@ Page({
     var newNum = 0;
     if (type == 1) {
       // 减少
-      newNum = item.shoppingcartintermediate.number - 1;
+      newNum = item.number - 1;
     } else {
       // 增加
-      newNum = item.shoppingcartintermediate.number + 1;
+      newNum = item.number + 1;
     }
     var params = {
       shopCommoditDto: [
         {
-          id: item.id,
-          spec: item.shoppingcartintermediate.spec,
+          id: item.commodity.id,
+          spec: item.spec,
           number: newNum
         }
       ],
-      shopId: item.shoppingcartintermediate.shopId,
+      shopId: item.shopId,
       userId: getApp().globalData.userInfo.id,
     }
     shopApi.updateCar(params)
@@ -231,7 +232,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     var data = this.data.carList;
     data[idx].isSelect = false;
-    data[idx].commodity[index].isSelect = !data[idx].commodity[index].isSelect;
+    data[idx].lst[index].isSelect = !data[idx].lst[index].isSelect;
     this.setData({
       carList: data,
       selectedAllStatus: false
@@ -247,8 +248,8 @@ Page({
     var data = this.data.carList;
     for (var i = 0; i < data.length; i++) {
       data[i].isSelect = selectedAllStatus;
-      for (var j = 0; j < data[i].commodity.length; j++) {
-        data[i].commodity[j].isSelect = selectedAllStatus;
+      for (var j = 0; j < data[i].lst.length; j++) {
+        data[i].lst[j].isSelect = selectedAllStatus;
       }
     }
     this.setData({
@@ -262,10 +263,10 @@ Page({
     var num = 0;
     var data = this.data.carList;
     for (var i = 0; i < data.length; i++) {
-      for (var j = 0; j < data[i].commodity.length; j++) {
-        if (data[i].commodity[j].isSelect) {
+      for (var j = 0; j < data[i].lst.length; j++) {
+        if (data[i].lst[j].isSelect) {
           // 选中的加上价格, 数量转整数，价格转浮点数类型
-          num = num + parseInt(data[i].commodity[j].shoppingcartintermediate.number) * parseFloat(data[i].commodity[j].specpricelst[0].price);
+          num = num + parseInt(data[i].lst[j].number) * parseFloat(data[i].lst[j].specprice.price);
         }
       }
     }
@@ -306,13 +307,13 @@ Page({
     var userId = getApp().globalData.userInfo.id;
     var shopCommoditDto = [
       {
-        id: item.id,
-        spec: item.shoppingcartintermediate.spec
+        id: item.commodity.id,
+        spec: item.spec
       }
     ];
     var params = {
       shopCommoditDto: shopCommoditDto,
-      shopId: item.shoppingcartintermediate.shopId,
+      shopId: item.shopId,
       userId: userId
     }
     shopApi.deleteCar(params)
@@ -345,13 +346,13 @@ Page({
   // 立即下单
   bindSubmitOder: function() {
     var data = this.data.carList;
-    var newData = this.data.carList;
+    var submitData = this.data.carList[0];
+    submitData.lstSubmit = [];
     var selectNum = 0;
     for (var i = 0; i < data.length; i++) {
-      newData[i].newCommodity = [];
-      for (var j = 0; j < data[i].commodity.length; j++) {
-        if (data[i].commodity[j].isSelect) {
-          newData[i].newCommodity.push(data[i].commodity[j]);
+      for (var j = 0; j < data[i].lst.length; j++) {
+        if (data[i].lst[j].isSelect) {
+          submitData.lstSubmit.push(data[i].lst[j]);
           selectNum = 1;
         }
       }
@@ -364,9 +365,8 @@ Page({
       })
       return
     }
-    getApp().globalData.submitCarData = newData;
+    getApp().globalData.submitCarData = submitData;
     console.log(getApp().globalData.submitCarData)
-    return
     wx.navigateTo({
       url: '/pages/orderSubmit/orderSubmit'
     })

@@ -415,6 +415,7 @@ Page({
     }
     var params = {
       shopCommoditDto: shopCommoditDto,
+      reignId: this.data.curRegion.id,
       shopId: this.data.curShop.id,
       userId: getApp().globalData.userInfo.id,
     }
