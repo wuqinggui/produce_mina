@@ -130,7 +130,7 @@ var shopApi = {
   // 下单接口
   addOrder: function(params) {
     return new Promise((resolve, reject) => {
-      wxRequest(addOrderUrl, 'GET', params)
+      wxRequest(addOrderUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })
