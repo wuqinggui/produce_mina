@@ -68,7 +68,7 @@
 .carts-type {
   padding: 1rpx 10rpx;
 	font-size: 20rpx;
-	color: #DEDEDE;
+	color: #666;
 	border: 1px solid #f3f3f3;
 	border-radius: 50rpx;
 	text-align: center;
@@ -84,7 +84,8 @@
 	color: #fc9326;
 }
 .carts-price .unit {
-	color: #DEDEDE;
+	color: #999999;
+  margin-left: 12rpx;
 }
 .carts-price .num {
 	color: #666;

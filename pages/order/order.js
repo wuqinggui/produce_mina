@@ -1,5 +1,4 @@
 // pages/order/order.js
-var util = require('../../utils/util.js');
 var shopApi = require('../../http/shopApi.js').default;
 Page({
 
@@ -7,44 +6,47 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: false,
-    activeNav: 'all',
-    navs: [{
+    curNavIitem: {
       text: '全部',
-      alias: 'all'
-    }, {
-      text: '待付款',
-      alias: 'unpaid'
-    }, {
-      text: '待发货',
-      alias: 'undelivered'
-    }, {
-      text: '待收货',
-      alias: 'unreceived'
-      }, {
+      index: 1,
+      orderState: ''
+    },
+    isClick: false,
+    navs: [
+      {
+        text: '全部',
+        index: 1,
+        orderState: ''
+      }, 
+      {
+        text: '待发货',
+        index: 2,
+        orderState: 1
+      }, 
+      {
+        text: '待收货',
+        index: 3,
+        orderState: 2
+      }, 
+      {
+        text: '待付款',
+        index: 4,
+        orderPayState: 0,
+        orderState: ''
+      }, 
+      {
+        text: '已付款',
+        index: 5,
+        orderPayState: 1,
+        orderState: ''
+      }, 
+      {
         text: '退货/退款',
-        alias: 'returnGoods'
-      }],
+        index: 6,
+        orderState: 3
+      }
+    ],
     orderList: []
-  },
-
-
-  changeList(e) {
-    const that = this;
-    const alias = e.target.dataset.alias;
-    if (alias !== this.data.activeNav) {
-      this.setData({
-        activeNav: e.target.dataset.alias,
-        // loading: true
-      });
-      // this.getList().then((res) => {
-      //   that.setOrderData(res.data);
-      //   that.setData({
-      //     orderList: res.data,
-      //     loading: false
-      //   });
-      // });
-    }
   },
 
   /**
@@ -52,15 +54,6 @@ Page({
    */
   onLoad: function(options) {
 
-  },
-  OpenClose: function(e) {
-    var index = e.currentTarget.dataset.index;
-    var orderList = this.data.orderList;
-    var flag = orderList[index].flexible;
-    orderList[index].flexible = !flag;
-    this.setData({
-      orderList: orderList
-    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -120,167 +113,97 @@ Page({
   
   // 获取订单数据
   getData: function () {
-    var userId = getApp().globalData.userInfo.id;
+    wx.showLoading({
+      title: '加载中',
+    })
     var params = {
-      userId: userId
+      orderState: this.data.curNavIitem.orderState,
+      userId: getApp().globalData.userInfo.id
     }
-    shopApi.orderList(params)
+    if (this.data.curNavIitem.hasOwnProperty("orderPayState")) {
+      // 是否传待支付已支付的支付状态字段
+      params.orderPayState = this.data.curNavIitem.orderPayState;
+    }
+    shopApi.getOrder(params)
       .then((res) => {
-      console.log('获取订单数据成功', res);
+        console.log('获取订单数据成功', res);
+        wx.hideLoading();
+        this.setData({
+          orderList: res.data ? res.data : [],
+          isClick: false
+        })
       })
       .catch((error) => {
         console.log('获取订单数据失败', error);
+        wx.hideLoading();
+        this.setData({
+          isClick: false
+        })
         wx.showToast({
           title: error.message ? error.message : '获取订单数据失败',
           icon: 'none',
           duration: 2000
         })
       })
+  },
 
-    var orderList = [{
-      flexible: true,
-      address: "123123",
-      admin_note: "",
-      city: "北京市",
-      confirm_time: "0000-00-00 00:00:00",
-      consignee: "322",
-      country: "中国",
-      created_at: "2016-12-26 11:51:29",
-      district: "北京市",
-      goodsList: [{
-        created_at: "2016-12-26 11:51:29",
-        goods_attr: "口味:甜; 尺寸:L; ",
-        goods_id: 1,
-        goods_name: "仙美XM1",
-        goods_number: 100,
-        goods_sn: "上品",
-        market_price: 6,
-        price: 5,
-        real_price: 5,
-        shop_price: 6,
-        sku_id: 6,
-        sum_price: "12.00",
-        thumb_url: "../../images/cai.jpg"
-      },{
-        created_at: "2016-12-26 11:51:29",
-        goods_attr: "口味:甜; 尺寸:L; ",
-        goods_id: 1,
-        goods_name: "仙美XM2",
-        goods_number: 100,
-        goods_sn: "上品",
-        market_price: 6,
-        price: 5,
-        real_price: 5,
-        shop_price: 6,
-        sku_id: 6,
-        sum_price: "12.00",
-        thumb_url: "../../images/cai.jpg"
-      }],
-      goods_price: 12,
-      id: 192,
-      logisticsCompanyCode: "qita",
-      mobile: "13231231312",
-      order: {
-        orderStatus: "待支付",
-        orderSn: "M161226426899685865",
-        subOrderSn: "S161226426899719327",
-        isButtonHidden: true
-      },
-      order_amount: 10,
-      order_sn: "M161226426899685865",
-      order_status: "待支付",
-      order_type: "普通订单",
-      parent_id: "192",
-      pay_time: "0000-00-00 00:00:00",
-      pay_way: "待支付",
-      province: "北京市",
-      receipt_status: "待收货",
-      refund_status: "没有售后",
-      shipping_status: "待发货",
-      shipping_time: "0000-00-00 00:00:00",
-      shop_id: 1,
-      sub_order_sn: "S161226426899719327",
-      suppliers_id: 0,
-      total_amount: 10,
-      tuan_role: 0,
-      tuan_status: "正常开团",
-      updated_at: "2016-12-26 11:51:29",
-      user_id: 1835,
-      why_failed: "待收货",
-    },
-      {
-        flexible: true,
-        address: "123123",
-        admin_note: "",
-        city: "北京市",
-        confirm_time: "0000-00-00 00:00:00",
-        consignee: "322",
-        country: "中国",
-        created_at: "2016-12-26 11:51:29",
-        district: "北京市",
-        goodsList: [{
-          created_at: "2016-12-26 11:51:29",
-          goods_attr: "口味:甜; 尺寸:L; ",
-          goods_id: 1,
-          goods_name: "仙美XM1",
-          goods_number: 100,
-          goods_sn: "上品",
-          market_price: 6,
-          price: 5,
-          real_price: 5,
-          shop_price: 6,
-          sku_id: 6,
-          sum_price: "12.00",
-          thumb_url: "../../images/cai.jpg"
-        }, {
-          created_at: "2016-12-26 11:51:29",
-          goods_attr: "口味:甜; 尺寸:L; ",
-          goods_id: 1,
-          goods_name: "仙美XM2",
-          goods_number: 100,
-          goods_sn: "上品",
-          market_price: 6,
-          price: 5,
-          real_price: 5,
-          shop_price: 6,
-          sku_id: 6,
-            sum_price: "12.00",
-          thumb_url: "../../images/cai.jpg"
-        }],
-        goods_price: 12,
-        id: 192,
-        logisticsCompanyCode: "qita",
-        mobile: "13231231312",
-        order: {
-          orderStatus: "待支付",
-          orderSn: "M161226426899685865",
-          subOrderSn: "S161226426899719327",
-          isButtonHidden: true
-        },
-        order_amount: 10,
-        order_sn: "M161226426899685865",
-        order_status: "待支付",
-        order_type: "普通订单",
-        parent_id: "192",
-        pay_time: "0000-00-00 00:00:00",
-        pay_way: "待支付",
-        province: "北京市",
-        receipt_status: "待收货",
-        refund_status: "没有售后",
-        shipping_status: "待发货",
-        shipping_time: "0000-00-00 00:00:00",
-        shop_id: 1,
-        sub_order_sn: "S161226426899719327",
-        suppliers_id: 0,
-        total_amount: 10,
-        tuan_role: 0,
-        tuan_status: "正常开团",
-        updated_at: "2016-12-26 11:51:29",
-        user_id: 1835,
-        why_failed: "待收货",
-      }];
+  // 切换订单列表筛选
+  changeList(e) {
+    console.log(e.target.dataset)
+    let { item } = e.target.dataset;
+    if (this.data.isClick || item.index == this.data.curNavIitem.index) {
+      return
+    }
     this.setData({
-      orderList: orderList
+      curNavIitem: item,
+      isClick: true
     });
+    this.getData();
+  },
+
+  // 去下单
+  goBuy: function () {
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
+  },
+
+  // 跳转订单详情
+  goDetail: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: '/pages/orderDetail/orderDetail?orderNo=' + item.orderNo
+    })
+  },
+
+  // 补单
+  supplyOrder: function (e) {
+    console.log(e.currentTarget.dataset)
+  },
+
+  // 取消订单
+  cancelOrder: function (e) {
+    console.log(e.currentTarget.dataset)
+  },
+
+  // 退货退款
+  returnOrder: function (e) {
+    console.log(e.currentTarget.dataset)
+  },
+
+  // 再来一单
+  againOrder: function (e) {
+    console.log(e.currentTarget.dataset)
+  },
+
+  // 立即支付
+  payOrder: function (e) {
+    console.log(e.currentTarget.dataset)
+  },
+
+  // 确认收货
+  takeOrder: function (e) {
+    console.log(e.currentTarget.dataset)
   }
 })

@@ -1,19 +1,23 @@
 // pages/orderDetail/orderDetail.js
-var util = require('../../utils/util.js');
+var shopApi = require('../../http/shopApi.js').default;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    isAuto: true
+    orderNo: '',
+    orderData: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log('订单详情options', options)
+    this.setData({
+      orderNo: options.orderNo
+    })
   },
 
   /**
@@ -21,13 +25,6 @@ Page({
    */
   onReady: function () {
 
-  },
-
-  changeWidth: function () {
-    var isAuto = this.data.isAuto;
-    this.setData({
-      isAuto: !isAuto
-    })
   },
   /**
    * 生命周期函数--监听页面显示
@@ -78,87 +75,62 @@ Page({
 
   },
   
-  // 获取数据
+  // 获取订单数据
   getData: function () {
-    this.setData({
-      cartObj: [{
-        id: 1,
-        storeName: '水果旗舰店1',
-        selectedAll: true,
-        carts: [{
-          objectId: 1,
-          selected: true,
-          quantity: 1,
-          goods: {
-            objectId: 1,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 2,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 3,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }]
-      }, {
-        id: 2,
-        storeName: '水果旗舰店2',
-        selectedAll: true,
-        carts: [{
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 4,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 5,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }, {
-          objectId: 1,
-          selected: true,
-          quantity: 10,
-          goods: {
-            objectId: 6,
-            avatar: '../../images/cai.jpg',
-            title: '小宝贝',
-            price: 12,
-            type: '上品'
-          }
-        }]
-      }
-      ]
+    wx.showLoading({
+      title: '加载中',
     })
+    var params = {
+      orderState: '',
+      orderNo: this.data.orderNo,
+      userId: getApp().globalData.userInfo.id
+    }
+    shopApi.getOrder(params)
+      .then((res) => {
+        console.log('获取订单数据成功', res);
+        wx.hideLoading();
+        this.setData({
+          orderData: res.data && res.data.length > 0 ? res.data[0] : {}
+        })
+      })
+      .catch((error) => {
+        console.log('获取订单数据失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '获取订单数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 补单
+  supplyOrder: function () {
+    
+  },
+
+  // 取消订单
+  cancelOrder: function () {
+    
+  },
+
+  // 退货退款
+  returnOrder: function () {
+    
+  },
+
+  // 再来一单
+  againOrder: function () {
+    
+  },
+
+  // 立即支付
+  payOrder: function () {
+    
+  },
+
+  // 确认收货
+  takeOrder: function () {
+    
   }
 })

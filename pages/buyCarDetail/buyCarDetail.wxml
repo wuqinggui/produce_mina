@@ -9,7 +9,7 @@
     <view wx:for="{{shopitem.lst}}" wx:key="index" class="carts-container">
       <view class="carts-item" style="transform: translate3d({{itemLefts[idx][index]}}px,0,0);" data-idx="{{idx}}" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
-        <icon type="{{item.isSelect ? 'success_circle' : 'circle'}}" color="{{item.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}"/>
+        <!-- <icon type="{{item.isSelect ? 'success_circle' : 'circle'}}" color="{{item.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="bindCheckbox" data-idx="{{idx}}" data-index="{{index}}"/> -->
         <view>
           <!-- 缩略图 -->
           <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
@@ -21,9 +21,9 @@
           <view class="carts-subtitle">
             <!-- 价格 -->
             <view class="carts-price">
-              <text class="symbol f13">￥</text>
-              <text class="price pr5">{{item.specprice.price}}</text>
-              <text class="unit f13">{{item.commodity.measurement}}</text>
+              <text class="symbol f12">￥</text>
+              <text class="price f16">{{item.specprice.price}}</text>
+              <text class="unit f12">{{item.commodity.measurement}}</text>
             </view>
             <!-- 数量加减 -->
             <view>
@@ -57,7 +57,7 @@
     </view>
     <view class="sum">
       <text class="mr20">合计: ￥{{totalPrice}}</text>
-      <button class="button mr10" bindtap="bindSubmitOder">立即下单</button>
+      <button class="button mr10" hover-class="click-active" bindtap="bindSubmitOder">立即下单</button>
     </view>
   </view>
   <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

@@ -17,7 +17,7 @@
   color: #858585;
 }
 .detailInfo {
-  border-bottom: 1rpx solid #eee;
+  border-bottom: 1rpx solid #f5f5f5;
 }
 .detailInfo text {
   line-height: 60rpx;
@@ -31,7 +31,7 @@
 	height:100%;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
-	border-bottom: 1rpx solid #eee;
+	border-bottom: 1rpx solid #f5f5f5;
 	padding: 15rpx 0;
 	margin-right: 40rpx;
 	background: white;
@@ -61,7 +61,7 @@
 .carts-type {
   padding: 1rpx 10rpx;
 	font-size: 20rpx;
-	color: #DEDEDE;
+	color: #666;
 	border: 1px solid #DEDEDE;
 	border-radius: 50rpx;
 	text-align: center;
@@ -77,14 +77,15 @@
 	color: #fc9326;
 }
 .carts-price .unit {
-	color: #DEDEDE;
+	color: #999999;
+  margin-left: 12rpx;
 }
 .carts-price .num {
 	color: #666;
 }
 .freight, .summation {
   height: 80rpx;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f5f5f5;
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -98,16 +99,39 @@
 .freight .type {
   color: #838383;
 }
+
 .btns {
   justify-content: flex-end;
 }
+
 .btns .btn {
-  color: #8B8B8B;
-  border: 1rpx solid #8B8B8B;
-  padding: 6rpx 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  border: 1rpx solid rgb(192, 191, 191);
+  padding: 12rpx 30rpx;
   border-radius: 30rpx;
 }
+
 .btns .btn-border {
-  color: #FFAE11;
-  border: 1rpx solid #FFAE11;
+  color: #ffae11;
+  border: 1rpx solid #f3d599;
+}
+
+.carts-name {
+  position: relative;
+}
+
+.carts-image {
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.shop-icon{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.cell-status {
+  text-align: right;
+  color: #ffae11;
 }

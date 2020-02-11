@@ -1,96 +1,108 @@
 <!--pages/orderDetail/orderDetail.wxml-->
 <view class="orderDetail">
-  <view class="receipt row al-c ju-b mb20" bindtap="updateInfo">
-    <view class="info pr10">
-      <view class="userinfo flex ju-b mb5 mt10">
-        <text class="name f14">收件人： 陈一发</text>
-        <text class="number f14">156465451654</text>
+  <view class="receipt row verticle-center">
+    <view class="info pr10 flex-1">
+      <view class="userinfo row mb5 mt10">
+        <text class="name flex-1">收件人： {{orderData.addresseeData.name}}</text>
+        <text class="number">{{orderData.addresseeData.phone}}</text>
       </view>
-      <view class="address f12">
-        收货地址：嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻嘻
+      <view class="address f13">
+        收货地址：{{orderData.addresseeData.addresses}}
       </view>
     </view>
-    <mp-icon icon="arrow" color="black" size="{{14}}"></mp-icon>
   </view>
-  <view class="{{isAuto ? 'list' : ''}}">
-    <block wx:for="{{cartObj}}" wx:key="idx" wx:for-index="idx" wx:for-item="itemName">
-      <view wx:for="{{itemName.carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.goods.objectId}}">
-        <view class="carts-item" data-idx="{{idx}}" data-index="{{index}}">
+  <view>
+    <view class="carts-name pt10 pb10 mt5">
+      <view class="shop-name row verticle-center">
+        <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
+        <text class="flex-1 text-overflow">{{orderData.shoppingcart.shop.merchantName ? orderData.shoppingcart.shop.merchantName : '店铺名称'}}</text>
+        <view class="cell-status" wx:if="{{orderData.orderPayState == 0 && (orderData.orderState != 4 || orderData.orderState != 5)}}">待付款</view>
+        <view class="cell-status" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 1}}">待发货</view>
+        <view class="cell-status" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 2}}">待收货</view>
+        <view class="cell-status" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 3}}">售后处理中</view>
+        <view class="cell-status gray6" wx:if="{{orderData.orderState == 4}}">交易完成</view>
+        <view class="cell-status gray6" wx:if="{{orderData.orderState == 5}}">交易取消</view>
+      </view>
+      <view class="half-px-border half-px-border-bottom"></view>
+    </view>
+    <block>
+      <view wx:for="{{orderData.shoppingcart.lst}}" class="carts-container" wx:key="index">
+        <view class="carts-item">
           <view>
             <!-- 缩略图 -->
-            <image class="carts-image" src="{{item.goods.avatar}}" mode="aspectFill" />
+            <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
           </view>
           <view class="carts-text">
             <!-- 商品标题 -->
             <view class="verticle-center">
-              <text class="carts-title f12">{{item.goods.title}}</text>
-              <text class="carts-type ml10">{{item.goods.type}}</text>
+              <text class="carts-title text-overflow">{{item.commodity.name}}</text>
+              <text class="carts-type ml10 text-overflow">{{item.specprice.spec.specName}}</text>
             </view>
             <view class="carts-price row ju-b al-c">
               <view class="priceinfo">
-                <text class="symbol f10">￥</text>
-                <text class="price f14 pr10">{{item.goods.price}}</text>
-                <text class="unit f12">/斤</text>
+                <text class="symbol f12">￥</text>
+                <text class="price f16">{{item.specprice.price}}</text>
+                <text class="unit f12">{{item.commodity.measurement}}</text>
               </view>
-              <view class="num f10">
-                * 100</view>
+              <view class="num f15">× {{item.number}}</view>
             </view>
           </view>
         </view>
       </view>
     </block>
   </view>
-  <view class="more flex ju-c pt10 pb10" bindtap="changeWidth">
-    <image src="../../images/icon_{{isAuto ? 'down' : 'up'}}@2x.png"></image>
-  </view>
-  <view class="other mt20 mb50">
+  <view class="other mb20">
     <view class="freight">
       <text class="f14">运费</text>
-      <text class="type f14">免运费</text>
+      <text class="type f14">{{orderData.freight}}</text>
     </view>
     <view class="summation">
       <text class="f14">合计</text>
       <view>
-        <text class="suminfo f12">共计15件商品</text>
-        <text class="total ml10 f14">￥90.00</text>
+        <text class="suminfo f12">共计{{orderData.shoppingcart.lst.length ? orderData.shoppingcart.lst.length : '0'}}件商品</text>
+        <text class="total ml10 f14">￥{{orderData.totalSum}}</text>
       </view>
     </view>
     <view class="freight">
     <view>
       <text class="f14">账单</text>
-      <text class="tip f10 ml5">账期内未付款，则不能再次下单</text>
+      <text class="tip f10 ml5">（账期内未付款，则不能再次下单）</text>
     </view>
-      <text class="type f14">2010/10/06</text>
+      <text class="type f14">{{orderData.accountPeriodID}}</text>
     </view>
     <view class="freight">
       <text class="f14 orderinfo">订单信息</text>
     </view>
-    <view class="detailInfo flex column mt10 pb10">
+    <view class="detailInfo flex column mt5 pb5">
       <view class="flex ju-b">
         <text>付款方式：</text>
-        <text>微信付款</text>
+        <text>{{orderData.payType}}</text>
       </view>
       <view class="flex ju-b">
         <text>订单编号：</text>
-        <text>100111546546546465</text>
+        <text>{{orderData.orderNo}}</text>
       </view>
       <view class="flex ju-b">
         <text>创建时间：</text>
-        <text>2010/10/06 11:00</text>
+        <text>{{orderData.createTime}}</text>
       </view>
       <view class="flex ju-b">
         <text>付款时间：</text>
-        <text>2010/10/06 11:00</text>
+        <text>{{orderData.payTime}}</text>
       </view>
       <view class="flex ju-b">
         <text>发货时间：</text>
-        <text>2010/10/06 11:00</text>
+        <text>{{orderData.sendTime}}</text>
       </view>
     </view>
-    <view class="btns mt10 flex">
-      <text class="btn f13 ml5">补单</text>
-      <text class="btn f13 ml5">退货退款</text>
-      <text class="btn btn-border f13 ml5">确认收货</text>
+    <view class="btns flex mt10">
+      <!-- 发货前的订单才能补单 -->
+      <button class="button btn ml5" hover-class="click-active" bindtap="supplyOrder" wx:if="{{orderData.orderState == 1}}">补单</button>
+      <button class="button btn ml5" hover-class="click-active" bindtap="cancelOrder" wx:if="{{orderData.orderPayState == 0 && (orderData.orderState != 4 || orderData.orderState != 5)}}">取消订单</button>
+      <button class="button btn ml5" hover-class="click-active" bindtap="returnOrder" wx:if="{{orderData.orderPayState == 1 && (orderData.orderState == 1 || orderData.orderState == 2)}}">退货退款</button>
+      <button class="button btn btn-border ml5" hover-class="click-active" bindtap="againOrder" wx:if="{{orderData.orderState == 4 || orderData.orderState == 5}}">再来一单</button>
+      <button class="button btn btn-border ml5" hover-class="click-active" bindtap="payOrder" wx:if="{{orderData.orderPayState == 0 && (orderData.orderState != 4 || orderData.orderState != 5)}}">立即支付</button>
+      <button class="button btn btn-border ml5" hover-class="click-active" bindtap="takeOrder" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 2}}">确认收货</button>
     </view>
   </view>
 </view>

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderId: '', // 支付成功的订单id
+    orderNo: '', // 支付成功的订单id
   },
 
   /**
@@ -14,7 +14,7 @@ Page({
   onLoad: function (options) {
     console.log('支付成功options', options)
     this.setData({
-      orderId: options.orderId
+      orderNo: options.orderNo
     })
   },
 
@@ -77,7 +77,7 @@ Page({
   // 查看订单详情
   goOrderDetail: function () {
     wx.navigateTo({
-      url: '/pages/orderDetail/orderDetail?orderId=' + this.data.orderId
+      url: '/pages/orderDetail/orderDetail?orderNo=' + this.data.orderNo
     })
   },
 

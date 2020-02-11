@@ -97,7 +97,7 @@
       <view class="gray3 f16">已选</view>
     </view>
     <view class='flex-1'>
-      <button class="add_btn" bindtap="addCar">加入购物车</button>
+      <button class="add_btn" bindtap="addCar" hover-class="click-active">加入购物车</button>
     </view>
   </view>
 
@@ -124,8 +124,8 @@
           </scroll-view>
         </view>
         <view class="shopPop-foot">
-          <button class="cancel-btn col-xs-6 p15 f14 gray6" bindtap="hidShopPop">取消</button>
-          <button class="sure-btn col-xs-6 p15 f14 gray3" bindtap="sureChangeShop">确认</button>
+          <button class="cancel-btn col-xs-6 p15 f14 gray6" hover-class="click-active" bindtap="hidShopPop">取消</button>
+          <button class="sure-btn col-xs-6 p15 f14 gray3" hover-class="click-active" bindtap="sureChangeShop">确认</button>
         </view>
       </view>
   </view>

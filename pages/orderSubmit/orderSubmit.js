@@ -7,7 +7,6 @@ Page({
    */
   data: {
     freightPrice: '0.00', // 运费
-    totalNum: 0, // 合计商品数量
     totalPrice: 0, // 合计价格
     addresseeData: {}, // 收件人信息
     submitCarData: {}, // 立即下单的购物车数据
@@ -99,19 +98,16 @@ Page({
       url: '/pages/index/index'
     })
   },
-  // 合计商品数量和价格
+  // 合计商品价格
   countTotal: function () {
-    var totalNum = 0;
     var totalPrice = 0;
     var data = this.data.submitCarData;
     for (var j = 0; j < data.lstSubmit.length; j++) {
         // 选中的加上价格, 数量转整数，价格转浮点数类型
-        totalNum = totalNum + parseInt(data.lstSubmit[j].number)
         totalPrice = totalPrice + parseInt(data.lstSubmit[j].number) * parseFloat(data.lstSubmit[j].specprice.price);
     }
     totalPrice = totalPrice.toFixed(2);
     this.setData({
-      totalNum: totalNum,
       totalPrice: totalPrice
     })
   },
@@ -130,11 +126,9 @@ Page({
     })
     var params = {
       cartId: this.data.submitCarData.id,
-      actualNumber: this.data.totalNum,
-      number: this.data.totalNum,
-      totalSum: this.data.totalPrice,
+      // totalSum: this.data.totalPrice,
       addressId: this.data.addresseeData.id,
-      freight: this.data.freightPrice,
+      shopid: this.data.submitCarData.shopid,
       userId: getApp().globalData.userInfo.id
     }
     shopApi.addOrder(params)
@@ -147,13 +141,13 @@ Page({
           duration: 1000
         })
         // 带上返回的订单id，关闭单前页面，跳转到支付成功页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
-        // if (res.data.orderId) {
-        //   getApp().globalData.submitCarData = {};
-        //   getApp().globalData.addresseeData = {};
-        //   wx.redirectTo({
-        //     url: '/pages/paySuccess/paySuccess?orderId=' + res.data.orderId,
-        //   })
-        // }
+        if (res.data.orderNo) {
+          getApp().globalData.submitCarData = {};
+          getApp().globalData.addresseeData = {};
+          wx.redirectTo({
+            url: '/pages/paySuccess/paySuccess?orderNo=' + res.data.orderNo
+          })
+        }
       })
       .catch((error) => {
         console.log('下单失败', error);

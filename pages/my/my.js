@@ -13,26 +13,30 @@ Page({
         text: '店铺管理',
         url: '/pages/shopManage/shopManage',
         num: 0
-      }, {
+      }, 
+      {
         text: '员工管理',
         url: '/pages/staffManage/staffManage',
         num: 0
-      }, {
+      }, 
+      {
         text: '商家入驻申请',
         url: '/pages/applySettled/applySettled',
         num: 0
-      }
-      , {
-        text: '关于我们',
-        url: '',
-        // url: '/pages/aboutUS/aboutUS',
-        num: 0
-      }, {
-        text: '客服',
-        url: '',
-        // url: '/pages/service/service',
-        num: 0
-      }, {
+      }, 
+      // {
+      //   text: '关于我们',
+      //   url: '',
+      //   // url: '/pages/aboutUS/aboutUS',
+      //   num: 0
+      // }, 
+      // {
+      //   text: '客服',
+      //   url: '',
+      //   // url: '/pages/service/service',
+      //   num: 0
+      // }, 
+      {
         text: '设置',
         url: '/pages/set/set',
         num: 0

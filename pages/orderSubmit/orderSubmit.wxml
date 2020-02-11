@@ -34,14 +34,11 @@
               </view>
               <view class="carts-price row ju-b al-c">
                 <view class="priceinfo">
-                  <text class="symbol f13">￥</text>
-                  <text class="price pr10">{{item.specprice.price}}</text>
-                  <text class="unit f13">{{item.commodity.measurement}}</text>
+                  <text class="symbol f12">￥</text>
+                  <text class="price f16">{{item.specprice.price}}</text>
+                  <text class="unit f12">{{item.commodity.measurement}}</text>
                 </view>
-                <view class="num f13 verticle-center">
-                  <text class="mr5">*</text>
-                  <text>{{item.number}}</text>
-                </view>
+                <view class="num f15">× {{item.number}}</view>
               </view>
             </view>
           <view class="half-px-border half-px-border-bottom"></view>
@@ -58,7 +55,7 @@
       <view class="summation">
         <text>合计</text>
         <view>
-          <text class="suminfo f13 gray6">共计{{totalNum}}件商品</text>
+          <text class="suminfo f13 gray6">共计{{submitCarData.lstSubmit.length ? submitCarData.lstSubmit.length : '0'}}件商品</text>
           <text class="total ml10">￥{{totalPrice}}</text>
         </view>
           <view class="half-px-border half-px-border-bottom"></view>
@@ -76,7 +73,7 @@
     <view class="sum pl15 pr15">
       <text class="mr5">合计: </text>
       <text class="mr10 total">￥{{totalPrice}}</text>
-      <view class="button" bindtap="sureSubmitOrder">确认下单</view>
+      <button class="button" hover-class="click-active" bindtap="sureSubmitOrder">确认下单</button>
     </view>
   </view>
   <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

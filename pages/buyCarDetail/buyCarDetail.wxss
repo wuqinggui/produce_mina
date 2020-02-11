@@ -84,7 +84,7 @@
 /*右上部分类别*/
 .carts-type {
 	font-size: 20rpx;
-	color: #DEDEDE;
+	color: #666;
 	border: 1rpx solid #f0f0f0;
 	border-radius: 50rpx;
 	width: 60rpx;
@@ -94,7 +94,7 @@
 /*右下部分价格与数量*/
 .carts-subtitle {
 	font-size: 25rpx;
-	color:#DEDEDE;
+	color:#999999;
 	padding: 0;
 	display: flex;
 	flex-direction: row;

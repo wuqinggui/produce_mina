@@ -1,86 +1,71 @@
-<!--pages/order/order.wxml-->
-<template name="order-cell">
-  <view class="order-cell {{index == 0 ? '' : 'mt10'}}">
-    <view class="carts-list {{flexible ? '' : 'auto'}}">
-      <view class="carts-name flex ju-b pt10 pb10">
-      <view class="half-px-border half-px-border-bottom"></view>
-        <view class="shop-name">
-          <mp-icon icon="album" color="black" size="{{20}}"></mp-icon>
-          <text class="ml5">水果店铺名</text>
-        </view>
-        <view class="cell-status">
-          {{refund_status==="没有售后" ? order_status : "售后处理中"}}
-        </view>
-      </view>
-      <view class="carts-item" wx:for="{{goodsList}}" wx:key="index">
-        <view>
-          <!-- 缩略图 -->
-          <image class="carts-image" src="{{goodsList[index].thumb_url}}" mode="aspectFill" />
-        </view>
-        <view class="carts-text">
-          <!-- 商品标题 -->
-          <view class="verticle-center">
-            <text class="carts-title">{{goodsList[index].goods_name}}</text>
-            <text class="carts-type ml10">{{goodsList[index].goods_sn}}</text>
-          </view>
-          <view class="carts-price row ju-b al-c">
-            <view class="priceinfo">
-              <text class="symbol f10">￥</text>
-              <text class="price pr10">{{goodsList[index].sum_price}}</text>
-              <text class="unit f13">/斤</text>
-            </view>
-            <view class="num f13">× {{goodsList[index].goods_number}}</view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="flexible pt10 pb10" bindtap="OpenClose" data-index="{{index}}">
-      <view class="common-arrow ml5 {{flexible ? 'left' : 'right'}} arrow"></view>
-      <!-- <image src="../../images/{{flexible ? 'icon_up@2x' : 'icon_down@2x'}}.png"></image> -->
-    </view>
-    <view class="cell-count flex">
-      <text class="count-amount f12">共{{goodsList.length}}件商品</text>
-      <text class="count-price f14">合计：￥{{total_amount}}</text>
-    </view>
-    <view class="btns flex mt10" hidden="{{order.isButtonShow}}">
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="payOrder" data-order-sn="{{order.orderSn}}">去支付
-      </button>
-
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
-
-      <button class="btn ml5 btn-border" wx:if="{{ order.orderStatus==='待支付' }}" bindtap="cancelOrder" data-order-sn="{{order.orderSn}}">取消订单</button>
-
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待发货'&&refund_status === '没有售后' }}" bindtap="drawbackOrder" data-order-sn="{{order.subOrderSn}}">申请退款</button>
-
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="logistics" data-order-sn="{{order.subOrderSn}}">查看物流</button>
-
-      <button class="btn ml5" wx:if="{{ order.orderStatus==='待收货' }}" bindtap="confirmOrder" data-order-sn="{{order.subOrderSn}}">确认收货</button>
-
-      <button wx:if="{{ order.orderStatus==='交易成功'||order.orderStatus==='交易关闭'||order.orderStatus==='订单关闭'}}" bindtap="order.deleteOrder({ subOrderSn:order.data.sub_order_sn })">删除订单</button>
+<view class="order pb20 order-page">
+  <view class="nav-header">
+    <view wx:for="{{navs}}"  wx:key="navindex" wx:for-index="navindex" wx:for-item="navitem" class="nav-cell {{navitem.index == curNavIitem.index ? 'active' : ''}}">
+      <text bindtap="changeList" data-item="{{navitem}}">{{navitem.text}}</text>
     </view>
   </view>
-</template>
-
-<view class="order pb20">
-  <view class="nav-header mt10 mb10">
-    <view wx:for="{{navs}}" wx:key="alias" class="nav-cell {{item.alias==activeNav?'active':''}}">
-      <text bindtap="changeList" data-alias="{{item.alias}}">{{item.text}}</text>
-    </view>
-  </view>
-  <view class="orders-wrap" hidden="{{loading}}">
+  <view class="orders-wrap">
     <scroll-view scroll-y="true" class="orders">
-      <view class="order-list {{orderList.length===0?'hide':''}}">
-        <block wx:for="{{orderList}}" wx:key="index">
-          <template is="order-cell" data="{{index, ...item}}"></template>
+      <view class="order-list" wx:if="{{orderList.length > 0}}">
+        <block wx:for="{{orderList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
+          <view class="order-cell {{idx == 0 ? '' : 'mt10'}}">
+            <view bindtap="goDetail" data-item="{{shopitem}}">
+              <view class="carts-list">
+                <view class="carts-name pt10 pb10">
+                  <view class="shop-name row verticle-center">
+                    <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
+                    <text class="flex-1 text-overflow">{{shopitem.shoppingcart.shop.merchantName ? shopitem.shoppingcart.shop.merchantName : '店铺名称'}}</text>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">待付款</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1}}">待发货</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 2}}">待收货</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 3}}">售后处理中</view>
+                    <view class="cell-status gray6" wx:if="{{shopitem.orderState == 4}}">交易完成</view>
+                    <view class="cell-status gray6" wx:if="{{shopitem.orderState == 5}}">交易取消</view>
+                  </view>
+                  <view class="half-px-border half-px-border-bottom"></view>
+                </view>
+                <view class="carts-item" wx:for="{{shopitem.shoppingcart.lst}}" wx:key="index">
+                  <view>
+                    <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
+                  </view>
+                  <view class="carts-text">
+                    <view class="verticle-center">
+                      <text class="carts-title text-overflow">{{item.commodity.name}}</text>
+                      <text class="carts-type ml10 text-overflow">{{item.specprice.spec.specName}}</text>
+                    </view>
+                    <view class="carts-price row ju-b al-c">
+                      <view class="priceinfo">
+                        <text class="symbol f12">￥</text>
+                        <text class="price f16">{{item.specprice.price}}</text>
+                        <text class="unit f12">{{item.commodity.measurement}}</text>
+                      </view>
+                      <view class="num f15">× {{item.number}}</view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+              <view class="cell-count flex">
+                <text class="count-amount f12">共{{shopitem.shoppingcart.lst.length ? shopitem.shoppingcart.lst.length : '0'}}件商品</text>
+                <text class="count-price f14">合计：￥{{shopitem.totalSum}}</text>
+              </view>
+            </view>
+            <view class="btns flex mt10">
+              <!-- 发货前的订单才能补单 -->
+              <button class="button btn ml5" hover-class="click-active" bindtap="supplyOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderState == 1}}">补单</button>
+              <button class="button btn ml5" hover-class="click-active" bindtap="cancelOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">取消订单</button>
+              <button class="button btn ml5" hover-class="click-active" bindtap="returnOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && (shopitem.orderState == 1 || shopitem.orderState == 2)}}">退货退款</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="againOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderState == 4 || shopitem.orderState == 5}}">再来一单</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="payOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">立即支付</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="takeOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 2}}">确认收货</button>
+            </view>
+          </view>
         </block>
       </view>
-      <view class="empty {{orderList.length===0?'':'hide'}}">
-        <image class="empty-img" src="../../images/empty.png"></image>
-        <view>您还没有相关的订单</view>
-        <view>可以去看看有哪些想买的</view>
-        <navigator open-type="switchTab" url="../index/index" hover-class="none" class="btn-to-home btn-solid-red">随便逛逛</navigator>
+      <view wx:else class="list-nodata-area">
+        <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+        <view class="list-nodata-tip"> -- 暂无订单数据 -- </view>
+        <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>
       </view>
     </scroll-view>
   </view>
-  <loading hidden="{{!loading}}">正在加载中...</loading>
 </view>
