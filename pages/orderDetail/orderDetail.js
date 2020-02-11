@@ -4,6 +4,9 @@ Page({
 
   /**
    * 页面的初始数据
+    // "logisticsStatus": "string",物流状态 默认“0-待发货 1-已发货 2-待收货 3-退货换货”
+    // "orderPayState": "string",支付状态  默认“0-未支付 1-已支付”
+    // "orderState": "string",订单状态：1-正常 2-取消 3-退货/换货 4-已完成
    */
   data: {
     orderNo: '',
@@ -106,7 +109,10 @@ Page({
 
   // 补单
   supplyOrder: function () {
-    
+    getApp().globalData.supplyOrderData = this.data.orderData;
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
   },
 
   // 取消订单
@@ -121,7 +127,9 @@ Page({
 
   // 再来一单
   againOrder: function () {
-    
+    wx.reLaunch({
+      url: '/pages/index/index'
+    })
   },
 
   // 立即支付

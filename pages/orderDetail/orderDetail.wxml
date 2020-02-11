@@ -76,7 +76,7 @@
     <view class="detailInfo flex column mt5 pb5">
       <view class="flex ju-b">
         <text>付款方式：</text>
-        <text>{{orderData.payType}}</text>
+        <text>{{orderData.playType}}</text>
       </view>
       <view class="flex ju-b">
         <text>订单编号：</text>
@@ -88,7 +88,7 @@
       </view>
       <view class="flex ju-b">
         <text>付款时间：</text>
-        <text>{{orderData.payTime}}</text>
+        <text>{{orderData.playTime}}</text>
       </view>
       <view class="flex ju-b">
         <text>发货时间：</text>

@@ -1,7 +1,13 @@
 <view class="menu-wrap {{classList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
 <!-- 头部地区店铺 -->
   <view class="head-wrap verticle-center row">
-    <picker bindchange="bindPickerChange" value="{{curRegionIndex}}" range="{{regionList}}" range-key="name">
+    <view wx:if="{{isLock}}">
+      <!-- 已登陆的锁定用户地区 -->
+      <view class="city-wrap verticle-center row">
+        <view class='city-name text-black text-overflow flex-1 mr5'>{{curRegion.name}}</view>
+      </view>
+    </view>
+    <picker bindchange="bindPickerChange" value="{{curRegionIndex}}" range="{{regionList}}" range-key="name" wx:else>
       <view class="city-wrap verticle-center row">
         <view class='city-name text-black text-overflow flex-1 mr5'>{{curRegion.name}}</view>
         <view class='triangle-wrap'></view>

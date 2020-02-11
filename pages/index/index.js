@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    isLock: false, // 已登陆的用户的地区id
     name: '', // 模糊搜索
     // 当前地区
     curRegion: {},
@@ -109,6 +110,9 @@ Page({
         var regionId = getApp().globalData.userInfo.regionId ? getApp().globalData.userInfo.regionId : '';
         // 已登陆
         if (regionId) {
+          this.setData({
+            isLock: true
+          })
           for (var i = 0; i < res.data.length; i++) {
             if (res.data[i].id === regionId) {
               this.setData({
@@ -415,7 +419,7 @@ Page({
     }
     var params = {
       shopCommoditDto: shopCommoditDto,
-      reignId: this.data.curRegion.id,
+      regionId: this.data.curRegion.id,
       shopId: this.data.curShop.id,
       userId: getApp().globalData.userInfo.id,
     }

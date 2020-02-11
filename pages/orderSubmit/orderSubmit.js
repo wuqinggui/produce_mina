@@ -121,16 +121,20 @@ Page({
       })
       return
     }
+
     wx.showLoading({
       title: '加载中',
     })
     var params = {
       cartId: this.data.submitCarData.id,
-      // totalSum: this.data.totalPrice,
       addressId: this.data.addresseeData.id,
       shopid: this.data.submitCarData.shopid,
       userId: getApp().globalData.userInfo.id
     }
+    // if (getApp().globalData.supplyOrderData.orderNo) {
+    //   // 补单（判断当前店铺是补单那个店铺）
+    //   params.orderNo = getApp().globalData.supplyOrderData.orderNo;
+    // }
     shopApi.addOrder(params)
       .then((res) => {
         console.log('下单成功', res);
