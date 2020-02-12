@@ -9,7 +9,7 @@ Page({
     // "orderState": "string",订单状态 1-正常 2-取消 3-退货/换货 4-已完成
    */
   data: {
-    orderNo: '',
+    orderId: '',
     orderData: {}
   },
 
@@ -19,7 +19,7 @@ Page({
   onLoad: function (options) {
     console.log('订单详情options', options)
     this.setData({
-      orderNo: options.orderNo
+      orderId: options.orderId
     })
   },
 
@@ -84,7 +84,7 @@ Page({
       title: '加载中',
     })
     var params = {
-      orderNo: this.data.orderNo
+      id: this.data.orderId
     }
     shopApi.getOrder(params)
       .then((res) => {
@@ -152,7 +152,7 @@ Page({
       title: '加载中',
     })
     var params = {
-      orderNo: item.orderNo,
+      id: item.id,
       orderState: state
     }
     shopApi.orderUpdate(params)
@@ -168,7 +168,7 @@ Page({
           isClick: false
         })
         wx.showToast({
-          title: error.message ? error.message : '获取订单数据失败',
+          title: error.message ? error.message : '操作失败',
           icon: 'none',
           duration: 2000
         })

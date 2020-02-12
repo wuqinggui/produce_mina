@@ -29,7 +29,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    getApp().clearUserInfo();// 清空用户信息和缓存
+    console.log('清空用户信息和缓存')
+    getApp().globalData.userInfo = {};
+    wx.removeStorageSync('sj_userInfo');
+    wx.removeStorageSync('sj_userid');
+    wx.removeStorageSync('sj_token');
   },
 
   /**
@@ -122,7 +126,12 @@ Page({
     .then((res) => {
       console.log('根据token获取用户信息成功', res)
       wx.hideLoading();
-      getApp().saveUserInfo(res.data);// 存储用户数据和设置缓存
+      var userInfo = res.data;
+      console.log('存储用户数据和设置缓存', userInfo)
+      getApp().globalData.userInfo = userInfo;
+      wx.setStorageSync("sj_userInfo", userInfo);
+      wx.setStorageSync("sj_userId", userInfo.id);
+      wx.setStorageSync("sj_token", userInfo.token);
       wx.showToast({
         title: '登录成功',
         icon: 'success',

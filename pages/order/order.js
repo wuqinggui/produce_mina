@@ -178,7 +178,7 @@ Page({
     console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: '/pages/orderDetail/orderDetail?orderNo=' + item.orderNo
+      url: '/pages/orderDetail/orderDetail?orderId=' + item.id
     })
   },
 
@@ -231,7 +231,7 @@ Page({
       title: '加载中',
     })
     var params = {
-      orderNo: item.orderNo,
+      id: item.id,
       orderState: state
     }
     shopApi.orderUpdate(params)
@@ -247,7 +247,7 @@ Page({
           isClick: false
         })
         wx.showToast({
-          title: error.message ? error.message : '获取订单数据失败',
+          title: error.message ? error.message : '操作失败',
           icon: 'none',
           duration: 2000
         })
