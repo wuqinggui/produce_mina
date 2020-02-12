@@ -121,7 +121,31 @@ Page({
       })
       return
     }
-
+    if (getApp().globalData.supplyOrderData.shopid && getApp().globalData.supplyOrderData.shopid == this.data.submitCarData.shopid) {
+      // 补单
+      var _this = this;
+      wx.showModal({
+        title: '下单提示',
+        content: '您提交的订单是补单还是重新下单',
+        cancelText: '重新下单',
+        confirmText: '补单',
+        success (res) {
+          if (res.confirm) {
+            console.log('用户点击补单')
+            _this.addNewOrder(2);
+          } else if (res.cancel) {
+            console.log('用户点击重新下单')
+            _this.addNewOrder(1);
+          }
+        }
+      })
+    } else {
+      // 直接下单
+      this.addNewOrder(1);
+    }
+  },
+  // 添加新订单
+  addNewOrder: function (type) {
     wx.showLoading({
       title: '加载中',
     })
@@ -131,10 +155,10 @@ Page({
       shopid: this.data.submitCarData.shopid,
       userId: getApp().globalData.userInfo.id
     }
-    // if (getApp().globalData.supplyOrderData.orderNo) {
-    //   // 补单（判断当前店铺是补单那个店铺）
-    //   params.orderNo = getApp().globalData.supplyOrderData.orderNo;
-    // }
+    if (type && type == 2) {
+      // 补单
+      params.orderNo = getApp().globalData.supplyOrderData.shopid;
+    }
     shopApi.addOrder(params)
       .then((res) => {
         console.log('下单成功', res);
@@ -144,6 +168,7 @@ Page({
           icon: 'success',
           duration: 1000
         })
+        getApp().globalData.supplyOrderData = {};
         // 带上返回的订单id，关闭单前页面，跳转到支付成功页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
         if (res.data.orderNo) {
           getApp().globalData.submitCarData = {};
@@ -162,5 +187,5 @@ Page({
           duration: 2000
         })
       })
-  },
+  }
 })

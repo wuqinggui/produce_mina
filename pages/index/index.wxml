@@ -27,7 +27,7 @@
           wx:for-item="classItem"
           wx:for-index="classIndex"
           wx:key="classIndex">
-      <view class="narItem col-xs-3" >
+      <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}">
         <view class="image-wrap">
           <image src="{{classItem.imagepath ? classItem.imagepath : imgPlaceholder}}" class="image"></image>
         </view>

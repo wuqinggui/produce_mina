@@ -139,24 +139,9 @@ Page({
     shopApi.shopClass()
       .then((res) => {
         console.log('获取大分类数据成功', res);
-        // this.setData({
-        //   classList: res.data ? res.data : []
-        // })
-        var num = 0;
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].imagepath) {
-            num = num + 1
-          }
-        }
-        if (num > 0 && num === res.data.length) {
-          this.setData({
-            classList: res.data
-          })
-        } else {
-          this.setData({
-            classList: []
-          })
-        }
+        this.setData({
+          classList: res.data ? res.data : []
+        })
       })
       .catch((error) => {
         console.log('获取大分类数据失败', error);

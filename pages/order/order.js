@@ -4,9 +4,9 @@ Page({
 
   /**
    * 页面的初始数据
-    // "logisticsStatus": "string",物流状态 默认“0-待发货 1-已发货 2-待收货 3-退货换货”
-    // "orderPayState": "string",支付状态  默认“0-未支付 1-已支付”
-    // "orderState": "string",订单状态：1-正常 2-取消 3-退货/换货 4-已完成
+    // "logisticsStatus": "string",物流状态 1-待发货 2-待收货 3-确认收货
+    // "orderPayState": "string",支付状态 1-未支付，2-已支付
+    // "orderState": "string",订单状态 1-正常 2-取消 3-退货/换货 4-已完成
    */
   data: {
     curNavIitem: {
@@ -24,24 +24,22 @@ Page({
       {
         text: '待发货',
         index: 2,
-        orderState: 1
+        logisticsStatus: 1
       }, 
       {
         text: '待收货',
         index: 3,
-        orderState: 2
+        logisticsStatus: 2
       }, 
       {
         text: '待付款',
         index: 4,
-        orderPayState: 0,
-        orderState: ''
+        orderPayState: 1
       }, 
       // {
       //   text: '已付款',
       //   index: 5,
-      //   orderPayState: 1,
-      //   orderState: ''
+      //   orderPayState: 2
       // }, 
       {
         text: '退货/退款',
@@ -120,11 +118,15 @@ Page({
       title: '加载中',
     })
     var params = {
-      orderState: this.data.curNavIitem.orderState,
       userId: getApp().globalData.userInfo.id
     }
+    if (this.data.curNavIitem.hasOwnProperty("orderState")) {
+      params.orderState = this.data.curNavIitem.orderState;
+    }
+    if (this.data.curNavIitem.hasOwnProperty("logisticsStatus")) {
+      params.logisticsStatus = this.data.curNavIitem.logisticsStatus;
+    }
     if (this.data.curNavIitem.hasOwnProperty("orderPayState")) {
-      // 是否传待支付已支付的支付状态字段
       params.orderPayState = this.data.curNavIitem.orderPayState;
     }
     shopApi.getOrder(params)
@@ -193,11 +195,15 @@ Page({
   // 取消订单
   cancelOrder: function (e) {
     console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    this.editOrder(item, 2);
   },
 
   // 退货退款
   returnOrder: function (e) {
     console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    this.editOrder(item, 3);
   },
 
   // 再来一单
@@ -216,5 +222,35 @@ Page({
   // 确认收货
   takeOrder: function (e) {
     console.log(e.currentTarget.dataset)
-  }
+    let { item } = e.currentTarget.dataset;
+    this.editOrder(item, 4);
+  },
+  // 修改订单数据
+  editOrder: function (item, state) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      orderNo: item.orderNo,
+      orderState: state
+    }
+    shopApi.orderUpdate(params)
+      .then((res) => {
+        console.log('修改订单数据成功', res);
+        wx.hideLoading();
+        this.getData();
+      })
+      .catch((error) => {
+        console.log('修改订单数据失败', error);
+        wx.hideLoading();
+        this.setData({
+          isClick: false
+        })
+        wx.showToast({
+          title: error.message ? error.message : '获取订单数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  } 
 })

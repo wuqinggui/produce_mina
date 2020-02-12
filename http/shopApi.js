@@ -12,6 +12,7 @@ import {
   deleteCarUrl,
   addOrderUrl,
   getOrderUrl,
+  orderUpdateUrl,
   shopListUrl,
   addShopUrl,
   findListShopUrl,
@@ -141,6 +142,16 @@ var shopApi = {
   getOrder: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(getOrderUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 订单修改接口
+  orderUpdate: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(orderUpdateUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

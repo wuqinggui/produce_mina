@@ -19,6 +19,7 @@ export const deleteCarUrl = baseUrl + 'shoppingcart/delete'; // 从购物车中�
 // 订单
 export const addOrderUrl = baseUrl + 'order/add'; // 下单接口
 export const getOrderUrl = baseUrl + 'order/findList'; // 订单查询接口
+export const orderUpdateUrl = baseUrl + 'order/update'; // 订单修改接口
 // 店铺
 export const addShopUrl = baseUrl + 'shop/add'; // 新增店铺接口（含申请入驻的接口）
 export const updateShopUrl = baseUrl + 'shop/update'; // 修改店铺接口

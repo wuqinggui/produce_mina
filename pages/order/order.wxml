@@ -15,12 +15,12 @@
                   <view class="shop-name row verticle-center">
                     <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
                     <text class="flex-1 text-overflow">{{shopitem.shoppingcart.shop.merchantName ? shopitem.shoppingcart.shop.merchantName : '店铺名称'}}</text>
-                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">待付款</view>
-                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1}}">待发货</view>
-                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 2}}">待收货</view>
-                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 3}}">售后处理中</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1}}">待付款</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 2 && shopitem.orderState == 1 && shopitem.logisticsStatus == 1}}">待发货</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 2 && shopitem.orderState == 1 && shopitem.logisticsStatus == 2}}">待收货</view>
+                    <view class="cell-status" wx:if="{{shopitem.orderPayState == 2 && shopitem.orderState == 3}}">售后处理中</view>
                     <view class="cell-status gray6" wx:if="{{shopitem.orderState == 4}}">交易完成</view>
-                    <view class="cell-status gray6" wx:if="{{shopitem.orderState == 5}}">交易取消</view>
+                    <view class="cell-status gray6" wx:if="{{shopitem.orderState == 2}}">交易取消</view>
                   </view>
                   <view class="half-px-border half-px-border-bottom"></view>
                 </view>
@@ -51,12 +51,12 @@
             </view>
             <view class="btns flex mt10">
               <!-- 发货前的订单才能补单 -->
-              <button class="button btn ml5" hover-class="click-active" bindtap="supplyOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderState == 1}}">补单</button>
-              <button class="button btn ml5" hover-class="click-active" bindtap="cancelOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">取消订单</button>
-              <button class="button btn ml5" hover-class="click-active" bindtap="returnOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && (shopitem.orderState == 1 || shopitem.orderState == 2)}}">退货退款</button>
-              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="againOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderState == 4 || shopitem.orderState == 5}}">再来一单</button>
-              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="payOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 0 && (shopitem.orderState != 4 || shopitem.orderState != 5)}}">立即支付</button>
-              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="takeOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 2}}">确认收货</button>
+              <button class="button btn ml5" hover-class="click-active" bindtap="supplyOrder" data-item="{{shopitem}}" wx:if="{{shopitem.logisticsStatus == 1 && shopitem.orderState == 1}}">补单</button>
+              <button class="button btn ml5" hover-class="click-active" bindtap="cancelOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1 }}">取消订单</button>
+              <button class="button btn ml5" hover-class="click-active" bindtap="returnOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 2 && shopitem.orderState == 1 && shopitem.logisticsStatus != 3}}">退货退款</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="againOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderState == 2 || shopitem.orderState == 4}}">再来一单</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="payOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1}}">立即支付</button>
+              <button class="button btn btn-border ml5" hover-class="click-active" bindtap="takeOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 2 && shopitem.logisticsStatus != 3 && shopitem.orderState == 1}}">确认收货</button>
             </view>
           </view>
         </block>

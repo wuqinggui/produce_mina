@@ -156,10 +156,10 @@ Page({
     if (this.data.isClick) {
       return
     }
-    this.setData({
-      isClick: true
-    })
     if (item.number > 1) {
+      this.setData({
+        isClick: true
+      })
       // 修改
       this.changeCar(item, 1);
     }
@@ -282,28 +282,13 @@ Page({
     if (this.data.isClick) {
       return
     }
-    var _this = this;
-    var item = e.currentTarget.dataset.item;
-    wx.showModal({
-      title: '温馨提示',
-      content: '确认要删除该商品吗？',
-      success: function(res) {
-        if (res.confirm) {
-          console.log('确认删除成功');
-          _this.delectSure(item);
-        }
-      }
-    })
-  },
-  // 确认删除
-  delectSure: function (item) {
-    console.log(item)
     this.setData({
       isClick: true
     })
     wx.showLoading({
       title: '加载中'
     });
+    var item = e.currentTarget.dataset.item;
     var userId = getApp().globalData.userInfo.id;
     var shopCommoditDto = [
       {

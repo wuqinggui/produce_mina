@@ -4,9 +4,9 @@ Page({
 
   /**
    * 页面的初始数据
-    // "logisticsStatus": "string",物流状态 默认“0-待发货 1-已发货 2-待收货 3-退货换货”
-    // "orderPayState": "string",支付状态  默认“0-未支付 1-已支付”
-    // "orderState": "string",订单状态：1-正常 2-取消 3-退货/换货 4-已完成
+    // "logisticsStatus": "string",物流状态 1-待发货 2-待收货 3-确认收货
+    // "orderPayState": "string",支付状态 1-未支付，2-已支付
+    // "orderState": "string",订单状态 1-正常 2-取消 3-退货/换货 4-已完成
    */
   data: {
     orderNo: '',
@@ -84,14 +84,15 @@ Page({
       title: '加载中',
     })
     var params = {
-      orderState: '',
-      orderNo: this.data.orderNo,
-      userId: getApp().globalData.userInfo.id
+      orderNo: this.data.orderNo
     }
     shopApi.getOrder(params)
       .then((res) => {
         console.log('获取订单数据成功', res);
         wx.hideLoading();
+        res.data.forEach(function(item) {
+          item.address.addresses = item.address.regional.replace(/\,/g, '') + item.address.addresses;
+        })
         this.setData({
           orderData: res.data && res.data.length > 0 ? res.data[0] : {}
         })
@@ -117,12 +118,14 @@ Page({
 
   // 取消订单
   cancelOrder: function () {
-    
+    var item = this.data.orderData;
+    this.editOrder(item, 2);
   },
 
   // 退货退款
   returnOrder: function () {
-    
+    var item = this.data.orderData;
+    this.editOrder(item, 3);
   },
 
   // 再来一单
@@ -139,6 +142,36 @@ Page({
 
   // 确认收货
   takeOrder: function () {
-    
-  }
+    var item = this.data.orderData;
+    this.editOrder(item, 4);
+  },
+
+  // 修改订单数据
+  editOrder: function (item, state) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      orderNo: item.orderNo,
+      orderState: state
+    }
+    shopApi.orderUpdate(params)
+      .then((res) => {
+        console.log('修改订单数据成功', res);
+        wx.hideLoading();
+        this.getData();
+      })
+      .catch((error) => {
+        console.log('修改订单数据失败', error);
+        wx.hideLoading();
+        this.setData({
+          isClick: false
+        })
+        wx.showToast({
+          title: error.message ? error.message : '获取订单数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  } 
 })
