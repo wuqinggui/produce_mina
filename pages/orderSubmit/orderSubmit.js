@@ -121,7 +121,7 @@ Page({
       })
       return
     }
-    if (getApp().globalData.supplyOrderData.shopid && getApp().globalData.supplyOrderData.shopid == this.data.submitCarData.shopid) {
+    if (getApp().globalData.supplyOrderData.shopid && getApp().globalData.supplyOrderData.id && getApp().globalData.supplyOrderData.shopid == this.data.submitCarData.shopid) {
       // 补单
       var _this = this;
       wx.showModal({
@@ -132,20 +132,20 @@ Page({
         success (res) {
           if (res.confirm) {
             console.log('用户点击补单')
-            _this.addNewOrder(2);
+            _this.supplyOrder();
           } else if (res.cancel) {
             console.log('用户点击重新下单')
-            _this.addNewOrder(1);
+            _this.addNewOrder();
           }
         }
       })
     } else {
       // 直接下单
-      this.addNewOrder(1);
+      this.addNewOrder();
     }
   },
   // 添加新订单
-  addNewOrder: function (type) {
+  addNewOrder: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -154,10 +154,6 @@ Page({
       addressId: this.data.addresseeData.id,
       shopid: this.data.submitCarData.shopid,
       userId: getApp().globalData.userInfo.id
-    }
-    if (type && type == 2) {
-      // 补单
-      params.id = getApp().globalData.supplyOrderData.id ? getApp().globalData.supplyOrderData.id : '';
     }
     shopApi.addOrder(params)
       .then((res) => {
@@ -187,5 +183,43 @@ Page({
           duration: 2000
         })
       })
-  }
+  },
+  // 补单
+  supplyOrder: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      cartId: this.data.submitCarData.id,
+      id: getApp().globalData.supplyOrderData.id
+    }
+    shopApi.orderUpdate(params)
+      .then((res) => {
+        console.log('补单成功', res);
+        wx.hideLoading();
+        wx.showToast({
+          title: '补单成功',
+          icon: 'success',
+          duration: 1000
+        })
+        getApp().globalData.supplyOrderData = {}; // 清空补单信息
+        // 带上返回的订单id，关闭单前页面，跳转到支付成功页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
+        if (res.data.id) {
+          getApp().globalData.submitCarData = {};
+          getApp().globalData.addresseeData = {};
+          wx.redirectTo({
+            url: '/pages/paySuccess/paySuccess?orderId=' + res.data.id
+          })
+        }
+      })
+      .catch((error) => {
+        console.log('补单失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '操作失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
 })

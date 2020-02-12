@@ -65,10 +65,10 @@
     </view>
     <view class="freight">
     <view>
-      <text class="f14">账单</text>
+      <text class="f14">账期</text>
       <text class="tip f10 ml5">（账期内未付款，则不能再次下单）</text>
     </view>
-      <text class="type f14">{{orderData.accountPeriodID}}</text>
+      <text class="type f14">{{orderData.accountperiod.number ? orderData.accountperiod.number + ' 天' : ''}}</text>
     </view>
     <view class="freight">
       <text class="f14 orderinfo">订单信息</text>
