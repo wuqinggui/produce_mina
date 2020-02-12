@@ -168,7 +168,7 @@ Page({
           icon: 'success',
           duration: 1000
         })
-        getApp().globalData.supplyOrderData = {};
+        getApp().globalData.supplyOrderData = {}; // 清空补单信息
         // 带上返回的订单id，关闭单前页面，跳转到支付成功页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
         if (res.data.orderNo) {
           getApp().globalData.submitCarData = {};
