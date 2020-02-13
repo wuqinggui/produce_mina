@@ -164,10 +164,10 @@ Page({
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
-      this.getData();
       this.setData({
         userId: sj_userId
       });
+      this.getData();
     } else {
       wx.navigateTo({
         url: '/pages/login/login'

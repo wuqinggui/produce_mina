@@ -188,11 +188,11 @@ Page({
       shopInfo.userId = sj_userId;
       shopInfo.headAddress = addresseeData.id;
       shopInfo.headAddress_name = addresseeData.addresses || '请选择';
-      this.getData();
       this.setData({
         shopInfo: shopInfo,
         addresseeData: addresseeData
       });
+      this.getData();
     } else {
       wx.navigateTo({
         url: '/pages/login/login'

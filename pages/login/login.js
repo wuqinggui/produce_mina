@@ -32,7 +32,7 @@ Page({
     console.log('清空用户信息和缓存')
     getApp().globalData.userInfo = {};
     wx.removeStorageSync('sj_userInfo');
-    wx.removeStorageSync('sj_userid');
+    wx.removeStorageSync('sj_userId');
     wx.removeStorageSync('sj_token');
   },
 
