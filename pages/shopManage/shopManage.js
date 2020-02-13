@@ -189,10 +189,10 @@ Page({
       wx.showLoading({
         title: '加载中',
       })
-      this.getData();
       this.setData({
         userId: sj_userId
       });
+      this.getData();
     } else {
       wx.navigateTo({
         url: '/pages/login/login'
@@ -237,8 +237,10 @@ Page({
 
   // 获取数据
   getData: function() {
-    let params = {};
-    shopApi.shopList(params).then((res) => {
+    let params = {
+      userId: this.data.userId
+    };
+    shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
       this.setData({
         showNone: true,
