@@ -294,23 +294,38 @@ Page({
     this.getShopList();
   },
   // 获取员工列表
-  getUserList: function() {
-    shopApi.findUser({}).then((res) => {
+  getUserList: function () {
+    let params = {
+      userId: this.data.userId
+    };
+    let list = [];
+    // 查询该员工下的店铺
+    shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
-      res.data.forEach((item) => {
-        if (item.userRole == 1) {
-          item.roleName = '下单人员';
-        } else if (item.userRole == 2) {
-          item.roleName = '收货人员';
-        } else if (item.userRole == 3) {
-          item.roleName = '付款人员';
-        } else if (item.userRole == 4) {
-          item.roleName = '管理人员';
-        }
-      })
-      this.setData({
-        showNone: true,
-        list: res.data
+      res.data.forEach((shopItem) => {
+        let shopParams = {
+          shopId: shopItem.id
+        };
+        // 查询每个店铺下的员工
+        shopApi.searchUser(shopParams).then((userRes) => {
+          console.log(userRes);
+          userRes.data.forEach((item) => {
+            if (item.userRole == 1) {
+              item.roleName = '下单人员';
+            } else if (item.userRole == 2) {
+              item.roleName = '收货人员';
+            } else if (item.userRole == 3) {
+              item.roleName = '付款人员';
+            } else if (item.userRole == 4) {
+              item.roleName = '管理人员';
+            }
+            list.push(item);
+          })
+          this.setData({
+            showNone: true,
+            list: list
+          })
+        })
       })
     }).catch((error) => {
       console.log(error);
