@@ -9,7 +9,7 @@
         收货地址：{{addresseeData.addresses}}
       </view>
     </view>
-    <view class="common-arrow right"></view>
+    <view class="common-arrow right" wx:if="{{!isSupplyOrder}}"></view>
   </view>
   <view wx:if="{{submitCarData.lstSubmit}}">
     <view>
@@ -73,7 +73,8 @@
     <view class="sum pl15 pr15">
       <text class="mr5">合计: </text>
       <text class="mr10 total">￥{{totalPrice}}</text>
-      <button class="button" hover-class="click-active" bindtap="sureSubmitOrder">确认下单</button>
+      <button class="button" hover-class="click-active" bindtap="supplyOrder" wx:if="{{isSupplyOrder}}">确认补单</button>
+      <button class="button" hover-class="click-active" bindtap="sureSubmitOrder" wx:else>确认下单</button>
     </view>
   </view>
   <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

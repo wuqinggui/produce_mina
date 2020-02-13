@@ -107,6 +107,7 @@ Page({
           itemLefts: {},
           isClick: false
         })
+        this.bindSelectAll();
       })
       .catch((error) => {
         console.log('获取购物车数据失败', error);

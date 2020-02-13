@@ -10,6 +10,8 @@ Page({
     totalPrice: 0, // 合计价格
     addresseeData: {}, // 收件人信息
     submitCarData: {}, // 立即下单的购物车数据
+    supplyOrderData: {}, // 补单的订单信息
+    isSupplyOrder: false, // 是否补单
   },
 
   /**
@@ -76,17 +78,34 @@ Page({
   
   // 获取数据
   getData: function () {
-    this.setData({
-      submitCarData: getApp().globalData.submitCarData,
-      addresseeData: getApp().globalData.addresseeData
-    })
+    // 判断是否补单
+    if (getApp().globalData.submitCarData.shopid && getApp().globalData.supplyOrderData.shopid &&  getApp().globalData.submitCarData.shopid == getApp().globalData.supplyOrderData.shopid) {
+      this.setData({
+        submitCarData: getApp().globalData.submitCarData,
+        supplyOrderData: getApp().globalData.supplyOrderData,
+        addresseeData: getApp().globalData.supplyOrderData.address,
+        isSupplyOrder: true
+      })
+    } else {
+      this.setData({
+        submitCarData: getApp().globalData.submitCarData,
+        addresseeData: getApp().globalData.addresseeData,
+        supplyOrderData: {},
+        isSupplyOrder: false
+      })
+    }
     this.countTotal();
     console.log('立即下单的购物车数据', this.data.submitCarData)
     console.log('收货人信息', this.data.addresseeData)
+    console.log('补单信息', this.data.supplyOrderData)
   },
   
   // 跳转收货人信息
   changeAddresseeData: function() {
+    if (this.data.isSupplyOrder) {
+      // 补单不能选择收件人信息
+      return
+    }
     var id = this.data.addresseeData.id ? this.data.addresseeData.id : '';
     wx.navigateTo({
       url: '/pages/shippingAddress/shippingAddress?isSelect=1&addressId=' + id,
@@ -121,31 +140,6 @@ Page({
       })
       return
     }
-    if (getApp().globalData.supplyOrderData.shopid && getApp().globalData.supplyOrderData.id && getApp().globalData.supplyOrderData.shopid == this.data.submitCarData.shopid) {
-      // 补单
-      var _this = this;
-      wx.showModal({
-        title: '下单提示',
-        content: '您提交的订单是补单还是重新下单',
-        cancelText: '重新下单',
-        confirmText: '补单',
-        success (res) {
-          if (res.confirm) {
-            console.log('用户点击补单')
-            _this.supplyOrder();
-          } else if (res.cancel) {
-            console.log('用户点击重新下单')
-            _this.addNewOrder();
-          }
-        }
-      })
-    } else {
-      // 直接下单
-      this.addNewOrder();
-    }
-  },
-  // 添加新订单
-  addNewOrder: function () {
     wx.showLoading({
       title: '加载中',
     })
@@ -191,7 +185,7 @@ Page({
     })
     var params = {
       cartId: this.data.submitCarData.id,
-      id: getApp().globalData.supplyOrderData.id
+      id: this.data.supplyOrderData.id
     }
     shopApi.orderUpdate(params)
       .then((res) => {

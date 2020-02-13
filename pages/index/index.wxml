@@ -27,11 +27,11 @@
           wx:for-item="classItem"
           wx:for-index="classIndex"
           wx:key="classIndex">
-      <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}">
+      <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}" bindtap="handleChangeClass" data-item="{{classItem}}">
         <view class="image-wrap">
           <image src="{{classItem.imagepath ? classItem.imagepath : imgPlaceholder}}" class="image"></image>
         </view>
-        <view class="text-center f14 gray3 text-overflow">{{classItem.className}}</view>
+        <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'gray3' : 'gray9'}}">{{classItem.className}}</view>
       </view>
     </block>
   </view>

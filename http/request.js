@@ -25,21 +25,23 @@ const wxRequest = (url, type, params) => {
         if (res.data.code === 20000) {
           console.log(`___________URL:${url}成功,Params:${JSON.stringify(params)} response:`, res);
           resolve(res.data);
-        } else if (res.data.code === 1004 || res.data.code === 1007) { // 账号状态变更或者无效sessionid
-            wx.showToast({
-              title: res.data.message ? res.data.message : '登陆过期，请重新登陆',
-              icon: 'none',
-              duration: 1000
-            })
-            setTimeout(() => {
-              let pageUrl = util.getCurrentPageUrl(1); // 不带参数
-              if (pageUrl !== 'pages/login/login') {
-                wx.navigateTo({
-                  url: '/pages/login/login'
-                })
-              }
-            }, 1000);
-        } else {
+        } 
+        // else if (res.data.code === 1004 || res.data.code === 1007) { // 账号状态变更或者无效sessionid
+        //     wx.showToast({
+        //       title: res.data.message ? res.data.message : '登陆过期，请重新登陆',
+        //       icon: 'none',
+        //       duration: 1000
+        //     })
+        //     setTimeout(() => {
+        //       let pageUrl = util.getCurrentPageUrl(1); // 不带参数
+        //       if (pageUrl !== 'pages/login/login') {
+        //         wx.navigateTo({
+        //           url: '/pages/login/login'
+        //         })
+        //       }
+        //     }, 1000);
+        // } 
+        else {
           console.log(`___________URL:${url}失败,Params:${JSON.stringify(params)} response:`, res);
           reject(res.data);
         }

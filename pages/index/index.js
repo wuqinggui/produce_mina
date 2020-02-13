@@ -22,6 +22,7 @@ Page({
     showShopList: false, // 是否显示店铺下拉列表
     // 大分类
     classList: [],
+    curClass: {}, // 当前大分类
     // 小分类
     smallClassList: [],
     // 当前小分类
@@ -93,20 +94,22 @@ Page({
   pageInit: function () {
     console.log('首页')
     this.getRegionList(); // 获取地区列表
-    this.getShopClass(); // 获取大分类
   },
   
   // 获取地区列表
   getRegionList: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
     shopApi.region()
       .then((res) => {
         console.log('获取地区数据成功', res);
+        wx.hideLoading();
         this.setData({
           regionList: res.data,
           curRegion: res.data.length > 0 ? res.data[0] : {},
           curRegionIndex: 0
         })
-        this.getShopSmallClass(); // 查询小分类
         var regionId = getApp().globalData.userInfo.regionId ? getApp().globalData.userInfo.regionId : '';
         // 已登陆
         if (regionId) {
@@ -123,9 +126,11 @@ Page({
             }
           }
         }
+        this.getShopClass(); // 获取大分类
       })
       .catch((error) => {
         console.log('获取地区数据失败', error);
+        wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取地区数据失败',
           icon: 'none',
@@ -136,15 +141,22 @@ Page({
 
   // 获取大分类
   getShopClass: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
     shopApi.shopClass()
       .then((res) => {
         console.log('获取大分类数据成功', res);
+        wx.hideLoading();
         this.setData({
-          classList: res.data ? res.data : []
+          classList: res.data ? res.data : [],
+          curClass: res.data.length > 0 ? res.data[0] : {}
         })
+        this.getShopSmallClass(); // 查询小分类
       })
       .catch((error) => {
         console.log('获取大分类数据失败', error);
+        wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取大分类数据失败',
           icon: 'none',
@@ -155,9 +167,16 @@ Page({
 
   // 查询小分类
   getShopSmallClass: function () {
-    shopApi.shopSmallClass()
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      classId: this.data.curClass.id ? this.data.curClass.id : ''
+    }
+    shopApi.shopSmallClass(params)
       .then((res) => {
         console.log('获取小分类数据成功', res);
+        wx.hideLoading();
         this.setData({
           smallClassList: res.data,
           curSmallClass: res.data.length > 0 ? res.data[0] : {}
@@ -166,6 +185,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取小分类数据失败', error);
+        wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取小分类数据失败',
           icon: 'none',
@@ -180,8 +200,8 @@ Page({
       title: '加载中',
     })
     var params = {
-      regionID: this.data.curRegion.id,
-      shopsmallclassid: this.data.curSmallClass.id,
+      regionID: this.data.curRegion.id ? this.data.curRegion.id : '',
+      shopsmallclassid: this.data.curSmallClass.id? this.data.curSmallClass.id : '',
       name: this.data.name
     }
     shopApi.commodityList(params)
@@ -240,9 +260,22 @@ Page({
     }
   },
 
+  // 切换大分类
+  handleChangeClass: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    if (item.id === this.data.curClass.id) {
+      return
+    }
+    this.setData({
+      curClass: item
+    });
+    this.getShopSmallClass();
+  },
+
   // 点击左侧小分类菜单
   handleChangeSmallClass: function (e) {
-    console.log(e)
+    console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
     if (item.id === this.data.curSmallClass.id) {
       return
