@@ -7,6 +7,7 @@ Page({
    */
   data: {
     isLock: false, // 已登陆的用户的地区id
+    customerTypeId: '', // 客户类型id
     name: '', // 模糊搜索
     // 当前地区
     curRegion: {},
@@ -125,14 +126,47 @@ Page({
               break
             }
           }
+          this.getCustomerType(); // 查询客户类型
+        } else {
+          this.setData({
+            isLock: false
+          })
+          this.getShopClass(); // 获取大分类
         }
-        this.getShopClass(); // 获取大分类
       })
       .catch((error) => {
         console.log('获取地区数据失败', error);
         wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取地区数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 查询客户类型
+  getCustomerType: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    var params = {
+      userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
+    }
+    shopApi.findShopByUserId(params)
+      .then((res) => {
+        console.log('查询客户类型成功', res);
+        wx.hideLoading();
+        this.setData({
+          customerTypeId: res.data.customerType ? res.data.customerType : ''
+        })
+        this.getShopClass(); // 获取大分类
+      })
+      .catch((error) => {
+        console.log('查询客户类型失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '查询客户类型失败',
           icon: 'none',
           duration: 2000
         })
@@ -202,7 +236,8 @@ Page({
     var params = {
       regionID: this.data.curRegion.id ? this.data.curRegion.id : '',
       shopsmallclassid: this.data.curSmallClass.id? this.data.curSmallClass.id : '',
-      name: this.data.name
+      name: this.data.name,
+      customerTypeId: this.data.customerTypeId
     }
     shopApi.commodityList(params)
       .then((res) => {
