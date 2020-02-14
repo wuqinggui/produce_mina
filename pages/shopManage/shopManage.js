@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    shopId: '',
     showNone: false,
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
     info: {},
@@ -20,19 +21,25 @@ Page({
     oneButton2: [{
       text: '确定'
     }],
-    list: []
+    list: [], // 页面店铺列表
+    userList: [], //负责人列表
+    superiorShop: []  // 上级店铺列表
   },
   // 编辑店铺
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let info = this.data.list[index];
+    let shopId = this.data.shopId;
+    this.getCurrShopUser(info.id);
+    if (shopId) {
+      this.getSuperiorShop(shopId);
+    }
     this.setData({
       btnStatus: 2,
       shopIndex: index,
       info: info,
       showOneButtonDialog: true
     });
-
   },
   // 添加 / 修改
   tapDialogButton(e) {
@@ -40,8 +47,10 @@ Page({
     let toastTxt = '';
     if (!data.info.merchantName) {
       toastTxt = '请输入店铺名';
+    } else if (data.shopId && !data.info.shopSuperior) {
+      toastTxt = '请选择上级店铺';
     } else if (!data.info.personName) {
-      toastTxt = '请输入负责人';
+      toastTxt = '请选择负责人';
     } else if (!data.info.phone) {
       toastTxt = '请输入联系电话';
     } else if (!/^1[3|4|5|7|8]\d{9}$/.test(data.info.phone)) {
@@ -57,7 +66,9 @@ Page({
       })
     }
     data.info.userId = this.data.userId;
-    data.info.type = 0;
+    data.info.type = 0; // 店铺类型 0-店铺 1-供应商
+    data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; // 默认当前用户地区
+    // 修改
     if (data.btnStatus == 2) {
       shopApi.updateShop(data.info).then((res) => {
         wx.showToast({
@@ -74,8 +85,8 @@ Page({
           duration: 2000
         })
       })
-    } else {
-      data.info.auditStatus = 1;
+    } else { // 新增
+      data.info.auditStatus = 1; // 审核状态（1-未审核 2-已审核 3-已拒绝 4-撤销）
       shopApi.addShop(data.info).then((res) => {
         wx.showToast({
           title: '添加成功',
@@ -186,12 +197,14 @@ Page({
    */
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
+    let shopId = wx.getStorageSync('sj_userInfo').shopId;
     if (sj_userId) {
       wx.showLoading({
         title: '加载中',
       })
       this.setData({
-        userId: sj_userId
+        userId: sj_userId,
+        shopId: shopId
       });
       this.getData();
     } else {
@@ -238,6 +251,29 @@ Page({
 
   // 获取数据
   getData: function() {
+    this.getShopList();
+  },
+  // 获取上级店铺列表
+  getSuperiorShop: function (shopId) {
+    let params = {
+      shopId: shopId
+    };
+    shopApi.findMoreShopById(params).then((res) => {
+      console.log(res);
+      this.setData({
+        superiorShop: res.data
+      })
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+  // 获取店铺列表
+  getShopList: function() {
     let params = {
       userId: this.data.userId
     };
@@ -249,6 +285,45 @@ Page({
       });
     }).catch((err) => {
       wx.hideLoading();
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+  // 负责人选中
+  changePerson: function(e) {
+    let index = e.detail.value;
+    let info = this.data.info;
+    let userList = this.data.userList;
+    info.personName = userList[index].nickname;
+    this.setData({
+      info: info
+    });
+  },
+  // 选择上级店铺
+  changeShop: function(e) {
+    let index = e.detail.value;
+    let info = this.data.info;
+    let superiorShop = this.data.superiorShop;
+    info.shopSuperior = superiorShop[index].merchantName;
+    this.setData({
+      info: info
+    });
+  },
+  // 获取当前用户下的列表 
+  getCurrShopUser: function(id) {
+    let shopParams = {
+      shopId: id
+    };
+    // 查询每个店铺下的员工
+    shopApi.searchUser(shopParams).then((res) => {
+      this.setData({
+        userList: res.data
+      });
+    }).catch((error) => {
+      console.log(error);
       wx.showToast({
         title: error.message ? error.message : '获取数据失败',
         icon: 'none',

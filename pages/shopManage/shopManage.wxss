@@ -4,6 +4,10 @@
   flex: 0 0 180rpx;
 }
 
+.arrow {
+  transform: rotate(90deg);
+}
+
 .addinfo {
   position: relative;
 }

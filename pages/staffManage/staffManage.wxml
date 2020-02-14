@@ -1,7 +1,7 @@
 <!--pages/staffManage/staffManage.wxml-->
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2 }}">
-    <view class="addinfo piker pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
       <text>店铺：</text>
       <picker bindchange="bindPickerChange2" value="{{shopList[index]}}" range="{{shopList}}" range-key="merchantName">
         <view class="picker flex">
@@ -11,7 +11,7 @@
       </picker>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo piker pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
       <text>工种：</text>
       <picker bindchange="bindPickerChange3" value="{{userRoles[index]}}" range="{{userRoles}}" range-key="name">
         <view class="picker flex">
@@ -21,22 +21,22 @@
       </picker>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>员工名：</text>
       <input class="weui-input" data-key="nickname" value="{{info.nickname}}" bindinput="bindAndSet" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>联系电话：</text>
       <input class="weui-input" value="{{info.phone}}" bindinput="bindAndSet" data-key="phone" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>账号：</text>
       <input class="weui-input" value="{{info.userName}}" bindinput="bindAndSet" data-key="userName" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>密码：</text>
       <input class="weui-input" value="{{info.password}}" bindinput="bindAndSet" data-key="password" />
       <view class="half-px-border half-px-border-bottom"></view>
@@ -58,7 +58,7 @@
   <view class="list">
     <view class="list-item pt10 pb10 flex ju-b" wx:for="{{list}}" wx:key="index" bindtap="editItem" data-index="{{index}}">
       <view class="flex">
-        <view class="portrait pr10">
+        <view class="portrait pr10 verticle-center">
           <image src="../../images/head_img.png"></image>
         </view>
         <view class="info">
@@ -67,6 +67,8 @@
           </view>
           <view class="people gray9">电话：
             <text>{{item.phone}}</text> </view>
+          <view class="people gray9">店铺名称：
+            <text>{{item.shop.merchantName}}</text> </view>
         </view>
       </view>
       <view class="icon">

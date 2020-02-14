@@ -297,9 +297,8 @@ Page({
   getUserList: function () {
     let params = {
       userId: this.data.userId
-    };
+    }; 
     let list = [];
-    let userShopName = '';
     // 查询该登录用户下的店铺
     shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
