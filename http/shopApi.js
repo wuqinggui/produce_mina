@@ -23,6 +23,7 @@ import {
   findUserUrl,
   searchUserUrl,
   findByUserIdUrl,
+  findMoreShopByIdUrl,
   addAddressUrl,
   searchAddressListUrl,
   findByIdAddressUrl,
@@ -242,6 +243,16 @@ var shopApi = {
   findShopByUserId: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(findByUserIdUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 店铺id搜店铺
+  findMoreShopById: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(findMoreShopByIdUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })

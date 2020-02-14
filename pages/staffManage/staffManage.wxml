@@ -49,7 +49,7 @@
           <input class="weui-input" value="{{inputValue}}" disabled="true" />
         </view>
       </picker>
-      <view class="common-arrow right arrow select"></view>
+      <view class="common-arrow right small arrow select"></view>
     </view>
     <view class="add pl20 flex" bindtap="addUser">
       <mp-icon icon="add2" color="black" size="{{26}}"></mp-icon>

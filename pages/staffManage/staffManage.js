@@ -196,9 +196,9 @@ Page({
     })
     list[index].userRoleName = userRole && userRole.name;
     let params = {
-      userID: this.data.userId
+      shopId: list[index].shopId
     };
-    shopApi.findShopByUserId(params).then((res) => {
+    shopApi.findMoreShopById(params).then((res) => {
       let shopInfo = res.data.find((item) => {
         return list[index].shopId == item.id;
       })
@@ -299,7 +299,8 @@ Page({
       userId: this.data.userId
     };
     let list = [];
-    // 查询该员工下的店铺
+    let userShopName = '';
+    // 查询该登录用户下的店铺
     shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
       res.data.forEach((shopItem) => {

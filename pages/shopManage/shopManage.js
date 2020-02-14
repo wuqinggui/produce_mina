@@ -99,6 +99,7 @@ Page({
   bindKeyInput: function(e) {
     let inputValue = e.detail.value;
     let params = {
+      userId: this.data.userId,
       merchantName: inputValue
     };
     shopApi.findListShop(params).then((res) => {

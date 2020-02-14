@@ -56,7 +56,7 @@
   width: 100%;
 }
 .ipt .select {
-  top: 24rpx;
+  top: 26rpx;
   right: 10rpx;
   position: absolute;
   width: 50rpx;
@@ -82,7 +82,7 @@
 }
 
 .info .name {
-  line-height: 64rpx;
+  line-height: 60rpx;
 }
 
 .info .remark {

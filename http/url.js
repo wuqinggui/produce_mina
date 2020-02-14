@@ -35,6 +35,7 @@ export const shopListUrl = baseUrl + 'shop/findAll'; //店铺列表管理
 export const deleteShopUrl = baseUrl + 'shop/delete'; //删除店铺 店铺管理
 export const findListShopUrl = baseUrl + 'shop/findList'; //多条件搜索店铺
 export const findByUserIdUrl = baseUrl + 'shop/findByUserId'; //用户搜店铺
+export const findMoreShopByIdUrl = baseUrl + 'shop/findMoreShopById'; //根据店铺id查找店铺
 // 收货地址
 export const addAddressUrl = baseUrl + 'address/add'; // 新增收货地址
 export const searchAddressListUrl = baseUrl + 'address/findAll'; // 收货地址列表
