@@ -234,7 +234,7 @@ Page({
       title: '加载中',
     })
     var params = {
-      regionID: this.data.curRegion.id ? this.data.curRegion.id : '',
+      regionId: this.data.curRegion.id ? this.data.curRegion.id : '',
       shopsmallclassid: this.data.curSmallClass.id? this.data.curSmallClass.id : '',
       name: this.data.name,
       customerTypeId: this.data.customerTypeId
