@@ -23,7 +23,7 @@
             <view class="carts-price">
               <text class="symbol f12">￥</text>
               <text class="price f16">{{item.specprice.price}}</text>
-              <text class="unit f12">{{item.commodity.measurement}}</text>
+              <text class="unit f12">{{'/ ' + item.commodity.measurement}}</text>
             </view>
             <!-- 数量加减 -->
             <view>

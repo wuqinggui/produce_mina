@@ -36,7 +36,7 @@
                 <view class="priceinfo">
                   <text class="symbol f12">￥</text>
                   <text class="price f16">{{item.specprice.price}}</text>
-                  <text class="unit f12">{{item.commodity.measurement}}</text>
+                  <text class="unit f12">{{'/ ' + item.commodity.measurement}}</text>
                 </view>
                 <view class="num f15">× {{item.number}}</view>
               </view>

@@ -118,7 +118,7 @@ Page({
             isLock: true
           })
           for (var i = 0; i < res.data.length; i++) {
-            if (res.data[i].id === regionId) {
+            if (res.data[i].id == regionId) {
               this.setData({
                 curRegion: res.data[i],
                 curRegionIndex: i
@@ -299,7 +299,7 @@ Page({
   handleChangeClass: function (e) {
     console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
-    if (item.id === this.data.curClass.id) {
+    if (item.id == this.data.curClass.id) {
       return
     }
     this.setData({
@@ -312,7 +312,7 @@ Page({
   handleChangeSmallClass: function (e) {
     console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
-    if (item.id === this.data.curSmallClass.id) {
+    if (item.id == this.data.curSmallClass.id) {
       return
     }
     this.setData({
