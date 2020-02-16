@@ -1,4 +1,5 @@
 var userApi = require('../../http/userApi.js').default;
+var MD5 = require('../../utils/md5.js');
 var util = require('../../utils/util.js');
 
 Page({
@@ -103,7 +104,8 @@ Page({
     });
     userApi.login({
       userName: this.data.userName,
-      password: this.data.password
+      // password: this.data.password
+      password: MD5.hexMD5(this.data.password)
     })
     .then((res) => {
       console.log('登陆成功', res)

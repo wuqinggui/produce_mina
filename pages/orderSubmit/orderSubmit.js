@@ -52,7 +52,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    // 关闭页面清空收件人信息
+    getApp().globalData.addresseeData = {};
   },
 
   /**

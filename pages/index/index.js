@@ -158,7 +158,7 @@ Page({
         console.log('查询客户类型成功', res);
         wx.hideLoading();
         this.setData({
-          customerTypeId: res.data.customerType ? res.data.customerType : ''
+          customerTypeId: res.data && res.data.customerType ? res.data.customerType : ''
         })
         this.getShopClass(); // 获取大分类
       })
