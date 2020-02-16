@@ -43,6 +43,16 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">手机号码：</text>
+        </view>
+        <view class="list-item-input">
+          <input name="phone" bindinput="bindAndSet" data-key="phone" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="手机号码" value="{{phone}}" />
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
       <view class="list-item flex" bindtap="selectCardDate">
         <view class="list-item-info">
           <text class="require">*</text>
@@ -56,6 +66,16 @@
               <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
             </view>
           </picker>
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <view class="list-item flex">
+        <view class="list-item-info">
+          <text class="require">*</text>
+          <text class="name">地址：</text>
+        </view>
+        <view class="list-item-input">
+          <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{address}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>

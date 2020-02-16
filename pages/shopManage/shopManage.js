@@ -134,12 +134,14 @@ Page({
     })
   },
   addShop: function() {
+    let shopId = wx.getStorageSync('sj_userInfo').shopId || '';
     let info = {
       merchantName: '',
       personName: '',
       phone: '',
       desction: ''
     };
+    this.getCurrShopUser(shopId);
     this.setData({
       btnStatus: 1,
       info: info,
@@ -297,6 +299,7 @@ Page({
     let index = e.detail.value;
     let info = this.data.info;
     let userList = this.data.userList;
+    console.log(userList);
     info.personName = userList[index].nickname;
     this.setData({
       info: info

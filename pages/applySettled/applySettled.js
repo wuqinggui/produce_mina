@@ -15,7 +15,7 @@ Page({
     shopInfo: {
       customerTypeArr: [],
       address: '', // 商户地址 ,
-      auditStatus: '', // 审核状态 ,
+      auditStatus: 1, // 审核状态 ,
       businessLicense: '', // 营业执照照片 ,
       cardBsPath: '', // 身份证半身照 ,
       cardEffectiveDate: '', // 有效日期 ,
@@ -38,7 +38,7 @@ Page({
       regionId: '', // 地区id ,
       shopSuperior: '', // 店铺上级 ,
       shopType: '', // 商户类型 ,
-      type: '', // 店铺类型 ,
+      type: 0, // 店铺类型 ,
       updateName: '', // 修改人名称 ,
       updateTime: '', // 修改时间 ,
       userId: '', // 用户id ,
@@ -92,6 +92,24 @@ Page({
     } else if (!shopInfo.validity) {
       return wx.showToast({
         title: '请选择身份证期限',
+        icon: 'none',
+        duration: 2000
+      })
+    } else if (!shopInfo.phone) {
+      return wx.showToast({
+        title: '请输入手机号码',
+        icon: 'none',
+        duration: 2000
+      })
+    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(shopInfo.phone)) {
+      return wx.showToast({
+        title: '手机号码有误，请重新输入',
+        icon: 'none',
+        duration: 2000
+      })
+    } else if (!shopInfo.address) {
+      return wx.showToast({
+        title: '请输入地址',
         icon: 'none',
         duration: 2000
       })
