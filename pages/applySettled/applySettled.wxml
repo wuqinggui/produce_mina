@@ -29,7 +29,12 @@
           <text class="name">商户负责人姓名：</text>
         </view>
         <view class="list-item-input">
-          <input name="personName" bindinput="bindAndSet" data-key="personName" placeholder-class="place-holder" class="weui-input" placeholder="证件名" value="{{personName}}" />
+          <picker bindchange="changePerson" value="{{userList[index]}}" range="{{userList}}" range-key="nickname">
+            <view class="picker flex ju-b verticle-center  {{personName ? '' : 'grayaaa f12'}}">
+              <text class="f14">{{personName ? personName : '请选择'}}</text>
+              <mp-icon icon="arrow" color="black" size="{{13}}"></mp-icon>
+            </view>
+          </picker>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
@@ -75,7 +80,7 @@
           <text class="name">地址：</text>
         </view>
         <view class="list-item-input">
-          <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{address}}" />
+          <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="请输入店铺地址" value="{{address}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>

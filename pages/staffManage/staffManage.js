@@ -1,6 +1,7 @@
 // pages/staffManage/staffManage.js
 var util = require('../../utils/util.js');
 var shopApi = require('../../http/shopApi.js').default;
+var MD5 = require('../../utils/md5.js');
 Page({
   /**
    * 页面的初始数据
@@ -125,6 +126,7 @@ Page({
       })
     }
     data.info.userId = data.userId;
+    // data.info.password = MD5.hexMD5(data.info.password)
     let params = data.info;
     if (data.btnStatus == 1) {
       shopApi.addUser(params).then((res) => {

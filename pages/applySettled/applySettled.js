@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    shopId: '', //店铺id
     uploadUrl: 'http://47.106.130.46:8000/common/file/upload/qxkj-test/qxkj/test',
     isAccept: 0,
     step: 0,
@@ -14,6 +15,7 @@ Page({
     addresseeData: {},
     shopInfo: {
       customerTypeArr: [],
+      userList: [], //用户列表
       address: '', // 商户地址 ,
       auditStatus: 1, // 审核状态 ,
       businessLicense: '', // 营业执照照片 ,
@@ -44,6 +46,27 @@ Page({
       userId: '', // 用户id ,
       validity: '' // 身份证期限
     }
+  },
+  // 获取当前用户下的列表 
+  getCurrShopUser: function (id) {
+    let shopInfo = this.data.shopInfo;
+    let shopParams = {
+      shopId: id
+    };
+    // 查询每个店铺下的员工
+    shopApi.searchUser(shopParams).then((res) => {
+      shopInfo.userList = res.data;
+      this.setData({
+        shopInfo: shopInfo
+      });
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
   },
   // 同意选中协议
   checkDeal: function(e) {
@@ -199,14 +222,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    let sj_userId = wx.getStorageSync('sj_userId');
+    let sj_userId = wx.getStorageSync('sj_userId'); 
+    let { shopId, regionId } = wx.getStorageSync('sj_userInfo');
     let addresseeData = getApp().globalData.addresseeData;
     if (sj_userId) {
       let shopInfo = this.data.shopInfo;
       shopInfo.userId = sj_userId;
+      shopInfo.regionId = regionId;
       shopInfo.headAddress = addresseeData.id;
       shopInfo.headAddress_name = addresseeData.addresses || '请选择';
       this.setData({
+        shopId: shopId,
         shopInfo: shopInfo,
         addresseeData: addresseeData
       });
@@ -229,7 +255,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    // 关闭页面清空收件人信息
+    getApp().globalData.addresseeData = {};
   },
 
   /**
@@ -262,7 +289,18 @@ Page({
 
   // 获取数据
   getData: function() {
+    let shopId = this.data.shopId;
     this.getCustomerType();
+    this.getCurrShopUser(shopId);
+  },
+  // 负责人选中
+  changePerson: function (e) {
+    let index = e.detail.value;
+    let shopInfo = this.data.shopInfo;
+    shopInfo.personName = shopInfo.userList[index].nickname;
+    this.setData({
+      shopInfo: shopInfo
+    });
   },
 // 获取客户类型
   getCustomerType: function() {
@@ -276,6 +314,7 @@ Page({
       console.log(error);
     })
   },
+  // 选择客户类型：
   changeCustom: function(e) {
     let index = e.detail.value;
     let shopInfo = this.data.shopInfo;

@@ -38,7 +38,7 @@
     </view>
     <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>密码：</text>
-      <input class="weui-input" value="{{info.password}}" bindinput="bindAndSet" data-key="password" />
+      <input class="weui-input" password="{{true}}" value="{{info.password}}" bindinput="bindAndSet" data-key="password" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </mp-dialog>
