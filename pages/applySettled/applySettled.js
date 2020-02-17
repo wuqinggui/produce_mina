@@ -100,13 +100,15 @@ Page({
         icon: 'none',
         duration: 2000
       })
-    } else if (!shopInfo.personName) {
-      return wx.showToast({
-        title: '请输入负责人名称',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!shopInfo.cardNumber) {
+    } 
+    // else if (!shopInfo.personName) {
+    //   return wx.showToast({
+    //     title: '请输入负责人名称',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
+    else if (!shopInfo.cardNumber) {
       return wx.showToast({
         title: '请输入身份证',
         icon: 'none',
@@ -227,6 +229,7 @@ Page({
     let addresseeData = getApp().globalData.addresseeData;
     if (sj_userId) {
       let shopInfo = this.data.shopInfo;
+      shopInfo.personName = wx.getStorageSync('sj_userInfo').id;
       shopInfo.userId = sj_userId;
       shopInfo.regionId = regionId;
       shopInfo.headAddress = addresseeData.id;

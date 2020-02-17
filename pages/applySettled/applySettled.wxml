@@ -23,7 +23,7 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <view class="list-item flex">
+      <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">商户负责人姓名：</text>
@@ -37,7 +37,7 @@
           </picker>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>

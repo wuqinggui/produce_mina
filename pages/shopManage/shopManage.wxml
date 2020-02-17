@@ -20,7 +20,7 @@
       <text>负责人：</text>
       <picker bindchange="changePerson" value="{{userList[index]}}" range="{{userList}}" range-key="nickname">
         <view class="picker flex">
-          <input class="weui-input" disabled="true" value="{{info.personName}}" />
+          <input class="weui-input" disabled="true" value="{{info.nmUser.nickname}}" />
           <view class="common-arrow right arrow"></view>
         </view>
       </picker>
@@ -52,7 +52,7 @@
           <text class="remark ml5">{{item.desction ? "("+item.desction+")" : '' }}</text>
         </view>
         <view class="people gray9">负责人名字：
-          <text class="mr10">{{item.personName}}</text>
+          <text class="mr10">{{item.nmUser.nickname}}</text>
           <text>{{item.phone}}</text> </view>
       </view>
       <view class="icon flex verticle-center ju-b {{item.auditStatus==1 ? 'w180' : ''}}">

@@ -115,7 +115,7 @@ Page({
       toastTxt = '手机号码格式，请重新输入';
     } else if (!data.info.userName) {
       toastTxt = '请输入用户名';
-    } else if (!data.info.password) {
+    } else if (data.btnStatus == 1 && !data.info.password) {
       toastTxt = '请输入密码';
     }
     if (toastTxt) {
@@ -126,7 +126,7 @@ Page({
       })
     }
     data.info.userId = data.userId;
-    // data.info.password = MD5.hexMD5(data.info.password)
+    data.info.password = MD5.hexMD5(data.info.password)
     let params = data.info;
     if (data.btnStatus == 1) {
       shopApi.addUser(params).then((res) => {

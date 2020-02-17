@@ -29,6 +29,7 @@ Page({
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let info = this.data.list[index];
+    console.log(info);
     let shopId = this.data.shopId;
     this.getCurrShopUser(info.id);
     if (shopId) {
@@ -300,7 +301,8 @@ Page({
     let info = this.data.info;
     let userList = this.data.userList;
     console.log(userList);
-    info.personName = userList[index].nickname;
+    info.personName = userList[index].id;
+    info.nmUser.nickname = userList[index].nickname;
     this.setData({
       info: info
     });
