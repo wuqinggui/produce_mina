@@ -144,7 +144,7 @@
 
 .carts-price .unit {
   color: #999999;
-  margin-left: 12rpx;
+  margin-left: 8rpx;
 }
 
 .carts-price .num {

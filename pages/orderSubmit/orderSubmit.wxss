@@ -85,7 +85,7 @@
 }
 .carts-price .unit {
 	color: #999999;
-  margin-left: 12rpx;
+  margin-left: 8rpx;
 }
 .carts-price .num {
 	color: #666;
@@ -149,6 +149,10 @@
 	font-size: 28rpx;
 	border-radius: 50px;
 	border: 0;
+}
+
+.carts-footer .nopay{
+	width: 360rpx;
 }
 
 /*删除按钮*/

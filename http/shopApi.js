@@ -11,6 +11,8 @@ import {
   updateCarUrl,
   deleteCarUrl,
   addOrderUrl,
+  payTimeUrl,
+  payParamsUrl,
   getOrderUrl,
   orderUpdateUrl,
   shopListUrl,
@@ -133,6 +135,26 @@ var shopApi = {
   addOrder: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(addOrderUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 可支付下单的时间段
+  payTime: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(payTimeUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 支付参数接口
+  payParams: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(payParamsUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

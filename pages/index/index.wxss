@@ -199,7 +199,7 @@ image {
 
 .product-detail-wrap .unit {
   color: #999999;
-  margin-left: 12rpx;
+  margin-left: 8rpx;
 }
 
 /* 为了不让购物车挡住最后一个产品，多加一个空白占位的元素 */

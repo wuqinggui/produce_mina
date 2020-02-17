@@ -77,7 +77,7 @@
             <view class="price-wrap">
               <text class="price f12">¥</text>
               <text class="price f16">{{specItem.price}}</text>
-              <text class="unit f12">{{'/ ' + goodsItem.measurement}}</text>
+              <text class="unit f12">/ {{goodsItem.allocated.name ? goodsItem.allocated.name : ''}}</text>
             </view>
           </view>
           <view class="icon-wrap direction-center">

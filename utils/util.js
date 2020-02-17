@@ -3,7 +3,7 @@
  * 1: yyyy-mm-dd hh:mm:ss
  */
 const formatTime = (date, type) => {
-  const time = new Date(date * 1000)
+  const time = new Date(date)
   const year = time.getFullYear()
   const month = time.getMonth() + 1
   const day = time.getDate()
@@ -11,7 +11,12 @@ const formatTime = (date, type) => {
   const minute = time.getMinutes()
   const second = time.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  if (type && type == 1) {
+    // 获取时分秒
+    return [hour, minute, second].map(formatNumber).join(':')
+  } else {
+    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+  }
 }
 
 const formatNumber = m => {
@@ -19,9 +24,24 @@ const formatNumber = m => {
 }
 
 /**
+ * 时分秒转成时间戳
+ */
+
+ function formatTimeNumber (time) {
+  var result = '';
+  var hour = time.split(':')[0];
+  var min = time.split(':')[1];
+  var sec = time.split(':')[2];
+  result = Number(hour*3600) + Number(min*60) + Number(sec);
+  return result;
+ }
+
+
+/**
  * 时间戳剩余样式格式化
  * @param timespan
  * @returns {*}
+ * new Date(new Date().getTime()).setHours(10, 0, 0, 0) setHours函数用于基于当地时间设置当前Date对象中的小时值
  */
 function formatMsgTime(timespan) {
   timeSpanStr = "";
@@ -159,6 +179,7 @@ function getCurrentPageUrl(type) {
 
 module.exports = {
   formatTime,
+  formatTimeNumber,
   formatMsgTime,
   getRandom,
   matchFn,

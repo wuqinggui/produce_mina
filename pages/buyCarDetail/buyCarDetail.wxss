@@ -112,6 +112,11 @@
 	color: #fc9326;
 }
 
+.carts-price .unit {
+	color: #999999;
+  margin-left: 8rpx;
+}
+
 /*商品加减按钮*/
 /*stepper容器*/
 .stepper {
