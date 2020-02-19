@@ -1,5 +1,6 @@
 // pages/orderDetail/orderDetail.js
 var shopApi = require('../../http/shopApi.js').default;
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -7,10 +8,13 @@ Page({
     // "logisticsStatus": "string",物流状态 1-待发货 2-待收货 3-确认收货
     // "orderPayState": "string",支付状态 1-未支付，2-已支付
     // "orderState": "string",订单状态 1-正常 2-取消 3-退货/换货 4-已完成
+    // 订单状态为1（正常），而且支付状态为1（未支付），而且物流状态为2（待收货）的才能显示“立即支付”按钮进行支付
+    // 订单状态为1（正常），而且物流状态为1（待发货）的才能显示“补单”按钮进行补单
    */
   data: {
     orderId: '',
-    orderData: {}
+    orderData: {},
+    isCanPay: false, // 是否可以下单支付
   },
 
   /**
@@ -61,7 +65,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    
   },
 
   /**
@@ -135,11 +139,6 @@ Page({
     })
   },
 
-  // 立即支付
-  payOrder: function () {
-    
-  },
-
   // 确认收货
   takeOrder: function () {
     var item = this.data.orderData;
@@ -173,5 +172,151 @@ Page({
           duration: 2000
         })
       })
-  } 
+  },
+
+  // 立即支付
+  payOrder: function () {
+    var item = this.data.orderData;
+    this.getTime(item);
+  },
+
+  // 获取可支付下单的时间段
+  getTime: function (orderData) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    shopApi.payTime()
+      .then((res) => {
+        console.log('获取可支付下单的时间段成功', res);
+        wx.hideLoading();
+        var data = res.data ? res.data : [];
+        var date =  Date.parse(new Date()); // 当前时间
+        var nowDate = util.formatTime(date, 1); // 当前时分秒
+        var nowTime = util.formatTimeNumber(nowDate); // 时分秒转成时间戳
+        this.setData({
+          isCanPay: false
+          // isCanPay: true // 测试时先跳过下单时间校验
+        })
+        for (var i = 0; i < data.length; i++) {
+          data[i].beginTimeNumber = data[i].beginTime ? util.formatTimeNumber(data[i].beginTime) : 0;
+          data[i].endTimeNumber = data[i].endTime ? util.formatTimeNumber(data[i].endTime) : 0;
+          // 判断当前时间是否在可下单支付的时间段里面
+          if (nowTime > data[i].beginTimeNumber && nowTime < data[i].endTimeNumber) {
+            this.setData({
+              isCanPay: true
+            })
+            break
+          }
+        }
+        if (!this.data.isCanPay) {
+          wx.showToast({
+            title: '当前时间不开放下单支付',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        this.getPayParams(orderData);
+      })
+      .catch((error) => {
+        console.log('获取可支付下单的时间段失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '获取可支付下单的时间段请求失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+  // 获取支付参数
+  getPayParams: function (data) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.login({
+      success: (res) => {
+        console.log('微信登陆成功', res)
+        if (res.code) {
+          var params = {
+            money: data.totalSum, 
+            orderNum: data.orderNo,
+            code: res.code,
+            userId: getApp().globalData.userInfo.id
+          }
+          shopApi.payParams(params)
+            .then((res) => {
+              console.log('获取支付参数成功', res);
+              wx.hideLoading();
+              if (res.data && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
+                this.payMoney(res.data)
+              } else {
+                wx.showToast({
+                  title: '支付参数不全，无法进行微信支付',
+                  icon: 'none',
+                  duration: 2000
+                })
+                this.getData();
+              }
+            })
+            .catch((error) => {
+              console.log('获取支付参数失败', error);
+              wx.hideLoading();
+              wx.showToast({
+                title: error.message ? error.message : '获取支付参数失败，无法进行微信支付',
+                icon: 'none',
+                duration: 2000
+              })
+              this.getData();
+            })
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: '微信登录出错，无法进行微信支付',
+            icon: 'none'
+          });
+          this.getData();
+        }
+      },
+      fail: (res) => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '微信登录出错，无法进行微信支付',
+          icon: 'none'
+        });
+        this.getData();
+      }
+    });
+  },
+  // 微信支付
+  payMoney: function (data) {
+    let _self = this;
+    wx.requestPayment({
+      'timeStamp': data.timeStamp,
+      'nonceStr': data.nonceStr,
+      'package': data.package,
+      'signType': 'MD5',
+      'paySign': data.paySign,
+      success: res => {
+        console.log('支付成功', res)
+        wx.showToast({
+          title: '支付成功',
+          icon: 'success',
+          duration: 1000
+        })
+        setTimeout(() => {
+          _self.getData();
+        }, 1000);
+      },
+      fail: res => {
+        // 用户取消支付/支付失败
+        console.log('支付失败', res)
+        wx.showToast({
+          title: res.errMsg ? res.errMsg : '支付失败',
+          icon: 'none',
+          duration: 1000
+        })
+        _self.getData();
+      }
+    })
+  },
 })
