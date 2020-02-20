@@ -31,7 +31,7 @@
         <view class="image-wrap">
           <image src="{{classItem.imagepath ? classItem.imagepath : imgPlaceholder}}" class="image"></image>
         </view>
-        <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'gray3' : 'gray9'}}">{{classItem.className}}</view>
+        <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'text-black' : 'gray9'}}">{{classItem.className}}</view>
       </view>
     </block>
   </view>
@@ -49,10 +49,10 @@
              wx:for-index="smallClassIndex"
              wx:key="smallClassIndex">
         <view
-          class="smallClassItem {{curSmallClass.id == smallClassItem.id ? 'cur' : ''}}"
+          class="smallClassItem text-overflow text-center {{curSmallClass.id == smallClassItem.id ? 'cur gray3' : 'gray6'}}"
           data-item="{{smallClassItem}}"
           bindtap="handleChangeSmallClass">
-          <view class="text-overflow text-center text-black">{{smallClassItem.smallClassName}}</view>
+          {{smallClassItem.smallClassName}}
         </view>
       </block>
     </scroll-view>
@@ -63,7 +63,7 @@
         wx:for-item="goodsItem"
         wx:for-index="goodsIndex"
         wx:key="goodsIndex">
-        <view class="goodsItem" wx:for="{{goodsItem.specpricelst}}" wx:for-item="specItem" wx:for-index="specIndex" wx:key="specIndex">
+        <view class="goodsItem">
           <view class="image-wrap">
             <image
               src="{{goodsItem.imagepath ? goodsItem.imagepath : imgPlaceholder}}"
@@ -72,16 +72,16 @@
           <view class="product-detail-wrap column ju-b">
             <view>
               <view class="title gray3 text-overflow f16">{{goodsItem.name}}</view>
-              <text class="label f10 gray6 text-overflow" wx:if="{{specItem.spec.specName}}">{{specItem.spec.specName}}</text>
+              <text class="label f10 gray6 text-overflow" wx:if="{{goodsItem.spec.specName}}">{{goodsItem.spec.specName}}</text>
             </view>
             <view class="price-wrap">
               <text class="price f12">¥</text>
-              <text class="price f16">{{specItem.price}}</text>
-              <text class="unit f12">/ {{goodsItem.allocated.name ? goodsItem.allocated.name : ''}}</text>
+              <text class="price f16">{{goodsItem.price}}</text>
+              <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
             </view>
           </view>
           <view class="icon-wrap direction-center">
-            <icon type="{{specItem.isSelect ? 'success_circle' : 'circle'}}" color="{{specItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckSpecItem" data-index="{{goodsIndex}}" data-specindex="{{specIndex}}" data-check-value="{{specItem.isSelect ? false : true}}"/>
+            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" catchtap="bindCheckSpecItem" data-index="{{goodsIndex}}"  data-check-value="{{goodsItem.isSelect ? false : true}}"/>
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>

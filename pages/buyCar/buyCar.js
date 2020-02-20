@@ -91,7 +91,7 @@ Page({
         console.log('获取购物车店铺数据成功', res);
         wx.hideLoading();
         this.setData({
-          buyList: res.data,
+          buyList: res.data ? res.data : [],
           isLoading: false
         })
       })

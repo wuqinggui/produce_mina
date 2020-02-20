@@ -80,7 +80,7 @@ Page({
   // 获取数据
   getData: function () {
     // 判断是否补单
-    if (getApp().globalData.submitCarData.shopid && getApp().globalData.supplyOrderData.shopid &&  getApp().globalData.submitCarData.shopid == getApp().globalData.supplyOrderData.shopid) {
+    if (getApp().globalData.submitCarData.shopId && getApp().globalData.supplyOrderData.shopId &&  getApp().globalData.submitCarData.shopId == getApp().globalData.supplyOrderData.shopId) {
       this.setData({
         submitCarData: getApp().globalData.submitCarData,
         supplyOrderData: getApp().globalData.supplyOrderData,
@@ -88,6 +88,7 @@ Page({
         isSupplyOrder: true
       })
     } else {
+      getApp().globalData.supplyOrderData = {}; // 清空补单信息
       this.setData({
         submitCarData: getApp().globalData.submitCarData,
         addresseeData: getApp().globalData.addresseeData,
@@ -124,7 +125,7 @@ Page({
     var data = this.data.submitCarData;
     for (var j = 0; j < data.lstSubmit.length; j++) {
         // 选中的加上价格, 数量转整数，价格转浮点数类型
-        totalPrice = totalPrice + parseInt(data.lstSubmit[j].number) * parseFloat(data.lstSubmit[j].specprice.price);
+        totalPrice = totalPrice + parseInt(data.lstSubmit[j].number) * parseFloat(data.lstSubmit[j].commodity.price);
     }
     totalPrice = totalPrice.toFixed(2);
     this.setData({
@@ -147,7 +148,7 @@ Page({
     var params = {
       cartId: this.data.submitCarData.id,
       addressId: this.data.addresseeData.id,
-      shopid: this.data.submitCarData.shopid,
+      shopId: this.data.submitCarData.shopId,
       userId: getApp().globalData.userInfo.id
     }
     shopApi.addOrder(params)
@@ -167,7 +168,6 @@ Page({
           wx.redirectTo({
             url: '/pages/orderDetail/orderDetail?orderId=' + res.data.id
           })
-          
         } else {
           wx.showToast({
             title: '缺少返回订单信息',

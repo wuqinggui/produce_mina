@@ -82,10 +82,9 @@ Page({
     wx.showLoading({
       title: '加载中'
     });
-    var userId = getApp().globalData.userInfo.id;
     var params = {
-      userId: userId,
-      shopid: this.data.shopId
+      userId: getApp().globalData.userInfo.id,
+      shopId: this.data.shopId
     }
     shopApi.getCar(params)
       .then((res) => {
@@ -193,8 +192,7 @@ Page({
     var params = {
       shopCommoditDto: [
         {
-          id: item.commodity.id,
-          spec: item.spec,
+          id: item.commodityId,
           number: newNum
         }
       ],
@@ -267,7 +265,7 @@ Page({
       for (var j = 0; j < data[i].lst.length; j++) {
         if (data[i].lst[j].isSelect) {
           // 选中的加上价格, 数量转整数，价格转浮点数类型
-          num = num + parseInt(data[i].lst[j].number) * parseFloat(data[i].lst[j].specprice.price);
+          num = num + parseInt(data[i].lst[j].number) * parseFloat(data[i].lst[j].commodity.price);
         }
       }
     }
@@ -290,17 +288,15 @@ Page({
       title: '加载中'
     });
     var item = e.currentTarget.dataset.item;
-    var userId = getApp().globalData.userInfo.id;
     var shopCommoditDto = [
       {
-        id: item.commodity.id,
-        spec: item.spec
+        id: item.commodityId
       }
     ];
     var params = {
       shopCommoditDto: shopCommoditDto,
       shopId: item.shopId,
-      userId: userId
+      userId: getApp().globalData.userInfo.id
     }
     shopApi.deleteCar(params)
       .then((res) => {

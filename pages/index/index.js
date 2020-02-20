@@ -107,8 +107,8 @@ Page({
         console.log('获取地区数据成功', res);
         wx.hideLoading();
         this.setData({
-          regionList: res.data,
-          curRegion: res.data.length > 0 ? res.data[0] : {},
+          regionList: res.data ? res.data : [],
+          curRegion: res.data && res.data.length > 0 ? res.data[0] : {},
           curRegionIndex: 0
         })
         var regionId = getApp().globalData.userInfo.regionId ? getApp().globalData.userInfo.regionId : '';
@@ -158,7 +158,7 @@ Page({
         console.log('查询客户类型成功', res);
         wx.hideLoading();
         this.setData({
-          customerTypeId: res.data && res.data.customerType ? res.data.customerType : ''
+          customerTypeId: res.data && res.data.customerTypeId ? res.data.customerTypeId : ''
         })
         this.getShopClass(); // 获取大分类
       })
@@ -184,7 +184,7 @@ Page({
         wx.hideLoading();
         this.setData({
           classList: res.data ? res.data : [],
-          curClass: res.data.length > 0 ? res.data[0] : {}
+          curClass: res.data && res.data.length > 0 ? res.data[0] : {}
         })
         this.getShopSmallClass(); // 查询小分类
       })
@@ -212,8 +212,8 @@ Page({
         console.log('获取小分类数据成功', res);
         wx.hideLoading();
         this.setData({
-          smallClassList: res.data,
-          curSmallClass: res.data.length > 0 ? res.data[0] : {}
+          smallClassList: res.data ? res.data : [],
+          curSmallClass: res.data && res.data.length > 0 ? res.data[0] : {}
         })
         this.getCommodity();
       })
@@ -235,7 +235,8 @@ Page({
     })
     var params = {
       regionId: this.data.curRegion.id ? this.data.curRegion.id : '',
-      shopsmallclassid: this.data.curSmallClass.id? this.data.curSmallClass.id : '',
+      shopclassId: this.data.curClass.id ? this.data.curClass.id : '',
+      shopsmallclassId: this.data.curSmallClass.id ? this.data.curSmallClass.id : '',
       name: this.data.name,
       customerTypeId: this.data.customerTypeId
     }
@@ -245,9 +246,7 @@ Page({
         wx.hideLoading();
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
-          for (var j = 0; j < data[i].specpricelst.length; j++) {
-            data[i].specpricelst[j].isSelect = false;
-          }
+          data[i].isSelect = false;
         }
         this.setData({
           goodsList: data,
@@ -324,15 +323,13 @@ Page({
   // 切换菜品选中状态
   bindCheckSpecItem: function (e) {
     console.log(e.currentTarget.dataset)
-    let { index, specindex, checkValue } = e.currentTarget.dataset;
+    let { index, checkValue } = e.currentTarget.dataset;
     let data = this.data.goodsList;
-    data[index].specpricelst[specindex].isSelect = checkValue;
+    data[index].isSelect = checkValue;
     let buyCarGoodtypeNum = 0;
     for (var i = 0; i < data.length; i++) {
-      for (var j = 0; j < data[i].specpricelst.length; j++) {
-        if (data[i].specpricelst[j].isSelect) {
-          buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
-        }
+      if (data[i].isSelect) {
+        buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
       }
     }
     this.setData({
@@ -390,8 +387,8 @@ Page({
         console.log('获取店铺成功', res);
         wx.hideLoading();
         this.setData({
-          shopList: res.data.list ? res.data.list : [],
-          curShop: res.data.list && res.data.list.length > 0 ? res.data.list[0] : {}
+          shopList: res.data && res.data.list ? res.data.list : [],
+          curShop: res.data && res.data.list && res.data.list.length > 0 ? res.data.list[0] : {}
         })
         this.showShopPop();
       })
@@ -459,15 +456,12 @@ Page({
     var shopCommoditDto = [];
     var data = this.data.goodsList;
     for (var i = 0; i < data.length; i++) {
-      for (var j = 0; j < data[i].specpricelst.length; j++) {
-        if (data[i].specpricelst[j].isSelect) {
-          var item = {
-            id: data[i].id,
-            spec: data[i].specpricelst[j].spec.id,
-            number: 1
-          }
-          shopCommoditDto.push(item)
+      if (data[i].isSelect) {
+        var item = {
+          id: data[i].commodityId,
+          number: 1
         }
+        shopCommoditDto.push(item)
       }
     }
     var params = {
@@ -487,9 +481,7 @@ Page({
       })
       var data = this.data.goodsList;
       for (var a = 0; a < data.length; a++) {
-        for (var b = 0; b < data[a].specpricelst.length; b++) {
-          data[a].specpricelst[b].isSelect = false;
-        }
+        data[a].isSelect = false;
       }
       this.setData({
         goodsList: data,

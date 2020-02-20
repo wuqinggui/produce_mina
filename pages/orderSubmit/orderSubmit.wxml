@@ -30,12 +30,12 @@
               <!-- 商品标题 -->
               <view class="verticle-center">
                 <text class="carts-title text-overflow">{{item.commodity.name}}</text>
-                <text class="carts-type ml10 text-overflow">{{item.specprice.spec.specName}}</text>
+                <text class="carts-type ml10 text-overflow">{{item.commodity.specs.specName}}</text>
               </view>
               <view class="carts-price row ju-b al-c">
                 <view class="priceinfo">
                   <text class="symbol f12">￥</text>
-                  <text class="price f16">{{item.specprice.price}}</text>
+                  <text class="price f16">{{item.commodity.price}}</text>
                   <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
                 </view>
                 <view class="num f15">× {{item.number}}</view>
