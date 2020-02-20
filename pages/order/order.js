@@ -9,7 +9,7 @@ Page({
     // "orderPayState": "string",支付状态 1-未支付，2-已支付
     // "orderState": "string",订单状态 1-正常 2-取消 3-退货/换货 4-已完成
     // 订单状态为1（正常），而且支付状态为1（未支付），而且物流状态为2（待收货）的才能显示“立即支付”按钮进行支付
-    // 订单状态为1（正常），而且物流状态为1（待发货）的才能显示“补单”按钮进行补单
+    // 订单状态为1（正常），而且支付状态为1（未支付），而且物流状态为1（待发货）的才能显示“补单”按钮进行补单
    */
   data: {
     curNavIitem: {
@@ -327,7 +327,7 @@ Page({
             .then((res) => {
               console.log('获取支付参数成功', res);
               wx.hideLoading();
-              if (res.data && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
+              if (res.data && res.data.orderId && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
                 this.payMoney(res.data)
               } else {
                 wx.showToast({
@@ -335,7 +335,6 @@ Page({
                   icon: 'none',
                   duration: 2000
                 })
-                this.getData();
               }
             })
             .catch((error) => {
@@ -346,7 +345,6 @@ Page({
                 icon: 'none',
                 duration: 2000
               })
-              this.getData();
             })
         } else {
           wx.hideLoading();
@@ -354,7 +352,6 @@ Page({
             title: '微信登录出错，无法进行微信支付',
             icon: 'none'
           });
-          this.getData();
         }
       },
       fail: (res) => {
@@ -363,7 +360,6 @@ Page({
           title: '微信登录出错，无法进行微信支付',
           icon: 'none'
         });
-        this.getData();
       }
     });
   },
@@ -384,7 +380,10 @@ Page({
           duration: 1000
         })
         setTimeout(() => {
-          _self.getData();
+          // 跳转支付成功页面
+          wx.navigateTo({
+            url: '/pages/paySuccess/paySuccess?orderId=' + data.orderId
+          })
         }, 1000);
       },
       fail: res => {
@@ -395,7 +394,6 @@ Page({
           icon: 'none',
           duration: 1000
         })
-        _self.getData();
       }
     })
   },

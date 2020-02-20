@@ -247,7 +247,7 @@ Page({
             .then((res) => {
               console.log('获取支付参数成功', res);
               wx.hideLoading();
-              if (res.data && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
+              if (res.data && res.data.orderId && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
                 this.payMoney(res.data)
               } else {
                 wx.showToast({
@@ -255,7 +255,6 @@ Page({
                   icon: 'none',
                   duration: 2000
                 })
-                this.getData();
               }
             })
             .catch((error) => {
@@ -266,7 +265,6 @@ Page({
                 icon: 'none',
                 duration: 2000
               })
-              this.getData();
             })
         } else {
           wx.hideLoading();
@@ -274,7 +272,6 @@ Page({
             title: '微信登录出错，无法进行微信支付',
             icon: 'none'
           });
-          this.getData();
         }
       },
       fail: (res) => {
@@ -283,7 +280,6 @@ Page({
           title: '微信登录出错，无法进行微信支付',
           icon: 'none'
         });
-        this.getData();
       }
     });
   },
@@ -304,7 +300,10 @@ Page({
           duration: 1000
         })
         setTimeout(() => {
-          _self.getData();
+          // 跳转支付成功页面
+          wx.navigateTo({
+            url: '/pages/paySuccess/paySuccess?orderId=' + data.orderId
+          })
         }, 1000);
       },
       fail: res => {
@@ -315,7 +314,6 @@ Page({
           icon: 'none',
           duration: 1000
         })
-        _self.getData();
       }
     })
   },

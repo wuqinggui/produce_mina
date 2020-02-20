@@ -73,9 +73,8 @@
     <view class="sum pl15 pr15">
       <text class="mr5">合计: </text>
       <text class="mr10 total">￥{{totalPrice}}</text>
-      <button class="button" hover-class="click-active" bindtap="supplyOrder" wx:if="{{isSupplyOrder && isCanPay}}">确认补单</button>
-      <button class="button" hover-class="click-active" bindtap="sureSubmitOrder" wx:if="{{!isSupplyOrder && isCanPay}}">确认下单</button>
-      <button class="button nopay" hover-class="click-active" wx:if="{{!isCanPay}}">当前时间不开放下单支付</button>
+      <button class="button" hover-class="click-active" bindtap="supplyOrder" wx:if="{{isSupplyOrder}}">确认补单</button>
+      <button class="button" hover-class="click-active" bindtap="sureSubmitOrder" wx:if="{{!isSupplyOrder}}">确认下单</button>
     </view>
   </view>
   <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
