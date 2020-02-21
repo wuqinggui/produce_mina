@@ -6,6 +6,7 @@ Page({
    */
   data: {
     orderId: '', // 支付成功的订单id
+    isBack: '', // 判断点击“查看订单”是进入订单详情页面还是返回订单详情页面
   },
 
   /**
@@ -14,7 +15,8 @@ Page({
   onLoad: function (options) {
     console.log('支付成功options', options)
     this.setData({
-      orderId: options.orderId
+      orderId: options.orderId,
+      isBack: options.isBack ? options.isBack : ''
     })
   },
 
@@ -76,9 +78,15 @@ Page({
 
   // 查看订单详情
   goOrderDetail: function () {
-    wx.navigateTo({
-      url: '/pages/orderDetail/orderDetail?orderId=' + this.data.orderId
-    })
+    if (this.data.isBack && this.data.isBack == 1) {
+      // 返回订单详情页面
+      wx.navigateBack();
+    } else {
+      // 跳转订单详情页面
+      wx.navigateTo({
+        url: '/pages/orderDetail/orderDetail?orderId=' + this.data.orderId
+      })
+    }
   },
 
   // 回到商城首页

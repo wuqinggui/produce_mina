@@ -15,7 +15,7 @@
     <view class="carts-name pt10 pb10 mt5">
       <view class="shop-name row verticle-center">
         <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
-        <text class="flex-1 text-overflow">{{orderData.shoppingcart.shop.merchantName ? orderData.shoppingcart.shop.merchantName : '店铺名称'}}</text>
+        <text class="flex-1 text-overflow">{{orderData.shop.merchantName ? orderData.shop.merchantName : '店铺名称'}}</text>
         <!-- <view class="cell-status" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 1 && orderData.logisticsStatus == 2}}">待付款</view> -->
         <view class="cell-status" wx:if="{{orderData.orderState == 1 && orderData.logisticsStatus == 1}}">待发货</view>
         <view class="cell-status" wx:if="{{orderData.orderPayState == 1 && orderData.orderState == 1 && orderData.logisticsStatus == 2}}">待收货</view>
@@ -26,7 +26,7 @@
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <block>
-      <view wx:for="{{orderData.shoppingcart.lst}}" class="carts-container" wx:key="index">
+      <view wx:for="{{orderData.orderCommditys}}" class="carts-container" wx:key="index">
         <view class="carts-item">
           <view>
             <!-- 缩略图 -->
@@ -36,13 +36,13 @@
             <!-- 商品标题 -->
             <view class="verticle-center">
               <text class="carts-title text-overflow">{{item.commodity.name}}</text>
-              <text class="carts-type ml10 text-overflow">{{item.specprice.spec.specName}}</text>
+              <text class="carts-type ml10 text-overflow">{{item.commodity.specs.specName}}</text>
             </view>
             <view class="carts-price row ju-b al-c">
               <view class="priceinfo">
                 <text class="symbol f12">￥</text>
-                <text class="price f16">{{item.specprice.price}}</text>
-                <text class="unit f12">/ {{item.commodity.unitMeasurement.name ? item.commodity.unitMeasurement.name : ''}}</text>
+                <text class="price f16">{{item.commodity.price}}</text>
+                <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
               </view>
               <view class="num f15">× {{item.number}}</view>
             </view>
@@ -59,7 +59,7 @@
     <view class="summation">
       <text class="f14">合计</text>
       <view>
-        <text class="suminfo f12">共计{{orderData.shoppingcart.lst.length ? orderData.shoppingcart.lst.length : '0'}}件商品</text>
+        <text class="suminfo f12">共计{{orderData.orderCommditys.length ? orderData.orderCommditys.length : '0'}}件商品</text>
         <text class="total ml10 f14">￥{{orderData.totalSum}}</text>
       </view>
     </view>

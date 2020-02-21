@@ -146,8 +146,9 @@ Page({
       title: '加载中',
     })
     var params = {
-      cartId: this.data.submitCarData.id,
       addressId: this.data.addresseeData.id,
+      regionId: this.data.submitCarData.regionId,
+      cartId: this.data.submitCarData.id,
       shopId: this.data.submitCarData.shopId,
       userId: getApp().globalData.userInfo.id
     }

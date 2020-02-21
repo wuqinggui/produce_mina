@@ -309,7 +309,7 @@ Page({
       })
   },
   // 获取支付参数
-  getPayParams: function (data) {
+  getPayParams: function (orderData) {
     wx.showLoading({
       title: '加载中',
     })
@@ -318,8 +318,9 @@ Page({
         console.log('微信登陆成功', res)
         if (res.code) {
           var params = {
-            money: data.totalSum, 
-            orderNum: data.orderNo,
+            money: orderData.totalSum, 
+            // money: '0.01', // 测试使用
+            orderNum: orderData.orderNo,
             code: res.code,
             userId: getApp().globalData.userInfo.id
           }
@@ -327,8 +328,8 @@ Page({
             .then((res) => {
               console.log('获取支付参数成功', res);
               wx.hideLoading();
-              if (res.data && res.data.orderId && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
-                this.payMoney(res.data)
+              if (res.data && res.data.timeStamp && res.data.nonceStr && res.data.package && res.data.paySign) {
+                this.payMoney(res.data, orderData.id)
               } else {
                 wx.showToast({
                   title: '支付参数不全，无法进行微信支付',
@@ -364,7 +365,7 @@ Page({
     });
   },
   // 微信支付
-  payMoney: function (data) {
+  payMoney: function (data, orderId) {
     let _self = this;
     wx.requestPayment({
       'timeStamp': data.timeStamp,
@@ -382,7 +383,7 @@ Page({
         setTimeout(() => {
           // 跳转支付成功页面
           wx.navigateTo({
-            url: '/pages/paySuccess/paySuccess?orderId=' + data.orderId
+            url: '/pages/paySuccess/paySuccess?orderId=' + orderId
           })
         }, 1000);
       },
