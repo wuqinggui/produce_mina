@@ -1,7 +1,7 @@
 <!--pages/staffManage/staffManage.wxml-->
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2 }}">
-    <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
+    <!-- <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
       <text>店铺：</text>
       <picker bindchange="bindPickerChange2" value="{{shopList[index]}}" range="{{shopList}}" range-key="merchantName">
         <view class="picker flex">
@@ -10,7 +10,7 @@
         </view>
       </picker>
       <view class="half-px-border half-px-border-bottom"></view>
-    </view>
+    </view> -->
     <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
       <text>工种：</text>
       <picker bindchange="bindPickerChange3" value="{{userRoles[index]}}" range="{{userRoles}}" range-key="name">
@@ -63,12 +63,12 @@
         </view>
         <view class="info">
           <view class="name">{{item.nickname}}
-            <text class="remark ml5">{{item.roleName ? '('+ item.roleName +')' : ''}}</text>
+            <text class="remark ml5">{{item.userRole ? '('+ item.userRoleName +')' : ''}}</text>
           </view>
           <view class="people gray9">电话：
             <text>{{item.phone}}</text> </view>
-          <view class="people gray9">店铺名称：
-            <text>{{item.shop.merchantName}}</text> </view>
+          <!-- <view class="people gray9">店铺名称：
+            <text>{{item.shop.merchantName}}</text> </view> -->
         </view>
       </view>
       <view class="icon">

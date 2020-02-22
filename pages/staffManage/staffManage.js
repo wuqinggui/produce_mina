@@ -93,8 +93,8 @@ Page({
   bindPickerChange3: function(e) {
     var userRoles = this.data.userRoles;
     var info = this.data.info;
-    info.userRole = userRoles[e.detail.value].id;
     info.userRoleName = userRoles[e.detail.value].name;
+    info.userRole = userRoles[e.detail.value].id;
     this.setData({
       info: info
     })
@@ -103,9 +103,7 @@ Page({
   tapDialogButton(e) {
     let data = this.data;
     let toastTxt = '';
-    if (!data.info.shopId) {
-      toastTxt = '请输入店铺';
-    } else if (!data.info.userRole) {
+    if (!data.info.userRole) {
       toastTxt = '请输入工种';
     } else if (!data.info.nickname) {
       toastTxt = '请输入员工名';
@@ -125,9 +123,13 @@ Page({
         duration: 2000
       })
     }
+    data.info.userType = wx.getStorageSync('sj_userInfo').userType; // 用户类型
+    data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; //地区ID
+    data.info.shopId = wx.getStorageSync('shopId');
     data.info.userId = data.userId;
     data.info.password = MD5.hexMD5(data.info.password)
     let params = data.info;
+    // 新增员工
     if (data.btnStatus == 1) {
       shopApi.addUser(params).then((res) => {
         wx.showToast({
@@ -144,7 +146,7 @@ Page({
           duration: 2000
         })
       })
-    } else {
+    } else {// 修改员工
       shopApi.updateUser(params).then((res) => {
         wx.showToast({
           title: '修改成功',
@@ -179,6 +181,7 @@ Page({
       password: '',
       shopId: '',
       userRole: '',
+      userRoleName: '',
       phone: '',
       nickname: ''
     };
@@ -192,11 +195,6 @@ Page({
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let list = this.data.list;
-    let userRoles = this.data.userRoles;
-    let userRole = userRoles.find((item) => {
-      return item.id == list[index].userRole
-    })
-    list[index].userRoleName = userRole && userRole.name;
     let params = {
       shopId: list[index].shopId
     };
@@ -204,7 +202,6 @@ Page({
       let shopInfo = res.data.find((item) => {
         return list[index].shopId == item.id;
       })
-      list[index].merchantName = shopInfo.merchantName;
       this.setData({
         info: list[index],
         btnStatus: 2,
@@ -293,42 +290,40 @@ Page({
     })
     this.getAddress();
     this.getUserList();
-    this.getShopList();
+    // this.getShopList();
   },
   // 获取员工列表
-  getUserList: function () {
+  getUserList: function() {
     let params = {
       userId: this.data.userId
-    }; 
+    };
     let list = [];
+    let _this = this;
     // 查询该登录用户下的店铺
     shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
-      res.data.forEach((shopItem) => {
-        let shopParams = {
-          shopId: shopItem.id
-        };
-        // 查询每个店铺下的员工
-        shopApi.searchUser(shopParams).then((userRes) => {
-          console.log(userRes);
-          userRes.data.forEach((item) => {
-            if (item.userRole == 1) {
-              item.roleName = '下单人员';
-            } else if (item.userRole == 2) {
-              item.roleName = '收货人员';
-            } else if (item.userRole == 3) {
-              item.roleName = '付款人员';
-            } else if (item.userRole == 4) {
-              item.roleName = '管理人员';
-            }
-            list.push(item);
-          })
-          this.setData({
-            showNone: true,
-            list: list
+      if (res.data.length) {
+        res.data.forEach((shopItem) => {
+          let shopParams = {
+            shopId: shopItem.id
+          };
+          // 查询每个店铺下的员工
+          shopApi.searchUser(shopParams).then((userRes) => {
+            userRes.data.forEach((item) => {
+              list.push(item);
+            })
+            _this.setData({
+              showNone: true,
+              list: list
+            })
           })
         })
-      })
+      } else {
+        _this.setData({
+          showNone: true,
+          list: list
+        })
+      }
     }).catch((error) => {
       console.log(error);
       wx.showToast({

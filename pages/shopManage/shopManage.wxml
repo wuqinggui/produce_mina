@@ -6,7 +6,7 @@
       <input class="weui-input" bindinput="bindAndSet" data-key="merchantName" value="{{info.merchantName}}" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo verticle-center pb10 pt10 flex ju-c" wx:if="{{shopId}}">
+    <!-- <view class="addinfo verticle-center pb10 pt10 flex ju-c" wx:if="{{shopId}}">
       <text>上级店铺：</text>
       <picker bindchange="changeShop" value="{{superiorShop[index]}}" range="{{superiorShop}}" range-key="merchantName">
         <view class="picker flex">
@@ -15,12 +15,12 @@
         </view>
       </picker>
       <view class="half-px-border half-px-border-bottom"></view>
-    </view>
+    </view> -->
     <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>负责人：</text>
       <picker bindchange="changePerson" value="{{userList[index]}}" range="{{userList}}" range-key="nickname">
         <view class="picker flex">
-          <input class="weui-input" disabled="true" value="{{info.nmUser.nickname}}" />
+          <input class="weui-input" disabled="true" value="{{info.nickname}}" />
           <view class="common-arrow right arrow"></view>
         </view>
       </picker>

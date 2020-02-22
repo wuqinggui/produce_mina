@@ -1,5 +1,6 @@
 // pages/my/my.js
 var userApi = require('../../http/userApi.js').default;
+var shopApi = require('../../http/shopApi.js').default;
 var util = require('../../utils/util.js');
 Page({
 
@@ -7,6 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    shopId: '',
+    userId: '',
     userInfo: {},
     list: [
       {
@@ -17,12 +20,12 @@ Page({
       {
         text: '员工管理',
         url: '/pages/staffManage/staffManage',
-        num: 0
+        num: 1
       }, 
       {
         text: '商家入驻申请',
         url: '/pages/applySettled/applySettled',
-        num: 0
+        num: 2
       }, 
       // {
       //   text: '关于我们',
@@ -39,7 +42,7 @@ Page({
       {
         text: '设置',
         url: '/pages/set/set',
-        num: 0
+        num: 3
       }
     ]
   },
@@ -63,6 +66,9 @@ Page({
   onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      this.setData({
+        userId: sj_userId
+      });
       this.getData();
     } else {
       wx.navigateTo({
@@ -105,29 +111,63 @@ Page({
   onShareAppMessage: function () {
 
   },
-
+// 获取店铺id
+getShopId: function() {
+  let params = {
+    userId: this.data.userId
+  }
+  shopApi.findShopByUserId(params).then((res) => {
+    wx.setStorageSync('shopId',res.data.id);
+    this.setData({
+      shopId: res.data.id
+    });
+  }).catch((err) => {
+    wx.showToast({
+      title: err.message ? err.message : '获取数据失败',
+      icon: 'none'
+    });
+  })
+},
   // 获取用户信息
   getData: function () {
     this.setData({
       userInfo: getApp().globalData.userInfo
     })
-    console.log('用户信息', this.data.userInfo)
+    this.getShopId();
+    // console.log('用户信息', this.data.userInfo)
   },
 
   // 页面跳转
   navigateTo: function(e) {
-    let { url,text  } = e.currentTarget.dataset;
-    if (url) {
+    let { url, text, num} = e.currentTarget.dataset;
+    if(num == 0 || num == 1) {
+      if(this.data.shopId) {
+        wx.navigateTo({
+          url: url,
+        })
+      } else {
+        wx.showToast({
+          title: '暂无店铺,请先申请商家入驻',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    } else {
       wx.navigateTo({
         url: url,
       })
-    } else {
-      wx.showToast({
-        title: '暂无设计' + text + '页面',
-        icon: 'none',
-        duration: 2000
-      })
     }
+    // if (url) {
+    //   wx.navigateTo({
+    //     url: url,
+    //   })
+    // } else {
+    //   wx.showToast({
+    //     title: '暂无设计' + text + '页面',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // }
   },
   
   // 弹框式授权用户信息

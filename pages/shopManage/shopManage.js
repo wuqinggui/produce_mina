@@ -29,12 +29,11 @@ Page({
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let info = this.data.list[index];
-    console.log(info);
-    let shopId = this.data.shopId;
+    info.nickname = info.nmUser.nickname;
     this.getCurrShopUser(info.id);
-    if (shopId) {
-      this.getSuperiorShop(shopId);
-    }
+    // if (shopId) { //获取上级店铺
+    //   this.getSuperiorShop(shopId);
+    // }
     this.setData({
       btnStatus: 2,
       shopIndex: index,
@@ -48,9 +47,7 @@ Page({
     let toastTxt = '';
     if (!data.info.merchantName) {
       toastTxt = '请输入店铺名';
-    } else if (data.shopId && !data.info.shopSuperior) {
-      toastTxt = '请选择上级店铺';
-    } else if (!data.info.personName) {
+    } else if (!data.info.personId) {
       toastTxt = '请选择负责人';
     } else if (!data.info.phone) {
       toastTxt = '请输入联系电话';
@@ -68,6 +65,7 @@ Page({
     }
     data.info.userId = this.data.userId;
     data.info.type = 0; // 店铺类型 0-店铺 1-供应商
+    data.info.shopSuperior = wx.getStorageSync('shopId');
     data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; // 默认当前用户地区
     // 修改
     if (data.btnStatus == 2) {
@@ -91,7 +89,7 @@ Page({
       shopApi.addShop(data.info).then((res) => {
         wx.showToast({
           title: '添加成功',
-          icon: 'success',
+          icon: 'none',
           duration: 2000
         })
         this.getData();
@@ -135,10 +133,10 @@ Page({
     })
   },
   addShop: function() {
-    let shopId = wx.getStorageSync('sj_userInfo').shopId || '';
+    let shopId = this.data.shopId;
     let info = {
       merchantName: '',
-      personName: '',
+      personId: '',
       phone: '',
       desction: ''
     };
@@ -200,7 +198,7 @@ Page({
    */
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
-    let shopId = wx.getStorageSync('sj_userInfo').shopId;
+    let shopId = wx.getStorageSync('shopId');
     if (sj_userId) {
       wx.showLoading({
         title: '加载中',
@@ -300,9 +298,8 @@ Page({
     let index = e.detail.value;
     let info = this.data.info;
     let userList = this.data.userList;
-    console.log(userList);
-    info.personName = userList[index].id;
-    info.nmUser.nickname = userList[index].nickname;
+    info.personId = userList[index].id;
+    info.nickname = userList[index].nickname;
     this.setData({
       info: info
     });

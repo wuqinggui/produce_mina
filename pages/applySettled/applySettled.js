@@ -352,6 +352,10 @@ Page({
       })
     }
     shopApi.addShop(params).then((res) => {
+      wx.showToast({
+        title: res.data.message ? res.data.message : '上传成功',
+        icon: 'none'
+      })
       this.setData({
         step: 2
       });
