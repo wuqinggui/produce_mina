@@ -125,7 +125,7 @@ image {
 
 .smallClass-list .smallClassItem {
   width: 180rpx;
-  padding: 22rpx 28rpx;
+  padding: 22rpx 24rpx;
   font-size: 26rpx;
   line-height: 32rpx;
   color: #333;
