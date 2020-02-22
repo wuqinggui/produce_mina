@@ -101,6 +101,7 @@ Page({
   getRegionList: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     shopApi.region()
       .then((res) => {
@@ -149,6 +150,7 @@ Page({
   getCustomerType: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
@@ -177,6 +179,7 @@ Page({
   getShopClass: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     shopApi.shopClass()
       .then((res) => {
@@ -203,6 +206,7 @@ Page({
   getShopSmallClass: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       classId: this.data.curClass.id ? this.data.curClass.id : ''
@@ -232,6 +236,7 @@ Page({
   getCommodity: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       regionId: this.data.curRegion.id ? this.data.curRegion.id : '',
@@ -372,6 +377,7 @@ Page({
   getShopList: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     });
     var userId = getApp().globalData.userInfo.id;
     var params = {
@@ -452,6 +458,7 @@ Page({
   sureAddCar: function () {
     wx.showLoading({
       title: '添加中',
+      mask: true
     });
     var shopCommoditDto = [];
     var data = this.data.goodsList;

@@ -101,6 +101,7 @@ Page({
     }
     wx.showLoading({
       title: '登录中',
+      mask: true
     });
     userApi.login({
         userName: this.data.userName,

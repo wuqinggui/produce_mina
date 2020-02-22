@@ -1,6 +1,5 @@
 // pages/order/order.js
 var shopApi = require('../../http/shopApi.js').default;
-var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -51,7 +50,6 @@ Page({
       }
     ],
     orderList: [],
-    isCanPay: false, // 是否可以下单支付
   },
 
   /**
@@ -120,6 +118,7 @@ Page({
   getData: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       userId: getApp().globalData.userInfo.id
@@ -228,6 +227,7 @@ Page({
   editOrder: function (item, state) {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       id: item.id,
@@ -257,61 +257,14 @@ Page({
   payOrder: function (e) {
     console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
-    this.getTime(item);
+    this.getPayParams(item);
   },
 
-  // 获取可支付下单的时间段
-  getTime: function (orderData) {
-    wx.showLoading({
-      title: '加载中',
-    })
-    shopApi.payTime()
-      .then((res) => {
-        console.log('获取可支付下单的时间段成功', res);
-        wx.hideLoading();
-        var data = res.data ? res.data : [];
-        var date =  Date.parse(new Date()); // 当前时间
-        var nowDate = util.formatTime(date, 1); // 当前时分秒
-        var nowTime = util.formatTimeNumber(nowDate); // 时分秒转成时间戳
-        this.setData({
-          isCanPay: false
-          // isCanPay: true // 测试时先跳过下单时间校验
-        })
-        for (var i = 0; i < data.length; i++) {
-          data[i].beginTimeNumber = data[i].beginTime ? util.formatTimeNumber(data[i].beginTime) : 0;
-          data[i].endTimeNumber = data[i].endTime ? util.formatTimeNumber(data[i].endTime) : 0;
-          // 判断当前时间是否在可下单支付的时间段里面
-          if (nowTime > data[i].beginTimeNumber && nowTime < data[i].endTimeNumber) {
-            this.setData({
-              isCanPay: true
-            })
-            break
-          }
-        }
-        if (!this.data.isCanPay) {
-          wx.showToast({
-            title: '当前时间不开放下单支付',
-            icon: 'none',
-            duration: 2000
-          })
-          return
-        }
-        this.getPayParams(orderData);
-      })
-      .catch((error) => {
-        console.log('获取可支付下单的时间段失败', error);
-        wx.hideLoading();
-        wx.showToast({
-          title: error.message ? error.message : '获取可支付下单的时间段请求失败',
-          icon: 'none',
-          duration: 2000
-        })
-      })
-  },
   // 获取支付参数
   getPayParams: function (orderData) {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     wx.login({
       success: (res) => {

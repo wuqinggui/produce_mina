@@ -80,7 +80,8 @@ Page({
   // 获取购物车详情数据
   getData: function () {
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     });
     var params = {
       userId: getApp().globalData.userInfo.id,
@@ -133,7 +134,8 @@ Page({
   // 切换店铺的选中状态
   cnangeShopSelect: function (e) {
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
@@ -180,6 +182,7 @@ Page({
   changeCar: function (item, type) {
     wx.showLoading({
       title: '加载中',
+      mask: true
     });
     var newNum = 0;
     if (type == 1) {
@@ -224,7 +227,8 @@ Page({
   // 切换单个商品选中状态
   bindCheckbox: function(e) {
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
@@ -241,7 +245,8 @@ Page({
   // 切换全选
   bindSelectAll: function() {
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     });
     var selectedAllStatus = !this.data.selectedAllStatus; // 取反
     var data = this.data.carList;
@@ -285,7 +290,8 @@ Page({
       isClick: true
     })
     wx.showLoading({
-      title: '加载中'
+      title: '加载中',
+      mask: true
     });
     var item = e.currentTarget.dataset.item;
     var shopCommoditDto = [

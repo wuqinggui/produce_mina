@@ -1,5 +1,6 @@
 // pages/orderSubmit/orderSubmit.js
 var shopApi = require('../../http/shopApi.js').default;
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -12,6 +13,7 @@ Page({
     submitCarData: {}, // 立即下单的购物车数据
     supplyOrderData: {}, // 补单的订单信息
     isSupplyOrder: false, // 是否补单
+    isCanPay: false, // 是否可以下单/补单
   },
 
   /**
@@ -142,8 +144,12 @@ Page({
       })
       return
     }
+    this.getTime(1);
+  },
+  sureSubmitOrder2: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       addressId: this.data.addresseeData.id,
@@ -187,10 +193,15 @@ Page({
         })
       })
   },
+
   // 补单
   supplyOrder: function () {
+    this.getTime(2);
+  },
+  supplyOrder2: function () {
     wx.showLoading({
       title: '加载中',
+      mask: true
     })
     var params = {
       cartId: this.data.submitCarData.id,
@@ -226,6 +237,60 @@ Page({
         wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '操作失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+
+  // 获取可下单的时间段
+  getTime: function (type) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    shopApi.payTime()
+      .then((res) => {
+        console.log('获取可下单补单的时间段成功', res);
+        wx.hideLoading();
+        var data = res.data ? res.data : [];
+        var date =  Date.parse(new Date()); // 当前时间
+        var nowDate = util.formatTime(date, 1); // 当前时分秒
+        var nowTime = util.formatTimeNumber(nowDate); // 时分秒转成时间戳
+        this.setData({
+          isCanPay: false
+          // isCanPay: true // 测试时先跳过下单时间校验
+        })
+        for (var i = 0; i < data.length; i++) {
+          data[i].beginTimeNumber = data[i].beginTime ? util.formatTimeNumber(data[i].beginTime) : 0;
+          data[i].endTimeNumber = data[i].endTime ? util.formatTimeNumber(data[i].endTime) : 0;
+          // 判断当前时间是否在可下单的时间段里面
+          if (nowTime > data[i].beginTimeNumber && nowTime < data[i].endTimeNumber) {
+            this.setData({
+              isCanPay: true
+            })
+            break
+          }
+        }
+        if (!this.data.isCanPay) {
+          wx.showToast({
+            title: '当前时间暂不开放下单/补单',
+            icon: 'none',
+            duration: 2000
+          })
+          return
+        }
+        if (type == 1) {
+           this.sureSubmitOrder2();
+        } else if (type == 2) {
+          this.supplyOrder2();
+        }
+      })
+      .catch((error) => {
+        console.log('获取可下单补单的时间段失败', error);
+        wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '获取可下单补单的时间段请求失败',
           icon: 'none',
           duration: 2000
         })

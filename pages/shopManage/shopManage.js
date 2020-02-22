@@ -202,6 +202,7 @@ Page({
     if (sj_userId) {
       wx.showLoading({
         title: '加载中',
+        mask: true
       })
       this.setData({
         userId: sj_userId,

@@ -377,6 +377,7 @@ Page({
       success: function(res) {
         wx.showLoading({
           title: '上传中...',
+          mask: true
         })
         var tempFilePaths = res.tempFilePaths
         wx.uploadFile({

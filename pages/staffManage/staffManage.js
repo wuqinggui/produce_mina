@@ -287,6 +287,7 @@ Page({
   getData: function() {
     wx.showLoading({
       title: '加载中...',
+      mask: true
     })
     this.getAddress();
     this.getUserList();
