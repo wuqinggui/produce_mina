@@ -277,8 +277,7 @@ Page({
   },
 
   // 模糊查询
-  searchName: function () {
-    console.log('模糊查询')
+  searchName: function (e) {
     if (this.data.curRegion.id && this.data.curSmallClass.id) {
       this.getCommodity();
     }

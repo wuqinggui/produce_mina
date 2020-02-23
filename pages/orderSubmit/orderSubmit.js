@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    freightPrice: '0.00', // 运费
+    freightPrice: 0, // 运费
     totalPrice: 0, // 合计价格
     addresseeData: {}, // 收件人信息
     submitCarData: {}, // 立即下单的购物车数据

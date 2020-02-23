@@ -49,7 +49,7 @@
     <view class="other mt10 mb100">
       <view class="freight">
         <text>运费</text>
-        <text class="type">{{freightPrice ? freightPrice : '免运费'}}</text>
+        <text class="type">{{freightPrice ? freightPrice : '0'}}元</text>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
       <view class="summation">

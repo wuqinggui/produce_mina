@@ -31,7 +31,7 @@
                 <!-- 减号 -->
                 <text class="iconfont icon-jianhao {{item.number == 1 ? '' : 'normal'}}" data-item="{{item}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
-                <input type="number" value="{{item.number}}" disabled="{{true}}"/>
+                <input type="number" value="{{item.number}}" bindblur="changeNumber"/>
                 <!-- 加号 -->
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>

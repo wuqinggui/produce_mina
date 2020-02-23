@@ -15,9 +15,9 @@
     </picker>
     <view class="flex-1 pt5 pb5 pl10 pr10 ml10 shop-search">
       <view class='search-wrap'>
-        <image src="../../images/search_icon.jpg" hover-class="click-active" bindtap="searchName"></image>
+        <image src="../../images/search_icon.jpg"></image>
       </view>
-      <input value="{{name}}" bindinput="bingChangeName" bindconfirm="searchName" confirm-type="搜索" placeholder="搜索" placeholder-class="name-placeholder" class="flex-1 name-content"/>
+      <input value="{{name}}" bindinput="bingChangeName" bindconfirm="searchName" confirm-type="search" placeholder="搜索" placeholder-class="name-placeholder" class="flex-1 name-content"/>
     </view>
   </view>
 

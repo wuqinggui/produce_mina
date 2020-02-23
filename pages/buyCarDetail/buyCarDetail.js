@@ -178,8 +178,30 @@ Page({
     })
     this.changeCar(item, 2);
   },
+
+  // 修改数量
+  changeNumber: function (e) {
+    console.log('222', e.detail.value)
+    var value = e.detail.value;
+    if (value < 1) {
+      wx.showToast({
+        title: '数量不能小于1',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    if (this.data.isClick) {
+      return
+    }
+    this.setData({
+      isClick: true
+    })
+    this.changeCar(item, 3, value);
+  },
+
   // 修改购物车商品数据
-  changeCar: function (item, type) {
+  changeCar: function (item, type, value) {
     wx.showLoading({
       title: '加载中',
       mask: true
@@ -188,9 +210,12 @@ Page({
     if (type == 1) {
       // 减少
       newNum = item.number - 1;
-    } else {
+    } else if (type == 2){
       // 增加
       newNum = item.number + 1;
+    } else if (type == 3) {
+      // 输入框改数量
+      newNum = value
     }
     var params = {
       shopCommoditDto: [
@@ -224,6 +249,7 @@ Page({
       })
     })
   },
+
   // 切换单个商品选中状态
   bindCheckbox: function(e) {
     wx.showLoading({

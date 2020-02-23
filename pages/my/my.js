@@ -117,10 +117,12 @@ getShopId: function() {
     userId: this.data.userId
   }
   shopApi.findShopByUserId(params).then((res) => {
-    wx.setStorageSync('shopId',res.data.id);
-    this.setData({
-      shopId: res.data.id
-    });
+    if (res.data && res.data.id) {
+      wx.setStorageSync('shopId',res.data.id);
+      this.setData({
+        shopId: res.data.id
+      });
+    }
   }).catch((err) => {
     wx.showToast({
       title: err.message ? err.message : '获取数据失败',

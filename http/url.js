@@ -9,7 +9,7 @@ export const tokenURL = baseUrl + 'nmUser/getToken'; // 根据token获取用户�
 export const regionUrl = baseUrl + 'region/findAll'; // 获取所有地区的接口
 export const shopClassUrl = baseUrl + 'shopclass/findAll'; // 查询大分类的接口
 export const shopSmallClassUrl = baseUrl + 'shopsmallclass/findList'; // 查询小分类的接口
-export const commodityListUrl = baseUrl + 'commodity/findList'; // 根据小分类查询所有商品的接口
+export const commodityListUrl = baseUrl + 'commodity/findListByCustomercommodity'; // 根据小分类查询所有商品的接口
 export const buyShopUrl = baseUrl + 'shop/searchByShop'; // 查询可下单的店铺列表
 // 购物车
 export const addCarUrl = baseUrl + 'shoppingcart/add'; // 将商品保存到购物车的接口
