@@ -96,7 +96,7 @@ Page({
   // 获取列表
   getAddressList: function() {
     shopApi.addressList().then((res) => {
-      res.data.forEach(function(item) {
+      res.data && res.data.forEach(function(item) {
         item.addresses = item.regional.replace(/\,/g, '') + item.addresses;
       })
       this.setData({
@@ -108,9 +108,11 @@ Page({
   },
 
   // 选择收货地址，放到全局选择收货地址变量，返回上一页
-  selectAddress: function (e) {
+  selectAddress: function(e) {
     console.log(e.currentTarget.dataset)
-    let { item } = e.currentTarget.dataset;
+    let {
+      item
+    } = e.currentTarget.dataset;
     getApp().globalData.addresseeData = item;
     wx.navigateBack();
   }

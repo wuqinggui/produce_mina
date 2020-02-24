@@ -51,20 +51,22 @@ Page({
       regionId: e.detail.value
     };
     shopApi.searchUser(params).then((res) => {
-      res.data.forEach((item) => {
-        if (item.userRole == 1) {
-          item.roleName = '下单人员';
-        } else if (item.userRole == 2) {
-          item.roleName = '收货人员';
-        } else if (item.userRole == 3) {
-          item.roleName = '付款人员';
-        } else if (item.userRole == 4) {
-          item.roleName = '管理人员';
-        }
-      })
-      this.setData({
-        list: res.data
-      });
+      if (res.data) {
+        res.data.forEach((item) => {
+          if (item.userRole == 1) {
+            item.roleName = '下单人员';
+          } else if (item.userRole == 2) {
+            item.roleName = '收货人员';
+          } else if (item.userRole == 3) {
+            item.roleName = '付款人员';
+          } else if (item.userRole == 4) {
+            item.roleName = '管理人员';
+          }
+        })
+        this.setData({
+          list: res.data
+        });
+      }
     }).catch((error) => {
       console.log(error);
       wx.showToast({
@@ -146,7 +148,7 @@ Page({
           duration: 2000
         })
       })
-    } else {// 修改员工
+    } else { // 修改员工
       shopApi.updateUser(params).then((res) => {
         wx.showToast({
           title: '修改成功',
@@ -195,26 +197,31 @@ Page({
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let list = this.data.list;
-    let params = {
-      shopId: list[index].shopId
-    };
-    shopApi.findMoreShopById(params).then((res) => {
-      let shopInfo = res.data.find((item) => {
-        return list[index].shopId == item.id;
-      })
-      this.setData({
-        info: list[index],
-        btnStatus: 2,
-        showOneButtonDialog: true
-      })
-    }).catch((error) => {
-      console.log(error);
-      wx.showToast({
-        title: error.message ? error.message : '获取数据失败',
-        icon: 'none',
-        duration: 2000
-      })
+    // let params = {
+    //   shopId: list[index].shopId
+    // };
+    this.setData({
+      info: list[index],
+      btnStatus: 2,
+      showOneButtonDialog: true
     })
+    // shopApi.findMoreShopById(params).then((res) => {
+    //   let shopInfo = res.data.find((item) => {
+    //     return list[index].shopId == item.id;
+    //   })
+    //   this.setData({
+    //     info: list[index],
+    //     btnStatus: 2,
+    //     showOneButtonDialog: true
+    //   })
+    // }).catch((error) => {
+    //   console.log(error);
+    //   wx.showToast({
+    //     title: error.message ? error.message : '获取数据失败',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // })
   },
 
   /**
@@ -310,7 +317,7 @@ Page({
           };
           // 查询每个店铺下的员工
           shopApi.searchUser(shopParams).then((userRes) => {
-            userRes.data.forEach((item) => {
+            userRes.data && userRes.data.forEach((item) => {
               list.push(item);
             })
             _this.setData({
@@ -338,7 +345,7 @@ Page({
   getAddress: function() {
     shopApi.region().then((res) => {
       this.setData({
-        address: res.data
+        address: res.data ? res.data : []
       });
     }).catch((error) => {
       console.log(error);
@@ -353,7 +360,7 @@ Page({
   getShopList: function() {
     shopApi.shopList().then((res) => {
       this.setData({
-        shopList: res.data
+        shopList: res.data ? res.data : []
       });
     }).catch((err) => {
       wx.showToast({

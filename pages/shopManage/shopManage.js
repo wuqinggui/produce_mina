@@ -113,9 +113,9 @@ Page({
       merchantName: inputValue
     };
     shopApi.findListShop(params).then((res) => {
-      this.setData({
-        list: res.data
-      })
+        this.setData({
+          list: res.data ? res.data : []
+        })
     }).catch((error) => {
       wx.showToast({
         title: error.message ? error.message : '获取数据失败',
@@ -261,9 +261,8 @@ Page({
       shopId: shopId
     };
     shopApi.findMoreShopById(params).then((res) => {
-      console.log(res);
       this.setData({
-        superiorShop: res.data
+        superiorShop: res.data ? res.data : []
       })
     }).catch((error) => {
       console.log(error);
@@ -283,7 +282,7 @@ Page({
       wx.hideLoading();
       this.setData({
         showNone: true,
-        list: res.data
+        list: res.data ? res.data : []
       });
     }).catch((err) => {
       wx.hideLoading();
@@ -323,7 +322,7 @@ Page({
     // 查询每个店铺下的员工
     shopApi.searchUser(shopParams).then((res) => {
       this.setData({
-        userList: res.data
+        userList: res.data ? res.data : []
       });
     }).catch((error) => {
       console.log(error);

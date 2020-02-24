@@ -222,7 +222,7 @@ Page({
     }
     let params = { id: this.data.id };
     shopApi.findByIdAddress(params).then((res) => {
-      res.data.regional = res.data.regional.split(",");
+      res.data.regional = res.data && res.data.regional.split(",");
       this.setData({
         valObj: res.data,
         region: res.data.regional

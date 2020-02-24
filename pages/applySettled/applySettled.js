@@ -55,7 +55,7 @@ Page({
     };
     // 查询每个店铺下的员工
     shopApi.searchUser(shopParams).then((res) => {
-      shopInfo.userList = res.data;
+      shopInfo.userList = res.data ? res.data : [];
       this.setData({
         shopInfo: shopInfo
       });
@@ -309,7 +309,7 @@ Page({
   getCustomerType: function() {
     let shopInfo = this.data.shopInfo;
     shopApi.customertypeList().then((res) => {
-      shopInfo.customerTypeArr = res.data;
+      shopInfo.customerTypeArr = res.data ? res.data : [];
       this.setData({
         shopInfo: shopInfo
       });
@@ -353,7 +353,7 @@ Page({
     }
     shopApi.addShop(params).then((res) => {
       wx.showToast({
-        title: res.data.message ? res.data.message : '上传成功',
+        title: '上传成功',
         icon: 'none'
       })
       this.setData({
@@ -361,6 +361,11 @@ Page({
       });
     }).catch((error) => {
       console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '上传失败',
+        icon: 'none',
+        duration: 2000
+      })
     })
   },
   // 选择身份证头像面
