@@ -8,7 +8,11 @@ Page({
     totalPrice: 0, // 合计价格
     startX: 0,
     itemLefts: {},
-    isClick: false
+    isClick: false,
+    isFoucs: '', // 是否获取焦点
+    curIdx: -1,
+    curIndex: -1,
+    curItem: {}
   },
 
   /**
@@ -179,15 +183,30 @@ Page({
     this.changeCar(item, 2);
   },
 
-  // 修改数量
+  // 点击先获取当前操作的商品信息，input获取焦点
+  getFoucs: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item, idx, index } = e.currentTarget.dataset;
+    this.setData({
+      curIdx: idx,
+      curIndex: index,
+      curItem: item
+    })
+  },
+
+  // 失去焦点，修改数量
   changeNumber: function (e) {
-    console.log('222', e.detail.value)
     var value = e.detail.value;
     if (value < 1) {
       wx.showToast({
         title: '数量不能小于1',
         icon: 'none',
         duration: 2000
+      })
+      this.setData({
+        curIdx: -1,
+        curIndex: -1,
+        curItem: {}
       })
       return
     }
@@ -197,6 +216,11 @@ Page({
     this.setData({
       isClick: true
     })
+    this.setData({
+      curIdx: -1,
+      curIndex: -1
+    })
+    var item = this.data.curItem;
     this.changeCar(item, 3, value);
   },
 

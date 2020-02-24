@@ -30,9 +30,10 @@ Page({
     curSmallClass: {},
     // 产品数据
     goodsList: [],
-    buyCarGoodtypeNum: 0,
     imgPlaceholder: '../../images/cai.jpg', // 默认图片
     isClickView: false,
+    isSelectSpec: false, // 展示选规格弹框
+    curGoodsItem: {}, // 选规格的商品
   },
 
   /**
@@ -250,12 +251,8 @@ Page({
         console.log('获取商品数据成功', res);
         wx.hideLoading();
         var data = res.data ? res.data : [];
-        for (var i = 0; i < data.length; i++) {
-          data[i].isSelect = false;
-        }
         this.setData({
-          goodsList: data,
-          buyCarGoodtypeNum: 0
+          goodsList: data
         })
       })
       .catch((error) => {
@@ -324,34 +321,44 @@ Page({
     this.getCommodity();
   },
 
-  // 切换菜品选中状态
-  bindCheckSpecItem: function (e) {
+  // 选规格
+  showSpecPop: function (e) {
     console.log(e.currentTarget.dataset)
-    let { index, checkValue } = e.currentTarget.dataset;
-    let data = this.data.goodsList;
-    data[index].isSelect = checkValue;
-    let buyCarGoodtypeNum = 0;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].isSelect) {
-        buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
-      }
+    let { item } = e.currentTarget.dataset;
+    for (var i = 0; i < item.specPriceVos.length; i++) {
+      item.specPriceVos[i].isSelect = false;
     }
+    item.specPriceVos[0].isSelect = true;
     this.setData({
-      goodsList: data,
-      buyCarGoodtypeNum: buyCarGoodtypeNum
+      curGoodsItem: item,
+      isSelectSpec: true
+    })
+  },
+
+  // 关闭选规格弹框
+  hiddenSpecPop: function () {
+    this.setData({
+      isSelectSpec: false
+    })
+  },
+
+  // 切换选中的规格
+  changeSpec: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { index } = e.currentTarget.dataset;
+    var item = this.data.curGoodsItem;
+    for (var i = 0; i < item.specPriceVos.length; i++) {
+      item.specPriceVos[i].isSelect = false;
+    }
+    item.specPriceVos[index].isSelect = true;
+    this.setData({
+      curGoodsItem: item
     })
   },
 
   // 加入购物车
   addCar: function () {
-    if (this.data.buyCarGoodtypeNum == 0) {
-      wx.showToast({
-        title: '请先选择商品',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
+    console.log(this.data.curGoodsItem)
     let sj_userId = wx.getStorageSync('sj_userId')
     if (!sj_userId) {
       // 未登陆
@@ -368,6 +375,9 @@ Page({
       })
     } else {
       // 已登陆
+      this.setData({
+        isSelectSpec: false
+      })
       this.getShopList(); // 获取店铺
     }
   },
@@ -460,14 +470,16 @@ Page({
       mask: true
     });
     var shopCommoditDto = [];
-    var data = this.data.goodsList;
-    for (var i = 0; i < data.length; i++) {
-      if (data[i].isSelect) {
-        var item = {
-          id: data[i].commodityId,
-          number: 1
-        }
-        shopCommoditDto.push(item)
+    var item = this.data.curGoodsItem;
+    for (var i = 0; i < item.specPriceVos.length; i++) {
+      if (item.specPriceVos[i].isSelect) {
+        shopCommoditDto = [
+          {
+            id: item.specPriceVos[i].id ? item.specPriceVos[i].id : '',
+            number: 1
+          }
+        ]
+        break
       }
     }
     var params = {
@@ -484,14 +496,6 @@ Page({
         title: '添加成功',
         icon: 'success',
         duration: 1000
-      })
-      var data = this.data.goodsList;
-      for (var a = 0; a < data.length; a++) {
-        data[a].isSelect = false;
-      }
-      this.setData({
-        goodsList: data,
-        buyCarGoodtypeNum: 0
       })
     })
     .catch((error) => {

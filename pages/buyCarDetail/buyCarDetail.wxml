@@ -31,7 +31,8 @@
                 <!-- 减号 -->
                 <text class="iconfont icon-jianhao {{item.number == 1 ? '' : 'normal'}}" data-item="{{item}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
-                <input type="number" value="{{item.number}}" bindblur="changeNumber"/>
+                <input type="number" value="{{item.number}}" bindblur="changeNumber" focus="{{true}}" wx:if="{{curIdx == idx && curIndex == index}}"/>
+                <view class="foucs-wrap" data-item="{{item}}" data-idx="{{idx}}" data-index="{{index}}" catchtap="getFoucs" wx:else>{{item.number}}</view>
                 <!-- 加号 -->
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>

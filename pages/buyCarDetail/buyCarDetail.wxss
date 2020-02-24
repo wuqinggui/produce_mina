@@ -143,7 +143,19 @@
 	color: black;
 	float: left;
 	margin: 0 auto;
-	width: 60rpx;
+	width: 80rpx;
+	height: 40rpx;
+	text-align: center;
+	border-left: 1rpx solid #f0f0f0;
+	border-right: 1rpx solid #f0f0f0;
+}
+
+.stepper .foucs-wrap{
+	font-size: 26rpx;
+	color: black;
+	float: left;
+	margin: 0 auto;
+	width: 80rpx;
 	height: 40rpx;
 	text-align: center;
 	border-left: 1rpx solid #f0f0f0;
