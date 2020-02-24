@@ -30,10 +30,9 @@ Page({
     curSmallClass: {},
     // 产品数据
     goodsList: [],
+    buyCarGoodtypeNum: 0,
     imgPlaceholder: '../../images/cai.jpg', // 默认图片
     isClickView: false,
-    isSelectSpec: false, // 展示选规格弹框
-    curGoodsItem: {}, // 选规格的商品
   },
 
   /**
@@ -251,8 +250,15 @@ Page({
         console.log('获取商品数据成功', res);
         wx.hideLoading();
         var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].isSelect = false;
+          for (var j = 0; j < data[i].specPriceVos.length; j++) {
+            data[i].specPriceVos[j].isSelect = false;
+          }
+        }
         this.setData({
-          goodsList: data
+          goodsList: data,
+          buyCarGoodtypeNum: 0
         })
       })
       .catch((error) => {
@@ -321,44 +327,72 @@ Page({
     this.getCommodity();
   },
 
-  // 选规格
-  showSpecPop: function (e) {
+  // 切换菜品选中状态
+  bindCheckSpecItem: function (e) {
     console.log(e.currentTarget.dataset)
-    let { item } = e.currentTarget.dataset;
-    for (var i = 0; i < item.specPriceVos.length; i++) {
-      item.specPriceVos[i].isSelect = false;
+    let { index, value } = e.currentTarget.dataset;
+    let data = this.data.goodsList;
+    let buyCarGoodtypeNum = 0;
+    if (value) {
+      // 取消选中
+      data[index].isSelect = false;
+      for (var a = 0; a < data[index].specPriceVos.length; a++) {
+        data[index].specPriceVos[a].isSelect = false;
+      }
+    } else {
+      // 选中
+      if (data[index].specPriceVos.length > 0) {
+        data[index].isSelect = true;
+        data[index].specPriceVos[0].isSelect = true;
+      }
     }
-    item.specPriceVos[0].isSelect = true;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].isSelect) {
+        buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
+      }
+    }
     this.setData({
-      curGoodsItem: item,
-      isSelectSpec: true
-    })
-  },
-
-  // 关闭选规格弹框
-  hiddenSpecPop: function () {
-    this.setData({
-      isSelectSpec: false
+      goodsList: data,
+      buyCarGoodtypeNum: buyCarGoodtypeNum
     })
   },
 
   // 切换选中的规格
   changeSpec: function (e) {
     console.log(e.currentTarget.dataset)
-    let { index } = e.currentTarget.dataset;
-    var item = this.data.curGoodsItem;
-    for (var i = 0; i < item.specPriceVos.length; i++) {
-      item.specPriceVos[i].isSelect = false;
+    let { index, specindex, value } = e.currentTarget.dataset;
+    var data = this.data.goodsList;
+    if (value) {
+      // 取消选中
+      data[index].specPriceVos[specindex].isSelect = false;
+      data[index].isSelect = false;
+    } else {
+      // 选中
+      data[index].specPriceVos[specindex].isSelect = true;
+      data[index].isSelect = true;
     }
-    item.specPriceVos[index].isSelect = true;
+    let buyCarGoodtypeNum = 0;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].isSelect) {
+        buyCarGoodtypeNum = buyCarGoodtypeNum + 1;
+      }
+    }
     this.setData({
-      curGoodsItem: item
+      goodsList: data,
+      buyCarGoodtypeNum: buyCarGoodtypeNum
     })
   },
 
   // 加入购物车
   addCar: function () {
-    console.log(this.data.curGoodsItem)
+    if (this.data.buyCarGoodtypeNum == 0) {
+      wx.showToast({
+        title: '请先选择商品',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
     let sj_userId = wx.getStorageSync('sj_userId')
     if (!sj_userId) {
       // 未登陆
@@ -375,9 +409,6 @@ Page({
       })
     } else {
       // 已登陆
-      this.setData({
-        isSelectSpec: false
-      })
       this.getShopList(); // 获取店铺
     }
   },
@@ -470,16 +501,16 @@ Page({
       mask: true
     });
     var shopCommoditDto = [];
-    var item = this.data.curGoodsItem;
-    for (var i = 0; i < item.specPriceVos.length; i++) {
-      if (item.specPriceVos[i].isSelect) {
-        shopCommoditDto = [
-          {
-            id: item.specPriceVos[i].id ? item.specPriceVos[i].id : '',
+    var data = this.data.goodsList;
+    for (var i = 0; i < data.length; i++) {
+      for (var j = 0; j < data[i].specPriceVos.length; j++) {
+        if (data[i].specPriceVos[j].isSelect) {
+          var item = {
+            id: data[i].specPriceVos[j].id ? data[i].specPriceVos[j].id : '',
             number: 1
           }
-        ]
-        break
+          shopCommoditDto.push(item)
+        }
       }
     }
     var params = {
@@ -496,6 +527,17 @@ Page({
         title: '添加成功',
         icon: 'success',
         duration: 1000
+      })
+      var data = this.data.goodsList;
+      for (var a = 0; a < data.length; a++) {
+        data[a].isSelect = false;
+        for (var b = 0; b < data[a].specPriceVos.length; b++) {
+          data[a].specPriceVos[b].isSelect = false;
+        }
+      }
+      this.setData({
+        goodsList: data,
+        buyCarGoodtypeNum: 0
       })
     })
     .catch((error) => {

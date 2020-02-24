@@ -29,7 +29,10 @@
           wx:key="classIndex">
       <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}" bindtap="handleChangeClass" data-item="{{classItem}}">
         <view class="image-wrap">
-          <image src="{{classItem.imagepath ? classItem.imagepath : imgPlaceholder}}" class="image"></image>
+          <image src="../../images/dfl-ly.jpg" class="image" wx:if="{{classIndex == 0}}"></image>
+          <image src="../../images/dfl-sc.jpg" class="image" wx:if="{{classIndex == 1}}"></image>
+          <image src="../../images/dfl-bh.jpg" class="image" wx:if="{{classIndex == 2}}"></image>
+          <image src="../../images/dfl-sx.jpg" class="image" wx:if="{{classIndex == 3}}"></image>
         </view>
         <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'text-black' : 'gray9'}}">{{classItem.className}}</view>
       </view>
@@ -69,19 +72,41 @@
               src="{{goodsItem.imagepath ? goodsItem.imagepath : imgPlaceholder}}"
               class="image"></image>
           </view>
-          <view class="product-detail-wrap column ju-b">
-            <view>
-              <view class="name-wrap">
-                  <view class="title gray3 f16">
-                  {{goodsItem.name}}
-                  <view class="zlbz f12 bg-f5 text-red" wx:if="{{goodsItem.zlbz}}">{{goodsItem.zlbz}}</view>
-                  </view>
+          <view class="product-detail-wrap">
+            <view class="name-wrap">
+                <view class="title gray3 f16">
+                {{goodsItem.name}}
+                <view class="zlbz f12 bg-f5 text-red" wx:if="{{goodsItem.zlbz}}">{{goodsItem.zlbz}}</view>
+                </view>
+            </view>
+            <view class="row {{goodsItem.shopdesc ? '' : 'mt5'}}">
+              <view wx:for="{{goodsItem.specPriceVos}}"
+                  wx:for-item="specItem"
+                  wx:for-index="specIndex"
+                  wx:key="specIndex"
+                  class="specItem mr5 {{specItem.isSelect ? 'specItem-isSelect' : ''}}" data-index="{{goodsIndex}}" data-specindex="{{specIndex}}" data-value="{{specItem.isSelect}}" bindtap="changeSpec" hover-class="click-active">
+                  {{specItem.spec.specName}}
               </view>
-              <text class="title f12 gray6 text-overflow" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</text>
             </view>
-            <view class="price-wrap">
-              <button class="spec-btn" hover-class="click-active" bindtap="showSpecPop" data-item="{{goodsItem}}">选规格</button>
+            <view wx:for="{{goodsItem.specPriceVos}}"
+                wx:for-item="specItem"
+                wx:for-index="specIndex"
+                wx:key="specIndex">
+                <view class="carts-price {{goodsItem.shopdesc ? '' : 'mt5'}}" wx:if="{{specItem.isSelect}}">
+                  <text class="symbol f12">￥</text>
+                  <text class="price f14">{{specItem.price}}</text>
+                  <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
+                </view>
             </view>
+            <view class="carts-price {{goodsItem.shopdesc ? '' : 'mt5'}}" wx:if="{{!goodsItem.isSelect}}">
+              <text class="symbol f12">￥</text>
+              <text class="price f14">0</text>
+              <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
+            </view>
+            <view class="shopdesc f12 gray6 text-overflow" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</view>
+          </view>
+          <view class="icon-wrap direction-center">
+            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="20" data-index="{{goodsIndex}}" data-value="{{goodsItem.isSelect}}" bindtap="bindCheckSpecItem" hover-class="click-active"/>
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -93,51 +118,19 @@
     </view>
   </scroll-view>
 
-  <!-- 规格弹框 -->
-<view class="shopSpec-bg" wx:if="{{isSelectSpec}}" bindtap="hiddenSpecPop"></view>
-<view class="detail-popup-wrap popup-border-radius column ju-b {{isSelectSpec ? 'show-spec' : ''}}">
-  <view class="detail-wrap p20">
-    <view class="row">
-      <view class="image-wrap">
-        <image
-          src="{{curGoodsItem.imagepath ? curGoodsItem.imagepath : imgPlaceholder}}"
-          class="image"></image>
-      </view>
-      <view class="flex-1 pt5 pb5">
-        <view class="name-wrap">
-            <view class="title gray3 f16">
-            {{curGoodsItem.name}}
-            <view class="zlbz f12 bg-f5 text-red" wx:if="{{curGoodsItem.zlbz}}">{{curGoodsItem.zlbz}}</view>
-            </view>
-        </view>
-        <view class="gray6 text-overflow f14 mt10" wx:if="{{curGoodsItem.shopdesc}}">{{curGoodsItem.shopdesc}}</view>
-      </view>
+  <!-- 底部购物车 -->
+  <view class="foot-wrap verticle-center row">
+    <view class="image-wrap">
+      <image src="../../images/car_icon.jpg" class="car_icon"></image>
     </view>
-    <view class="gray3 mt10">商品规格：</view>
-    <view class="row">
-      <view wx:for="{{curGoodsItem.specPriceVos}}"
-          wx:for-item="specItem"
-          wx:for-index="specIndex"
-          wx:key="specIndex"
-          class="specItem mr10 mt10 {{specItem.isSelect ? 'isSelect' : ''}}" data-index="{{specIndex}}" bindtap="changeSpec">
-          {{specItem.spec.specName}}
-      </view>
+    <view class='selectedNum'>
+      <mp-badge content="{{buyCarGoodtypeNum}}" ext-class="badge-wrap" wx:if="{{buyCarGoodtypeNum}}"/>
+      <view class="gray3 f16">已选</view>
     </view>
-      <view wx:for="{{curGoodsItem.specPriceVos}}"
-          wx:for-item="specItem"
-          wx:for-index="specIndex"
-          wx:key="specIndex">
-          <view class="carts-price mt15" wx:if="{{specItem.isSelect}}">
-            <text class="symbol f12">￥</text>
-            <text class="price f16">{{specItem.price}}</text>
-            <text class="unit f12">/ {{curGoodsItem.unitMeasurement.name ? curGoodsItem.unitMeasurement.name : ''}}</text>
-          </view>
-      </view>
+    <view class='flex-1'>
+      <button class="add_btn" bindtap="addCar" hover-class="click-active">加入购物车</button>
+    </view>
   </view>
-  <view class="btn-wrap p20">
-    <button class="addcart-btn" hover-class="click-active" bindtap="addCar">加入购物车</button>
-  </view>
-</view>
 
   <!-- 店铺弹框 -->
   <view class="shopPop-bg" wx:if="{{shopPop}}"></view>
