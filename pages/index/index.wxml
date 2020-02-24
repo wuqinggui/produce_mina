@@ -28,7 +28,10 @@
           wx:for-index="classIndex"
           wx:key="classIndex">
       <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}" bindtap="handleChangeClass" data-item="{{classItem}}">
-        <view class="image-wrap">
+        <view class="image-wrap" wx:if="{{classItem.imagepath}}">
+          <image src="{{classItem.imagepath}}" class="image"></image>
+        </view>
+        <view class="image-wrap" wx:else>
           <image src="../../images/dfl-ly.jpg" class="image" wx:if="{{classIndex == 0}}"></image>
           <image src="../../images/dfl-sc.jpg" class="image" wx:if="{{classIndex == 1}}"></image>
           <image src="../../images/dfl-bh.jpg" class="image" wx:if="{{classIndex == 2}}"></image>
