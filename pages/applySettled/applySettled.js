@@ -157,9 +157,25 @@ Page({
         duration: 2000
       })
     }
-    this.setData({
-      step: 1
-    });
+    shopApi.addShop(shopInfo).then((res) => {
+      wx.showToast({
+        title: '上传成功',
+        icon: 'none'
+      })
+      this.setData({
+        step: 2
+      });
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '上传失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+    // this.setData({
+    //   step: 1
+    // });
   },
   bindAndSet: function (e) {
     let key = e.currentTarget.dataset.key;
