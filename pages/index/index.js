@@ -364,10 +364,15 @@ Page({
     var data = this.data.goodsList;
     if (value) {
       // 取消选中
-      data[index].specPriceVos[specindex].isSelect = false;
       data[index].isSelect = false;
+      for (var a = 0; a < data[index].specPriceVos.length; a++) {
+        data[index].specPriceVos[a].isSelect = false;
+      }
     } else {
       // 选中
+      for (var a = 0; a < data[index].specPriceVos.length; a++) {
+        data[index].specPriceVos[a].isSelect = false;
+      }
       data[index].specPriceVos[specindex].isSelect = true;
       data[index].isSelect = true;
     }
