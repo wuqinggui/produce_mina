@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "店铺管理",
+  "navigationBarTitleText": "商户管理",
   "usingComponents": {
     "mp-icon": "../../component/icon/icon",
     "mp-dialog": "../../component/dialog/dialog"

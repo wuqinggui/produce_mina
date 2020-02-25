@@ -89,7 +89,7 @@ Page({
     }
     shopApi.carShop(params)
       .then((res) => {
-        console.log('获取购物车店铺数据成功', res);
+        console.log('获取购物车商户数据成功', res);
         wx.hideLoading();
         this.setData({
           buyList: res.data ? res.data : [],

@@ -2,7 +2,7 @@
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2 }}">
     <!-- <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
-      <text>店铺：</text>
+      <text>商户：</text>
       <picker bindchange="bindPickerChange2" value="{{shopList[index]}}" range="{{shopList}}" range-key="merchantName">
         <view class="picker flex">
           <input class="weui-input" disabled="true" value="{{info.merchantName}}" />
@@ -67,7 +67,7 @@
           </view>
           <view class="people gray9">电话：
             <text>{{item.phone}}</text> </view>
-          <!-- <view class="people gray9">店铺名称：
+          <!-- <view class="people gray9">商户名称：
             <text>{{item.shop.merchantName}}</text> </view> -->
         </view>
       </view>

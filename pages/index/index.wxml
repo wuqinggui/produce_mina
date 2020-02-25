@@ -1,5 +1,5 @@
 <view class="menu-wrap {{classList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
-<!-- 头部地区店铺 -->
+<!-- 头部地区商户 -->
   <view class="head-wrap verticle-center row">
     <view wx:if="{{isLock}}">
       <!-- 已登陆的锁定用户地区 -->
@@ -135,11 +135,11 @@
     </view>
   </view>
 
-  <!-- 店铺弹框 -->
+  <!-- 商户弹框 -->
   <view class="shopPop-bg" wx:if="{{shopPop}}"></view>
   <view class="shopPop direction-center" wx:if="{{shopPop}}">
       <view class="shopPop-wrap">
-        <view class="shopPop-head gray3 f16 p15 ">请选择购买店铺</view>
+        <view class="shopPop-head gray3 f16 p15 ">请选择购买商户</view>
         <view class="shopPop-middle pl15 pr15 mb15">
           <view class="row verticle-center curShop {{curShop.merchantName ? '' : 'search'}}" bindtap="showShopSelect">
             <view class="flex-1 text-overflow f16 mr10 {{curShop.merchantName ? '' : 'f14 gray9'}}">{{curShop.merchantName ? curShop.merchantName : '请选择'}}</view>
@@ -154,7 +154,7 @@
             wx:if="{{shopList.length > 0}}">
               <button class="text-overflow f16 item {{curShop.id && curShop.id == shopItem.id ? 'cur' : '' }} {{shopIndex == shopList.length - 1 ? 'last' : ''}}" bindtap="changeShop"  data-shop-item="{{shopItem}}">{{shopItem.merchantName}}</button>
             </block>
-            <view class="text-center gray9 f16 pt40 pb40" wx:if="{{shopList.length == 0}}">暂无店铺数据</view>
+            <view class="text-center gray9 f16 pt40 pb40" wx:if="{{shopList.length == 0}}">暂无商户数据</view>
           </scroll-view>
         </view>
         <view class="shopPop-foot">

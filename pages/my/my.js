@@ -13,7 +13,7 @@ Page({
     userInfo: {},
     list: [
       {
-        text: '店铺管理',
+        text: '商户管理',
         url: '/pages/shopManage/shopManage',
         num: 0
       }, 
@@ -149,7 +149,7 @@ getShopId: function() {
         })
       } else {
         wx.showToast({
-          title: '暂无店铺,请先申请商家入驻',
+          title: '暂无商户,请先申请商家入驻',
           icon: 'none',
           duration: 2000
         })

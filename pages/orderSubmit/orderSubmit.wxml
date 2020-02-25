@@ -16,7 +16,7 @@
         <view class="shop-title">
           <view class="shop-name row verticle-center">
             <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
-            <text class="flex-1 text-overflow">{{submitCarData.shop.merchantName ? submitCarData.shop.merchantName : '店铺名称'}}</text>
+            <text class="flex-1 text-overflow">{{submitCarData.shop.merchantName ? submitCarData.shop.merchantName : '商户名称'}}</text>
           </view>
         </view>
         <view wx:for="{{submitCarData.lstSubmit}}" wx:key="index" class="carts-container">

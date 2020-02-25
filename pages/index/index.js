@@ -435,7 +435,7 @@ Page({
     }
     shopApi.buyShop(params)
       .then((res) => {
-        console.log('获取店铺成功', res);
+        console.log('获取商户成功', res);
         wx.hideLoading();
         this.setData({
           shopList: res.data && res.data.list ? res.data.list : [],
@@ -444,10 +444,10 @@ Page({
         this.showShopPop();
       })
       .catch((error) => {
-        console.log('获取店铺失败', error);
+        console.log('获取商户失败', error);
         wx.hideLoading();
         wx.showToast({
-          title: error.message ? error.message : '获取店铺数据失败',
+          title: error.message ? error.message : '获取商户数据失败',
           icon: 'none',
           duration: 2000
         })
@@ -479,7 +479,7 @@ Page({
   sureChangeShop: function (e) {
     if (!this.data.curShop.id) {
       wx.showToast({
-        title: '没有店铺数据不能添加购物车，请选择购买店铺',
+        title: '没有商户数据不能添加购物车，请选择购买商户',
         icon: 'none',
         duration: 2000
       })

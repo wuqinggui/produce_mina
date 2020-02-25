@@ -2,12 +2,12 @@
 <view class="shopManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2}}">
     <view class="addinfo verticle-center pb10 pt10 flex ju-c">
-      <text>店铺名：</text>
+      <text>商户名：</text>
       <input class="weui-input" bindinput="bindAndSet" data-key="merchantName" value="{{info.merchantName}}" />
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <!-- <view class="addinfo verticle-center pb10 pt10 flex ju-c" wx:if="{{shopId}}">
-      <text>上级店铺：</text>
+      <text>上级商户：</text>
       <picker bindchange="changeShop" value="{{superiorShop[index]}}" range="{{superiorShop}}" range-key="merchantName">
         <view class="picker flex">
           <input class="weui-input" disabled="true" value="{{info.shopSuperior}}" />

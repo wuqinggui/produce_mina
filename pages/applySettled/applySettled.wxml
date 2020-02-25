@@ -1,7 +1,7 @@
 <!--pages/applySettled/applySettled.wxml-->
 <template name="item1">
   <view class="template pl15 pr15">
-    <view class="title mt20 mb10 f16">填写店铺信息</view>
+    <view class="title mt20 mb10 f16">填写商户信息</view>
     <view class="shopInfo">
       <view class="list-item flex">
         <view class="list-item-info">
@@ -80,7 +80,7 @@
           <text class="name">地址：</text>
         </view>
         <view class="list-item-input">
-          <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="请输入店铺地址" value="{{address}}" />
+          <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="请输入商户地址" value="{{address}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
@@ -116,7 +116,7 @@
             <text class="name">手机号码：</text>
           </view>
           <view class="list-item-input">
-            <input name="phone" type="number" placeholder-class="place-holder" class="weui-input" placeholder="将用于接受通知短信及店铺账号等信息" />
+            <input name="phone" type="number" placeholder-class="place-holder" class="weui-input" placeholder="将用于接受通知短信及商户账号等信息" />
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>
@@ -232,7 +232,7 @@
     </view>
     <view class="txt mt20">
       <view class="f12 pb5 gray6">· 我们将在3个工作日内（不含国家法定节假日）完成审核并以短信或邮件的方式通知您。</view>
-      <view class="f12 pb5 gray6">· 您也可以登录我的店铺及时查看审核进度。</view>
+      <view class="f12 pb5 gray6">· 您也可以登录我的商户及时查看审核进度。</view>
       <view class="f12 pb5 gray6">· 如有疑问请咨询客服咨询。</view>
     </view>
     <view class="btns mt50 mb50 text-center ju-c flex">
@@ -249,7 +249,7 @@
     </view>
     <view class="txt mt20">
       <view class="f12 pb5 gray6">· 我们将在3个工作日内（不含国家法定节假日）完成审核并以短信或邮件的方式通知您。</view>
-      <view class="f12 pb5 gray6">· 您也可以登录我的店铺及时查看审核进度。</view>
+      <view class="f12 pb5 gray6">· 您也可以登录我的商户及时查看审核进度。</view>
       <view class="f12 pb5 gray6">· 如有疑问请咨询客服咨询。</view>
     </view>
     <view class="btns mt50 mb50 text-center ju-a flex">
@@ -262,10 +262,10 @@
   <view class="template pr20 pl20 ">
     <view class="tip pt30 pb20 text-center flex column">
       <icon class="mb20" type="success" size="80" color="#FFA800" />
-      <view>恭喜您，店铺创建成功！</view>
+      <view>恭喜您，商户创建成功！</view>
     </view>
     <view class="txt mt20">
-      <view class="f12 pb5 gray6">· 现在您可以回到商家我的店铺首页区经营您的店铺啦，赶紧去录入上品把。</view>
+      <view class="f12 pb5 gray6">· 现在您可以回到商家我的商户首页区经营您的商户啦，赶紧去录入上品把。</view>
       <view class="f12 pb5 gray6">· 如有疑问请咨询客服联系</view>
     </view>
     <view class="btns mt50 mb50 text-center ju-a flex">

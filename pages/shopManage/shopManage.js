@@ -46,7 +46,7 @@ Page({
     let data = this.data;
     let toastTxt = '';
     if (!data.info.merchantName) {
-      toastTxt = '请输入店铺名';
+      toastTxt = '请输入商户名';
     } else if (!data.info.personId) {
       toastTxt = '请选择负责人';
     } else if (!data.info.phone) {
