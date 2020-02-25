@@ -94,7 +94,6 @@ Page({
       if (data.address && data.address.hasOwnProperty("regional") && data.address.hasOwnProperty("addresses")) {
         data.address.addresses = data.address.regional.replace(/\,/g, '') + data.address.addresses;
       }
-      console.log(data)
       this.setData({
         submitCarData: data,
         supplyOrderData: {},
