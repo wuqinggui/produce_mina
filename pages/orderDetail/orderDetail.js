@@ -93,11 +93,13 @@ Page({
       .then((res) => {
         console.log('获取订单数据成功', res);
         wx.hideLoading();
-        res.data.forEach(function(item) {
-          item.address.addresses = item.address.regional.replace(/\,/g, '') + item.address.addresses;
-        })
+        var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].address.addresses = data[i].address.regional.replace(/\,/g, '') + data[i].address.addresses;
+          data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
+        }
         this.setData({
-          orderData: res.data && res.data.length > 0 ? res.data[0] : {}
+          orderData: data && data.length > 0 ? data[0] : {}
         })
       })
       .catch((error) => {
@@ -191,7 +193,7 @@ Page({
         console.log('微信登陆成功', res)
         if (res.code) {
           var params = {
-            money: orderData.totalSum, 
+            money: orderData.totalPriceNum, 
             // money: '0.01', // 测试使用
             orderNum: orderData.orderNo,
             code: res.code,

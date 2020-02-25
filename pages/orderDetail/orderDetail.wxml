@@ -54,13 +54,17 @@
   <view class="other mb20">
     <view class="freight">
       <text class="f14">运费</text>
-      <text class="type f14">{{orderData.freight}}</text>
+      <text class="type f14">￥{{orderData.freight}}</text>
+    </view>
+    <view class="freight">
+      <text class="f14">商品总金额</text>
+      <text class="type f14">￥{{orderData.totalSum}}</text>
     </view>
     <view class="summation">
       <text class="f14">合计</text>
       <view>
         <text class="suminfo f12">共计{{orderData.orderCommditys.length ? orderData.orderCommditys.length : '0'}}件商品</text>
-        <text class="total ml10 f14">￥{{orderData.totalSum}}</text>
+        <text class="total ml10 f14">总金额￥{{orderData.totalPriceNum}}</text>
       </view>
     </view>
     <view class="freight">

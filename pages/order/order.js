@@ -136,8 +136,12 @@ Page({
       .then((res) => {
         console.log('获取订单数据成功', res);
         wx.hideLoading();
+        var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
+        }
         this.setData({
-          orderList: res.data ? res.data : [],
+          orderList: data,
           isClick: false
         })
       })
@@ -271,7 +275,7 @@ Page({
         console.log('微信登陆成功', res)
         if (res.code) {
           var params = {
-            money: orderData.totalSum, 
+            money: orderData.totalPriceNum, 
             // money: '0.01', // 测试使用
             orderNum: orderData.orderNo,
             code: res.code,

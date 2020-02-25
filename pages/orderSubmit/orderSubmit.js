@@ -7,9 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    freightPrice: 0, // 运费
+    // freightPrice: 0, // 运费
     totalPrice: 0, // 合计价格
-    addresseeData: {}, // 收件人信息
     submitCarData: {}, // 立即下单的购物车数据
     supplyOrderData: {}, // 补单的订单信息
     isSupplyOrder: false, // 是否补单
@@ -54,8 +53,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    // 关闭页面清空收件人信息
-    getApp().globalData.addresseeData = {};
+    
   },
 
   /**
@@ -83,38 +81,30 @@ Page({
   getData: function () {
     // 判断是否补单
     if (getApp().globalData.submitCarData.shopId && getApp().globalData.supplyOrderData.shopId &&  getApp().globalData.submitCarData.shopId == getApp().globalData.supplyOrderData.shopId) {
+      // 补单
       this.setData({
         submitCarData: getApp().globalData.submitCarData,
         supplyOrderData: getApp().globalData.supplyOrderData,
-        addresseeData: getApp().globalData.supplyOrderData.address,
         isSupplyOrder: true
       })
     } else {
+      // 下单
       getApp().globalData.supplyOrderData = {}; // 清空补单信息
+      var data = getApp().globalData.submitCarData;
+      if (data.address && data.address.hasOwnProperty("regional") && data.address.hasOwnProperty("addresses")) {
+        data.address.addresses = data.address.regional.replace(/\,/g, '') + data.address.addresses;
+      }
       this.setData({
-        submitCarData: getApp().globalData.submitCarData,
-        addresseeData: getApp().globalData.addresseeData,
+        submitCarData: data,
         supplyOrderData: {},
         isSupplyOrder: false
       })
     }
     this.countTotal();
     console.log('立即下单的购物车数据', this.data.submitCarData)
-    console.log('收货人信息', this.data.addresseeData)
     console.log('补单信息', this.data.supplyOrderData)
   },
   
-  // 跳转收货人信息
-  changeAddresseeData: function() {
-    if (this.data.isSupplyOrder) {
-      // 补单不能选择收件人信息
-      return
-    }
-    var id = this.data.addresseeData.id ? this.data.addresseeData.id : '';
-    wx.navigateTo({
-      url: '/pages/shippingAddress/shippingAddress?isSelect=1&addressId=' + id,
-    })
-  },
   // 去下单
   goBuy: function () {
     wx.reLaunch({
@@ -136,14 +126,6 @@ Page({
   },
   // 确认下单
   sureSubmitOrder: function() {
-    if (!this.data.addresseeData.id) {
-      wx.showToast({
-        title: '请选择收件人信息',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
     this.getTime(1);
   },
   sureSubmitOrder2: function () {
@@ -152,7 +134,7 @@ Page({
       mask: true
     })
     var params = {
-      addressId: this.data.addresseeData.id,
+      addressId: this.data.submitCarData.addressee.id ? this.data.submitCarData.addressee.id : '',
       regionId: this.data.submitCarData.regionId,
       cartId: this.data.submitCarData.id,
       shopId: this.data.submitCarData.shopId,
@@ -169,9 +151,8 @@ Page({
         })
         getApp().globalData.supplyOrderData = {}; // 清空补单信息
         if (res.data.id) {
-          // 带上返回的订单id，关闭单前页面，跳转到订单详情页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
+          // 带上返回的订单id，关闭单前页面，跳转到订单详情页面，同时需要将全局立即下单的购物车数据submitCarData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
           getApp().globalData.submitCarData = {};
-          getApp().globalData.addresseeData = {};
           wx.redirectTo({
             url: '/pages/orderDetail/orderDetail?orderId=' + res.data.id
           })
@@ -218,9 +199,8 @@ Page({
         })
         getApp().globalData.supplyOrderData = {}; // 清空补单信息
         if (res.data.id) {
-          // 带上返回的订单id，关闭单前页面，跳转到订单详情页面，同时需要将全局立即下单的购物车数据submitCarData和收件人信息addresseeData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
+          // 带上返回的订单id，关闭单前页面，跳转到订单详情页面，同时需要将全局立即下单的购物车数据submitCarData清空（原购物车数据不清空，服务端也不用清空对应购物车数据）
           getApp().globalData.submitCarData = {};
-          getApp().globalData.addresseeData = {};
           wx.redirectTo({
             url: '/pages/orderDetail/orderDetail?orderId=' + res.data.id
           })

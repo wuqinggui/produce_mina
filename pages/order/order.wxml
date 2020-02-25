@@ -46,7 +46,7 @@
               </view>
               <view class="cell-count flex">
                 <text class="count-amount f12">共{{shopitem.orderCommditys.length ? shopitem.orderCommditys.length : '0'}}件商品</text>
-                <text class="count-price f14">合计：￥{{shopitem.totalSum}}</text>
+                <text class="count-price f14">合计：￥{{shopitem.totalPriceNum}}</text>
               </view>
             </view>
             <view class="btns flex mt10">

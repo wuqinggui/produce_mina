@@ -94,10 +94,10 @@
   color: #666;
 }
 .summation .total {
-  color: #999;
+  color: #666;
 }
 .freight .type {
-  color: #838383;
+  color: #666;
 }
 
 .btns {
