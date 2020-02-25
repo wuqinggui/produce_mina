@@ -134,7 +134,7 @@
       <view class="accept pt10">
         <checkbox-group name="accept" bindchange="checkDeal">
           <checkbox class="checkbox" value="{{isAccept}}">
-            <text class="agreement f20">《商家入驻协议》</text>
+            <text class="agreement f20">《买家管理协议》</text>
           </checkbox>
         </checkbox-group>
       </view>
@@ -226,7 +226,7 @@
   <view class="template pr20 pl20 ">
     <view class="tip pt30 pb20 text-center flex column">
       <icon class="mb20" type="success" size="80" color="#FFA800" />
-      <view>您的入驻申请已成功提交</view>
+      <view>您的管理申请已成功提交</view>
       <view>审核中，请耐心等待...</view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
@@ -265,7 +265,7 @@
       <view>恭喜您，商户创建成功！</view>
     </view>
     <view class="txt mt20">
-      <view class="f12 pb5 gray6">· 现在您可以回到商家我的商户首页区经营您的商户啦，赶紧去录入上品把。</view>
+      <view class="f12 pb5 gray6">· 现在您可以回到买家我的商户首页区经营您的商户啦，赶紧去录入上品把。</view>
       <view class="f12 pb5 gray6">· 如有疑问请咨询客服联系</view>
     </view>
     <view class="btns mt50 mb50 text-center ju-a flex">
@@ -275,7 +275,7 @@
 </template>
 <view class="applySettled">
   <view class="progress flex column">
-    <view class="title pb20 pt10 text-center">入驻进度</view>
+    <view class="title pb20 pt10 text-center">管理进度</view>
     <view class="list flex">
       <view class="item flex flex-1 column ju-c complate">
         <view class="step">

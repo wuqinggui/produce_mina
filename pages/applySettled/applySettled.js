@@ -152,7 +152,7 @@ Page({
       })
     } else if (!this.data.isAccept) {
       return wx.showToast({
-        title: '请阅读并勾选商家入驻协议',
+        title: '请阅读并勾选买家管理协议',
         icon: 'none',
         duration: 2000
       })
@@ -343,7 +343,7 @@ Page({
       shopInfo: shopInfo
     });
   },
-  // 申请入驻商户
+  // 申请ruzhu商户
   addShop: function() {
     let params = this.data.shopInfo;
     if (!params.cardZmPath) {

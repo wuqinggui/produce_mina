@@ -191,7 +191,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 新增商户接口（含申请入驻的接口）
+  // 新增商户接口（含申请ruzhu管理的接口）
   addShop: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(addShopUrl, 'POST', params)
