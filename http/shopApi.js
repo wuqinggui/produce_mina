@@ -74,7 +74,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 查询可下单的店铺列表
+  // 查询可下单的商户列表
   buyShop: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(buyShopUrl, 'POST', params)
@@ -95,7 +95,7 @@ var shopApi = {
     });
   },
     
-  // 查询购物车的店铺列表
+  // 查询购物车的商户列表
     carShop:   function (params)  {    
     return  new  Promise((resolve,  reject)  =>  {      
       wxRequest(carShopUrl,  'POST',  params)        .then((res)  =>  {          
@@ -181,7 +181,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 店铺管理列表
+  // 商户管理列表
   shopList: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(shopListUrl, 'GET', params)
@@ -191,7 +191,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 新增店铺接口（含申请入驻的接口）
+  // 新增商户接口（含申请入驻的接口）
   addShop: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(addShopUrl, 'POST', params)
@@ -201,7 +201,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 修改店铺接口
+  // 修改商户接口
   updateShop: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(updateShopUrl, 'POST', params)
@@ -211,7 +211,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 搜素店铺
+  // 搜素商户
   findListShop: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(findListShopUrl, 'POST', params)
@@ -221,7 +221,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 根据店铺id查询该店铺下所有的店铺
+  // 根据商户id查询该商户下所有的商户
   findShopByID: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(findShopByIDUrl, 'GET', params)
@@ -261,7 +261,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 用户id搜店铺
+  // 用户id搜商户
   findShopByUserId: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(findByUserIdUrl, 'GET', params)
@@ -271,7 +271,7 @@ var shopApi = {
         .catch((error) => reject(error))
     });
   },
-  // 店铺id搜店铺
+  // 商户id搜商户
   findMoreShopById: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(findMoreShopByIdUrl, 'GET', params)

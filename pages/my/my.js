@@ -111,7 +111,7 @@ Page({
   onShareAppMessage: function () {
 
   },
-// 获取店铺id
+// 获取商户id
 getShopId: function() {
   let params = {
     userId: this.data.userId

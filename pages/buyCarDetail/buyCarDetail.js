@@ -135,7 +135,7 @@ Page({
       url: '/pages/index/index'
     })
   },
-  // 切换店铺的选中状态
+  // 切换商户的选中状态
   cnangeShopSelect: function (e) {
     wx.showLoading({
       title: '加载中',

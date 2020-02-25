@@ -21,17 +21,17 @@ Page({
     oneButton2: [{
       text: '确定'
     }],
-    list: [], // 页面店铺列表
+    list: [], // 页面商户列表
     userList: [], //负责人列表
-    superiorShop: []  // 上级店铺列表
+    superiorShop: []  // 上级商户列表
   },
-  // 编辑店铺
+  // 编辑商户
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
     let info = this.data.list[index];
     info.nickname = info.nmUser.nickname;
     this.getCurrShopUser(info.id);
-    // if (shopId) { //获取上级店铺
+    // if (shopId) { //获取上级商户
     //   this.getSuperiorShop(shopId);
     // }
     this.setData({
@@ -64,7 +64,7 @@ Page({
       })
     }
     data.info.userId = this.data.userId;
-    data.info.type = 0; // 店铺类型 0-店铺 1-供应商
+    data.info.type = 0; // 商户类型 0-商户 1-供应商
     data.info.shopSuperior = wx.getStorageSync('shopId');
     data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; // 默认当前用户地区
     // 修改
@@ -255,7 +255,7 @@ Page({
   getData: function() {
     this.getShopList();
   },
-  // 获取上级店铺列表
+  // 获取上级商户列表
   getSuperiorShop: function (shopId) {
     let params = {
       shopId: shopId
@@ -273,7 +273,7 @@ Page({
       })
     })
   },
-  // 获取店铺列表
+  // 获取商户列表
   getShopList: function() {
     let params = {
       userId: this.data.userId
@@ -304,7 +304,7 @@ Page({
       info: info
     });
   },
-  // 选择上级店铺
+  // 选择上级商户
   changeShop: function(e) {
     let index = e.detail.value;
     let info = this.data.info;
@@ -319,7 +319,7 @@ Page({
     let shopParams = {
       shopId: id
     };
-    // 查询每个店铺下的员工
+    // 查询每个商户下的员工
     shopApi.searchUser(shopParams).then((res) => {
       this.setData({
         userList: res.data ? res.data : []

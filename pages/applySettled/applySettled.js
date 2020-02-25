@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    shopId: '', //店铺id
+    shopId: '', //商户id
     uploadUrl: 'http://47.106.130.46:8000/common/file/upload/qxkj-test/qxkj/test',
     isAccept: 0,
     step: 0,
@@ -38,9 +38,9 @@ Page({
       personName: '', // 负责人名称 ,
       phone: '', // 手机号码 ,
       regionId: '', // 地区id ,
-      shopSuperior: '', // 店铺上级 ,
+      shopSuperior: '', // 商户上级 ,
       shopType: '', // 商户类型 ,
-      type: 0, // 店铺类型 ,
+      type: 0, // 商户类型 ,
       updateName: '', // 修改人名称 ,
       updateTime: '', // 修改时间 ,
       userId: '', // 用户id ,
@@ -53,7 +53,7 @@ Page({
     let shopParams = {
       shopId: id
     };
-    // 查询每个店铺下的员工
+    // 查询每个商户下的员工
     shopApi.searchUser(shopParams).then((res) => {
       shopInfo.userList = res.data ? res.data : [];
       this.setData({
@@ -84,7 +84,7 @@ Page({
       cardTime: cardTime
     });
   },
-  // 店铺信息--下一步按钮
+  // 商户信息--下一步按钮
   nextSubmit: function() {
     var shopInfo = this.data.shopInfo;
     shopInfo.validity = this.data.cardTime;
@@ -343,7 +343,7 @@ Page({
       shopInfo: shopInfo
     });
   },
-  // 申请入驻店铺
+  // 申请入驻商户
   addShop: function() {
     let params = this.data.shopInfo;
     if (!params.cardZmPath) {

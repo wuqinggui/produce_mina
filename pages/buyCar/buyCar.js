@@ -76,7 +76,7 @@ Page({
 
   },
 
-  // 获取获取购物车店铺数据
+  // 获取获取购物车商户数据
   getData: function () {
     wx.showLoading({
       title: '加载中',

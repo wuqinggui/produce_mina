@@ -15,12 +15,12 @@ Page({
     curRegionIndex: 0,
     // 地区列表
     regionList: [],
-    // 当前店铺
+    // 当前商户
     curShop: {},
-    // 店铺列表
+    // 商户列表
     shopList: [],
-    shopPop: false, // 是否显示店铺弹框
-    showShopList: false, // 是否显示店铺下拉列表
+    shopPop: false, // 是否显示商户弹框
+    showShopList: false, // 是否显示商户下拉列表
     // 大分类
     classList: [],
     curClass: {}, // 当前大分类
@@ -414,11 +414,11 @@ Page({
       })
     } else {
       // 已登陆
-      this.getShopList(); // 获取店铺
+      this.getShopList(); // 获取商户
     }
   },
 
-  // 获取店铺
+  // 获取商户
   getShopList: function () {
     wx.showLoading({
       title: '加载中',
@@ -453,20 +453,20 @@ Page({
         })
       })
   },
-  // 显示店铺弹框
+  // 显示商户弹框
   showShopPop: function () {
     this.setData({
       shopPop: true,
       showShopList: false
     })
   },
-  // 显示店铺下拉数据
+  // 显示商户下拉数据
   showShopSelect: function () {
     this.setData({
       showShopList: !this.data.showShopList
     })
   },
-  // 切换店铺
+  // 切换商户
   changeShop: function (e) {
     console.log(e)
     let { shopItem } = e.currentTarget.dataset;
@@ -475,7 +475,7 @@ Page({
       showShopList: false
     })
   },
-  // 确认切换店铺
+  // 确认切换商户
   sureChangeShop: function (e) {
     if (!this.data.curShop.id) {
       wx.showToast({
@@ -491,7 +491,7 @@ Page({
     })
     this.sureAddCar();
   },
-  // 关闭店铺弹框
+  // 关闭商户弹框
   hidShopPop: function () {
     this.setData({
       showShopList: false,

@@ -14,7 +14,7 @@ image {
   height: 100%;
 }
 
-/* 顶部城市店铺 */
+/* 顶部城市商户 */
 .head-wrap{
   position: absolute;
   top: 0;
@@ -256,7 +256,7 @@ image {
   background-color: #FFA800;
 }
 
-/* 店铺弹框 */
+/* 商户弹框 */
 .shopPop-bg{
   position: fixed;
   top: 0;

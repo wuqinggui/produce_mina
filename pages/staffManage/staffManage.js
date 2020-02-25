@@ -38,7 +38,7 @@ Page({
         name: '管理人员'
       }
     ],
-    shopList: [], // 店铺列表
+    shopList: [], // 商户列表
     list: [] // 员工列表
   },
   selectShop: function() {
@@ -79,7 +79,7 @@ Page({
       inputValue: address[e.detail.value].name
     })
   },
-  // 选择店铺
+  // 选择商户
   bindPickerChange2: function(e) {
     var shopList = this.data.shopList;
     var info = this.data.info;
@@ -307,7 +307,7 @@ Page({
     };
     let list = [];
     let _this = this;
-    // 查询该登录用户下的店铺
+    // 查询该登录用户下的商户
     shopApi.findListShop(params).then((res) => {
       wx.hideLoading();
       if (res.data.length) {
@@ -315,7 +315,7 @@ Page({
           let shopParams = {
             shopId: shopItem.id
           };
-          // 查询每个店铺下的员工
+          // 查询每个商户下的员工
           shopApi.searchUser(shopParams).then((userRes) => {
             userRes.data && userRes.data.forEach((item) => {
               list.push(item);
@@ -356,7 +356,7 @@ Page({
       })
     })
   },
-  // 获取店铺列表
+  // 获取商户列表
   getShopList: function() {
     shopApi.shopList().then((res) => {
       this.setData({
