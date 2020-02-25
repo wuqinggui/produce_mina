@@ -2,11 +2,11 @@
   <view class="receipt row verticle-center">
     <view class="info pr10 flex-1">
       <view class="userinfo row mb5 mt10">
-        <text class="name flex-1">收件人： {{submitCarData.addressee.name ? submitCarData.addressee.name : ''}}</text>
-        <text class="number">{{submitCarData.addressee.phone ? submitCarData.addressee.phone : ''}}</text>
+        <text class="name flex-1">收件人： {{submitCarData.address.name ? submitCarData.address.name : ''}}</text>
+        <text class="number">{{submitCarData.address.phone ? submitCarData.address.phone : ''}}</text>
       </view>
       <view class="address f13">
-        收货地址：{{submitCarData.addressee.addresses ? submitCarData.addressee.addresses : ''}}
+        收货地址：{{submitCarData.address.addresses ? submitCarData.address.addresses : ''}}
       </view>
     </view>
   </view>

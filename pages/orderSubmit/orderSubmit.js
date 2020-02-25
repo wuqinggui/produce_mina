@@ -94,6 +94,7 @@ Page({
       if (data.address && data.address.hasOwnProperty("regional") && data.address.hasOwnProperty("addresses")) {
         data.address.addresses = data.address.regional.replace(/\,/g, '') + data.address.addresses;
       }
+      console.log(data)
       this.setData({
         submitCarData: data,
         supplyOrderData: {},
@@ -134,7 +135,7 @@ Page({
       mask: true
     })
     var params = {
-      addressId: this.data.submitCarData.addressee.id ? this.data.submitCarData.addressee.id : '',
+      addressId: this.data.submitCarData.address.id ? this.data.submitCarData.address.id : '',
       regionId: this.data.submitCarData.regionId,
       cartId: this.data.submitCarData.id,
       shopId: this.data.submitCarData.shopId,
