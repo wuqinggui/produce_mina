@@ -512,7 +512,8 @@ Page({
         if (data[i].specPriceVos[j].isSelect) {
           var item = {
             id: data[i].specPriceVos[j].id ? data[i].specPriceVos[j].id : '',
-            number: 1
+            number: 1,
+            specId: data[i].specPriceVos[j].spec.id ? data[i].specPriceVos[j].spec.id : '',
           }
           shopCommoditDto.push(item)
         }

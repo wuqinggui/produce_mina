@@ -245,7 +245,8 @@ Page({
       shopCommoditDto: [
         {
           id: item.commodityId,
-          number: newNum
+          number: newNum,
+          specId: item.specId
         }
       ],
       shopId: item.shopId,
@@ -346,7 +347,8 @@ Page({
     var item = e.currentTarget.dataset.item;
     var shopCommoditDto = [
       {
-        id: item.commodityId
+        id: item.commodityId,
+        specId: item.specId
       }
     ];
     var params = {
