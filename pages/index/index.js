@@ -511,7 +511,7 @@ Page({
       for (var j = 0; j < data[i].specPriceVos.length; j++) {
         if (data[i].specPriceVos[j].isSelect) {
           var item = {
-            id: data[i].specPriceVos[j].id ? data[i].specPriceVos[j].id : '',
+            id: data[i].commodityId,
             number: 1,
             specId: data[i].specPriceVos[j].spec.id ? data[i].specPriceVos[j].spec.id : '',
           }
