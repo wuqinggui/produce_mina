@@ -2,5 +2,8 @@
   <input value="{{userName}}" bindinput="bindKeyUserName" placeholder="用户名" placeholder-class="input-placeholder" class="input-content"/>
   <input value="{{password}}" password="{{true}}" bindinput="bindKeyPassword" maxlength="20" placeholder="密码" placeholder-class="input-placeholder" class="input-content"/>
   <button bindtap="login" hover-class="click-active" class="submit-btn {{ userName && password ? '' : 'btn-disabled' }}">登 录</button>
+  <view class="register pt10 gray287 text-right">
+    <text bindtap="goRegister">快速注册</text>
+  </view>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

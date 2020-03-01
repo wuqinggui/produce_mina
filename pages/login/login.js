@@ -71,6 +71,12 @@ Page({
   onShareAppMessage: function() {
 
   },
+// 注册页
+  goRegister: function() {
+    wx.navigateTo({
+      url: '/pages/register/register'
+    })
+  },
 
   bindKeyUserName: function(e) {
     this.setData({

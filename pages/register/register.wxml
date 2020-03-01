@@ -1,0 +1,62 @@
+<!--pages/register/register.wxml-->
+<view class="register pl20 pr20">
+  <view class="row flex">
+    <text>用户名</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请输入手机号" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>昵称</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请输入昵称" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>密码</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请输入密码" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>确认密码</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请确认密码" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>邮箱</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请输入邮箱" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>地区</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请选择地区" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>用户类型</text>
+    <view class="content">
+      <input class="ipt" value="" placeholder="请选择用户类型" />
+    </view>
+  </view>
+  <view class="row flex">
+    <text>客户类型</text>
+    <view class="content">
+      <picker bindchange="bindPickerChange2" value="{{shopList[index]}}" range="{{shopList}}" range-key="merchantName">
+        <view class="picker flex">
+          <input class="ipt" disabled="true" placeholder="请选择客户类型" value="{{info.merchantName}}" />
+          <view class="common-arrow right arrow small"></view>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="btns mt30">
+    <view class="register text-center">
+      <button class="register-btn f16">注册</button>
+    </view>
+    <view class="back text-center pb10 pt10">返回</view>
+  </view>
+</view>
