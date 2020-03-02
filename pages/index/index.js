@@ -167,7 +167,7 @@ Page({
     //   .then((res) => {
     //     console.log('查询客户类型成功', res);
     //     wx.hideLoading();
-    var customerTypeId = getApp().globalData.userInfo.customerTypeId ? getApp().globalData.userInfo.customerTypeId : '';
+    var customerTypeId = getApp().globalData.userInfo.customertyId ? getApp().globalData.userInfo.customertyId : '';
     console.log('客户类型', customerTypeId)
         this.setData({
           customerTypeId: customerTypeId
