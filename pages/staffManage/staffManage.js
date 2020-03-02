@@ -125,15 +125,15 @@ Page({
         duration: 2000
       })
     }
+    data.info.customertyId = 2; //客户类型
     data.info.userType = wx.getStorageSync('sj_userInfo').userType; // 用户类型
     data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; //地区ID
     data.info.shopId = wx.getStorageSync('shopId');
     data.info.userId = data.userId;
     data.info.password = MD5.hexMD5(data.info.password)
-    let params = data.info;
     // 新增员工
     if (data.btnStatus == 1) {
-      shopApi.addUser(params).then((res) => {
+      shopApi.addUser(data.info).then((res) => {
         wx.showToast({
           title: '添加成功',
           icon: 'success',
@@ -149,7 +149,7 @@ Page({
         })
       })
     } else { // 修改员工
-      shopApi.updateUser(params).then((res) => {
+      shopApi.updateUser(data.info).then((res) => {
         wx.showToast({
           title: '修改成功',
           icon: 'success',
