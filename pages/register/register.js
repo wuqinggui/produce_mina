@@ -1,5 +1,6 @@
 // pages/register/register.js
 var shopApi = require('../../http/shopApi.js').default;
+var MD5 = require('../../utils/md5.js');
 Page({
 
   /**
@@ -76,6 +77,7 @@ Page({
       mask: true
     })
     staffInfo.userType = 3; //定为商家管理员
+    staffInfo.password = MD5.hexMD5(staffInfo.password)
     shopApi.addUser(staffInfo).then((res) => {
       wx.hideLoading(); 
       wx.showToast({
