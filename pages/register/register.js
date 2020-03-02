@@ -22,7 +22,7 @@ Page({
   checkCustomerType: function (e) {
     let { customerTypeArr, staffInfo } = this.data;
     let index = e.detail.value;
-    ({ id: staffInfo.userRole, name: staffInfo.userRoleName } = customerTypeArr[index]);
+    ({ id: staffInfo.customertyId, name: staffInfo.customertyName } = customerTypeArr[index]);
     this.setData({
       staffInfo: staffInfo
     });
@@ -44,9 +44,9 @@ Page({
     // 邮箱正则匹配
     let emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
     let toastTxt = '';
-    if (!staffInfo.phone) {
+    if (!staffInfo.userName) {
       toastTxt = '请输入手机号';
-    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(staffInfo.phone)) {
+    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(staffInfo.userName)) {
       toastTxt = '手机号码格式，请重新输入';
     } else if (!staffInfo.nickname) {
       toastTxt = '请输入昵称';
@@ -62,7 +62,7 @@ Page({
       toastTxt = '邮箱格式有误，请重新输入';
     } else if (!staffInfo.regionId) {
       toastTxt = '请选择地区';
-    } else if (!staffInfo.userRole) {
+    } else if (!staffInfo.customertyId) {
       toastTxt = '请选择客户类型';
     }
     if (toastTxt) {
@@ -77,6 +77,8 @@ Page({
       mask: true
     })
     staffInfo.userType = 3; //定为商家管理员
+    staffInfo.stats = 1; //状态
+    staffInfo.phone = staffInfo.userName; //号码同用户名一致。
     staffInfo.password = MD5.hexMD5(staffInfo.password)
     shopApi.addUser(staffInfo).then((res) => {
       wx.hideLoading(); 

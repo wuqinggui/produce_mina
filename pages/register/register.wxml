@@ -3,7 +3,7 @@
   <view class="row flex">
     <text>手机号码</text>
     <view class="content">
-      <input class="ipt" bindinput="bindAndSet" data-key="phone" value="{{staffInf.phone}}" placeholder="请输入手机号" />
+      <input class="ipt" bindinput="bindAndSet" data-key="userName" value="{{staffInf.userName}}" placeholder="请输入手机号" />
     </view>
   </view>
   <view class="row flex">
@@ -57,7 +57,7 @@
     <view class="content">
       <picker bindchange="checkCustomerType" value="{{customerTypeArr[index]}}" range="{{customerTypeArr}}" range-key="name">
         <view class="picker flex">
-          <input class="ipt" disabled="true" placeholder="请选择客户类型" value="{{staffInfo.userRoleName}}" />
+          <input class="ipt" disabled="true" placeholder="请选择客户类型" value="{{staffInfo.customertyName}}" />
           <view class="common-arrow right arrow small"></view>
         </view>
       </picker>
