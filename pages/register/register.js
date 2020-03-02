@@ -86,9 +86,7 @@ Page({
         title: res.message ? res.message : '注册成功',
         icon: 'success',
         success: function() {
-          wx.navigateTo({
-            url: '/pages/login/login',
-          })
+          wx.navigateBack();
         }
       })
     }).catch((error) => {
