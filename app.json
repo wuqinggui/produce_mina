@@ -16,7 +16,8 @@
     "pages/shippingAddress/shippingAddress",
     "pages/addAddress/addAddress",
     "pages/applySettled/applySettled",
-    "pages/login/login"
+    "pages/login/login",
+    "pages/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",
