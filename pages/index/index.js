@@ -53,7 +53,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.pageInit();
+    // this.pageInit();
+    let sj_userId = wx.getStorageSync('sj_userId')
+    if (sj_userId) {
+      this.pageInit();
+    } else {
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    }
   },
 
   /**
@@ -148,31 +156,33 @@ Page({
 
   // 查询客户类型
   getCustomerType: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
-    var params = {
-      userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
-    }
-    shopApi.findShopByUserId(params)
-      .then((res) => {
-        console.log('查询客户类型成功', res);
-        wx.hideLoading();
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
+    // var params = {
+    //   userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
+    // }
+    // shopApi.findShopByUserId(params)
+    //   .then((res) => {
+    //     console.log('查询客户类型成功', res);
+    //     wx.hideLoading();
+    var customerTypeId = getApp().globalData.userInfo.customerTypeId ? getApp().globalData.userInfo.customerTypeId : '';
+    console.log('客户类型', customerTypeId)
         this.setData({
-          customerTypeId: res.data && res.data.customerTypeId ? res.data.customerTypeId : ''
+          customerTypeId: customerTypeId
         })
         this.getShopClass(); // 获取大分类
-      })
-      .catch((error) => {
-        console.log('查询客户类型失败', error);
-        wx.hideLoading();
-        wx.showToast({
-          title: error.message ? error.message : '查询客户类型失败',
-          icon: 'none',
-          duration: 2000
-        })
-      })
+    //   })
+    //   .catch((error) => {
+    //     console.log('查询客户类型失败', error);
+    //     wx.hideLoading();
+    //     wx.showToast({
+    //       title: error.message ? error.message : '查询客户类型失败',
+    //       icon: 'none',
+    //       duration: 2000
+    //     })
+    //   })
   },
 
   // 获取大分类
@@ -248,7 +258,6 @@ Page({
     shopApi.commodityList(params)
       .then((res) => {
         console.log('获取商品数据成功', res);
-        wx.hideLoading();
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].isSelect = false;
@@ -260,6 +269,7 @@ Page({
           goodsList: data,
           buyCarGoodtypeNum: 0
         })
+        wx.hideLoading();
       })
       .catch((error) => {
         console.log('获取商品数据失败', error);

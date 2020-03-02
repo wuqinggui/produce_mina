@@ -101,9 +101,10 @@
                   <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
                 </view>
             </view>
+            <!-- 未选择规格先默认展示第一个规格价格 -->
             <view class="carts-price {{goodsItem.shopdesc ? '' : 'mt5'}}" wx:if="{{!goodsItem.isSelect}}">
               <text class="symbol f12">￥</text>
-              <text class="price f14">0</text>
+              <text class="price f14" v-if="goodsItem.specPriceVos.length > 0">{{ goodsItem.specPriceVos[0].price}}</text>
               <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
             </view>
             <view class="shopdesc f12 gray6 text-overflow" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</view>
