@@ -18,9 +18,9 @@
           <!-- 商品标题 -->
           <text class="carts-title text-overflow">{{item.commodity.name}}</text>
           <text class="carts-type text-overflow">{{item.commodity.specs.specName}}</text>
-          <view class="carts-subtitle">
+          <view class="carts-subtitle row">
             <!-- 价格 -->
-            <view class="carts-price">
+            <view class="carts-price flex-1">
               <text class="symbol f12">￥</text>
               <text class="price f16">{{item.commodity.price}}</text>
               <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
@@ -37,6 +37,7 @@
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>
             </view>
+            <view class="ml10 gray6 f12 verticle-center">{{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
           </view>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>

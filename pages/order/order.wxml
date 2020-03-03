@@ -33,13 +33,14 @@
                       <text class="carts-title text-overflow">{{item.commodity.name}}</text>
                       <text class="carts-type ml10 text-overflow">{{item.commodity.specs.specName}}</text>
                     </view>
-                    <view class="carts-price row ju-b al-c">
-                      <view class="priceinfo">
+                    <view class="carts-price row al-c">
+                      <view class="priceinfo flex-1">
                         <text class="symbol f12">￥</text>
                         <text class="price f16">{{item.commodity.price}}</text>
                         <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
                       </view>
-                      <view class="num f15">× {{item.number}}</view>
+                      <view class="gray6 f13">实发：{{item.accountNumber}}{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
+                      <view class="gray6 f13 ml20">预订：{{item.number}}{{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
                     </view>
                   </view>
                 </view>
