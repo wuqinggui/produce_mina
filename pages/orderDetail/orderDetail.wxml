@@ -44,8 +44,8 @@
                 <text class="price f16">{{item.commodity.price}}</text>
                 <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
               </view>
-              <view class="gray6 f13 actual-warp">实发：{{item.accountNumber}}{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
-              <view class="gray6 f13 ml20 actual-warp">预订：{{item.number}}{{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
+              <view class="gray6 f13 actual-warp">实发：{{item.accountNumber}} {{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
+              <view class="gray6 f13 ml20 actual-warp">预订：{{item.number}} {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
             </view>
           </view>
         </view>
