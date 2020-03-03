@@ -135,3 +135,6 @@
   text-align: right;
   color: #ffae11;
 }
+.actual-warp{
+  min-width: 140rpx;
+}

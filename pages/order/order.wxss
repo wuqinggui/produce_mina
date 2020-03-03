@@ -275,3 +275,6 @@
   width: 30rpx;
   height: 30rpx;
 }
+.actual-warp{
+  min-width: 140rpx;
+}
