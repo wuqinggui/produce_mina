@@ -384,7 +384,7 @@ image {
 }
 
 .carts-price {
-	line-height: 20px;
+	line-height: 40rpx;
 }
 .carts-price .symbol {
 	color: #fc9326;

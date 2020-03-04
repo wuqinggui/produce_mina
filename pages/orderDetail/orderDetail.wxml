@@ -26,29 +26,36 @@
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <block>
-      <view wx:for="{{orderData.orderCommditys}}" class="carts-container" wx:key="index">
-        <view class="carts-item">
-          <view>
-            <!-- 缩略图 -->
-            <image class="carts-image" src="{{item.commodity.imagepath}}" mode="aspectFill" />
-          </view>
-          <view class="carts-text">
-            <!-- 商品标题 -->
-            <view class="verticle-center">
-              <text class="carts-title text-overflow">{{item.commodity.name}}</text>
-              <text class="carts-type ml10 text-overflow">{{item.commodity.specs.specName}}</text>
-            </view>
-            <view class="carts-price row al-c">
-              <view class="priceinfo flex-1">
-                <text class="symbol f12">￥</text>
-                <text class="price f16">{{item.commodity.price}}</text>
-                <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
-              </view>
-              <view class="gray6 f13 actual-warp">实发：{{item.accountNumber}} {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
-              <view class="gray6 f13 ml20 actual-warp">预订：{{item.number}} {{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
-            </view>
-          </view>
+      <view class="goodsItem" wx:for="{{orderData.orderCommditys}}" wx:key="index">
+        <view class="image-wrap">
+          <image
+            src="{{item.commodity.imagepath}}"
+            class="image"></image>
         </view>
+        <view class="product-detail-wrap">
+          <view class="name-wrap">
+            <view class="title gray3 f16">
+              {{item.commodity.name}}
+              <view class="zlbz f10 bg-f5 text-red" wx:if="{{item.commodity.zlbz}}">{{item.commodity.zlbz}}</view>
+              </view>
+          </view>
+          <view class="row {{item.commodity.shopdesc ? 'mt2' : 'mt9'}}">
+            <view class="specItem verticle-center mr5 specItem-isSelect">
+                {{item.commodity.specs.specName}}
+            </view>
+          </view>
+          <view class="price-wrap row al-c {{item.commodity.shopdesc ? 'mt2' : 'mt9'}}">
+            <view class="carts-price flex-1">
+              <text class="symbol f12">￥</text>
+              <text class="price f16">{{item.commodity.price}}</text>
+              <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
+            </view>
+            <view class="gray6 f13 actual-warp">实发：{{item.accountNumber}} {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
+            <view class="gray6 f13 ml20 actual-warp">预订：{{item.number}} {{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
+          </view>
+          <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{item.commodity.shopdesc}}">{{item.commodity.shopdesc}}</view>
+        </view>
+        <view class="half-px-border half-px-border-bottom"></view>
       </view>
     </block>
   </view>

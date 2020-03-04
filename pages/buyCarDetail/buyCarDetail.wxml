@@ -16,9 +16,18 @@
         </view>
         <view class="carts-text mr20">
           <!-- 商品标题 -->
-          <text class="carts-title text-overflow">{{item.commodity.name}}</text>
-          <text class="carts-type text-overflow">{{item.commodity.specs.specName}}</text>
-          <view class="carts-subtitle row">
+          <view class="name-wrap">
+            <view class="title gray3 f16">
+              {{item.commodity.name}}
+              <view class="zlbz f10 bg-f5 text-red" wx:if="{{item.commodity.zlbz}}">{{item.commodity.zlbz}}</view>
+              </view>
+          </view>
+          <view class="row {{item.commodity.shopdesc ? 'mt2' : 'mt9'}}">
+            <view class="specItem verticle-center mr5 specItem-isSelect">
+                {{item.commodity.specs.specName}}
+            </view>
+          </view>
+          <view class="carts-subtitle row {{item.commodity.shopdesc ? 'mt2' : 'mt9'}}">
             <!-- 价格 -->
             <view class="carts-price flex-1">
               <text class="symbol f12">￥</text>
@@ -39,6 +48,7 @@
             </view>
             <view class="ml10 gray6 f12 verticle-center">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
           </view>
+            <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{item.commodity.shopdesc}}">{{item.commodity.shopdesc}}</view>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>

@@ -43,11 +43,11 @@ Page({
       //   index: 5,
       //   orderPayState: 2
       // }, 
-      {
-        text: '退货/退款',
-        index: 6,
-        orderState: 3
-      }
+      // {
+      //   text: '退货/退款',
+      //   index: 6,
+      //   orderState: 3
+      // }
     ],
     orderList: [],
   },
