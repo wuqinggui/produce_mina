@@ -38,7 +38,7 @@
                   <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
                 </view>
                 <view class="num f15">× {{item.number}}</view>
-                <view class="ml5 gray6 f13">{{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
+                <view class="ml5 gray6 f13">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
               </view>
             </view>
           <view class="half-px-border half-px-border-bottom"></view>

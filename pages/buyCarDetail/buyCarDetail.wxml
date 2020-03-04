@@ -37,7 +37,7 @@
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>
             </view>
-            <view class="ml10 gray6 f12 verticle-center">{{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</view>
+            <view class="ml10 gray6 f12 verticle-center">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
           </view>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
