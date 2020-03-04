@@ -24,6 +24,7 @@ export const payParamsUrl = baseUrl + 'payment/toPay'; // 支付
 export const addOrderUrl = baseUrl + 'order/add'; // 下单接口
 export const getOrderUrl = baseUrl + 'order/findList'; // 订单查询接口
 export const orderUpdateUrl = baseUrl + 'order/update'; // 订单修改接口
+export const orderDeleteUrl = baseUrl + 'order/delete'; // 订单删除接口
 // 商户
 export const addShopUrl = baseUrl + 'shop/add'; // 新增商户接口（含申请ruzhu的接口）
 export const updateShopUrl = baseUrl + 'shop/update'; // 修改商户接口
@@ -41,7 +42,8 @@ export const findByUserIdUrl = baseUrl + 'shop/findByUserId'; //用户搜商户
 export const findMoreShopByIdUrl = baseUrl + 'shop/findMoreShopById'; //根据商户id查找商户
 // 收货地址
 export const addAddressUrl = baseUrl + 'address/add'; // 新增收货地址
-export const searchAddressListUrl = baseUrl + 'address/findAll'; // 收货地址列表
+// export const searchAddressListUrl = baseUrl + 'address/findAll'; // 收货地址列表
+export const searchAddressListUrl = baseUrl + 'address/findList'; // 收货地址列表
 export const findByIdAddressUrl = baseUrl + 'address/findById'; // 搜索
 export const updateAddressUrl = baseUrl + 'address/update'; // 修改地址
 // 客户类型

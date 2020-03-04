@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userId: '',
     list: [],
     isSelect: 0, // 是否来选择收货地址 (0为否1为是)
     addressId: '', // 选择收货地址时，从其他页传来的地址id
@@ -45,6 +46,9 @@ Page({
   onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      this.setData({
+        userId: sj_userId
+      });
       this.getData();
     } else {
       wx.navigateTo({
@@ -95,7 +99,8 @@ Page({
 
   // 获取列表
   getAddressList: function() {
-    shopApi.addressList().then((res) => {
+    let params = { userId: this.data.userId };
+    shopApi.addressList(params).then((res) => {
       res.data && res.data.forEach(function(item) {
         item.addresses = item.regional.replace(/\,/g, '') + item.addresses;
       })

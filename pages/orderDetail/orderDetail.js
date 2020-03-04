@@ -123,8 +123,33 @@ Page({
 
   // 取消订单
   cancelOrder: function () {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     var item = this.data.orderData;
-    this.editOrder(item, 2);
+    var params = {
+      id: item.id
+    }
+    shopApi.orderDelete(params)
+      .then((res) => {
+        console.log('修改订单数据成功', res);
+        wx.hideLoading();
+        // this.getData();
+        wx.navigateBack();
+      })
+      .catch((error) => {
+        console.log('修改订单数据失败', error);
+        wx.hideLoading();
+        this.setData({
+          isClick: false
+        })
+        wx.showToast({
+          title: error.message ? error.message : '操作失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
 
   // 退货退款

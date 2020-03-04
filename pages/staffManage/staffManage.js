@@ -126,9 +126,10 @@ Page({
       })
     }
     // 默认取用户信息里对应的字段
-    ({ customertyId: data.info.customertyId, userType: data.info.userType, regionId: data.info.regionId, freightId: data.info.freightId } = wx.getStorageSync('sj_userInfo'))
+    ({ customertyId: data.info.customertyId, userType: data.info.userType, regionId: data.info.regionId, freightId: data.info.freightId, accountperiodId: data.info.accountperiodId } = wx.getStorageSync('sj_userInfo'))
     data.info.shopId = wx.getStorageSync('shopId');
     data.info.userId = data.userId;
+    data.info.stats = '2';
     data.info.password = MD5.hexMD5(data.info.password)
     // 新增员工
     if (data.btnStatus == 1) {
