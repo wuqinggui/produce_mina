@@ -125,9 +125,8 @@ Page({
         duration: 2000
       })
     }
-    data.info.customertyId = 2; //客户类型
-    data.info.userType = wx.getStorageSync('sj_userInfo').userType; // 用户类型
-    data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; //地区ID
+    // 默认取用户信息里对应的字段
+    ({ customertyId: data.info.customertyId, userType: data.info.userType, regionId: data.info.regionId, freightId: data.info.freightId } = wx.getStorageSync('sj_userInfo'))
     data.info.shopId = wx.getStorageSync('shopId');
     data.info.userId = data.userId;
     data.info.password = MD5.hexMD5(data.info.password)

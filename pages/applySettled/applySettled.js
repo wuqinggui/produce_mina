@@ -94,13 +94,14 @@ Page({
         icon: 'none',
         duration: 2000
       })
-    } else if (!shopInfo.mainproject) {
-      return wx.showToast({
-        title: '请输入主营项目',
-        icon: 'none',
-        duration: 2000
-      })
     } 
+    // else if (!shopInfo.mainproject) {
+    //   return wx.showToast({
+    //     title: '请输入主营项目',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
     // else if (!shopInfo.personName) {
     //   return wx.showToast({
     //     title: '请输入负责人名称',
@@ -108,19 +109,20 @@ Page({
     //     duration: 2000
     //   })
     // } 
-    else if (!shopInfo.cardNumber) {
-      return wx.showToast({
-        title: '请输入身份证',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!shopInfo.validity) {
-      return wx.showToast({
-        title: '请选择身份证期限',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!shopInfo.phone) {
+    // else if (!shopInfo.cardNumber) {
+    //   return wx.showToast({
+    //     title: '请输入身份证',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } else if (!shopInfo.validity) {
+    //   return wx.showToast({
+    //     title: '请选择身份证期限',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
+    else if (!shopInfo.phone) {
       return wx.showToast({
         title: '请输入手机号码',
         icon: 'none',
@@ -132,25 +134,29 @@ Page({
         icon: 'none',
         duration: 2000
       })
-    } else if (!shopInfo.address) {
+    } 
+    // else if (!shopInfo.address) {
+    //   return wx.showToast({
+    //     title: '请输入地址',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
+    else if (!shopInfo.headAddress) {
       return wx.showToast({
-        title: '请输入地址',
+        title: '请选择收货地址',
         icon: 'none',
         duration: 2000
       })
-    } else if (!shopInfo.headAddress) {
-      return wx.showToast({
-        title: '请选择总店地址',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!shopInfo.customerType) {
-      return wx.showToast({
-        title: '请选择客户类型',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!this.data.isAccept) {
+    } 
+    // else if (!shopInfo.customerType) {
+    //   return wx.showToast({
+    //     title: '请选择客户类型',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
+    else if (!this.data.isAccept) {
       return wx.showToast({
         title: '请阅读并勾选买家管理协议',
         icon: 'none',

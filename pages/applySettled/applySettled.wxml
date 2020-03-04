@@ -13,7 +13,7 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <view class="list-item flex">
+      <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">主营项目：</text>
@@ -22,7 +22,7 @@
           <input name="mainproject" bindinput="bindAndSet" data-key="mainproject" placeholder-class="place-holder" class="weui-input" placeholder="例如：餐饮" value="{{mainproject}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
@@ -38,7 +38,7 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view> -->
-      <view class="list-item flex">
+      <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">身份证：</text>
@@ -47,7 +47,7 @@
           <input name="cardNumber" bindinput="bindAndSet" data-key="cardNumber" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="中国大陆身份证件号" value="{{cardNumber}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
@@ -58,11 +58,10 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <view class="list-item flex" bindtap="selectCardDate">
+      <!-- <view class="list-item flex" bindtap="selectCardDate">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">身份证期限：</text>
-          <!-- <text name="validity">{{validity}}</text> -->
         </view>
         <view class="list-item-input">
           <picker bindchange="changeTime" mode="date" value="{{cardTime}}">
@@ -83,11 +82,11 @@
           <input name="address" bindinput="bindAndSet" data-key="address" placeholder-class="place-holder" class="weui-input" placeholder="请输入商户地址" value="{{address}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
-          <text class="name">总店地址：</text>
+          <text class="name">收货地址：</text>
         </view>
         <view class="addressName flex flex-1 ju-b verticle-center" bindtap="selectAddress">
           <view class="headAddress f14 {{headAddress ? '' : 'grayaaa'}}">{{headAddress_name}}</view>
@@ -95,7 +94,7 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
-      <view class="list-item flex">
+      <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">客户类型：</text>
@@ -109,7 +108,7 @@
           </picker>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <!-- <view class="list-item flex">
           <view class="list-item-info">
             <text class="require">*</text>
@@ -274,7 +273,7 @@
   </view>
 </template>
 <view class="applySettled">
-  <view class="progress flex column">
+  <!-- <view class="progress flex column">
     <view class="title pb20 pt10 text-center">管理进度</view>
     <view class="list flex">
       <view class="item flex flex-1 column ju-c complate">
@@ -310,7 +309,7 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="infomation">
     <block>
       <template is="item1" data="{{cardTime, isAccept,customerType: customerType, ...shopInfo}}" wx:if="{{step == 0}}" />
