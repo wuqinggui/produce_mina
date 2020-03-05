@@ -184,7 +184,7 @@ var shopApi = {
   // 订单删除接口
   orderDelete: function(params) {
     return new Promise((resolve, reject) => {
-      wxRequest(orderDeleteUrl + "?id=" + params.id, 'POST', params)
+      wxRequest(orderDeleteUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

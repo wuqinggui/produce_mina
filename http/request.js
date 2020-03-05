@@ -1,4 +1,5 @@
 var util = require('../utils/util.js')
+import { orderDeleteUrl } from './url'
 
 function httpHeader (contentType) {
   // object传json格式，否则传formData，仅限post请求
@@ -17,7 +18,7 @@ function httpHeader (contentType) {
  */
 const wxRequest = (url, type, params) => {
   return new Promise((resolve, reject) => {
-    let formDataUrlList = [];
+    let formDataUrlList = [orderDeleteUrl];
     let isFormData = false;
     if (formDataUrlList.indexOf(url) !== -1) {
       isFormData = true;
