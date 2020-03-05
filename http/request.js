@@ -1,9 +1,10 @@
 var util = require('../utils/util.js')
 
-function httpHeader () {
+function httpHeader (contentType) {
+  // object传json格式，否则传formData，仅限post请求
+  contentType = contentType === 'formData' ? 'application/x-www-form-urlencoded;charset=UTF-8' : 'application/json;charset=UTF-8';
   return {
-    // 'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    'content-type': 'application/json;charset=UTF-8'
+    'content-type': contentType
   };
 }
 
@@ -16,9 +17,14 @@ function httpHeader () {
  */
 const wxRequest = (url, type, params) => {
   return new Promise((resolve, reject) => {
+    let formDataUrlList = [];
+    let isFormData = false;
+    if (formDataUrlList.indexOf(url) !== -1) {
+      isFormData = true;
+    }
     wx.request({
       url: url,
-      header: httpHeader(),
+      header: isFormData ? httpHeader('formData') : httpHeader(),
       method: type ? type : 'POST',
       data: params ? params : {},
       success: res => {
