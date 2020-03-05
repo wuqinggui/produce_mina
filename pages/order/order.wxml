@@ -34,7 +34,7 @@
                     <view class="name-wrap">
                       <view class="title gray3 f16">
                         {{item.commodity.name}}
-                        <view class="zlbz f10 bg-f5 text-red" wx:if="{{item.commodity.zlbz}}">{{item.commodity.zlbz}}</view>
+                        <view class="zlbz f10 bg-f5 text-red" wx:if="{{item.zlbz}}">{{item.zlbz}}</view>
                         </view>
                     </view>
                     <view class="row {{item.shopdesc ? 'mt2' : 'mt9'}}">
