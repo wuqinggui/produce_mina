@@ -185,7 +185,8 @@ Page({
 
   // 点击先获取当前操作的商品信息，input获取焦点
   getFoucs: function (e) {
-    console.log(e.currentTarget.dataset)
+    console.log('-------------------点击先获取当前操作的商品信息---------------------');
+    console.log(e.currentTarget.dataset.item.number)
     let { item, idx, index } = e.currentTarget.dataset;
     this.setData({
       curIdx: idx,
@@ -197,6 +198,7 @@ Page({
   // 失去焦点，修改数量
   changeNumber: function (e) {
     var value = e.detail.value;
+    var item = e.currentTarget.dataset.item;
     if (value < 1) {
       wx.showToast({
         title: '数量不能小于1',
@@ -220,7 +222,6 @@ Page({
       curIdx: -1,
       curIndex: -1
     })
-    var item = this.data.curItem;
     this.changeCar(item, 3, value);
   },
 
