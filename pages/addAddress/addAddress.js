@@ -168,11 +168,12 @@ Page({
         userId: sj_userId
       });
       this.getData();
-    } else {
-      wx.navigateTo({
-        url: '/pages/login/login'
-      })
     }
+    //  else {
+    //   wx.navigateTo({
+    //     url: '/pages/login/login'
+    //   })
+    // }
   },
 
   /**

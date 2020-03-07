@@ -30,11 +30,12 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.getData();
-    } else {
-      wx.navigateTo({
-        url: '/pages/login/login'
-      })
     }
+    //  else {
+    //   wx.navigateTo({
+    //     url: '/pages/login/login'
+    //   })
+    // }
   },
 
   /**

@@ -13,16 +13,19 @@ Page({
     userInfo: {},
     list: [
       {
+        show: true,
         text: '商户管理',
         url: '/pages/shopManage/shopManage',
         num: 0
       }, 
       {
+        show: true,
         text: '员工管理',
         url: '/pages/staffManage/staffManage',
         num: 1
       }, 
       {
+        show: true,
         text: '买家管理申请',
         url: '/pages/applySettled/applySettled',
         num: 2
@@ -40,9 +43,15 @@ Page({
       //   num: 0
       // }, 
       {
+        show: true,
         text: '设置',
         url: '/pages/set/set',
         num: 3
+      }, {
+        show: true,
+        text: '去登陆',
+        url: '/pages/login/login',
+        num: 4
       }
     ]
   },
@@ -66,8 +75,11 @@ Page({
   onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      let list = this.data.list;
+      list[list.length-1].show = false;
       this.setData({
-        userId: sj_userId
+        userId: sj_userId,
+        list: list
       });
       this.getData();
     } 
