@@ -6,7 +6,7 @@
 }
 
 .menu-wrap-have-nar{
-  padding-top: 240rpx;
+  padding-top: 160rpx;
 } 
 
 image {
