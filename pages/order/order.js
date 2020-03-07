@@ -73,7 +73,7 @@ Page({
     if (sj_userId) {
       this.getData();
     } else {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '/pages/login/login'
       })
     }

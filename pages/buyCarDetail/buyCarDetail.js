@@ -83,10 +83,10 @@ Page({
   
   // 获取购物车详情数据
   getData: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     var params = {
       userId: getApp().globalData.userInfo.id,
       shopId: this.data.shopId
@@ -94,7 +94,7 @@ Page({
     shopApi.getCar(params)
       .then((res) => {
         console.log('获取购物车数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         var data = [];
         data[0] = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
@@ -115,7 +115,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取购物车数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取购物车数据失败',
           icon: 'none',
@@ -162,7 +162,7 @@ Page({
     if (this.data.isClick) {
       return
     }
-    if (item.number > 1) {
+    if (item.number > 0) {
       this.setData({
         isClick: true
       })
@@ -199,9 +199,9 @@ Page({
   changeNumber: function (e) {
     var value = e.detail.value;
     var item = e.currentTarget.dataset.item;
-    if (value < 1) {
+    if (value < 0) {
       wx.showToast({
-        title: '数量不能小于1',
+        title: '数量不能小于0',
         icon: 'none',
         duration: 2000
       })

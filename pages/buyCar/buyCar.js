@@ -35,7 +35,7 @@ Page({
       })
       this.getData();
     } else {
-      wx.navigateTo({
+      wx.redirectTo({
         url: '/pages/login/login'
       })
     }

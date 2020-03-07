@@ -71,13 +71,18 @@ Page({
   onShareAppMessage: function() {
 
   },
-// 注册页
+  // 注册页
   goRegister: function() {
     wx.navigateTo({
       url: '/pages/register/register'
     })
   },
-
+  // 首页
+  goIndex: function() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
   bindKeyUserName: function(e) {
     this.setData({
       userName: e.detail.value

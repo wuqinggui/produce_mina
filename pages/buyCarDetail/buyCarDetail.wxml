@@ -38,7 +38,7 @@
             <view>
               <view class="stepper">
                 <!-- 减号 -->
-                <text class="iconfont icon-jianhao {{item.number == 1 ? '' : 'normal'}}" data-item="{{item}}" catchtap="bindMinus"></text>
+                <text class="iconfont icon-jianhao {{item.number == 0 ? '' : 'normal'}}" data-item="{{item}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
                 <input type="number" value="{{item.number}}" bindblur="changeNumber" focus="{{true}}" data-idx="{{idx}}" data-index="{{index}}" data-item="{{item}}"/>
                  <!-- wx:if="{{curIdx == idx && curIndex == index}}" -->

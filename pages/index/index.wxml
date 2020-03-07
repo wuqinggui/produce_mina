@@ -1,8 +1,8 @@
 <view class="menu-wrap {{classList.length > 0 ? 'menu-wrap-have-nar' : ''}}">
 <!-- 头部地区商户 -->
-  <view class="head-wrap verticle-center row">
+  <!-- <view class="head-wrap verticle-center row">
     <view wx:if="{{isLock}}">
-      <!-- 已登陆的锁定用户地区 -->
+      已登陆的锁定用户地区
       <view class="city-wrap verticle-center row">
         <view class='city-name text-black text-overflow flex-1 mr5'>{{curRegion.name}}</view>
       </view>
@@ -19,7 +19,7 @@
       </view>
       <input value="{{name}}" bindinput="bingChangeName" bindconfirm="searchName" confirm-type="search" placeholder="搜索" placeholder-class="name-placeholder" class="flex-1 name-content"/>
     </view>
-  </view>
+  </view> -->
 
 <!-- 顶部导航菜品分类 -->
   <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{classList.length > 0}}">
@@ -79,7 +79,7 @@
             <view class="name-wrap">
                 <view class="title gray3 f16">
                 {{goodsItem.name}}
-                <view class="zlbz f10 bg-f5 text-red" wx:if="{{goodsItem.zlbz}}">{{goodsItem.zlbz}}</view>
+                <view class="zlbz f13 bg-f5 text-red" wx:if="{{goodsItem.zlbz}}">{{goodsItem.zlbz}}</view>
                 </view>
             </view>
             <view class="row {{goodsItem.shopdesc ? 'mt2' : 'mt9'}}">
@@ -110,7 +110,7 @@
             <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</view>
           </view>
           <view class="icon-wrap direction-center">
-            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="20" data-index="{{goodsIndex}}" data-value="{{goodsItem.isSelect}}" bindtap="bindCheckSpecItem" hover-class="click-active"/>
+            <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" data-index="{{goodsIndex}}" data-value="{{goodsItem.isSelect}}" bindtap="bindCheckSpecItem" hover-class="click-active"/>
           </view>
           <view class="half-px-border half-px-border-bottom"></view>
         </view>

@@ -87,7 +87,7 @@ image {
 /* 顶部菜品 */
 .nar-wrap{
   position: absolute;
-  top: 80rpx;
+  top: 0;
   left: 0;
   width: 100%;
   height: 160rpx;
@@ -120,7 +120,7 @@ image {
 }
 
 .smallClass-list-have-nar{
-  top: 240rpx;
+  top: 160rpx;
 }
 
 .smallClass-list .smallClassItem {
@@ -369,7 +369,7 @@ image {
   text-align: center;
 }
 .specItem{
-  height:44rpx;
+  height:46rpx;
   text-align: center;
   font-size:24rpx;
   padding: 0 20rpx;
