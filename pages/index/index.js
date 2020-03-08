@@ -107,14 +107,14 @@ Page({
   
   // 获取地区列表
   getRegionList: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     shopApi.region()
       .then((res) => {
         console.log('获取地区数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           regionList: res.data ? res.data : [],
           curRegion: res.data && res.data.length > 0 ? res.data[0] : {},
@@ -145,7 +145,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取地区数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取地区数据失败',
           icon: 'none',

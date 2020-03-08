@@ -278,7 +278,7 @@ Page({
     let params = {
       userId: this.data.userId
     };
-    shopApi.findListShop(params).then((res) => {
+    shopApi.getUserShop(params).then((res) => {
       wx.hideLoading();
       this.setData({
         showNone: true,

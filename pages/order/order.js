@@ -116,10 +116,10 @@ Page({
   
   // 获取订单数据
   getData: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     var params = {
       userId: getApp().globalData.userInfo.id
     }
@@ -135,7 +135,7 @@ Page({
     shopApi.getOrder(params)
       .then((res) => {
         console.log('获取订单数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
@@ -147,7 +147,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取订单数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           isClick: false
         })

@@ -24,17 +24,12 @@ Page({
     userRoles: [{ // 工种
         id: 1,
         name: '下单人员'
-      },
-      {
+      },{
         id: 2,
-        name: '收货人员'
-      },
-      {
-        id: 3,
         name: '付款人员'
       },
       {
-        id: 4,
+        id: 3,
         name: '管理人员'
       }
     ],
@@ -56,11 +51,9 @@ Page({
         res.data.forEach((item) => {
           if (item.userRole == 1) {
             item.roleName = '下单人员';
-          } else if (item.userRole == 2) {
-            item.roleName = '收货人员';
-          } else if (item.userRole == 3) {
+          }else if (item.userRole == 2) {
             item.roleName = '付款人员';
-          } else if (item.userRole == 4) {
+          } else if (item.userRole == 3) {
             item.roleName = '管理人员';
           }
         })

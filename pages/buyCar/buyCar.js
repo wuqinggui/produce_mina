@@ -78,10 +78,10 @@ Page({
 
   // 获取获取购物车商户数据
   getData: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     var userId = getApp().globalData.userInfo.id;
     var params = {
       userId: userId,
@@ -90,7 +90,7 @@ Page({
     shopApi.getUserShop(params)
       .then((res) => {
         console.log('获取购物车商户数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           buyList: res.data ? res.data : [],
           isLoading: false
@@ -98,7 +98,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取购物车数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           buyList: [],
           isLoading: false
