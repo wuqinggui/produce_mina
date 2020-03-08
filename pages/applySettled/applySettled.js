@@ -14,37 +14,37 @@ Page({
     cardTime: '',
     addresseeData: {},
     shopInfo: {
-      customerTypeArr: [],
-      userList: [], //用户列表
+      // customerTypeArr: [],
+      // userList: [], //用户列表
       address: '', // 商户地址 ,
       auditStatus: 1, // 审核状态 ,
-      businessLicense: '', // 营业执照照片 ,
-      cardBsPath: '', // 身份证半身照 ,
-      cardEffectiveDate: '', // 有效日期 ,
-      cardZmPath: '', // 身份证正面 ,
-      cardFmPath: '', // 身份证反面 ,
-      cardNumber: '', // 身份证号码 ,
-      createName: '', // 创建人名称 ,
-      createTime: '', // 创建时间 ,
-      customerType: '', // 客户类型 ,
-      customerType_name: '请选择', // 客户类型 ,
-      desction: '', // 备注 ,
-      headAddress: '', // 总店地址 ,
-      headAddress_name: '', // 总店地址 ,
-      id: '', // 主键 ,
-      isorder: '', // 是否下单 ,
-      mainproject: '', // 主营项目 ,
+      // businessLicense: '', // 营业执照照片 ,
+      // cardBsPath: '', // 身份证半身照 ,
+      // cardEffectiveDate: '', // 有效日期 ,
+      // cardZmPath: '', // 身份证正面 ,
+      // cardFmPath: '', // 身份证反面 ,
+      // cardNumber: '', // 身份证号码 ,
+      // createName: '', // 创建人名称 ,
+      // createTime: '', // 创建时间 ,
+      // customerType: '', // 客户类型 ,
+      // customerType_name: '请选择', // 客户类型 ,
+      // desction: '', // 备注 ,
+      // headAddress: '', // 总店地址 ,
+      // headAddress_name: '', // 总店地址 ,
+      // id: '', // 主键 ,
+      // isorder: '', // 是否下单 ,
+      // mainproject: '', // 主营项目 ,
       merchantName: '', // 商户名称 ,
       personName: '', // 负责人名称 ,
       phone: '', // 手机号码 ,
       regionId: '', // 地区id ,
-      shopSuperior: '', // 商户上级 ,
-      shopType: '', // 商户类型 ,
+      // shopSuperior: '', // 商户上级 ,
+      // shopType: '', // 商户类型 ,
       type: 0, // 商户类型 ,
-      updateName: '', // 修改人名称 ,
-      updateTime: '', // 修改时间 ,
+      // updateName: '', // 修改人名称 ,
+      // updateTime: '', // 修改时间 ,
       userId: '', // 用户id ,
-      validity: '' // 身份证期限
+      // validity: '' // 身份证期限
     }
   },
   // 获取当前用户下的列表 
@@ -55,7 +55,7 @@ Page({
     };
     // 查询每个商户下的员工
     shopApi.searchUser(shopParams).then((res) => {
-      shopInfo.userList = res.data ? res.data : [];
+      // shopInfo.userList = res.data ? res.data : [];
       this.setData({
         shopInfo: shopInfo
       });
@@ -163,6 +163,7 @@ Page({
         duration: 2000
       })
     }
+    // return console.log(shopInfo);
     shopApi.addShop(shopInfo).then((res) => {
       wx.showToast({
         title: '上传成功',
@@ -316,7 +317,7 @@ Page({
   // 获取数据
   getData: function() {
     let shopId = this.data.shopId;
-    this.getCustomerType();
+    // this.getCustomerType();
     this.getCurrShopUser(shopId);
   },
   // 负责人选中

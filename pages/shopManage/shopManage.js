@@ -67,6 +67,7 @@ Page({
     data.info.type = 0; // 商户类型 0-商户 1-供应商
     data.info.shopSuperior = wx.getStorageSync('shopId');
     data.info.regionId = wx.getStorageSync('sj_userInfo').regionId; // 默认当前用户地区
+    data.info.nmUser = null;
     // 修改
     if (data.btnStatus == 2) {
       shopApi.updateShop(data.info).then((res) => {
@@ -317,7 +318,7 @@ Page({
   // 获取当前用户下的列表 
   getCurrShopUser: function(id) {
     let shopParams = {
-      shopId: id
+      userId: this.data.userId
     };
     // 查询每个商户下的员工
     shopApi.searchUser(shopParams).then((res) => {
