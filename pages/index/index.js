@@ -436,20 +436,20 @@ Page({
     });
     var userId = getApp().globalData.userInfo.id;
     var params = {
-      page: {
-        page: 1,
-        size: 100
-      },
-      type: 0,
+      // page: {
+      //   page: 1,
+      //   size: 100
+      // },
+      // type: 0,
       userId: userId
     }
-    shopApi.buyShop(params)
+    shopApi.getUserShop(params)
       .then((res) => {
         console.log('获取商户成功', res);
         wx.hideLoading();
         this.setData({
-          shopList: res.data && res.data.list ? res.data.list : [],
-          curShop: res.data && res.data.list && res.data.list.length > 0 ? res.data.list[0] : {}
+          shopList: res.data && res.data.length ? res.data : [],
+          curShop: res.data && res.data.length > 0 ? res.data[0] : {}
         })
         this.showShopPop();
       })

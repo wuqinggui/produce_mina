@@ -85,9 +85,9 @@ Page({
     var userId = getApp().globalData.userInfo.id;
     var params = {
       userId: userId,
-      type: 0
+      // type: 0
     }
-    shopApi.carShop(params)
+    shopApi.getUserShop(params)
       .then((res) => {
         console.log('获取购物车商户数据成功', res);
         wx.hideLoading();
