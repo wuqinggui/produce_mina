@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    shopId: '',
+    shopIds: [],
     userId: '',
     userInfo: {},
     list: [
@@ -129,13 +129,10 @@ getShopId: function() {
   let params = {
     userId: this.data.userId
   }
-  shopApi.findShopByUserId(params).then((res) => {
-    if (res.data && res.data.id) {
-      wx.setStorageSync('shopId',res.data.id);
-      this.setData({
-        shopId: res.data.id
-      });
-    }
+  shopApi.getUserShop(params).then((res) => {
+    this.setData({
+      shopIds: res.data.length ? res.data : []
+    });
   }).catch((err) => {
     wx.showToast({
       title: err.message ? err.message : '获取数据失败',
@@ -156,7 +153,7 @@ getShopId: function() {
   navigateTo: function(e) {
     let { url, text, num} = e.currentTarget.dataset;
     if(num == 0 || num == 1) {
-      if(this.data.shopId) {
+      if(this.data.shopIds.length) {
         wx.navigateTo({
           url: url,
         })

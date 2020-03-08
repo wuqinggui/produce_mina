@@ -18,6 +18,9 @@ export const carShopUrl = baseUrl + 'shop/findList'; // 查询购物车�
 export const getCarUrl = baseUrl + 'shoppingcart/findList'; // 根据购物车当前用户ID查询购物车中的商品
 export const updateCarUrl = baseUrl + 'shoppingcart/update'; // 修改购物车商品数据
 export const deleteCarUrl = baseUrl + 'shoppingcart/delete'; // 从购物车中删除商品的接口
+// 店铺 / 用户中间表
+export const getUserShopUrl = baseUrl + 'shopUser/getShops'; // 获取用户下所有的店铺id
+export const getNmUsersUrl = baseUrl + 'shopUser/getNmUsers'; // 获取员工列表
 // 支付
 export const payTimeUrl = baseUrl + 'switchSet/findAll'; // 可支付下单的时间段
 export const payParamsUrl = baseUrl + 'payment/toPay'; // 支付

@@ -31,7 +31,9 @@ import {
   searchAddressListUrl,
   findByIdAddressUrl,
   updateAddressUrl,
-  customertypeListUrl
+  customertypeListUrl,
+  getUserShopUrl,
+  getNmUsersUrl
 } from './url'
 
 var shopApi = {
@@ -346,6 +348,26 @@ var shopApi = {
   customertypeList: function(params) {
     return new Promise((resolve, reject) => {
       wxRequest(customertypeListUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 获取用户下的所有店铺和子店铺
+  getUserShop: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(getUserShopUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  },
+  // 获取员工列表
+  getNmUsers: function (params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(getNmUsersUrl, 'GET', params)
         .then((res) => {
           resolve(res);
         })

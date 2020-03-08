@@ -1,21 +1,22 @@
 /* pages/staffManage/staffManage.wxss */
+
 .picker {
   align-items: center;
 }
+
 .addinfo {
   position: relative;
 }
+
 .arrow {
   transform: rotate(90deg);
 }
-.addinfo text {
-  width: 160rpx;
-  text-align: right;
-}
+
 .addinfo .weui-input {
   text-align: left;
   padding-left: 10rpx;
 }
+
 .addinfo .select {
   right: 0;
   top: 0;
@@ -23,13 +24,32 @@
   width: 50rpx;
   height: 50rpx;
 }
+
 .addinfo text {
-  width: 180rpx;
+  flex: 0 0 180rpx;
+  text-align: right;
 }
+
+.addinfo .shops {
+  flex-wrap: wrap;
+}
+
+.addinfo .shop-item {
+  border-radius: 10rpx;
+  margin: 8rpx 8rpx;
+  padding: 4rpx 12rpx;
+  border: 1rpx solid #dcdcdc;
+}
+.addinfo .shop-item.active {
+  color: #06a380;
+  border: 1rpx solid #06a380;
+}
+
 .portrait image {
   width: 120rpx;
   height: 120rpx;
 }
+
 .weui-dialog__hd {
   padding: 30rpx 0 !important;
 }
@@ -37,10 +57,12 @@
 .weui-dialog__bd {
   margin-bottom: 14rpx !important;
 }
+
 .weui-dialog__ft {
   min-height: 55rpx !important;
   line-height: 55rpx !important;
 }
+
 .weui-dialog__ft::after {
   border-top: 1rpx solid #f3f3f3 !important;
 }
@@ -55,6 +77,7 @@
   position: relative;
   width: 100%;
 }
+
 .ipt .select {
   top: 26rpx;
   right: 10rpx;
@@ -63,6 +86,7 @@
   height: 50rpx;
   transform: rotate(90deg);
 }
+
 .piker {
   position: relative;
 }

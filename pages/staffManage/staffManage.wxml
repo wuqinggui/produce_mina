@@ -1,16 +1,6 @@
 <!--pages/staffManage/staffManage.wxml-->
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2 }}">
-    <!-- <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
-      <text>商户：</text>
-      <picker bindchange="bindPickerChange2" value="{{shopList[index]}}" range="{{shopList}}" range-key="merchantName">
-        <view class="picker flex">
-          <input class="weui-input" disabled="true" value="{{info.merchantName}}" />
-          <view class="common-arrow right arrow"></view>
-        </view>
-      </picker>
-      <view class="half-px-border half-px-border-bottom"></view>
-    </view> -->
     <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
       <text>工种：</text>
       <picker bindchange="bindPickerChange3" value="{{userRoles[index]}}" range="{{userRoles}}" range-key="name">
@@ -39,6 +29,13 @@
     <view class="addinfo verticle-center pb10 pt10 flex ju-c" wx:if="{{btnStatus == 1}}">
       <text>密码：</text>
       <input class="weui-input" password="{{true}}" value="{{info.password}}" bindinput="bindAndSet" data-key="password" />
+      <view class="half-px-border half-px-border-bottom"></view>
+    </view>
+    <view class="addinfo verticle-center piker pb10 pt10 flex">
+      <text>所属店铺：</text>
+      <view class="shops flex">
+        <view bindtap="checkShop" class="shop-item {{item.active ? 'active' : ''}}" wx:for="{{shopList}}" data-index="{{index}}">{{item.merchantName}}</view>
+      </view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
   </mp-dialog>

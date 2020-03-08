@@ -38,7 +38,8 @@ Page({
         name: '管理人员'
       }
     ],
-    shopList: [], // 商户列表
+    shopList: [], // 用户下的所有商户列表
+    checkedShopList: [],
     list: [] // 员工列表
   },
   selectShop: function() {
@@ -117,6 +118,8 @@ Page({
       toastTxt = '请输入用户名';
     } else if (data.btnStatus == 1 && !data.info.password) {
       toastTxt = '请输入密码';
+    } else if (!data.checkedShopList.length) {
+      toastTxt = '请选择该员工的所属店铺';
     }
     if (toastTxt) {
       return wx.showToast({
@@ -126,8 +129,15 @@ Page({
       })
     }
     // 默认取用户信息里对应的字段
-    ({ customertyId: data.info.customertyId, userType: data.info.userType, regionId: data.info.regionId, freightId: data.info.freightId, accountperiodId: data.info.accountperiodId } = wx.getStorageSync('sj_userInfo'))
+    ({
+      customertyId: data.info.customertyId,
+      userType: data.info.userType,
+      regionId: data.info.regionId,
+      freightId: data.info.freightId,
+      accountperiodId: data.info.accountperiodId
+    } = wx.getStorageSync('sj_userInfo'))
     data.info.shopId = wx.getStorageSync('shopId');
+    data.info.shopIds = data.checkedShopList;
     data.info.userId = data.userId;
     data.info.stats = '2';
     data.info.password = MD5.hexMD5(data.info.password)
@@ -182,11 +192,13 @@ Page({
       userName: '',
       password: '',
       shopId: '',
+      shopIds: [],
       userRole: '',
       userRoleName: '',
       phone: '',
       nickname: ''
     };
+    this.clearShopListStatus();
     this.setData({
       info: info,
       btnStatus: 1,
@@ -196,12 +208,22 @@ Page({
   // 编辑员工
   editItem: function(e) {
     let index = e.currentTarget.dataset.index;
-    let list = this.data.list;
-    // let params = {
-    //   shopId: list[index].shopId
-    // };
+    let {
+      list,
+      shopList,
+      checkedShopList
+    } = this.data;
+    this.clearShopListStatus();
+    checkedShopList = list[index].shopIds;
+    shopList.forEach((item) => {
+      if (list[index].shopIds.includes(item.id)) {
+        item.active = true;
+      }
+    })
     this.setData({
       info: list[index],
+      shopList: shopList,
+      checkedShopList: checkedShopList,
       btnStatus: 2,
       showOneButtonDialog: true
     })
@@ -223,7 +245,16 @@ Page({
     //   })
     // })
   },
-
+  clearShopListStatus: function() {
+    let shopList = this.data.shopList;
+    shopList.forEach((item) => {
+      item.active = false;
+    })
+    this.setData({
+      checkedShopList: [],
+      shopList: shopList
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -298,48 +329,60 @@ Page({
     })
     this.getAddress();
     this.getUserList();
-    // this.getShopList();
+    this.getShopList();
   },
   // 获取员工列表
   getUserList: function() {
     let params = {
       userId: this.data.userId
     };
-    let list = [];
-    let _this = this;
     // 查询该登录用户下的商户
-    shopApi.findListShop(params).then((res) => {
+    shopApi.getNmUsers(params).then((res) => {
       wx.hideLoading();
-      if (res.data.length) {
-        res.data.forEach((shopItem) => {
-          let shopParams = {
-            shopId: shopItem.id
-          };
-          // 查询每个商户下的员工
-          shopApi.searchUser(shopParams).then((userRes) => {
-            userRes.data && userRes.data.forEach((item) => {
-              list.push(item);
-            })
-            _this.setData({
-              showNone: true,
-              list: list
-            })
-          })
-        })
-      } else {
-        _this.setData({
-          showNone: true,
-          list: list
-        })
-      }
+      this.setData({
+        showNone: true,
+        list: res.data.length ? res.data : []
+      })
     }).catch((error) => {
-      console.log(error);
+      wx.hideLoading();
       wx.showToast({
         title: error.message ? error.message : '获取数据失败',
         icon: 'none',
         duration: 2000
       })
-    })
+    });
+    // shopApi.findListShop(params).then((res) => {
+    //   wx.hideLoading();
+    //   if (res.data.length) {
+    //     res.data.forEach((shopItem) => {
+    //       let shopParams = {
+    //         shopId: shopItem.id
+    //       };
+    //       // 查询每个商户下的员工
+    //       shopApi.searchUser(shopParams).then((userRes) => {
+    //         userRes.data && userRes.data.forEach((item) => {
+    //           list.push(item);
+    //         })
+    //         _this.setData({
+    //           showNone: true,
+    //           list: list
+    //         })
+    //       })
+    //     })
+    //   } else {
+    //     _this.setData({
+    //       showNone: true,
+    //       list: list
+    //     })
+    //   }
+    // }).catch((error) => {
+    //   console.log(error);
+    //   wx.showToast({
+    //     title: error.message ? error.message : '获取数据失败',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // })
   },
   // 获取地区
   getAddress: function() {
@@ -358,7 +401,10 @@ Page({
   },
   // 获取商户列表
   getShopList: function() {
-    shopApi.shopList().then((res) => {
+    let params = {
+      userId: this.data.userId
+    };
+    shopApi.getUserShop(params).then((res) => {
       this.setData({
         shopList: res.data ? res.data : []
       });
@@ -369,5 +415,24 @@ Page({
         duration: 2000
       })
     })
+  },
+  // 选中 取消选中 店铺
+  checkShop: function(e) {
+    let index = e.currentTarget.dataset.index;
+    let {
+      shopList,
+      checkedShopList
+    } = this.data;
+    shopList[index].active = shopList[index].active ? false : true;
+    if (shopList[index].active) {
+      checkedShopList.push(shopList[index].id);
+    } else {
+      let shopIndex = checkedShopList.indexOf(shopList[index].id);
+      checkedShopList.splice(shopIndex, 1);
+    }
+    this.setData({
+      shopList: shopList,
+      checkedShopList: checkedShopList
+    });
   }
 })
