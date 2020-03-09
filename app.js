@@ -86,12 +86,19 @@ App({
   getSystemInfo: function () {
     var systemInfo = wx.getSystemInfoSync()
     console.log('------------设备信息---------', systemInfo);
-    let {  model } = systemInfo;
+    let { model } = systemInfo;
     let ipxList = ['iPhone X', 'iPhone XR', 'iPhone XS', 'iPhone XS Max', 'iPhone11'];
-    if (ipxList.indexOf(model) !== -1) {
-      this.globalData.isIpx = true;
-    } else {
-      this.globalData.isIpx = false;
+    // if (ipxList.indexOf(model) !== -1) {
+    //   this.globalData.isIpx = true;
+    // } else {
+    //   this.globalData.isIpx = false;
+    // }
+    for (var i = 0; i < ipxList.length; i++) {
+      if (model.indexOf(ipxList[i]) !== -1) {
+        console.log('isIpx')
+        this.globalData.isIpx = true;
+        break;
+      }
     }
   },
 

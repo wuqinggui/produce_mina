@@ -41,9 +41,9 @@
     <view class="ipt">
       <input class="weui-input" bindinput="bindKeyInput" placeholder="" />
     </view>
-    <view class="add pl20 flex" bindtap="addShop">
+    <!-- <view class="add pl20 flex" bindtap="addShop">
       <mp-icon icon="add2" color="black" size="{{26}}"></mp-icon>
-    </view>
+    </view> -->
   </view>
   <view class="list">
     <view class="list-item pt10 pb10 flex ju-b" bindtap="editItem" data-index="{{index}}" wx:for="{{list}}" wx:key="index">

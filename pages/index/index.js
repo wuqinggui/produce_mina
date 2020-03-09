@@ -187,14 +187,14 @@ Page({
 
   // 获取大分类
   getShopClass: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     shopApi.shopClass()
       .then((res) => {
         console.log('获取大分类数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           classList: res.data ? res.data : [],
           curClass: res.data && res.data.length > 0 ? res.data[0] : {}
@@ -203,7 +203,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取大分类数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取大分类数据失败',
           icon: 'none',
@@ -214,17 +214,17 @@ Page({
 
   // 查询小分类
   getShopSmallClass: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     var params = {
       classId: this.data.curClass.id ? this.data.curClass.id : ''
     }
     shopApi.shopSmallClass(params)
       .then((res) => {
         console.log('获取小分类数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           smallClassList: res.data ? res.data : [],
           curSmallClass: res.data && res.data.length > 0 ? res.data[0] : {}
@@ -233,7 +233,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取小分类数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取小分类数据失败',
           icon: 'none',
@@ -244,10 +244,10 @@ Page({
 
   // 获取小分类对应的商品
   getCommodity: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
     var params = {
       regionId: this.data.curRegion.id ? this.data.curRegion.id : '',
       shopclassId: this.data.curClass.id ? this.data.curClass.id : '',
@@ -269,11 +269,11 @@ Page({
           goodsList: data,
           buyCarGoodtypeNum: 0
         })
-        wx.hideLoading();
+        // wx.hideLoading();
       })
       .catch((error) => {
         console.log('获取商品数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取商品数据失败',
           icon: 'none',
@@ -430,10 +430,10 @@ Page({
 
   // 获取商户
   getShopList: function () {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     var userId = getApp().globalData.userInfo.id;
     var params = {
       // page: {
@@ -446,7 +446,7 @@ Page({
     shopApi.getUserShop(params)
       .then((res) => {
         console.log('获取商户成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           shopList: res.data && res.data.length ? res.data : [],
           curShop: res.data && res.data.length > 0 ? res.data[0] : {}
@@ -455,7 +455,7 @@ Page({
       })
       .catch((error) => {
         console.log('获取商户失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: error.message ? error.message : '获取商户数据失败',
           icon: 'none',
@@ -511,10 +511,10 @@ Page({
 
   // 确认添加到购物车
   sureAddCar: function () {
-    wx.showLoading({
-      title: '添加中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '添加中',
+    //   mask: true
+    // });
     var shopCommoditDto = [];
     var data = this.data.goodsList;
     for (var i = 0; i < data.length; i++) {
@@ -538,7 +538,7 @@ Page({
     shopApi.addCar(params)
     .then((res) => {
       console.log('商品添加进购物车成功', res);
-      wx.hideLoading();
+      // wx.hideLoading();
       wx.showToast({
         title: '添加成功',
         icon: 'success',
@@ -558,7 +558,7 @@ Page({
     })
     .catch((error) => {
       console.log('商品添加进购物车失败', error);
-      wx.hideLoading();
+      // wx.hideLoading();
       wx.showToast({
         title: error.message ? error.message : '添加失败',
         icon: 'none',
