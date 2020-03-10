@@ -32,8 +32,8 @@
           <image src="{{classItem.imagepath}}" class="image"></image>
         </view>
         <view class="image-wrap" wx:else>
-          <image src="../../images/dfl-ly.jpg" class="image" wx:if="{{classIndex == 0}}"></image>
-          <image src="../../images/dfl-sc.jpg" class="image" wx:if="{{classIndex == 1}}"></image>
+          <image src="../../images/dfl-sc.jpg" class="image" wx:if="{{classIndex == 0}}"></image>
+          <image src="../../images/dfl-ly.jpg" class="image" wx:if="{{classIndex == 1}}"></image>
           <image src="../../images/dfl-bh.jpg" class="image" wx:if="{{classIndex == 2}}"></image>
           <image src="../../images/dfl-sx.jpg" class="image" wx:if="{{classIndex == 3}}"></image>
         </view>
