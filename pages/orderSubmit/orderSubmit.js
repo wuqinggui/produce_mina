@@ -1,5 +1,6 @@
 // pages/orderSubmit/orderSubmit.js
 var shopApi = require('../../http/shopApi.js').default;
+// var userApi = require('../../http/userApi.js').default;
 var util = require('../../utils/util.js');
 Page({
 
@@ -7,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // userId: '',
     // freightPrice: 0, // 运费
     totalPrice: 0, // 合计价格
     submitCarData: {}, // 立即下单的购物车数据
@@ -82,8 +84,12 @@ Page({
     // 判断是否补单
     if (getApp().globalData.submitCarData.shopId && getApp().globalData.supplyOrderData.shopId &&  getApp().globalData.submitCarData.shopId == getApp().globalData.supplyOrderData.shopId) {
       // 补单
+      var data = getApp().globalData.submitCarData;
+      if (data.address && data.address.hasOwnProperty("regional") && data.address.hasOwnProperty("addresses")) {
+        data.address.addresses = data.address.regional.replace(/\,/g, '') + data.address.addresses;
+      }
       this.setData({
-        submitCarData: getApp().globalData.submitCarData,
+        submitCarData: data,
         supplyOrderData: getApp().globalData.supplyOrderData,
         isSupplyOrder: true
       })
@@ -139,6 +145,7 @@ Page({
       cartId: this.data.submitCarData.id,
       shopId: this.data.submitCarData.shopId,
       userId: getApp().globalData.userInfo.id
+      // userId: this.data.userId ? this.data.userId : getApp().globalData.userInfo.id
     }
     shopApi.addOrder(params)
       .then((res) => {
@@ -260,6 +267,7 @@ Page({
           })
           return
         }
+        // this.reGetUserId(type);
         if (type == 1) {
            this.sureSubmitOrder2();
         } else if (type == 2) {
@@ -276,4 +284,29 @@ Page({
         })
       })
   },
+  // 重新拿用户id
+  // reGetUserId: function (type) {
+  //   userApi.token({
+  //     token: wx.getStorageSync('sj_token')
+  //   })
+  //   .then((res) => {
+  //     console.log('重新获取用户id成功', res)
+  //     this.setData({
+  //       userId: res.data && res.data.id ? res.data.id : ''
+  //     })
+  //     if (type == 1) {
+  //         this.sureSubmitOrder2();
+  //     } else if (type == 2) {
+  //       this.supplyOrder2();
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log('重新获取用户id成功失败', error)
+  //     wx.hideLoading();
+  //     wx.showToast({
+  //       title: error.message ? error.message : '获取用户ID失败',
+  //       icon: 'none'
+  //     });
+  //   })
+  // }
 })
