@@ -87,7 +87,7 @@
                   wx:for-item="specItem"
                   wx:for-index="specIndex"
                   wx:key="specIndex"
-                  class="specItem verticle-center mr5 {{specItem.isSelect ? 'specItem-isSelect' : ''}}" data-index="{{goodsIndex}}" data-specindex="{{specIndex}}" data-value="{{specItem.isSelect}}" bindtap="changeSpec" hover-class="click-active">
+                  class="specItem verticle-center mr5 fw {{specItem.isSelect ? 'specItem-isSelect' : ''}}" data-index="{{goodsIndex}}" data-specindex="{{specIndex}}" data-value="{{specItem.isSelect}}" bindtap="changeSpec" hover-class="click-active">
                   {{specItem.spec.specName}}
               </view>
             </view>
@@ -107,7 +107,7 @@
               <text class="price f14" v-if="goodsItem.specPriceVos.length > 0">{{ goodsItem.specPriceVos[0].price}}</text>
               <text class="unit f12">/ {{goodsItem.unitMeasurement.name ? goodsItem.unitMeasurement.name : ''}}</text>
             </view>
-            <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</view>
+            <view class="shopdesc f13 gray6 text-overflow mt2" wx:if="{{goodsItem.shopdesc}}">{{goodsItem.shopdesc}}</view>
           </view>
           <view class="icon-wrap direction-center">
             <icon type="{{goodsItem.isSelect ? 'success_circle' : 'circle'}}" color="{{goodsItem.isSelect ? '#FFA800' : ''}}" size="24" data-index="{{goodsIndex}}" data-value="{{goodsItem.isSelect}}" bindtap="bindCheckSpecItem" hover-class="click-active"/>

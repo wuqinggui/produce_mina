@@ -128,7 +128,7 @@
 	color: black;
 	float: left;
 	margin: 0 auto;
-	width: 80rpx;
+	width: 100rpx;
 	height: 40rpx;
 	line-height: 36rpx;
 	text-align: center;

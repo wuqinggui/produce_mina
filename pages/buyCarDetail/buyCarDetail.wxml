@@ -19,7 +19,7 @@
           <view class="name-wrap">
             <view class="title gray3 f16">
               {{item.commodity.name}}
-              <view class="zlbz f10 bg-f5 text-red" wx:if="{{item.zlbz}}">{{item.zlbz}}</view>
+              <view class="zlbz f13 bg-f5 text-red" wx:if="{{item.zlbz}}">{{item.zlbz}}</view>
               </view>
           </view>
           <view class="row {{item.shopdesc ? 'mt2' : 'mt9'}}">
@@ -32,7 +32,7 @@
             <view class="carts-price flex-1">
               <text class="symbol f12">￥</text>
               <text class="price f16">{{item.commodity.price}}</text>
-              <text class="unit f12">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
+              <text class="unit f13 fw">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
             </view>
             <!-- 数量加减 -->
             <view>
@@ -47,7 +47,7 @@
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>
             </view>
-            <view class="ml10 gray6 f12 verticle-center">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
+            <view class="ml10 gray6 f13 fw verticle-center">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
           </view>
             <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{item.shopdesc}}">{{item.shopdesc}}</view>
         </view>
