@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "设置",
   "usingComponents": {
-    "mp-icon": "../../component/icon/icon"
+    "mp-icon": "../../component/icon/icon",
+    "mp-dialog": "../../component/dialog/dialog"
   }
 }

@@ -1,12 +1,23 @@
 // pages/set/set.js
 var util = require('../../utils/util.js');
+var shopApi = require('../../http/shopApi.js').default;
+var MD5 = require('../../utils/md5.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    userId: '',
+    resetInfo: {
+      password: '',
+      enterPassword: ''
+    }, //密码
     userInfo: {},
+    showOneButtonDialog: false,
+    oneButton: [{
+      text: '确定'
+    }]
   },
 
   /**
@@ -29,6 +40,9 @@ Page({
   onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      this.setData({
+        userId: sj_userId
+      });
       this.getData();
     }
     //  else {
@@ -72,7 +86,14 @@ Page({
   onShareAppMessage: function () {
 
   },
-
+  bindAndSet: function (e) {
+    let key = e.currentTarget.dataset.key;
+    let info = this.data.resetInfo;
+    info[key] = e.detail.value;
+    this.setData({
+      resetInfo: info
+    })
+  },
   // 获取数据
   getData: function () {
     this.setData({
@@ -86,6 +107,40 @@ Page({
       url: '/pages/shippingAddress/shippingAddress',
     })
   },
+  // 确认 重置密码
+  resetPassword() {
+    let resetInfo = this.data.resetInfo;
+    if (resetInfo.password != resetInfo.enterPassword) {
+      wx.showToast({
+        title: '密码不一致，请重新输入',
+        icon: 'none'
+      })
+      return 
+    }
+    resetInfo.userId = this.data.userId;
+    resetInfo.password = MD5.hexMD5(resetInfo.password);
+    shopApi.updateUser(resetInfo).then((res) => {
+      this.setData({
+        showOneButtonDialog: false
+      })
+      setTimeout(() => {
+        this.logout();
+      }, 1000)
+    }).catch((error) => {
+      console.log(error);
+      wx.showToast({
+        title: error.message ? error.message : '获取数据失败',
+        icon: 'none',
+        duration: 2000
+      })
+    })
+  },
+  showDialog() {
+    this.setData({
+      showOneButtonDialog: true
+    });
+  },
+  
   // 退出登陆
   logout: function () {
     wx.reLaunch({
