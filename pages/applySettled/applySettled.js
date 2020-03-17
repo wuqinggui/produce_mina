@@ -122,19 +122,19 @@ Page({
     //     duration: 2000
     //   })
     // } 
-    else if (!shopInfo.phone) {
-      return wx.showToast({
-        title: '请输入手机号码',
-        icon: 'none',
-        duration: 2000
-      })
-    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(shopInfo.phone)) {
-      return wx.showToast({
-        title: '手机号码有误，请重新输入',
-        icon: 'none',
-        duration: 2000
-      })
-    } 
+    // else if (!shopInfo.phone) {
+    //   return wx.showToast({
+    //     title: '请输入手机号码',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } else if (!/^1[3|4|5|7|8]\d{9}$/.test(shopInfo.phone)) {
+    //   return wx.showToast({
+    //     title: '手机号码有误，请重新输入',
+    //     icon: 'none',
+    //     duration: 2000
+    //   })
+    // } 
     // else if (!shopInfo.address) {
     //   return wx.showToast({
     //     title: '请输入地址',

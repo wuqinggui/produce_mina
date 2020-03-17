@@ -48,7 +48,7 @@
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view> -->
-      <view class="list-item flex">
+      <!-- <view class="list-item flex">
         <view class="list-item-info">
           <text class="require">*</text>
           <text class="name">手机号码：</text>
@@ -57,7 +57,7 @@
           <input name="phone" bindinput="bindAndSet" data-key="phone" placeholder-class="place-holder" type="idcard" class="weui-input" placeholder="手机号码" value="{{phone}}" />
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
-      </view>
+      </view> -->
       <!-- <view class="list-item flex" bindtap="selectCardDate">
         <view class="list-item-info">
           <text class="require">*</text>
