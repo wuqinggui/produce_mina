@@ -45,11 +45,11 @@ Page({
       });
       this.getData();
     }
-    //  else {
-    //   wx.navigateTo({
-    //     url: '/pages/login/login'
-    //   })
-    // }
+     else {
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    }
   },
 
   /**

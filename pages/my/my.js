@@ -47,12 +47,13 @@ Page({
         text: '设置',
         url: '/pages/set/set',
         num: 3
-      }, {
-        show: true,
-        text: '去登陆',
-        url: '/pages/login/login',
-        num: 4
       }
+      // , {
+      //   show: true,
+      //   text: '去登陆',
+      //   url: '/pages/login/login',
+      //   num: 4
+      // }
     ]
   },
   /**

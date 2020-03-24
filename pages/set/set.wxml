@@ -41,12 +41,12 @@
     <view class="item-text f14 flex-1">收货地址</view>
     <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
   </view>
-  <view class="item row bg-white gray3 verticle-center pl15 pr15 pt10 pb10" hover-class="click-active" bindtap="showDialog">
+  <!-- <view class="item row bg-white gray3 verticle-center pl15 pr15 pt10 pb10" hover-class="click-active" bindtap="showDialog">
     <view class="item-text f14 flex-1">重置密码</view>
     <mp-icon icon="arrow" color="#999" size="{{12}}"></mp-icon>
   </view>
   <view class="item row mt10 bg-white gray3 verticle-center pl15 pr15 pt10 pb10" hover-class="click-active" bindtap="logout">
     <view class="item-text f14 flex-1">退出登陆</view>
-  </view>
+  </view> -->
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
