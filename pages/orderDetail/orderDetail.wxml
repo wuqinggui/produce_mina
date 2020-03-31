@@ -93,16 +93,16 @@
         <text>{{orderData.orderNo}}</text>
       </view>
       <view class="flex ju-b">
-        <text>创建时间：</text>
-        <text>{{orderData.createTime ? orderData.createTime : ''}}</text>
+        <text>下单时间：</text>
+        <text>{{orderData.createTimeFormat ? orderData.createTimeFormat : ''}}</text>
       </view>
       <view class="flex ju-b">
         <text>付款时间：</text>
-        <text>{{orderData.playTime ? orderData.playTime : ''}}</text>
+        <text>{{orderData.playTimeFormat ? orderData.playTimeFormat : ''}}</text>
       </view>
       <view class="flex ju-b">
         <text>发货时间：</text>
-        <text>{{orderData.sendTime ? orderData.sendTime : ''}}</text>
+        <text>{{orderData.sendTimeFormat ? orderData.sendTimeFormat : ''}}</text>
       </view>
     </view>
     <view class="btns flex mt10">

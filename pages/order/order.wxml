@@ -7,7 +7,7 @@
   <view class="orders-wrap">
     <scroll-view scroll-y="true" class="orders">
       <view class="order-list" wx:if="{{orderList.length > 0}}">
-        <block wx:for="{{orderList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
+        <!-- <block wx:for="{{orderList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
           <view class="order-cell {{idx == 0 ? '' : 'mt10'}}">
             <view bindtap="goDetail" data-item="{{shopitem}}">
               <view class="carts-list">
@@ -15,7 +15,6 @@
                   <view class="shop-name row verticle-center">
                     <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
                     <text class="flex-1 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '商户名称'}}</text>
-                    <!-- <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1 && shopitem.logisticsStatus == 2}}">待付款</view> -->
                     <view class="cell-status" wx:if="{{shopitem.orderState == 1 && shopitem.logisticsStatus == 1}}">待发货</view>
                     <view class="cell-status" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1 && shopitem.logisticsStatus == 2}}">待收货</view>
                     <view class="cell-status" wx:if="{{shopitem.orderState == 3}}">售后处理中</view>
@@ -70,7 +69,29 @@
               <button class="button btn btn-border ml5" hover-class="click-active" bindtap="takeOrder" data-item="{{shopitem}}" wx:if="{{shopitem.orderPayState == 2 && shopitem.logisticsStatus != 3 && shopitem.orderState == 1}}">确认收货</button>
             </view>
           </view>
-        </block>
+        </block> -->
+        <view wx:for="{{orderList}}"
+          wx:key="idx" 
+          wx:for-index="idx" 
+          wx:for-item="shopitem"
+          bindtap="goDetail"
+          data-item="{{shopitem}}">
+        <view class="buy-item">
+          <view class="row verticle-center">
+            <image class="shop-icon" src="/images/shop_icon.png" mode="cover"></image>
+            <view class="flex-1 f16 gray3 ml5 mr5 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '商户名称'}}</view>
+            <button class="state-1-btn" wx:if="{{shopitem.orderPayState == 1 && shopitem.orderState == 1}}">待支付</button>
+            <button class="state-1-btn" wx:if="{{shopitem.orderPayState == 2 && shopitem.orderState == 1}}">已支付</button>
+            <!-- <button class="state-1-btn" wx:if="{{shopitem.orderState == 3}}">售后处理中</button>
+            <button class="state-2-btn" wx:if="{{shopitem.orderState == 4}}">交易完成</button>
+            <button class="state-2-btn" wx:if="{{shopitem.orderState == 2}}" >交易取消</button> -->
+          </view>
+          <view class="flex ju-b pt10">
+            <text class="f14 gray6">下单时间：</text>
+            <text class="f14 gray3">{{shopitem.createTimeFormat ? shopitem.createTimeFormat : ''}}</text>
+          </view>
+        </view>
+      </view>
       </view>
       <view wx:else class="list-nodata-area">
         <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>

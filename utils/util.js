@@ -15,7 +15,7 @@ const formatTime = (date, type) => {
     // 获取时分秒
     return [hour, minute, second].map(formatNumber).join(':')
   } else {
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
   }
 }
 

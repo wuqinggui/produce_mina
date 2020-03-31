@@ -1,5 +1,6 @@
 // pages/order/order.js
 var shopApi = require('../../http/shopApi.js').default;
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -24,12 +25,14 @@ Page({
         orderState: ''
       }, 
       {
-        text: '待发货',
+        // text: '待发货',
+        text: '待处理',
         index: 2,
         logisticsStatus: 1
       }, 
       {
-        text: '待收货',
+        // text: '待收货',
+        text: '已处理',
         index: 3,
         logisticsStatus: 2
       }, 
@@ -139,6 +142,9 @@ Page({
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
+          data[i].createTimeFormat = data[i].createTime ? util.formatTime(data[i].createTime) : '';
+          data[i].playTimeFormat = data[i].playTime ? util.formatTime(data[i].playTime) : '';
+          data[i].sendTimeFormat = data[i].sendTime ? util.formatTime(data[i].sendTime) : '';
         }
         this.setData({
           orderList: data,

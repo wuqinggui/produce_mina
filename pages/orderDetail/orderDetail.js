@@ -1,5 +1,6 @@
 // pages/orderDetail/orderDetail.js
 var shopApi = require('../../http/shopApi.js').default;
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -97,6 +98,9 @@ Page({
         for (var i = 0; i < data.length; i++) {
           data[i].address.addresses = data[i].address.regional.replace(/\,/g, '') + data[i].address.addresses;
           data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
+          data[i].createTimeFormat = data[i].createTime ? util.formatTime(data[i].createTime) : '';
+          data[i].playTimeFormat = data[i].playTime ? util.formatTime(data[i].playTime) : '';
+          data[i].sendTimeFormat = data[i].sendTime ? util.formatTime(data[i].sendTime) : '';
         }
         this.setData({
           orderData: data && data.length > 0 ? data[0] : {}

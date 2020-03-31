@@ -5,11 +5,13 @@
           wx:key="index"
           data-item="{{item}}" 
           bindtap="toDetailPage">
-        <view class="buy-item row verticle-center">
-          <image class="shop-icon" src="/images/shop_icon.png" mode="cover"></image>
-          <view class="flex-1 f16 gray3 ml5 mr5 text-overflow">{{item.merchantName ? item.merchantName : '商户名称'}}</view>
-          <button class="state-1-btn" wx:if="{{item.isorder && item.isorder == '2'}}">已下单</button>
-          <button class="state-2-btn" wx:else>未下单</button>
+        <view class="buy-item">
+          <view class="row verticle-center">
+            <image class="shop-icon" src="/images/shop_icon.png" mode="cover"></image>
+            <view class="flex-1 f16 gray3 ml5 mr5 text-overflow">{{item.merchantName ? item.merchantName : '商户名称'}}</view>
+            <button class="state-1-btn" wx:if="{{item.isorder && item.isorder == '2'}}">已下单</button>
+            <button class="state-2-btn" wx:else>未下单</button>
+          </view>
         </view>
       </view>
     </scroll-view>
