@@ -1,0 +1,34 @@
+.wechat-login-area{
+  margin: 160rpx 0;
+  text-align: center;
+}
+
+.wechat-login-logo{
+  width: 200rpx;
+  height: 200rpx;
+  margin: 0 auto;
+}
+
+.wechat-login-title{
+  height:100rpx;
+  font-size:40rpx;
+  font-weight:400;
+  color:rgba(59,58,62,1);
+  line-height:100rpx;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.wechat-login-btn{
+  width: 80%;
+  margin-top: 40rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size:32rpx;
+  background-color: #ffb800;
+  margin: 0 auto;
+}
+
+.wechat-login-text{
+  color: #fff;
+}
