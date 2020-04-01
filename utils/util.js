@@ -15,13 +15,39 @@ const formatTime = (date, type) => {
     // 获取时分秒
     return [hour, minute, second].map(formatNumber).join(':')
   } else {
-    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
   }
 }
 
 const formatNumber = m => {
   return m < 10 ? '0' + m : m
 }
+
+/**
+ * ios不支持在数据库中传递 2019-07-02这种格式的日期，必须转换为2019/07/02这种格式才会显示正常
+ * 转化2020-03-18T01:57:23.000+0000成正常格式展示，安装和ios存在时区问题
+ */
+
+const formatTimeSubstr = (date) => {
+  var ymd = date.substr(0, 10);
+  var h = date.substr(11, 2);
+  h = parseInt(h) + 8;
+  h = h < 10 ? '0' + h : h;
+  var ms = date.substr(13, 6);
+  return ymd + ' ' + h + ms;
+  // var time = new Date(date.substr(0, 19));
+  // var time = new Date(Date.parse(date));
+  // time.setTime(time.setHours(time.getHours() + 8)); // 时区+8
+  // const year = time.getFullYear()
+  // const month = time.getMonth() + 1
+  // const day = time.getDate()
+  // const hour = time.getHours()
+  // const minute = time.getMinutes()
+  // const second = time.getSeconds()
+
+  // return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
 
 /**
  * 时分秒转成时间戳
@@ -179,6 +205,7 @@ function getCurrentPageUrl(type) {
 
 module.exports = {
   formatTime,
+  formatTimeSubstr,
   formatTimeNumber,
   formatMsgTime,
   getRandom,

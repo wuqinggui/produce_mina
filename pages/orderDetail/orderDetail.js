@@ -98,9 +98,9 @@ Page({
         for (var i = 0; i < data.length; i++) {
           data[i].address.addresses = data[i].address.regional.replace(/\,/g, '') + data[i].address.addresses;
           data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
-          data[i].createTimeFormat = data[i].createTime ? util.formatTime(data[i].createTime) : '';
-          data[i].playTimeFormat = data[i].playTime ? util.formatTime(data[i].playTime) : '';
-          data[i].sendTimeFormat = data[i].sendTime ? util.formatTime(data[i].sendTime) : '';
+          data[i].createTimeFormat = data[i].createTime ? util.formatTimeSubstr(data[i].createTime) : '';
+          data[i].playTimeFormat = data[i].playTime ? util.formatTimeSubstr(data[i].playTime) : '';
+          data[i].sendTimeFormat = data[i].sendTime ? util.formatTimeSubstr(data[i].sendTime) : '';
         }
         console.log(data)
         this.setData({
