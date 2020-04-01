@@ -102,6 +102,7 @@ Page({
           data[i].playTimeFormat = data[i].playTime ? util.formatTime(data[i].playTime) : '';
           data[i].sendTimeFormat = data[i].sendTime ? util.formatTime(data[i].sendTime) : '';
         }
+        console.log(JSON.stringify(data))
         this.setData({
           orderData: data && data.length > 0 ? data[0] : {}
         })
