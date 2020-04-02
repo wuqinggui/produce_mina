@@ -32,6 +32,9 @@ const formatTimeSubstr = (date) => {
   var ymd = date.substr(0, 10);
   var h = date.substr(11, 2);
   h = parseInt(h) + 8;
+  if (h > 24) {
+    h = h - 24;
+  }
   h = h < 10 ? '0' + h : h;
   var ms = date.substr(13, 6);
   return ymd + ' ' + h + ms;
