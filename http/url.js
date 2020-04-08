@@ -3,6 +3,7 @@
 export const baseUrl = 'https://www.yuannong.shop:8019/trade/';
 
 // 用户模块
+export const loginWxUrl = baseUrl + 'nmUser/loginWx'; // 微信登录注册
 export const loginURL = baseUrl + 'nmUser/login'; // 登陆
 export const tokenURL = baseUrl + 'nmUser/getToken'; // 根据token获取用户信息
 

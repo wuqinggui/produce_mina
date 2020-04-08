@@ -1,6 +1,4 @@
 var userApi = require('../../http/userApi.js').default;
-var MD5 = require('../../utils/md5.js');
-var util = require('../../utils/util.js');
 
 Page({
 
@@ -8,28 +6,33 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userName: '', // 用户名
-    password: '' // 密码
+    wxSetting: false, // 是否微信授权
+    code: '', // 微信登录的code
+    encryptedData: '', // 微信用户信息接口encryptedData
+    iv: '', // 微信用户信息接口iv
+    signature: '', // 微信用户信息接口signature
+    phoneIv: '', // 微信手机号授权iv
+    phoneEncryptedData: '', // 微信手机号授权phoneEncryptedData
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-
+  onLoad: function (options) {
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     console.log('清空用户信息和缓存')
     getApp().globalData.userInfo = {};
     wx.removeStorageSync('sj_userInfo');
@@ -40,103 +43,114 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  // onShareAppMessage: function () {
 
-  },
-  // 注册页
-  goRegister: function() {
-    wx.navigateTo({
-      url: '/pages/register/register'
-    })
-  },
-  // 首页
-  goIndex: function() {
-    wx.switchTab({
-      url: '/pages/index/index'
-    })
-  },
-  bindKeyUserName: function(e) {
-    this.setData({
-      userName: e.detail.value
-    })
-  },
+  // }
 
-  bindKeyPassword: function(e) {
-    this.setData({
-      password: e.detail.value
-    })
-  },
-
-  // 登陆
-  login: function() {
-    if (util.isBlank(this.data.userName)) {
-      wx.showToast({
-        title: '请输入用户名',
-        icon: 'none'
-      });
-      return;
-    } else if (util.isBlank(this.data.password)) {
-      wx.showToast({
-        title: '请输入密码',
-        icon: 'none'
-      });
-      return;
+  // 微信授权,获取用户头像昵称信息
+  getUserInfo: function (e) {
+    // console.log('微信授权', e)
+    if (e.detail.userInfo) { // 已授权
+      // 已授权的也重新获取微信用户数据，防止数据过时失效
+      // 微信登录
+      wx.login({
+        success: res => {
+          console.log('微信登录', res)
+          this.setData({
+            code: res.code
+          })
+          // 带上登录状态重新获取用户数据
+          wx.getUserInfo({
+            withCredentials: true,
+            success: res => {
+              console.log('带上登录状态获取授权数据成功', res)
+              this.setData({
+                encryptedData: res.encryptedData,
+                iv: res.iv,
+                signature: res.signature,
+                wxSetting: true
+              })
+            }
+          })
+        }
+      })
     }
+  },
+  // 微信手机号授权
+  getPhoneNumber: function (e) {
+    console.log('微信手机号授权', e)
+    if (e.detail.errMsg && e.detail.errMsg === 'getPhoneNumber:ok') {
+      let { iv, encryptedData } = e.detail
+      console.log(e.detail);
+      this.setData({
+        phoneIv: iv,
+        phoneEncryptedData: encryptedData,
+      })
+      this.weChatLogin();
+    }
+  },
+
+  // 微信登录
+  weChatLogin: function () {
     wx.showLoading({
       title: '登录中',
-      mask: true
     });
-    userApi.login({
-        userName: this.data.userName,
-        // password: this.data.password
-        password: MD5.hexMD5(this.data.password)
-      })
-      .then((res) => {
-        console.log('登陆成功', res)
-        this.getToken(res.data);
-      })
-      .catch((error) => {
-        console.log('登陆失败', error)
-        wx.hideLoading();
-        wx.showToast({
-          title: error.message ? error.message : '登陆失败',
-          icon: 'none'
-        });
-      })
+    let _self = this;
+    let wxLoginDto = {
+      wxCode: _self.data.code, // 微信code
+      signature: _self.data.signature, // 用户授权signature
+      encryptedData: _self.data.encryptedData, // 用户授权encryptedData
+      iv: _self.data.iv, // 用户授权iv
+      phoneIv: _self.data.phoneIv, // 手机号授权iv
+      phoneEncryptedData: _self.data.phoneEncryptedData // 手机号授权encryptedData
+    }
+    userApi.loginWx(wxLoginDto).then(res => {
+      wx.hideLoading(); 
+      this.getToken(res.data);
+      console.log('微信快捷登录成功', res)
+    }).catch(err => {
+      wx.hideLoading();
+      console.log(err);
+      // wx.showToast({
+      //   title: err.data.msg ? err.data.msg : '网络连接异常，请稍后重试',
+      //   icon: 'none',
+      //   duration: 1000
+      // })
+    })
   },
   // 根据token获取用户信息
-  getToken: function(token) {
+  getToken: function (token) {
     userApi.token({
-        token: token
-      })
+      token: token
+    })
       .then((res) => {
         console.log('根据token获取用户信息成功', res)
         wx.hideLoading();

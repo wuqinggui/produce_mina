@@ -1,10 +1,11 @@
-<view class="login-wrap">
-  <input value="{{userName}}" bindinput="bindKeyUserName" placeholder="用户名" placeholder-class="input-placeholder" class="input-content"/>
-  <input value="{{password}}" password="{{true}}" bindinput="bindKeyPassword" maxlength="20" placeholder="密码" placeholder-class="input-placeholder" class="input-content"/>
-  <button bindtap="login" hover-class="click-active" class="submit-btn {{ userName && password ? '' : 'btn-disabled' }}">登 录</button>
-  <view class="register pt10 gray287 flex ju-b">
-    <text bindtap="goIndex">暂不登录？去首页逛逛</text>
-    <text bindtap="goRegister">快速注册</text>
-  </view>
+<view class='wechat-login-area'>
+  <image class="wechat-login-logo" src="/images/fangsuo_logo.png" mode="cover"></image>
+  <view class='wechat-login-title'>农贸商城</view>
+  <button class="wechat-login-btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{!wxSetting}}">
+    <text class='wechat-login-text'>微信授权</text>
+  </button>
+  <button wx:else open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="wechat-login-btn">
+    <text class='wechat-login-text'>手机号授权登录</text>
+  </button>
 </view>
 <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
