@@ -17,7 +17,8 @@
     "pages/addAddress/addAddress",
     "pages/applySettled/applySettled",
     "pages/login/login",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/checkUser/checkUser"
   ],
   "window": {
     "backgroundTextStyle": "light",

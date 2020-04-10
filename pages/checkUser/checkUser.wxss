@@ -1,0 +1,93 @@
+/* pages/checkUser.wxss */
+.addinfo {
+  position: relative;
+}
+
+.addinfo .weui-input {
+  text-align: left;
+  padding-left: 10rpx;
+}
+
+.addinfo .select {
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.addinfo text {
+  flex: 0 0 180rpx;
+  text-align: right;
+}
+
+.addinfo .shops {
+  flex-wrap: wrap;
+}
+
+.addinfo .shop-item {
+  border-radius: 10rpx;
+  margin: 8rpx 8rpx;
+  padding: 4rpx 12rpx;
+  border: 1rpx solid #dcdcdc;
+}
+.addinfo .shop-item.active {
+  color: #06a380;
+  border: 1rpx solid #06a380;
+}
+
+.portrait image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.search .ipt {
+  position: relative;
+  width: 100%;
+}
+
+.ipt .select {
+  top: 26rpx;
+  right: 10rpx;
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  transform: rotate(90deg);
+}
+.search .ipt input {
+  color: #000;
+  padding-left: 30rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  border: 1rpx solid #ffeabf;
+  background-color: #fffbf7;
+}
+
+.list-item {
+  position: relative;
+  align-items: center;
+}
+
+.info .name {
+  line-height: 60rpx;
+}
+
+.info .remark {
+  color: #ffb017;
+}
+
+.icon .weui-icon {
+  background: #999 !important;
+}
+
+.enter {
+  color: #fff;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 90rpx;
+  line-height: 90rpx;
+  background-color: #FFA800;
+  text-align: center;
+}

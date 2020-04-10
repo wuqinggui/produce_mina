@@ -1,0 +1,39 @@
+<!--pages/checkUser.wxml-->
+<view class="checkUser pl20 pr20 pb100">
+  <view class="search flex ju-b pt10 pb10">
+    <view class="ipt" bindtap="selectShop">
+      <input class="weui-input" placeholder="请输入手机号搜索" bindinput="bindKeyInput" />
+    </view>
+  </view>
+  <view class="list">
+    <view class="list-item pt10 pb10 flex ju-b" wx:for="{{list}}" wx:key="index" bindtap="selectItem" data-index="{{index}}">
+      <view class="flex">
+        <view class="portrait pr10 verticle-center">
+          <image src="../../images/head_img.png"></image>
+        </view>
+        <view class="info">
+          <view class="name">{{item.nickname}}
+            <text class="remark ml5">{{item.userRole ? '('+ item.userRoleName +')' : ''}}</text>
+          </view>
+          <view class="people gray9">电话：
+            <text>{{item.phone}}</text> </view>
+          <!-- <view class="people gray9">商户名称：
+            <text>{{item.shop.merchantName}}</text> </view> -->
+        </view>
+      </view>
+      <view class="direction-center">
+        <icon type="{{checkId == item.id ? 'success_circle' : 'circle'}}" color="{{checkId == item.id ? '#FFA800' : ''}}" size="24" />
+      </view>
+      <view class="half-px-border half-px-border-bottom"></view>
+    </view>
+  </view>
+  <view wx:if="{{list.length == 0 && showNone}}" class="list-nodata-area">
+    <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
+    <view class="list-nodata-tip"> 暂无数据 </view>
+  </view>
+</view>
+<view class="enter" bindtap="enterUser">
+  <text>确定</text>
+  <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
+</view>
+<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>

@@ -9,13 +9,15 @@ Page({
   data: {
     userId: '',
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
+    checkUser_id: '',
+    checkUser_name: '',
     info: {}, // 新增修改数据
     showNone: false,
     inputValue: '',
     worktype: '',
     showOneButtonDialog: false,
     oneButton: [{
-      text: '添加'
+      text: '分配'
     }],
     oneButton2: [{
       text: '确定'
@@ -95,23 +97,31 @@ Page({
       info: info
     })
   },
+  checkUser: function(e) {
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/checkUser/checkUser?id=' + id,
+    })
+  },
   // 确定修改或新增
   tapDialogButton(e) {
     let data = this.data;
     let toastTxt = '';
     if (!data.info.userRole) {
       toastTxt = '请输入工种';
-    } else if (!data.info.nickname) {
-      toastTxt = '请输入员工名';
-    } else if (!data.info.phone) {
-      toastTxt = '请输入联系电话';
-    } else if (!/^1[3|4|5|7|8]\d{9}$/.test(data.info.phone)) {
-      toastTxt = '手机号码格式，请重新输入';
-    } else if (!data.info.userName) {
-      toastTxt = '请输入用户名';
-    } else if (data.btnStatus == 1 && !data.info.password) {
-      toastTxt = '请输入密码';
-    } else if (!data.checkedShopList.length) {
+    } else if (!data.checkUser_id) {
+      toastTxt = '请选择用户名';
+    }
+    //  else if (!data.info.nickname) {
+    //   toastTxt = '请输入员工名';
+    // } else if (!data.info.phone) {
+    //   toastTxt = '请输入联系电话';
+    // } else if (!/^1[3|4|5|7|8]\d{9}$/.test(data.info.phone)) {
+    //   toastTxt = '手机号码格式，请重新输入';
+    // }else if (data.btnStatus == 1 && !data.info.password) {
+    //   toastTxt = '请输入密码';
+    // } 
+    else if (!data.checkedShopList.length) {
       toastTxt = '请选择该员工的所属店铺';
     }
     if (toastTxt) {
@@ -131,28 +141,29 @@ Page({
     } = wx.getStorageSync('sj_userInfo'))
     data.info.shopId = wx.getStorageSync('shopId');
     data.info.shopIds = data.checkedShopList;
+    data.info.id = data.checkUser_id;
     data.info.userId = data.userId;
     data.info.stats = '2';
-    data.info.password = MD5.hexMD5(data.info.password)
+    // data.info.password = MD5.hexMD5(data.info.password)
     // 新增员工
-    if (data.btnStatus == 1) {
-      shopApi.addUser(data.info).then((res) => {
-        wx.showToast({
-          title: '添加成功',
-          icon: 'success',
-          duration: 2000
-        })
-        this.getUserList();
-      }).catch((error) => {
-        console.log(error);
-        wx.showToast({
-          title: error.message ? error.message : '获取数据失败',
-          icon: 'none',
-          duration: 2000
-        })
-      })
-    } else { // 修改员工
-      shopApi.updateUser(data.info).then((res) => {
+    // if (data.btnStatus == 1) {
+    //   shopApi.addUser(data.info).then((res) => {
+    //     wx.showToast({
+    //       title: '添加成功',
+    //       icon: 'success',
+    //       duration: 2000
+    //     })
+    //     this.getUserList();
+    //   }).catch((error) => {
+    //     console.log(error);
+    //     wx.showToast({
+    //       title: error.message ? error.message : '获取数据失败',
+    //       icon: 'none',
+    //       duration: 2000
+    //     })
+    //   })
+    // } else { // 修改员工
+    shopApi.updateWxUser(data.info).then((res) => {
         wx.showToast({
           title: '修改成功',
           icon: 'success',
@@ -166,7 +177,7 @@ Page({
           duration: 2000
         })
       })
-    }
+    // }
     this.setData({
       showOneButtonDialog: false
     })
@@ -195,6 +206,8 @@ Page({
     this.setData({
       info: info,
       btnStatus: 1,
+      checkUser_name: '',
+      checkUser_id: '',
       showOneButtonDialog: true
     })
   },
@@ -215,6 +228,7 @@ Page({
     })
     this.setData({
       info: list[index],
+      checkUser_name: list[index].nickname,
       shopList: shopList,
       checkedShopList: checkedShopList,
       btnStatus: 2,

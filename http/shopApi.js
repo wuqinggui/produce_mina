@@ -33,7 +33,9 @@ import {
   updateAddressUrl,
   customertypeListUrl,
   getUserShopUrl,
-  getNmUsersUrl
+  getNmUsersUrl,
+  findListSqNmUsersUrl,
+  updateWxUserUrl
 } from './url'
 
 var shopApi = {
@@ -368,6 +370,26 @@ var shopApi = {
   getNmUsers: function (params) {
     return new Promise((resolve, reject) => {
       wxRequest(getNmUsersUrl, 'GET', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  }, 
+  // 获取用户列表
+  findListSqNmUsers: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(findListSqNmUsersUrl, 'POST', params)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+    });
+  }, 
+  // 修改微信信息
+  updateWxUser: function(params) {
+    return new Promise((resolve, reject) => {
+      wxRequest(updateWxUserUrl, 'POST', params)
         .then((res) => {
           resolve(res);
         })

@@ -139,11 +139,11 @@ Page({
     }).catch(err => {
       wx.hideLoading();
       console.log(err);
-      // wx.showToast({
-      //   title: err.data.msg ? err.data.msg : '网络连接异常，请稍后重试',
-      //   icon: 'none',
-      //   duration: 1000
-      // })
+      wx.showToast({
+        title: err.errMsg ? err.errMsg : '网络连接异常，请稍后重试',
+        icon: 'none',
+        duration: 1000
+      })
     })
   },
   // 根据token获取用户信息

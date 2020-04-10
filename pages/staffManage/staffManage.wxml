@@ -11,7 +11,15 @@
       </picker>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c" bindtap="checkUser" data-id="{{info.id}}">
+      <text>用户名：</text>
+      <view class="pos-r flex-1 ju-b verticle-center">
+        <view class="username pl10">{{checkUser_name}}</view>
+        <view class="common-arrow right"></view>
+      </view>
+      <view class="half-px-border half-px-border-bottom"></view>
+    </view>
+    <!-- <view class="addinfo verticle-center pb10 pt10 flex ju-c">
       <text>员工名：</text>
       <input class="weui-input" data-key="nickname" value="{{info.nickname}}" bindinput="bindAndSet" />
       <view class="half-px-border half-px-border-bottom"></view>
@@ -30,7 +38,7 @@
       <text>密码：</text>
       <input class="weui-input" password="{{true}}" value="{{info.password}}" bindinput="bindAndSet" data-key="password" />
       <view class="half-px-border half-px-border-bottom"></view>
-    </view>
+    </view> -->
     <view class="addinfo verticle-center piker pb10 pt10 flex">
       <text>所属店铺：</text>
       <view class="shops flex">

@@ -37,8 +37,10 @@ export const findShopByIDUrl = baseUrl + 'shop/findShopByID'; // 根据商户id�
 // 员工
 export const addUserUrl = baseUrl + 'nmUser/add'; // 员工添加
 export const updateUserUrl = baseUrl + 'nmUser/update'; // 员工修改
+export const updateWxUserUrl = baseUrl + 'nmUser/updateWx'; // 员工修改(微信)
 export const findUserUrl = baseUrl + 'nmUser/findAll'; // 员工查询
 export const searchUserUrl = baseUrl + 'nmUser/search'; // 员工搜素
+export const findListSqNmUsersUrl = baseUrl + 'nmUser/findListSqNmUsers'; // 用户搜素
 // 商户管理
 export const shopListUrl = baseUrl + 'shop/findAll'; //商户列表管理
 export const deleteShopUrl = baseUrl + 'shop/delete'; //删除商户 商户管理
