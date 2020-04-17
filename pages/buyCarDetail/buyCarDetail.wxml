@@ -1,7 +1,7 @@
 <view class="container carts-list">
   <block wx:for="{{carList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
     <view class="shop-title row verticle-center {{idx == 0 ? '' : 'mt20'}}">
-      <icon type="{{shopitem.isSelect ? 'success_circle' : 'circle'}}" color="{{shopitem.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="cnangeShopSelect" data-idx="{{idx}}"/>
+      <icon type="{{shopitem.isSelect ? 'success_circle' : 'circle'}}" color="{{shopitem.isSelect ? '#FFA800' : ''}}" size="16" class="mr10" bindtap="cnangeShopSelect" data-idx="{{idx}}" />
       <image class="shop-icon mr5" src="/images/shop_icon.png" mode="cover"></image>
       <view class="flex-1 text-overflow">{{shopitem.shop.merchantName ? shopitem.shop.merchantName : '商户名称'}}</view>
       <view class="add mr20 ml10 f14" bindtap="addShop">添加商品</view>
@@ -20,11 +20,11 @@
             <view class="title gray3 f16">
               {{item.commodity.name}}
               <view class="zlbz f13 bg-f5 text-red" wx:if="{{item.zlbz}}">{{item.zlbz}}</view>
-              </view>
+            </view>
           </view>
           <view class="row {{item.shopdesc ? 'mt2' : 'mt9'}}">
             <view class="specItem verticle-center mr5 specItem-isSelect">
-                {{item.commodity.specs.specName}}
+              {{item.commodity.specs.specName}}
             </view>
           </view>
           <view class="carts-subtitle row {{item.shopdesc ? 'mt2' : 'mt9'}}">
@@ -35,21 +35,21 @@
               <text class="unit f13 fw">/ {{item.commodity.allocated.name ? item.commodity.allocated.name : ''}}</text>
             </view>
             <!-- 数量加减 -->
-            <view>
+            <view class="flex pos-a nums-absolute">
               <view class="stepper">
                 <!-- 减号 -->
                 <text class="iconfont icon-jianhao {{item.number == 0 ? '' : 'normal'}}" data-item="{{item}}" catchtap="bindMinus"></text>
                 <!-- 数值 -->
-                <input type="number" value="{{item.number}}" bindblur="changeNumber" data-idx="{{idx}}" data-index="{{index}}" data-item="{{item}}"/>
-                 <!-- wx:if="{{curIdx == idx && curIndex == index}}" -->
+                <input type="number" value="{{item.number}}" bindblur="changeNumber" data-idx="{{idx}}" data-index="{{index}}" data-item="{{item}}" />
+                <!-- wx:if="{{curIdx == idx && curIndex == index}}" -->
                 <!-- <view class="foucs-wrap" data-item="{{item}}" data-idx="{{idx}}" data-index="{{index}}" catchtap="getFoucs" wx:else>{{item.number}}</view> -->
                 <!-- 加号 -->
                 <text class="normal iconfont icon-jiahao" data-item="{{item}}" catchtap="bindPlus"></text>
               </view>
-            </view>
             <view class="ml10 gray6 f13 fw verticle-center">{{item.commodity.actual.name ? item.commodity.actual.name : ''}}</view>
+            </view>
           </view>
-            <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{item.shopdesc}}">{{item.shopdesc}}</view>
+          <view class="shopdesc f12 gray6 text-overflow mt2" wx:if="{{item.shopdesc}}">{{item.shopdesc}}</view>
         </view>
         <view class="half-px-border half-px-border-bottom"></view>
       </view>
@@ -65,7 +65,7 @@
 <view class="carts-footer" wx:if="{{carList.length > 0}}">
   <view class="carts-footer-wrap">
     <view class="select-and-amount" bindtap="bindSelectAll">
-      <icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" color="{{selectedAllStatus ? '#FFA800' : ''}}" size="16"/>
+      <icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" color="{{selectedAllStatus ? '#FFA800' : ''}}" size="16" />
       <text class="gray3 f14">全选</text>
     </view>
     <view class="sum">

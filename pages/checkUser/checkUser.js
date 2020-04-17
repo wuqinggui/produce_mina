@@ -10,12 +10,13 @@ Page({
     checkId: '', //上个页面传过来的id
     currentIndex: -1,
     showNone: false,
+    timer: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       checkId: options.id ? options.id : ''
     });
@@ -24,28 +25,31 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
-  bindKeyInput: function (e) {
+  bindKeyInput: function(e) {
+    clearTimeout(this.data.timer);
+    this.data.timer = setTimeout(() => {
     let inputValue = e.detail.value;
     let params = {
       phone: inputValue
     };
-    shopApi.findListSqNmUsers(params).then((res) => {
-      wx.hideLoading();
-      this.setData({
-        showNone: true,
-        list: res.data ? res.data : []
-      });
-    }).catch((err) => {
-      wx.hideLoading();
-      console.log(err);
-    })
+      shopApi.findListSqNmUsers(params).then((res) => {
+        wx.hideLoading();
+        this.setData({
+          showNone: true,
+          list: res.data ? res.data : []
+        });
+      }).catch((err) => {
+        wx.hideLoading();
+        console.log(err);
+      })
+    }, 600);
   },
   enterUser: function() {
     let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2]; 
+    let prevPage = pages[pages.length - 2];
     let index = this.data.currentIndex;
     prevPage.setData({
       checkUser_id: this.data.list[index].id,
@@ -63,7 +67,7 @@ Page({
     });
   },
   // 获取数据
-  getData: function () {
+  getData: function() {
     wx.showLoading({
       title: '加载中...',
     })
@@ -81,7 +85,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.setData({
@@ -98,35 +102,35 @@ Page({
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

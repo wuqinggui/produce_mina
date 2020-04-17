@@ -18,4 +18,4 @@
   <template is="address" wx:for="{{list}}" wx:key="index" data="{{region, customItem, valObj, ...item}}" />
   <view class="enter mt20 f16" bindtap="enter" bindtap="submit">确定</view>
 </view>
-<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
+<!-- <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view> -->

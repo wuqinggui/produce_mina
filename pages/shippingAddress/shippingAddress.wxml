@@ -26,4 +26,4 @@
   <text>新增收货地址</text>
   <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
 </view>
-<view class="fix-iphonex-button" wx:if="{{isIpx}}"></view>
+<!-- <view class="fix-iphonex-button" wx:if="{{isIpx}}"></view> -->
