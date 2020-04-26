@@ -263,6 +263,7 @@ Page({
           data[i].isSelect = false;
           for (var j = 0; j < data[i].specPriceVos.length; j++) {
             data[i].specPriceVos[j].isSelect = false;
+            data[i].specPriceVos[j].price = data[i].specPriceVos[j].price.toFixed(2);
           }
         }
         this.setData({

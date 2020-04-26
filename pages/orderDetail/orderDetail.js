@@ -97,10 +97,17 @@ Page({
         var data = res.data ? res.data : [];
         for (var i = 0; i < data.length; i++) {
           data[i].address.addresses = data[i].address.regional.replace(/\,/g, '') + data[i].address.addresses;
-          data[i].totalPriceNum = parseFloat(data[i].freight) + parseFloat(data[i].totalSum);
+          data[i].totalPriceNum = (parseFloat(data[i].freight) + parseFloat(data[i].totalSum)).toFixed(2);
           data[i].createTimeFormat = data[i].createTime ? util.formatTimeSubstr(data[i].createTime) : '';
           data[i].playTimeFormat = data[i].playTime ? util.formatTimeSubstr(data[i].playTime) : '';
           data[i].sendTimeFormat = data[i].sendTime ? util.formatTimeSubstr(data[i].sendTime) : '';
+          data[i].freight = data[i].freight.toFixed(2);
+          data[i].totalSum = data[i].totalSum.toFixed(2);
+          if (data[i].orderCommditys.length > 0) {
+            for (let j = 0; j < data[i].orderCommditys.length; j++) {
+              data[i].orderCommditys[j].commodity.price = data[i].orderCommditys[j].commodity.price.toFixed(2);
+            }
+          }
         }
         console.log(data)
         this.setData({

@@ -101,6 +101,7 @@ Page({
           data[i].isSelect = false;
           for (var j = 0; j < data[i].lst.length; j++) {
             data[i].lst[j].isSelect = false;
+            data[i].lst[j].commodity.price = data[i].lst[j].commodity.price.toFixed(2);
           }
         }
         this.setData({
