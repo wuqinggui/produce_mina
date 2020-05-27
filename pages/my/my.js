@@ -60,6 +60,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //通过id获取组件component
+    this.loginDialog = this.selectComponent("#loginDialog")
 
   },
 
@@ -76,6 +78,7 @@ Page({
   onShow: function () {
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
+      this.loginDialog.closeLoginTip(); // 调用组件方法
       let list = this.data.list;
       list[list.length-1].show = false;
       this.setData({
@@ -84,10 +87,17 @@ Page({
       });
       this.getData();
     } else {
-      wx.navigateTo({
-        url: '/pages/login/login'
-      })
+      // wx.navigateTo({
+      //   url: '/pages/login/login'
+      // })
+      this.loginDialog.showLoginTip(); // 调用组件方法
     }
+  },
+
+  // 组件回调方法
+  loginCallBack: function (e) {
+    console.log('登陆弹框回调', e)
+    this.onShow();
   },
 
   /**
@@ -121,9 +131,9 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
-  },
+  // },
 // 获取商户id
 getShopId: function() {
   let params = {
@@ -181,44 +191,4 @@ getShopId: function() {
     //   })
     // }
   },
-  
-  // 弹框式授权用户信息
-  // getUserInfo: function (e) {
-  //   var _this = this;
-  //   console.log(e.detail)
-  //   let { errMsg, userInfo } = e.detail;
-  //   switch (errMsg) {
-  //     case 'getUserInfo:fail auth deny':
-  //     case 'getUserInfo:fail:cancel to confirm login':
-  //       break;
-  //     default:
-  //       // 必须是在用户已经授权的情况下调用
-  //       wx.getUserInfo({
-  //         success(res) {
-  //           console.log('用户信息', res)
-  //           // let params = Object.assign({}, res);
-  //           // delete params['userInfo'];
-  //           // delete params['errMsg'];
-  //           // userApi.getUserInfo(params)
-  //           //   .then((res2) => {
-  //             getApp().getUserinfoSetting();
-  //             getApp().saveUserinfo(res.userInfo);
-  //             _this.setData({
-  //               isAuthUserinfo: true
-  //             })
-  //             // })
-  //             // .catch((error2) => {
-  //             //   console.log(error2);
-  //             // })
-  //         },
-  //         fail(error) {
-  //           wx.showToast({
-  //             title: '授权用户信息失败，请重试',
-  //             icon: 'none'
-  //           });
-  //         }
-  //       });
-  //       break;
-  //   }
-  // },
 })

@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "客服"
+  "navigationBarTitleText": "客服",
+  "usingComponents": {
+    "loginDialog": "../../component/loginDialog/loginDialog"
+  }
 }

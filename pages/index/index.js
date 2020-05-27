@@ -39,20 +39,22 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    //通过id获取组件component
+    this.loginDialog = this.selectComponent("#loginDialog")
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.loginDialog.closeLoginTip(); // 调用组件方法
     this.pageInit();
     // let sj_userId = wx.getStorageSync('sj_userId')
     // if (sj_userId) {
@@ -61,6 +63,7 @@ Page({
     //   wx.navigateTo({
     //     url: '/pages/login/login'
     //   })
+    // this.loginDialog.showLoginTip(); // 调用组件方法
     // }
   },
 
@@ -95,8 +98,14 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  // onShareAppMessage: function () {
 
+  // },
+
+  // 组件回调方法
+  loginCallBack: function (e) {
+    console.log('登陆弹框回调', e)
+    this.onShow();
   },
 
   // 页面初始化
@@ -411,15 +420,17 @@ Page({
     }
     let sj_userId = wx.getStorageSync('sj_userId')
     if (!sj_userId) {
+      var _this = this;
       // 未登陆
       wx.showModal({
         title: '登陆提示',
         content: '您还没有登陆，是否去登陆？',
         success: function(res) {
           if (res.confirm) {
-            wx.navigateTo({
-              url: '/pages/login/login'
-            })
+            // wx.navigateTo({
+            //   url: '/pages/login/login'
+            // })
+            _this.loginDialog.showLoginTip(); // 调用组件方法
           }
         }
       })

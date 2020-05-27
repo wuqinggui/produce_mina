@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "管理申请",
   "usingComponents": {
-    "mp-icon": "../../component/icon/icon"
+    "mp-icon": "../../component/icon/icon",
+    "loginDialog": "../../component/loginDialog/loginDialog"
   }
 }

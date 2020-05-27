@@ -2,5 +2,8 @@
   "backgroundTextStyle": "light",
   "navigationBarBackgroundColor": "#FFA800",
   "navigationBarTitleText": "支付成功",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "loginDialog": "../../component/loginDialog/loginDialog"
+  }
 }

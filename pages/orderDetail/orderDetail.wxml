@@ -1,3 +1,5 @@
+<!-- 自定义插件，设置回调方法，id属性 -->
+<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
 <!--pages/orderDetail/orderDetail.wxml-->
 <view class="orderDetail">
   <view class="receipt row verticle-center">

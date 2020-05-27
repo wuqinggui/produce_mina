@@ -1,3 +1,5 @@
+<!-- 自定义插件，设置回调方法，id属性 -->
+<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
 <template name="list">
     <view wx:if="{{show}}" class="list row verticle-center" hover-class="click-active" data-url="{{url}}" data-text="{{text}}" data-num="{{num}}" catchtap='navigateTo'>
         <view class="list-text flex-1">{{text}}</view>

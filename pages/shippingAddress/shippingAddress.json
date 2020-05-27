@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "收货地址",
   "usingComponents": {
-    "mp-icon": "../../component/icon/icon"
+    "mp-icon": "../../component/icon/icon",
+    "loginDialog": "../../component/loginDialog/loginDialog"
   }
 }

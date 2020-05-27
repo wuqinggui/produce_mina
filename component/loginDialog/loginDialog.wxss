@@ -1,0 +1,44 @@
+/*微信登录提示*/ 
+.register-wrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+.register-box {
+  position: fixed;
+  top: 385rpx;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 560rpx;
+  background: #fff;
+  border-radius: 10rpx;
+}
+.reg-title {
+  font-size: 34rpx;
+  color: #333;
+  text-align: center;
+  margin: 50rpx 0 40rpx 0; 
+  font-weight: bolder;
+  /* letter-spacing: 5rpx; */
+}
+.wechat-login {
+  margin-bottom: 60rpx;
+}
+.wechat-login-btn{
+  width: 80%;
+  margin-top: 40rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size:32rpx;
+  background-color: #ffb800;
+  margin: 0 auto;
+}
+
+.wechat-login-text{
+  color: #fff;
+}

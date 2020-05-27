@@ -1,3 +1,5 @@
+<!-- 自定义插件，设置回调方法，id属性 -->
+<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
 <view class="list user">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="resetPassword" buttons="{{oneButton}}">
     <view class="addinfo verticle-center pb10 pt10 flex ju-c">

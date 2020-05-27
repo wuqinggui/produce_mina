@@ -1,3 +1,5 @@
+<!-- 自定义插件，设置回调方法，id属性 -->
+<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
 <view class="container carts-list">
   <block wx:for="{{carList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
     <view class="shop-title row verticle-center {{idx == 0 ? '' : 'mt20'}}">

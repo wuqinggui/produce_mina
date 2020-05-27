@@ -1,3 +1,5 @@
+<!-- 自定义插件，设置回调方法，id属性 -->
+<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
 <view class="order pb20 order-page">
   <view class="nav-header">
     <view wx:for="{{navs}}"  wx:key="navindex" wx:for-index="navindex" wx:for-item="navitem" class="nav-cell {{navitem.index == curNavIitem.index ? 'active' : ''}}">
