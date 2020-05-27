@@ -6,15 +6,16 @@
   top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 10;
+  z-index: 1000;
 }
 .register-box {
   position: fixed;
-  top: 385rpx;
+  top: 50%;
+  transform: translateY(-50%);
   left: 0;
   right: 0;
   margin: auto;
-  width: 560rpx;
+  width: 500rpx;
   background: #fff;
   border-radius: 10rpx;
 }
