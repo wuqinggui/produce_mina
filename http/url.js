@@ -1,6 +1,6 @@
 // export const baseUrl = 'https://47.106.130.46:8016/trade/';
 // export const baseUrl = 'https://qxkj.org.cn:8019/trade/';
-export const baseUrl = 'https://www.yuannong.shop:8019/trade/';
+export const baseUrl = 'https://www.yuannong.shop:8015/trade/';
 
 // 用户模块
 export const loginWxUrl = baseUrl + 'nmUser/loginWx'; // 微信登录注册
