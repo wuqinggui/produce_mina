@@ -36,7 +36,6 @@
 
 .addinfo .shop-item {
   border-radius: 10rpx;
-  margin: 8rpx 8rpx;
   padding: 4rpx 12rpx;
   border: 1rpx solid #dcdcdc;
 }
@@ -48,6 +47,7 @@
 .portrait image {
   width: 120rpx;
   height: 120rpx;
+  border-radius: 50%;
 }
 
 .weui-dialog__hd {
@@ -119,4 +119,32 @@
 
 .add {
   align-items: center;
+}
+
+.input-phone{
+  color: #000;
+  font-size: 28rpx;
+  text-align: left;
+  border-radius: 6rpx;
+  padding: 4rpx 12rpx;
+  border: 1rpx solid #dcdcdc;
+}
+
+.label-warp{
+  width: 160rpx;
+  text-align: right;
+}
+
+.search-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:22rpx;
+  height:44rpx;
+  font-size:24rpx;
+  color: #fff;
+  line-height:44rpx;
+  padding: 0 22rpx;
+  margin-left: 10rpx;
+  background-color: #FFA800;
 }

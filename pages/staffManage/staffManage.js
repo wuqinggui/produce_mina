@@ -11,15 +11,20 @@ Page({
     btnStatus: 1, // 点击按钮新增(1)还是修改(2)
     checkUser_id: '',
     checkUser_name: '',
+    checkUser_phone: '',
     info: {}, // 新增修改数据
     showNone: false,
     inputValue: '',
     worktype: '',
     showOneButtonDialog: false,
     oneButton: [{
+      className: '',
+      extClass: '',
       text: '分配'
     }],
     oneButton2: [{
+      className: '',
+      extClass: '',
       text: '确定'
     }],
     address: [], // 地区选择列表
@@ -97,11 +102,54 @@ Page({
       info: info
     })
   },
-  checkUser: function(e) {
-    let id = e.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '/pages/checkUser/checkUser?id=' + id,
+  // checkUser: function(e) {
+  //   let id = e.currentTarget.dataset.id;
+  //   wx.navigateTo({
+  //     url: '/pages/checkUser/checkUser?id=' + id,
+  //   })
+  // },
+  // 输入用户手机号码
+  bindKeyPhone: function (e) {
+    // console.log('输入用户手机号码', e)
+    this.setData({
+      checkUser_phone: e.detail.value
     })
+  },
+  // 根据手机号码匹配用户名
+  queryfindListSqNmUsers: function () {
+    if (util.isBlank(this.data.checkUser_phone)) {
+      wx.showToast({
+        title: '请输入手机号码',
+        icon: 'none'
+      });
+      return;
+    }
+    if (!util.matchFn('mobile', this.data.checkUser_phone)) {
+      wx.showToast({
+        title: '手机号码格式错误，请重新输入',
+        icon: 'none'
+      });
+      return;
+    }
+    let params = {
+      phone: this.data.checkUser_phone
+    };
+      shopApi.findListSqNmUsers(params).then((res) => {
+        console.log('手机号码查询用户名成功', res);
+        if (!res.data || res.data.length == 0) {
+          wx.showToast({
+            title: '根据您输入的手机号码匹配不到用户信息，请重试',
+            icon: 'none'
+          });
+        } else {
+          this.setData({
+            checkUser_id: res.data[0].id,
+            checkUser_name: res.data[0].nickname,
+          })
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
   },
   // 确定修改或新增
   tapDialogButton(e) {
@@ -122,6 +170,7 @@ Page({
     //   toastTxt = '请输入密码';
     // } 
     else if (!data.checkedShopList.length) {
+      console.log(data.checkedShopList)
       toastTxt = '请选择该员工的所属店铺';
     }
     if (toastTxt) {
@@ -207,6 +256,7 @@ Page({
       info: info,
       btnStatus: 1,
       checkUser_name: '',
+      checkUser_phone: '',
       checkUser_id: '',
       showOneButtonDialog: true
     })
@@ -221,14 +271,22 @@ Page({
     } = this.data;
     this.clearShopListStatus();
     checkedShopList = list[index].shopIds;
-    shopList.forEach((item) => {
-      if (list[index].shopIds.includes(item.id)) {
-        item.active = true;
+    // shopList.forEach((item) => {
+    //   if (list[index].shopIds.includes(item.id)) {
+    //     item.active = true;
+    //   }
+    // })
+    for(var i = 0; i < shopList.length; i++) {
+      if (shopList[i].id == list[index].shopIds) {
+        shopList[i].active = true;
+        break
       }
-    })
+    }
     this.setData({
       info: list[index],
+      checkUser_id: list[index].id,
       checkUser_name: list[index].nickname,
+      checkUser_phone: '',
       shopList: shopList,
       checkedShopList: checkedShopList,
       btnStatus: 2,

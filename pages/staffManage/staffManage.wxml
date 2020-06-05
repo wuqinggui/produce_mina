@@ -4,21 +4,26 @@
 <view class="staffManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2 }}">
     <view class="addinfo verticle-center piker pb10 pt10 flex ju-c">
-      <text>工种：</text>
+      <view class="label-warp">工种：</view>
+      <view class="flex-1">
       <picker bindchange="bindPickerChange3" value="{{userRoles[index]}}" range="{{userRoles}}" range-key="name">
         <view class="picker flex">
           <input class="weui-input" disabled="true" value="{{info.userRoleName}}" />
           <view class="common-arrow right arrow"></view>
         </view>
       </picker>
+      </view>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
-    <view class="addinfo verticle-center pb10 pt10 flex ju-c" bindtap="checkUser" data-id="{{info.id}}">
-      <text>用户名：</text>
-      <view class="pos-r flex-1 ju-b verticle-center">
+    <!-- <view class="addinfo verticle-center pb10 pt10 flex ju-c" bindtap="checkUser" data-id="{{info.id}}"> -->
+    <view class="addinfo verticle-center pb10 pt10 flex ju-c">
+      <view class="label-warp">用户名：</view>
+      <view class="pos-r flex-1 ju-b verticle-center" wx:if="{{checkUser_name}}">
         <view class="username pl10">{{checkUser_name}}</view>
-        <view class="common-arrow right"></view>
+        <!-- <view class="common-arrow right"></view> -->
       </view>
+      <input value="{{checkUser_phone}}" type="number" placeholder="输入手机号匹配用户名"  bindinput="bindKeyPhone" maxlength="11" placeholder-class="f12" class="input-phone flex-1"  wx:if="{{!checkUser_name}}"/>
+      <button class="search-btn" bindtap="queryfindListSqNmUsers" hover-class="click-active" wx:if="{{!checkUser_name}}">匹配</button>
       <view class="half-px-border half-px-border-bottom"></view>
     </view>
     <!-- <view class="addinfo verticle-center pb10 pt10 flex ju-c">
@@ -42,11 +47,13 @@
       <view class="half-px-border half-px-border-bottom"></view>
     </view> -->
     <view class="addinfo verticle-center piker pb10 pt10 flex">
-      <text>所属店铺：</text>
-      <view class="shops flex">
-        <view bindtap="checkShop" class="shop-item {{item.active ? 'active' : ''}}" wx:for="{{shopList}}" data-index="{{index}}">{{item.merchantName}}</view>
+      <view class="label-warp">所属店铺：</view>
+      <view class="shops  flex-1">
+      <view wx:for="{{shopList}}" wx:for-item="shopItem" wx:for-index="shopIndex"  wx:key="shopIndex">
+        <view bindtap="checkShop" class="shop-item {{shopItem.active ? 'active' : ''}}" data-index="{{index}}">{{shopItem.merchantName}}</view>
       </view>
-      <view class="half-px-border half-px-border-bottom"></view>
+      </view>
+      <!-- <view class="half-px-border half-px-border-bottom"></view> -->
     </view>
   </mp-dialog>
   <view class="search flex ju-b pt10 pb10">
@@ -66,7 +73,7 @@
     <view class="list-item pt10 pb10 flex ju-b" wx:for="{{list}}" wx:key="index" bindtap="editItem" data-index="{{index}}">
       <view class="flex">
         <view class="portrait pr10 verticle-center">
-          <image src="../../images/head_img.png"></image>
+          <image src="{{item.avatarUrl ? item.avatarUrl : '../../images/head_img.png'}}"></image>
         </view>
         <view class="info">
           <view class="name">{{item.nickname}}

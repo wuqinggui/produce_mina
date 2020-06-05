@@ -51,7 +51,7 @@
              wx:for-index="smallClassIndex"
              wx:key="smallClassIndex">
         <view
-          class="smallClassItem text-overflow text-center {{curSmallClass.id == smallClassItem.id ? 'cur gray3' : 'gray6'}}"
+          class="smallClassItem text-overflow text-center {{curSmallClass.id == smallClassItem.id ? 'cur gray3' : 'gray6'}} {{ (smallClassItem.id == 199999999 || smallClassItem.id == '199999999') ? 'fw f16 grayfa6470' : ''}}"
           data-item="{{smallClassItem}}"
           bindtap="handleChangeSmallClass">
           {{smallClassItem.smallClassName}}
