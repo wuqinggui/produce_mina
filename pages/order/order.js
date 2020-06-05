@@ -12,6 +12,8 @@ Page({
     // 订单状态为1（正常），而且支付状态为1（未支付），而且物流状态为1（待发货）的才能显示“补单”按钮进行补单
    */
   data: {
+    classList: [], // 大分类
+    curClass: {}, // 当前大分类
     curNavIitem: {
       text: '全部',
       index: 1,
@@ -77,7 +79,7 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.loginDialog.closeLoginTip(); // 调用组件方法
-      this.getData();
+      this.getShopClass();
     } else {
       // wx.redirectTo({
       //   url: '/pages/login/login'
@@ -126,6 +128,44 @@ Page({
   // onShareAppMessage: function() {
 
   // },
+  // 获取大分类
+  getShopClass: function () {
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
+    shopApi.shopClass()
+      .then((res) => {
+        console.log('获取大分类数据成功', res);
+        // wx.hideLoading();
+        this.setData({
+          classList: res.data ? res.data : [],
+          curClass: res.data && res.data.length > 0 ? res.data[0] : {}
+        })
+        this.getData();
+      })
+      .catch((error) => {
+        console.log('获取大分类数据失败', error);
+        // wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '获取大分类数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+  // 切换大分类
+  handleChangeClass: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    if (item.id == this.data.curClass.id) {
+      return
+    }
+    this.setData({
+      curClass: item
+    });
+    this.getData();
+  },
   
   // 获取订单数据
   getData: function () {
@@ -134,6 +174,7 @@ Page({
     //   mask: true
     // })
     var params = {
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       userId: getApp().globalData.userInfo.id
     }
     if (this.data.curNavIitem.hasOwnProperty("orderState")) {
@@ -202,7 +243,7 @@ Page({
     console.log(e.currentTarget.dataset)
     let { item } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: '/pages/orderDetail/orderDetail?orderId=' + item.id
+      url: '/pages/orderDetail/orderDetail?orderId=' + item.id + '&shopClassId=' + this.data.curClass.id
     })
   },
 
@@ -275,6 +316,7 @@ Page({
     })
     var params = {
       id: item.id,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       orderState: state
     }
     shopApi.orderUpdate(params)

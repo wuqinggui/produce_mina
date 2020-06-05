@@ -1,5 +1,20 @@
 <!-- 自定义插件，设置回调方法，id属性 -->
 <loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
+
+<!-- 顶部导航菜品分类 -->
+  <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{classList.length > 0}}">
+    <block wx:for="{{classList}}" 
+          wx:for-item="classItem"
+          wx:for-index="classIndex"
+          wx:key="classIndex">
+      <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}" bindtap="handleChangeClass" data-item="{{classItem}}">
+        <view class="image-wrap">
+          <image src="{{classItem.imagPath}}" class="image" wx:if="{{classItem.imagPath}}"></image>
+        </view>
+        <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'text-black' : 'gray9'}}">{{classItem.className}}</view>
+      </view>
+    </block>
+  </view>
 <view class="order pb20 order-page">
   <view class="nav-header">
     <view wx:for="{{navs}}"  wx:key="navindex" wx:for-index="navindex" wx:for-item="navitem" class="nav-cell {{navitem.index == curNavIitem.index ? 'active' : ''}}">
@@ -95,7 +110,7 @@
         </view>
       </view>
       </view>
-      <view wx:else class="list-nodata-area">
+      <view wx:else class="list-nodata-area pt80">
         <image src="../../images/list_nodata_icon.png" class="list-nodata-image"></image>
         <view class="list-nodata-tip"> -- 暂无订单数据 -- </view>
         <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>

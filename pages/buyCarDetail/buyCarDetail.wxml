@@ -1,5 +1,22 @@
 <!-- 自定义插件，设置回调方法，id属性 -->
 <loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
+
+<!-- 顶部导航菜品分类 -->
+  <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{classList.length > 0}}">
+    <block wx:for="{{classList}}" 
+          wx:for-item="classItem"
+          wx:for-index="classIndex"
+          wx:key="classIndex">
+      <view class="narItem col-xs-3" wx:if="{{classIndex < 4}}" bindtap="handleChangeClass" data-item="{{classItem}}">
+        <view class="image-wrap">
+          <image src="{{classItem.imagPath}}" class="image" wx:if="{{classItem.imagPath}}"></image>
+        </view>
+        <view class="text-center f14 text-overflow {{curClass.id && curClass.id == classItem.id ? 'text-black' : 'gray9'}}">{{classItem.className}}</view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 中间商品信息 -->
 <view class="container carts-list">
   <block wx:for="{{carList}}" wx:key="idx" wx:for-index="idx" wx:for-item="shopitem">
     <view class="shop-title row verticle-center {{idx == 0 ? '' : 'mt20'}}">
@@ -64,6 +81,8 @@
     <button class="goBuy-btn" hover-class="click-active" bindtap="goBuy">去下单</button>
   </view>
 </view>
+
+<!-- 底部 -->
 <view class="carts-footer" wx:if="{{carList.length > 0}}">
   <view class="carts-footer-wrap">
     <view class="select-and-amount" bindtap="bindSelectAll">

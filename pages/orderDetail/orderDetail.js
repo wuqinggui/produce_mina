@@ -14,6 +14,7 @@ Page({
   data: {
     orderId: '',
     orderData: {},
+    shopClassId: '', // 新增大分类id字段
   },
 
   /**
@@ -24,7 +25,8 @@ Page({
     this.loginDialog = this.selectComponent("#loginDialog")
     console.log('订单详情options', options)
     this.setData({
-      orderId: options.orderId
+      orderId: options.orderId,
+      shopClassId: options.shopClassId
     })
   },
 
@@ -98,6 +100,7 @@ Page({
       mask: true
     })
     var params = {
+      shopClassId: this.data.shopClassId, // 新增大分类id字段
       id: this.data.orderId
     }
     shopApi.getOrder(params)
@@ -201,6 +204,7 @@ Page({
     })
     var params = {
       id: item.id,
+      shopClassId: this.data.shopClassId, // 新增大分类id字段
       orderState: state
     }
     shopApi.orderUpdate(params)

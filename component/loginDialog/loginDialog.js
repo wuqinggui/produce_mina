@@ -29,7 +29,7 @@ Component({
   methods: {
     //关闭弹窗
     closeLoginTip: function () {
-      console.log('关闭登陆弹框')
+      // console.log('关闭登陆弹框')
       this.setData({
         loginTipShow: false
       })

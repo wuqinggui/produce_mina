@@ -545,6 +545,7 @@ Page({
       shopCommoditDto: shopCommoditDto,
       regionId: this.data.curRegion.id,
       shopId: this.data.curShop.id,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       userId: getApp().globalData.userInfo.id,
     }
     shopApi.addCar(params)

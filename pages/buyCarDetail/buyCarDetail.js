@@ -2,6 +2,8 @@
 var shopApi = require('../../http/shopApi.js').default;
 Page({
   data: {
+    classList: [], // 大分类
+    curClass: {}, // 当前大分类
     shopId: '',
     carList: [],
     selectedAllStatus: false, // 全选状态
@@ -41,7 +43,7 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     if (sj_userId) {
       this.loginDialog.closeLoginTip(); // 调用组件方法
-      this.getData();
+      this.getShopClass();
     } else {
       // wx.navigateTo({
       //   url: '/pages/login/login'
@@ -90,6 +92,44 @@ Page({
   // onShareAppMessage: function () {
 
   // },
+  // 获取大分类
+  getShopClass: function () {
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // })
+    shopApi.shopClass()
+      .then((res) => {
+        console.log('获取大分类数据成功', res);
+        // wx.hideLoading();
+        this.setData({
+          classList: res.data ? res.data : [],
+          curClass: res.data && res.data.length > 0 ? res.data[0] : {}
+        })
+        this.getData(); // 查询购物车大分类的商品信息
+      })
+      .catch((error) => {
+        console.log('获取大分类数据失败', error);
+        // wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '获取大分类数据失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
+  },
+  // 切换大分类
+  handleChangeClass: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { item } = e.currentTarget.dataset;
+    if (item.id == this.data.curClass.id) {
+      return
+    }
+    this.setData({
+      curClass: item
+    });
+    this.getData();
+  },
   
   // 获取购物车详情数据
   getData: function () {
@@ -99,6 +139,7 @@ Page({
     // });
     var params = {
       userId: getApp().globalData.userInfo.id,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       shopId: this.data.shopId
     }
     shopApi.getCar(params)
@@ -148,10 +189,10 @@ Page({
   },
   // 切换商户的选中状态
   cnangeShopSelect: function (e) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
     var data = this.data.carList;
@@ -238,10 +279,10 @@ Page({
 
   // 修改购物车商品数据
   changeCar: function (item, type, value) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     var newNum = 0;
     if (type == 1) {
       // 减少
@@ -262,12 +303,13 @@ Page({
         }
       ],
       shopId: item.shopId,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       userId: getApp().globalData.userInfo.id,
     }
     shopApi.updateCar(params)
     .then((res) => {
       console.log('修改购物车商品数据成功', res);
-      wx.hideLoading();
+      // wx.hideLoading();
       this.setData({
         isClick: false
       })
@@ -275,7 +317,7 @@ Page({
     })
     .catch((error) => {
       console.log('修改购物车商品数据失败', error);
-      wx.hideLoading();
+      // wx.hideLoading();
       this.setData({
         isClick: false
       })
@@ -289,10 +331,10 @@ Page({
 
   // 切换单个商品选中状态
   bindCheckbox: function(e) {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     console.log(e.currentTarget.dataset)
     var idx = e.currentTarget.dataset.idx;
     var index = e.currentTarget.dataset.index;
@@ -307,10 +349,10 @@ Page({
   },
   // 切换全选
   bindSelectAll: function() {
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     var selectedAllStatus = !this.data.selectedAllStatus; // 取反
     var data = this.data.carList;
     for (var i = 0; i < data.length; i++) {
@@ -341,7 +383,7 @@ Page({
     this.setData({
       totalPrice: num
     })
-    wx.hideLoading();
+    // wx.hideLoading();
   },
   // 删除商品
   delete: function(e) {
@@ -352,10 +394,10 @@ Page({
     this.setData({
       isClick: true
     })
-    wx.showLoading({
-      title: '加载中',
-      mask: true
-    });
+    // wx.showLoading({
+    //   title: '加载中',
+    //   mask: true
+    // });
     var item = e.currentTarget.dataset.item;
     var shopCommoditDto = [
       {
@@ -371,7 +413,7 @@ Page({
     shopApi.deleteCar(params)
       .then((res) => {
         console.log('删除购物车数据成功', res);
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           title: '删除成功',
           icon: 'success',
@@ -384,7 +426,7 @@ Page({
       })
       .catch((error) => {
         console.log('删除购物车数据失败', error);
-        wx.hideLoading();
+        // wx.hideLoading();
         this.setData({
           isClick: false
         })
@@ -419,7 +461,7 @@ Page({
     }
     getApp().globalData.submitCarData = submitData;
     wx.navigateTo({
-      url: '/pages/orderSubmit/orderSubmit'
+      url: '/pages/orderSubmit/orderSubmit?shopClassId=' + this.data.curClass.id
     })
   },
   // 左右滑动

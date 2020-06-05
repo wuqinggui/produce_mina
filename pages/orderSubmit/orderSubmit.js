@@ -15,6 +15,7 @@ Page({
     supplyOrderData: {}, // 补单的订单信息
     isSupplyOrder: false, // 是否补单
     isCanPay: false, // 是否可以下单/补单
+    shopClassId: '', // 新增大分类id字段
   },
 
   /**
@@ -23,7 +24,10 @@ Page({
   onLoad: function (options) {
     //通过id获取组件component
     this.loginDialog = this.selectComponent("#loginDialog")
-
+    console.log('提交订单options', options)
+    this.setData({
+      shopClassId: options.shopClassId
+    })
   },
 
   /**
@@ -154,6 +158,7 @@ Page({
       regionId: this.data.submitCarData.regionId,
       cartId: this.data.submitCarData.id,
       shopId: this.data.submitCarData.shopId,
+      shopClassId: this.data.shopClassId, // 新增大分类id字段
       userId: getApp().globalData.userInfo.id
       // userId: this.data.userId ? this.data.userId : getApp().globalData.userInfo.id
     }
@@ -203,6 +208,7 @@ Page({
     })
     var params = {
       cartId: this.data.submitCarData.id,
+      shopClassId: this.data.shopClassId, // 新增大分类id字段
       id: this.data.supplyOrderData.id
     }
     shopApi.orderUpdate(params)
