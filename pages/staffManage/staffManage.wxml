@@ -50,7 +50,7 @@
       <view class="label-warp">所属店铺：</view>
       <view class="shops  flex-1">
       <view wx:for="{{shopList}}" wx:for-item="shopItem" wx:for-index="shopIndex"  wx:key="shopIndex">
-        <view bindtap="checkShop" class="shop-item {{shopItem.active ? 'active' : ''}}" data-index="{{index}}">{{shopItem.merchantName}}</view>
+        <view bindtap="checkShop" class="shop-item {{shopItem.active ? 'active' : ''}}" data-index="{{shopIndex}}">{{shopItem.merchantName}}</view>
       </view>
       </view>
       <!-- <view class="half-px-border half-px-border-bottom"></view> -->
