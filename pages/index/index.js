@@ -234,9 +234,19 @@ Page({
       .then((res) => {
         console.log('获取小分类数据成功', res);
         // wx.hideLoading();
+        var data = res.data ? res.data : [];
+        for (var i = 0; i < data.length; i++) {
+          var id = data[i].id.toString();
+          if (id.indexOf('99999999') !== -1) {
+            // 特价类
+            // console.log('特价id:', id)
+            data[i].isTejia = true;
+            // console.log('特价:', data[i])
+          }
+        }
         this.setData({
-          smallClassList: res.data ? res.data : [],
-          curSmallClass: res.data && res.data.length > 0 ? res.data[0] : {}
+          smallClassList: data,
+          curSmallClass: data.length > 0 ? data[0] : {}
         })
         this.getCommodity();
       })
