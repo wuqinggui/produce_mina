@@ -265,7 +265,8 @@ Page({
     })
     let { id } = e.currentTarget.dataset.item;
     var params = {
-      id: id
+      id: id,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
     }
     shopApi.orderDelete(params)
       .then((res) => {

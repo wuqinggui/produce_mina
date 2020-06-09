@@ -154,7 +154,8 @@ Page({
     })
     var item = this.data.orderData;
     var params = {
-      id: item.id
+      id: item.id,
+      shopClassId: this.data.shopClassId, // 新增大分类id字段
     }
     shopApi.orderDelete(params)
       .then((res) => {

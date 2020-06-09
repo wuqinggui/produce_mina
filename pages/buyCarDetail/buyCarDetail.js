@@ -408,6 +408,7 @@ Page({
     var params = {
       shopCommoditDto: shopCommoditDto,
       shopId: item.shopId,
+      shopClassId: this.data.curClass.id, // 新增大分类id字段
       userId: getApp().globalData.userInfo.id
     }
     shopApi.deleteCar(params)
