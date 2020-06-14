@@ -177,12 +177,14 @@ Page({
   },
   // 添加商品
   addShop: function() {
+    getApp().globalData.curBigClassData = this.data.curClass;
     wx.reLaunch({
       url: '/pages/index/index'
     })
   },
   // 去下单
   goBuy: function () {
+    getApp().globalData.curBigClassData = this.data.curClass;
     wx.reLaunch({
       url: '/pages/index/index'
     })

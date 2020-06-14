@@ -233,6 +233,7 @@ Page({
 
   // 去下单
   goBuy: function () {
+    getApp().globalData.curBigClassData = this.data.curClass;
     wx.reLaunch({
       url: '/pages/index/index'
     })
