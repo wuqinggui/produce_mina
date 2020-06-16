@@ -185,7 +185,7 @@ Page({
    */
   onLoad: function(options) {
     //通过id获取组件component
-    this.loginDialog = this.selectComponent("#loginDialog")
+    // this.loginDialog = this.selectComponent("#loginDialog")
 
   },
 
@@ -203,7 +203,7 @@ Page({
     let sj_userId = wx.getStorageSync('sj_userId')
     let shopId = wx.getStorageSync('shopId');
     if (sj_userId) {
-      this.loginDialog.closeLoginTip(); // 调用组件方法
+      // this.loginDialog.closeLoginTip(); // 调用组件方法
       wx.showLoading({
         title: '加载中',
         mask: true
@@ -214,18 +214,18 @@ Page({
       });
       this.getData();
     } else {
-      // wx.navigateTo({
-      //   url: '/pages/login/login'
-      // })
-      this.loginDialog.showLoginTip(); // 调用组件方法
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+      // this.loginDialog.showLoginTip(); // 调用组件方法
     }
   },
 
   // 组件回调方法
-  loginCallBack: function (e) {
-    console.log('登陆弹框回调', e)
-    this.onShow();
-  },
+  // loginCallBack: function (e) {
+  //   console.log('登陆弹框回调', e)
+  //   this.onShow();
+  // },
 
   /**
    * 生命周期函数--监听页面隐藏

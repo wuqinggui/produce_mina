@@ -1,5 +1,5 @@
 <!-- 自定义插件，设置回调方法，id属性 -->
-<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
+<!-- <loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>   --> 
 
 <!-- 顶部导航菜品分类 -->
   <view class="nar-wrap pl5 pr5 verticle-center" wx:if="{{classList.length > 0}}">

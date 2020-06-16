@@ -23,6 +23,7 @@ App({
     submitCarData: {}, // 立即下单的购物车数据
     addresseeData: {}, // 提交订单页面的收件人信息
     supplyOrderData: {}, // 补单的现订单信息
+    curBigClassData: {}, // 选择的大分类信息
   },
   onLaunch: function (options) {
     console.log('------------onLaunch场景值---------', options.scene);

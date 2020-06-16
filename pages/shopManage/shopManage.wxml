@@ -1,5 +1,5 @@
 <!-- 自定义插件，设置回调方法，id属性 -->
-<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
+<!-- <loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>   --> 
 <!--pages/shopManage/shopManage.wxml-->
 <view class="shopManage pl20 pr20">
   <mp-dialog show="{{showOneButtonDialog}}" bindbuttontap="tapDialogButton" buttons="{{btnStatus == 1 ? oneButton : oneButton2}}">

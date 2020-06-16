@@ -1,5 +1,5 @@
 <!-- 自定义插件，设置回调方法，id属性 -->
-<loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>  
+<!-- <loginDialog id="loginDialog" bindmyevent="loginCallBack"></loginDialog>   --> 
 <!--pages/applySettled/applySettled.wxml-->
 <template name="item1">
   <view class="template pl15 pr15">

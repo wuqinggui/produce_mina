@@ -40,7 +40,7 @@ Page({
    */
   onLoad: function (options) {
     //通过id获取组件component
-    this.loginDialog = this.selectComponent("#loginDialog")
+    // this.loginDialog = this.selectComponent("#loginDialog")
   },
 
   /**
@@ -54,7 +54,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.loginDialog.closeLoginTip(); // 调用组件方法
+    // this.loginDialog.closeLoginTip(); // 调用组件方法
     this.pageInit();
     // let sj_userId = wx.getStorageSync('sj_userId')
     // if (sj_userId) {
@@ -103,10 +103,10 @@ Page({
   // },
 
   // 组件回调方法
-  loginCallBack: function (e) {
-    console.log('登陆弹框回调', e)
-    this.onShow();
-  },
+  // loginCallBack: function (e) {
+  //   console.log('登陆弹框回调', e)
+  //   this.onShow();
+  // },
 
   // 页面初始化
   pageInit: function () {
@@ -169,29 +169,29 @@ Page({
     //   title: '加载中',
     //   mask: true
     // })
-    // var params = {
-    //   userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
-    // }
-    // shopApi.findShopByUserId(params)
-    //   .then((res) => {
-    //     console.log('查询客户类型成功', res);
-    //     wx.hideLoading();
-    var customerTypeId = getApp().globalData.userInfo.customertyId ? getApp().globalData.userInfo.customertyId : '';
-    console.log('客户类型', customerTypeId)
+    var params = {
+      userId: getApp().globalData.userInfo.id ? getApp().globalData.userInfo.id : ''
+    }
+    shopApi.getUserShop(params)
+      .then((res) => {
+        console.log('查询客户类型成功', res);
+        // wx.hideLoading();
+        var customerTypeId = res.data && res.data.length > 0 && res.data[0].nmUser && res.data[0].nmUser.customertyId ? res.data[0].nmUser.customertyId : '';
+        console.log('客户类型', customerTypeId)
         this.setData({
           customerTypeId: customerTypeId
         })
         this.getShopClass(); // 获取大分类
-    //   })
-    //   .catch((error) => {
-    //     console.log('查询客户类型失败', error);
-    //     wx.hideLoading();
-    //     wx.showToast({
-    //       title: error.message ? error.message : '查询客户类型失败',
-    //       icon: 'none',
-    //       duration: 2000
-    //     })
-    //   })
+      })
+      .catch((error) => {
+        console.log('查询客户类型失败', error);
+        // wx.hideLoading();
+        wx.showToast({
+          title: error.message ? error.message : '查询客户类型失败',
+          icon: 'none',
+          duration: 2000
+        })
+      })
   },
 
   // 获取大分类
@@ -204,9 +204,21 @@ Page({
       .then((res) => {
         console.log('获取大分类数据成功', res);
         // wx.hideLoading();
+        var list = res.data ? res.data : [];
+        var item = res.data && res.data.length > 0 ? res.data[0] : {};
+        if (getApp().globalData.curBigClassData.id) {
+          for (var i = 0; i < list.length; i++) {
+            if (getApp().globalData.curBigClassData.id == list[i].id) {
+              // 有选中大分类
+              item = list[i];
+              getApp().globalData.curBigClassData = {}; // 清空信息
+              break;
+            }
+          }
+        }
         this.setData({
-          classList: res.data ? res.data : [],
-          curClass: res.data && res.data.length > 0 ? res.data[0] : {}
+          classList: list,
+          curClass: item
         })
         this.getShopSmallClass(); // 查询小分类
       })
@@ -437,10 +449,10 @@ Page({
         content: '您还没有登陆，是否去登陆？',
         success: function(res) {
           if (res.confirm) {
-            // wx.navigateTo({
-            //   url: '/pages/login/login'
-            // })
-            _this.loginDialog.showLoginTip(); // 调用组件方法
+            wx.navigateTo({
+              url: '/pages/login/login'
+            })
+            // this.loginDialog.showLoginTip(); // 调用组件方法
           }
         }
       })
